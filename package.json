@@ -27,12 +27,26 @@
   },
   "homepage": "https://github.com/zyndex-drive/server#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
+    "crypto-js": "^4.0.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-mongo-sanitize": "^2.1.0",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.15",
+    "nodemailer": "^6.6.2",
+    "x-xss-protection": "^2.0.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/crypto-js": "^4.0.1",
+    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.12",
+    "@types/jsonwebtoken": "^8.5.2",
     "@types/node": "^15.12.4",
-    "ts-node": "^10.0.0",
+    "@types/nodemailer": "^6.4.2",
     "typescript": "^4.3.4"
   }
 }
