@@ -13,7 +13,6 @@ function corsMiddleware(req: Request, res: Response, next: NextFunction): void {
     : [];
 
   const { origin } = req.headers;
-  console.log(allowedDomains, origin);
   if (origin && allowedDomains.indexOf(origin) > -1) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }

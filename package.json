@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "jest",
-    "build": "tsc --project ./",
+    "build": "tsc",
     "dev": "nodemon app.ts"
   },
   "repository": {

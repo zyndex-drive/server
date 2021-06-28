@@ -8,6 +8,9 @@ import xssProtect from 'x-xss-protection';
 // Middlewares
 import cors from './middlewares/cors';
 
+// Main Route
+import router from './routes';
+
 // Load ENV Variables to the Process
 dotenv.config();
 
@@ -19,9 +22,7 @@ app.use(xssProtect());
 app.use(mongoSanitize());
 app.use(cors);
 
-app.get('/', (req, res) => {
-  res.send('Init the Server');
-});
+app.use('/', router);
 
 app.listen(3000, () => {
   console.log('started');
