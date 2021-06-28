@@ -1,7 +1,3 @@
-import type roleType from './roles';
-import type sessionType from './sessions';
-import type userType from './user';
-
-export type user = userType;
-export type role = roleType;
-export type session = sessionType;
+export type { default as user } from './user';
+export type { default as role } from './roles';
+export type { default as session } from './session';

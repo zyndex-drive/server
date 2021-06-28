@@ -21,6 +21,10 @@ const UserSchema = new Schema<UserType>({
     required: true,
     default: Date.now,
   },
+  token_hash: {
+    type: String,
+    required: true,
+  },
   password: {
     type: String,
     default: null,

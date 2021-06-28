@@ -1,4 +1,5 @@
 import Roles from './roles';
+import Scopes from './scope';
 
 interface User {
   name: string;
@@ -6,9 +7,10 @@ interface User {
   email: string;
   avatar: string;
   registered_at: Date;
-  temp_password: string;
+  scope: Scopes['scope_id'][];
+  verified_at: Date;
+  token_hash: string;
   restricted: boolean;
-  verified: boolean;
   role: Roles;
   password: string;
 }
