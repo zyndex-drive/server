@@ -2,8 +2,8 @@ import { Schema, model } from 'mongoose';
 import { session as SessionType } from '../types/models';
 
 const SessionSchema = new Schema<SessionType>({
-  sId: {
-    type: Number,
+  _id: {
+    type: String,
     required: true,
     unique: true,
   },
@@ -12,7 +12,8 @@ const SessionSchema = new Schema<SessionType>({
     required: true,
   },
   user_id: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
   token_secret: {
@@ -27,6 +28,6 @@ const SessionSchema = new Schema<SessionType>({
   },
 });
 
-const Session = model('Session', SessionSchema);
+const Sessions = model('Session', SessionSchema);
 
-export default Session;
+export default Sessions;

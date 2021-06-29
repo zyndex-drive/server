@@ -1,6 +1,6 @@
 interface Credentials {
+  _id: string;
   alias: string;
-  cred_id: string;
   client_id: string;
   client_secret: string;
   email: string;

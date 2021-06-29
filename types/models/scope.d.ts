@@ -1,10 +1,10 @@
 import credentials from './credentials';
 
 interface scope {
+  _id: string;
   name: string;
-  scope_id: string;
   added_at: Date;
-  related_to: credentials['cred_id'][];
+  related_to: credentials['_id'][];
 }
 
 export default scope;

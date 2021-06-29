@@ -2,6 +2,11 @@ import { Schema, model } from 'mongoose';
 import { user as UserType } from '../types/models';
 
 const UserSchema = new Schema<UserType>({
+  _id: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   name: {
     type: String,
     required: true,
@@ -21,6 +26,14 @@ const UserSchema = new Schema<UserType>({
     required: true,
     default: Date.now,
   },
+  verified_at: {
+    type: Date,
+    required: true,
+  },
+  scopes: {
+    type: Schema.Types.ObjectId,
+    ref: 'Scope',
+  },
   token_hash: {
     type: String,
     required: true,
@@ -28,9 +41,6 @@ const UserSchema = new Schema<UserType>({
   password: {
     type: String,
     default: null,
-  },
-  temp_password: {
-    type: String,
   },
   restricted: {
     type: Boolean,
@@ -40,11 +50,6 @@ const UserSchema = new Schema<UserType>({
     type: String,
     required: true,
     default: 'User',
-  },
-  verified: {
-    type: Boolean,
-    required: true,
-    default: false,
   },
 });
 

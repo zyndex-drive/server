@@ -2,10 +2,11 @@ import type Roles from './roles';
 import type Scopes from './scope';
 
 interface PendingUser {
+  _id: string;
   name: string;
   email: string;
   role: Roles;
-  scope: Scopes['scope_id'][];
+  scopes: Scopes['_id'][];
   requested_at: Date;
 }
 
