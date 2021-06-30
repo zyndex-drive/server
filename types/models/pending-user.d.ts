@@ -1,13 +1,11 @@
-import type Roles from './roles';
+import type Roles from './role';
 import type Scopes from './scope';
 
-interface PendingUser {
+export default interface PendingUser {
   _id: string;
   name: string;
   email: string;
-  role: Roles;
+  role: Roles['_id'];
   scopes: Scopes['_id'][];
   requested_at: Date;
 }
-
-export default PendingUser;

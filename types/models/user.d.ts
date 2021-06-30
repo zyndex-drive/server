@@ -1,7 +1,8 @@
-import Roles from './roles';
+import Roles from './role';
 import Scopes from './scope';
+import Policy from './policy';
 
-interface User {
+export default interface User {
   _id: string;
   name: string;
   email: string;
@@ -11,8 +12,8 @@ interface User {
   verified_at: Date;
   token_hash: string;
   restricted: boolean;
-  role: Roles;
+  role: Roles['_id'];
   password: string;
+  allowed_policies: Policy['_id'][];
+  disallowed_policies: Policy['_id'][];
 }
-
-export default User;

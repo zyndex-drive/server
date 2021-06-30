@@ -24,7 +24,7 @@ const SessionSchema = new Schema<SessionType>({
   issued_at: {
     type: Date,
     required: true,
-    default: Date.now(),
+    default: Date.now,
   },
 });
 

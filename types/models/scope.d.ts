@@ -1,10 +1,8 @@
-import credentials from './credentials';
+import credentials from './credential';
 
-interface scope {
+export default interface scope {
   _id: string;
   name: string;
   added_at: Date;
   related_to: credentials['_id'][];
 }
-
-export default scope;

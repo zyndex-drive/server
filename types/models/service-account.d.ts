@@ -1,6 +1,6 @@
-import Credentials from './credentials';
+import Credentials from './credential';
 
-interface serviceAccount {
+export default interface serviceAccount {
   _id: string;
   project_id: string;
   private_key: {
@@ -13,5 +13,3 @@ interface serviceAccount {
   };
   related_to: Credentials['_id'];
 }
-
-export default serviceAccount;

@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import uid from '../helpers/uid';
 import { scope as ScopeType } from '../types/models';
 
 const ScopeSchema = new Schema<ScopeType>({
@@ -6,6 +7,10 @@ const ScopeSchema = new Schema<ScopeType>({
     type: String,
     required: true,
     unique: true,
+    default: () =>
+      uid('Drive-Scope', 'scp')
+        .then((uid: string) => uid)
+        .catch(() => null),
   },
   name: {
     type: String,
@@ -14,7 +19,7 @@ const ScopeSchema = new Schema<ScopeType>({
   added_at: {
     type: Date,
     required: true,
-    default: Date.now(),
+    default: Date.now,
   },
   related_to: [
     {

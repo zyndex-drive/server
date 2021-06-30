@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import uid from '../helpers/uid';
 import { user as UserType } from '../types/models';
 
 const UserSchema = new Schema<UserType>({
@@ -6,6 +7,10 @@ const UserSchema = new Schema<UserType>({
     type: String,
     required: true,
     unique: true,
+    default: () =>
+      uid('Verified-User', 'usr')
+        .then((uid: string) => uid)
+        .catch(() => null),
   },
   name: {
     type: String,
