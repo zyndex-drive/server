@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-import uid from '../helpers/uid';
 import { credential as CredsType } from '../types/models';
 
 const credentialSchema = new Schema<CredsType>({
@@ -7,10 +6,6 @@ const credentialSchema = new Schema<CredsType>({
     type: String,
     required: true,
     unique: true,
-    default: () =>
-      uid('Credentials', 'cred')
-        .then((uid: string) => uid)
-        .catch(() => null),
   },
   alias: {
     type: String,

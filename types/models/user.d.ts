@@ -8,8 +8,8 @@ export default interface User {
   email: string;
   avatar: string;
   registered_at: Date;
-  scopes: Scopes['_id'][];
   verified_at: Date;
+  scopes: Scopes['_id'][];
   token_hash: string;
   restricted: boolean;
   role: Roles['_id'];

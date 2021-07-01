@@ -5,6 +5,7 @@ export default interface PendingUser {
   _id: string;
   name: string;
   email: string;
+  message: string;
   role: Roles['_id'];
   scopes: Scopes['_id'][];
   requested_at: Date;

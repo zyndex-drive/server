@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-import uid from '../helpers/uid';
 import { pendingUser as PendingUserType } from '../types/models';
 
 const pendingUserSchema = new Schema<PendingUserType>({
@@ -7,10 +6,6 @@ const pendingUserSchema = new Schema<PendingUserType>({
     type: String,
     required: true,
     unique: true,
-    default: () =>
-      uid('Pending-Users', 'usr-pnd')
-        .then((uid: string) => uid)
-        .catch(() => null),
   },
   name: {
     type: String,
@@ -20,8 +15,13 @@ const pendingUserSchema = new Schema<PendingUserType>({
     type: String,
     required: true,
   },
-  role: {
+  message: {
     type: String,
+    required: true,
+  },
+  role: {
+    type: Schema.Types.ObjectId,
+    ref: 'Role',
     required: true,
   },
   scopes: [

@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-import uid from '../helpers/uid';
 import { serviceAccount as ServiceAccType } from '../types/models';
 
 const sacSchema = new Schema<ServiceAccType>({
@@ -7,10 +6,6 @@ const sacSchema = new Schema<ServiceAccType>({
     type: String,
     required: true,
     unique: true,
-    default: () =>
-      uid('Service-Accounts', 'sac')
-        .then((uid: string) => uid)
-        .catch(() => null),
   },
   project_id: {
     type: String,
