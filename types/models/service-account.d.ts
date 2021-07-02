@@ -1,6 +1,6 @@
-import Credentials from './credential';
+import type { Document, ObjectId } from 'mongoose';
 
-export default interface serviceAccount {
+export default interface serviceAccount extends Document {
   _id: string;
   project_id: string;
   private_key: {
@@ -11,5 +11,5 @@ export default interface serviceAccount {
     id: string;
     email: string;
   };
-  related_to: Credentials['_id'];
+  related_to: ObjectId; // Credential Collection - ObjectID
 }

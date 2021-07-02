@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { policy as PolicyType } from '../types/models';
+import type { policy as PolicyType } from '../types/models';
 
 const policySchema = new Schema<PolicyType>({
   _id: {
@@ -7,11 +7,11 @@ const policySchema = new Schema<PolicyType>({
     required: true,
     unique: true,
   },
-  pcy_name: {
+  name: {
     type: String,
     required: true,
   },
-  pcy_message: {
+  message: {
     type: String,
     required: true,
   },
@@ -21,5 +21,5 @@ const policySchema = new Schema<PolicyType>({
   },
 });
 
-const Policies = model('Policy', policySchema);
+const Policies = model<PolicyType>('Policy', policySchema);
 export default Policies;

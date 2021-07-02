@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { session as SessionType } from '../types/models';
+import type { session as SessionType } from '../types/models';
 
 const SessionSchema = new Schema<SessionType>({
   _id: {
@@ -16,6 +16,11 @@ const SessionSchema = new Schema<SessionType>({
     ref: 'User',
     required: true,
   },
+  frontend: {
+    type: Schema.Types.ObjectId,
+    ref: 'Frontend',
+    required: true,
+  },
   token_secret: {
     type: String,
     required: true,
@@ -28,6 +33,5 @@ const SessionSchema = new Schema<SessionType>({
   },
 });
 
-const Sessions = model('Session', SessionSchema);
-
+const Sessions = model<SessionType>('Session', SessionSchema);
 export default Sessions;

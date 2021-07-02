@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { role as RoleType } from '../types/models';
+import type { role as RoleType } from '../types/models';
 
 const roleSchema = new Schema<RoleType>({
   _id: {
@@ -15,13 +15,13 @@ const roleSchema = new Schema<RoleType>({
     type: String,
     required: true,
   },
+  type: {
+    type: String,
+    required: true,
+  },
   delgates_from: {
     type: Schema.Types.ObjectId || null,
     ref: 'Role',
-  },
-  max_sessions: {
-    type: Number,
-    required: true,
   },
   allowed_policies: [
     {
@@ -35,7 +35,19 @@ const roleSchema = new Schema<RoleType>({
       ref: 'Policy',
     },
   ],
+  specific_settings: [
+    {
+      setting: {
+        type: Schema.Types.ObjectId,
+        ref: 'GlobalSetting',
+      },
+      flag: {
+        type: String || Boolean || Number,
+        required: true,
+      },
+    },
+  ],
 });
 
-const Roles = model('Role', roleSchema);
+const Roles = model<RoleType>('Role', roleSchema);
 export default Roles;

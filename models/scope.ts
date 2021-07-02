@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { scope as ScopeType } from '../types/models';
+import type { scope as ScopeType } from '../types/models';
 
 const ScopeSchema = new Schema<ScopeType>({
   _id: {
@@ -16,6 +16,17 @@ const ScopeSchema = new Schema<ScopeType>({
     required: true,
     default: Date.now,
   },
+  drive_id: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  disallowed_frontends: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Frontend',
+    },
+  ],
   related_to: [
     {
       type: Schema.Types.ObjectId,
@@ -24,5 +35,5 @@ const ScopeSchema = new Schema<ScopeType>({
   ],
 });
 
-const Scopes = model('Scope', ScopeSchema);
+const Scopes = model<ScopeType>('Scope', ScopeSchema);
 export default Scopes;

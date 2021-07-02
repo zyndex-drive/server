@@ -1,15 +1,16 @@
-export default interface SmtpProviders {
+import type { Document } from 'mongoose';
+
+export default interface SmtpProviders extends Document {
   _id: string;
   name: string;
   alias: string;
-  smtp_url: {
+  smtp: {
     url: string;
     port: number;
   };
-  imap_url: {
+  imap: {
     url: string;
     port: number;
   };
-  port: number;
   dkim_key: string | undefined;
 }

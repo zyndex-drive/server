@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { pendingUser as PendingUserType } from '../types/models';
+import type { pendingUser as PendingUserType } from '../types/models';
 
 const pendingUserSchema = new Schema<PendingUserType>({
   _id: {
@@ -37,5 +37,5 @@ const pendingUserSchema = new Schema<PendingUserType>({
   },
 });
 
-const PendingUsers = model('PendingUser', pendingUserSchema);
+const PendingUsers = model<PendingUserType>('PendingUser', pendingUserSchema);
 export default PendingUsers;

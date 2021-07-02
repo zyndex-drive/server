@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { credential as CredsType } from '../types/models';
+import type { credential as CredsType } from '../types/models';
 
 const credentialSchema = new Schema<CredsType>({
   _id: {
@@ -22,8 +22,9 @@ const credentialSchema = new Schema<CredsType>({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
 });
 
-const Credentials = model('Credential', credentialSchema);
+const Credentials = model<CredsType>('Credential', credentialSchema);
 export default Credentials;

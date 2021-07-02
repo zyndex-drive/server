@@ -1,8 +1,10 @@
-import credentials from './credential';
+import type { Document, ObjectId } from 'mongoose';
 
-export default interface scope {
+export default interface scope extends Document {
   _id: string;
   name: string;
   added_at: Date;
-  related_to: credentials['_id'][];
+  drive_id: string;
+  disallowed_frontends: ObjectId[]; // Frontend Collection - ObjectID
+  related_to: ObjectId[]; // Credential Collection - ObjectID
 }

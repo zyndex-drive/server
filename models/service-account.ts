@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { serviceAccount as ServiceAccType } from '../types/models';
+import type { serviceAccount as ServiceAccType } from '../types/models';
 
 const sacSchema = new Schema<ServiceAccType>({
   _id: {
@@ -38,5 +38,5 @@ const sacSchema = new Schema<ServiceAccType>({
   },
 });
 
-const ServiceAccs = model('ServiceAccounts', sacSchema);
+const ServiceAccs = model<ServiceAccType>('ServiceAccounts', sacSchema);
 export default ServiceAccs;

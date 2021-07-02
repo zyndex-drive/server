@@ -1,11 +1,10 @@
-import User from './user';
-import Roles from './role';
+import type { Document, ObjectId } from 'mongoose';
 
-export default interface blacklistedUser {
-  _id: User['_id'];
+export default interface blacklistedUser extends Document {
+  _id: ObjectId; // User Collection - ObjectID
   name: string;
   email: string;
-  blacklisted_at: Date;
-  role: Roles['_id'];
-  flagged_by: User['_id'];
+  blacklisted_from: Date;
+  role: ObjectId; // Role Collection - ObjectID
+  flagged_by: ObjectId; // User Collection - ObjectID
 }

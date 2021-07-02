@@ -1,6 +1,8 @@
-export default interface policy {
+import type { Document } from 'mongoose';
+
+export default interface policy extends Document {
   _id: string;
-  pcy_name: string;
-  pcy_message: string;
+  name: string;
+  message: string;
   global_flag: boolean;
 }

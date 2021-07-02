@@ -1,11 +1,16 @@
-import Policy from './policy';
+import type { Document, ObjectId } from 'mongoose';
 
-export default interface role {
+export default interface role extends Document {
   _id: string;
   name: string;
   alias: string;
-  delgates_from: this['_id'] | null;
+  type: string & ('main' | 'sub');
+  delgates_from: ObjectId | null; // This Collection - Type - Main only - ObjectID
   max_sessions: number;
-  allowed_policies: Policy['_id'][];
-  disallowed_policies: Policy['_id'][];
+  allowed_policies: ObjectId[]; // Policy Collection - ObjectID
+  disallowed_policies: ObjectId[]; // Policy Collection - ObjectID
+  specific_settings: {
+    setting: ObjectId; // GlobalSettings Collection - ObjectID
+    flag: boolean | string | number;
+  }[];
 }
