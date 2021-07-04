@@ -6,10 +6,10 @@ import mongoSanitize from 'express-mongo-sanitize';
 import xssProtect from 'x-xss-protection';
 
 // Middlewares
-import cors from './middlewares/cors';
+import cors from '@middlewares/cors';
 
-// Main Route
-import router from './routes';
+// Router
+import router from '@routes';
 
 // Load ENV Variables to the Process
 dotenv.config();
@@ -22,8 +22,10 @@ app.use(xssProtect());
 app.use(mongoSanitize());
 app.use(cors);
 
+// Use the Router Config from Routes
 app.use('/', router);
 
+// Listen to the Port
 app.listen(3000, () => {
   console.log('started');
 });

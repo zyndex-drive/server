@@ -41,6 +41,7 @@
     "operator-linebreak": "off",
     "indent": "off",
     "strict": "off",
+    "valid-jsdoc":"off",
     "node/no-missing-import": "off",
     "object-curly-spacing": "off",
     "semi": "off",
