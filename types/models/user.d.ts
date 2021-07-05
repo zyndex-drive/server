@@ -7,10 +7,14 @@ export default interface User extends Document {
   avatar: string;
   registered_at: Date;
   verified_at: Date;
-  scopes: ObjectId[]; // Scope Collection - ObjectID
   token_hash: string;
   restricted: boolean;
-  role: ObjectId; // Role Collection - ObjectID
+  role: [
+    {
+      scope: ObjectId; // Scope Collection - ObjectID
+      role: ObjectId; // Role Collection - ObjectID
+    },
+  ];
   password: string;
   allowed_policies: ObjectId[]; // Policy Collection - ObjectID
   disallowed_policies: ObjectId[]; // Policy Collection - ObjectID

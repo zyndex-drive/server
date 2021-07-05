@@ -1,10 +1,8 @@
 /**
- * Policy Definition File
- *
- * Module - User
- * Sub Module - Remove
- *
+ * @file Policy Definition File
  * @description Policies Related to Removing Various Types of Users
+ * @module - User[Remove]
+ * @author Sudharshan TK
  */
 
 import { policySchema } from '@typs/models/policy';
@@ -32,9 +30,9 @@ export const mods_rm: Readonly<policySchema> = {
   global_flag: true,
 };
 
-export const owner_rm: Readonly<policySchema> = {
+export const mgr_rm: Readonly<policySchema> = {
   _id: `${IDPREFIX}0004`,
-  name: 'Remove Owners',
-  message: 'Enable Removal of Owners and Delegates',
+  name: 'Remove Managers',
+  message: 'Enable Removal of Managers and Delegates',
   global_flag: true,
 };

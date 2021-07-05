@@ -17,6 +17,7 @@ const roleSchema = new Schema<RoleType>({
   },
   type: {
     type: String,
+    enum: ['main', 'sub'],
     required: true,
   },
   delgates_from: {

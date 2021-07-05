@@ -7,4 +7,4 @@ export interface policySchema {
   global_flag: boolean;
 }
 
-export default interface policy extends Document, policySchema {}
+export default interface policy extends policySchema, Document {}

@@ -1,10 +1,8 @@
 /**
- * Policy Definition File
- *
- * Module - User
- * Sub Module - Blacklist
- *
+ * @file Policy Definition File
  * @description Policies Related to Blacklisting Various Types of Users
+ * @module - User[Blacklist]
+ * @author Sudharshan TK
  */
 
 import type { policySchema } from '@typs/models/policy';
@@ -32,9 +30,9 @@ export const mod_blist: Readonly<policySchema> = {
   global_flag: true,
 };
 
-export const owner_blist: Readonly<policySchema> = {
+export const mgr_blist: Readonly<policySchema> = {
   _id: `${IDPREFIX}0004`,
-  name: 'Blacklist Owners',
-  message: 'Enable Blacklisting of Owners and its Delegates',
+  name: 'Blacklist Managers',
+  message: 'Enable Blacklisting of Managers and its Delegates',
   global_flag: true,
 };

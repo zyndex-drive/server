@@ -19,6 +19,12 @@ const policySchema = new Schema<PolicyType>({
     type: Boolean,
     required: true,
   },
+  allowed_roles: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Role',
+    },
+  ],
 });
 
 const Policies = model<PolicyType>('Policy', policySchema);

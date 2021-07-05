@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "build": "tsc && tsc-alias",
-    "dev": "ts-node -r tsconfig-paths/register app.ts"
+    "dev": "nodemon -r tsconfig-paths/register app.ts"
   },
   "repository": {
     "type": "git",
@@ -61,6 +61,7 @@
     "eslint-plugin-jsdoc": "^35.4.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
+    "jsdoc": "^3.6.7",
     "tsc-alias": "^1.3.7",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.3.4"

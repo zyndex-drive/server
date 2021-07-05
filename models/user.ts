@@ -30,12 +30,6 @@ const UserSchema = new Schema<UserType>({
     type: Date,
     required: true,
   },
-  scopes: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Scope',
-    },
-  ],
   token_hash: {
     type: String,
     required: true,
@@ -44,11 +38,20 @@ const UserSchema = new Schema<UserType>({
     type: Boolean,
     default: false,
   },
-  role: {
-    type: Schema.Types.ObjectId,
-    ref: 'Role',
-    required: true,
-  },
+  role: [
+    {
+      scope: {
+        type: Schema.Types.ObjectId,
+        ref: 'Scope',
+        required: true,
+      },
+      role: {
+        type: Schema.Types.ObjectId,
+        ref: 'Role',
+        required: true,
+      },
+    },
+  ],
   password: {
     type: String,
     default: null,

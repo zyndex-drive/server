@@ -1,10 +1,8 @@
 /**
- * Policy Definition File
- *
- * Module - User
- * Sub Module - Add
- *
+ * @file Policy Definition File
  * @description Policies Related to Adding Various Types of Users
+ * @module - User[Add]
+ * @author Sudharshan TK
  */
 
 import type { policySchema } from '@typs/models/policy';
@@ -33,10 +31,10 @@ export const mod_add: Readonly<policySchema> = {
   global_flag: true,
 };
 
-export const owner_add: Readonly<policySchema> = {
+export const mgr_add: Readonly<policySchema> = {
   _id: `${IDPREFIX}0004`,
-  name: 'Add Owners',
-  message: 'Enable Accepting of Requests for Owners and its Delegates',
+  name: 'Add Managers',
+  message: 'Enable Accepting of Requests for Managers and its Delegates',
   global_flag: true,
 };
 
@@ -56,10 +54,10 @@ export const self_mod_add: Readonly<policySchema> = {
   global_flag: true,
 };
 
-export const self_owner_add: Readonly<policySchema> = {
+export const self_mgr_add: Readonly<policySchema> = {
   _id: `${IDPREFIX}0007`,
-  name: 'Promote to Owners',
+  name: 'Promote to Manager',
   message:
-    'Enable Promoting of Users to Owners without their Request and its Delegates',
+    'Enable Promoting of Users to Managers without their Request and its Delegates',
   global_flag: true,
 };

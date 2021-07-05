@@ -21,6 +21,7 @@ const smtpMailerSchema = new Schema<SmtpMailerType>({
   },
   type: {
     type: String,
+    enum: ['gmail', 'others'],
     required: true,
   },
   provider: {
