@@ -7,7 +7,7 @@
 
 import { policySchema } from '@typs/models/policy';
 
-const IDPREFIX = 'creds-';
+const IDPREFIX = 'creds@';
 
 export const creds_add: Readonly<policySchema> = {
   _id: `${IDPREFIX}0001`,

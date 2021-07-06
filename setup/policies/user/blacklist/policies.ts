@@ -7,7 +7,7 @@
 
 import type { policySchema } from '@typs/models/policy';
 
-const IDPREFIX = 'usr-blist-';
+const IDPREFIX = 'usr@blist-';
 
 export const viewer_blist: Readonly<policySchema> = {
   _id: `${IDPREFIX}0001`,

@@ -16,8 +16,13 @@ const globalSettingsSchema = new Schema<GlobalSettingsType>({
     required: true,
   },
   global_flag: {
-    type: Boolean || String || Number,
+    type: Boolean || String || Number || Schema.Types.ObjectId,
+    refPath: 'reference',
     required: true,
+  },
+  reference: {
+    type: String,
+    enum: ['SMTPMailer', 'SMTPProvider'],
   },
 });
 

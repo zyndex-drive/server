@@ -7,7 +7,7 @@
 
 import type { policySchema } from '@typs/models/policy';
 
-const IDPREFIX = 'usr-add-';
+const IDPREFIX = 'usr@add-';
 
 export const viewer_add: Readonly<policySchema> = {
   _id: `${IDPREFIX}0001`,

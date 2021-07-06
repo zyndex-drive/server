@@ -33,5 +33,5 @@ const smtpMailerSchema = new Schema<SmtpMailerType>({
   },
 });
 
-const SMTPMailers = model<SmtpMailerType>('Session', smtpMailerSchema);
+const SMTPMailers = model<SmtpMailerType>('SMTPMailer', smtpMailerSchema);
 export default SMTPMailers;

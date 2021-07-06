@@ -2,6 +2,8 @@
  * @file Role Definition File
  * @description Describes different Properties for each Role in the Organisation
  * @author Sudharshan TK
+ *
+ * Note: This Will be used only at the time of First Setup
  */
 
 import { roleSchema } from '@typs/models/role';
@@ -62,4 +64,4 @@ export const owner: Readonly<roleSchema> = {
   allowed_policies: [],
 };
 
-export const roleMap = [viewer, contentMgr, moderator, owner];
+export const map = [viewer, contentMgr, moderator, owner];
