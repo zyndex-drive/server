@@ -4,8 +4,6 @@ import type { globalSettings as GlobalSettingsType } from '../types/models';
 const globalSettingsSchema = new Schema<GlobalSettingsType>({
   _id: {
     type: String,
-    required: true,
-    unique: true,
   },
   name: {
     type: String,

@@ -4,8 +4,6 @@ import type { policy as PolicyType } from '../types/models';
 const policySchema = new Schema<PolicyType>({
   _id: {
     type: String,
-    required: true,
-    unique: true,
   },
   name: {
     type: String,

@@ -4,8 +4,6 @@ import type { smtpProvider as SmtpProviderType } from '../types/models';
 const smtpProviderSchema = new Schema<SmtpProviderType>({
   _id: {
     type: String,
-    required: true,
-    unique: true,
   },
   name: {
     type: String,

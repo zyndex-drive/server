@@ -4,8 +4,6 @@ import type { frontend as FrontendType } from '../types/models';
 const frontendSchema = new Schema<FrontendType>({
   _id: {
     type: String,
-    unique: true,
-    required: true,
   },
   domain: {
     type: String,

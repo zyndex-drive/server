@@ -4,8 +4,6 @@ import type { credential as CredsType } from '../types/models';
 const credentialSchema = new Schema<CredsType>({
   _id: {
     type: String,
-    required: true,
-    unique: true,
   },
   alias: {
     type: String,

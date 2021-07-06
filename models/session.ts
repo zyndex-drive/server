@@ -4,8 +4,6 @@ import type { session as SessionType } from '../types/models';
 const SessionSchema = new Schema<SessionType>({
   _id: {
     type: String,
-    required: true,
-    unique: true,
   },
   ip: {
     type: String,

@@ -5,8 +5,6 @@ const blaclistUserSchema = new Schema<BlacklistedUserType>({
   _id: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
-    unique: true,
   },
   name: {
     type: String,
@@ -34,7 +32,7 @@ const blaclistUserSchema = new Schema<BlacklistedUserType>({
 });
 
 const BlacklistUsers = model<BlacklistedUserType>(
-  'Credential',
+  'BlacklistedUser',
   blaclistUserSchema,
 );
 export default BlacklistUsers;

@@ -4,8 +4,6 @@ import type { role as RoleType } from '../types/models';
 const roleSchema = new Schema<RoleType>({
   _id: {
     type: String,
-    required: true,
-    unique: true,
   },
   name: {
     type: String,

@@ -4,8 +4,6 @@ import type { scope as ScopeType } from '../types/models';
 const ScopeSchema = new Schema<ScopeType>({
   _id: {
     type: String,
-    required: true,
-    unique: true,
   },
   name: {
     type: String,

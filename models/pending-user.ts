@@ -4,8 +4,6 @@ import type { pendingUser as PendingUserType } from '../types/models';
 const pendingUserSchema = new Schema<PendingUserType>({
   _id: {
     type: String,
-    required: true,
-    unique: true,
   },
   name: {
     type: String,
