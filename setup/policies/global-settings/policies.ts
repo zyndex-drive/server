@@ -5,11 +5,11 @@
  * @author Sudharshan TK
  */
 
-import { policySchema } from '@typs/models/policy';
+import { IPolicy } from '@models/policy/types';
 
 const IDPREFIX = 'globals@';
 
-export const global_settings_edit: Readonly<policySchema> = {
+export const global_settings_edit: Readonly<IPolicy> = {
   _id: `${IDPREFIX}0001`,
   name: 'Edit Global Settings',
   message: 'Enable Editing of Global Settings of the Server',

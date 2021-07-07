@@ -6,7 +6,7 @@
  * Note: This Will be used only at the time of First Setup
  */
 
-import { roleSchema } from '@typs/models/role';
+import { IRole } from '@models/role/types';
 
 const IDS = {
   viewer: 'roles@main-0005',
@@ -16,7 +16,7 @@ const IDS = {
   owner: 'roles@main-0001',
 };
 
-export const viewer: Readonly<roleSchema> = {
+export const viewer: Readonly<IRole> = {
   _id: IDS.viewer,
   name: 'Viewer',
   alias: 'Viewer',
@@ -25,7 +25,7 @@ export const viewer: Readonly<roleSchema> = {
   allowed_policies: [],
 };
 
-export const contentMgr: Readonly<roleSchema> = {
+export const contentMgr: Readonly<IRole> = {
   _id: IDS.contentMgr,
   name: 'Content Manager',
   alias: 'Content Manager',
@@ -35,7 +35,7 @@ export const contentMgr: Readonly<roleSchema> = {
   allowed_policies: [],
 };
 
-export const moderator: Readonly<roleSchema> = {
+export const moderator: Readonly<IRole> = {
   _id: IDS.moderator,
   name: 'Moderator',
   alias: 'Moderator',
@@ -45,7 +45,7 @@ export const moderator: Readonly<roleSchema> = {
   allowed_policies: [],
 };
 
-export const manager: Readonly<roleSchema> = {
+export const manager: Readonly<IRole> = {
   _id: IDS.manager,
   name: 'Owner',
   alias: 'Owner',
@@ -55,7 +55,7 @@ export const manager: Readonly<roleSchema> = {
   allowed_policies: [],
 };
 
-export const owner: Readonly<roleSchema> = {
+export const owner: Readonly<IRole> = {
   _id: IDS.owner,
   name: 'Owner',
   alias: 'Owner',

@@ -1,0 +1,17 @@
+import type { Document, Model } from 'mongoose';
+import type { IFrontendDoc } from '@models/frontend/types';
+import type { ICredentialsDoc } from '@models/credential/types';
+import type { ID } from '@typs/model.objectid';
+
+export interface IScope {
+  _id: string;
+  name: string;
+  added_at: Date;
+  drive_id: string;
+  disallowed_frontends: ID<IFrontendDoc>[];
+  related_to: ID<ICredentialsDoc>[];
+}
+
+export interface IScopeDoc extends IScope, Document {}
+
+export interface IScopeModel extends Model<IScope> {}

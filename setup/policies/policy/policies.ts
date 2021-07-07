@@ -5,11 +5,11 @@
  * @author Sudharshan TK
  */
 
-import { policySchema } from '@typs/models/policy';
+import { IPolicy } from '@models/policy/types';
 
 const IDPREFIX = 'policies@';
 
-export const policies_edit: Readonly<policySchema> = {
+export const policies_edit: Readonly<IPolicy> = {
   _id: `${IDPREFIX}0001`,
   name: 'Edit Policies',
   message: 'Enable Editing of Organisation Policies',
