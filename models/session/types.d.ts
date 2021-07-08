@@ -14,4 +14,4 @@ export interface ISession {
 
 export interface ISessionDoc extends ISession, Document {}
 
-export interface ISessionModel extends Model<ISession> {}
+export interface ISessionModel extends Model<ISessionDoc> {}

@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
-import type { ISessionDoc } from './types';
+import type { ISession, ISessionModel } from './types';
 
-export default new Schema<ISessionDoc>({
+export default new Schema<ISession, ISessionModel>({
   _id: {
     type: String,
   },

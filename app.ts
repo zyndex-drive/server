@@ -10,6 +10,7 @@ import mongoose, { Error } from 'mongoose';
 import db from '@helpers/db';
 
 // Middlewares
+import dbChecker from '@middlewares/dbchecker';
 import cors from '@middlewares/cors';
 
 // Router
@@ -24,7 +25,6 @@ app.use(express.json({ limit: '50kb' }));
 app.use(helmet());
 app.use(xssProtect());
 app.use(mongoSanitize());
-app.use(cors);
 
 // Connect to Datbase
 db.connect()
@@ -38,12 +38,7 @@ db.connect()
   });
 
 // Use the Router Config from Routes
-app.use('/', router);
-
-// Close the Database Connection on App Close
-process.on('SIGTERM', db.close);
-process.on('SIGINT', db.close);
-process.on('exit', db.close);
+app.use('/', dbChecker, cors, router);
 
 // Listen to the Port
 app.listen(3000);

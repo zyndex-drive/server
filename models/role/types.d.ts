@@ -22,4 +22,4 @@ export interface IRole {
 
 export interface IRoleDoc extends IRole, Document {}
 
-export interface IRoleModel extends Model<IRole> {}
+export interface IRoleModel extends Model<IRoleDoc> {}

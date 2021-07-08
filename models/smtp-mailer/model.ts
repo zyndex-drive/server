@@ -1,5 +1,5 @@
 import { model } from 'mongoose';
 import schema from './schema';
-import type { ISMTPMailerDoc } from './types';
+import type { ISMTPMailer, ISMTPMailerModel } from './types';
 
-export default model<ISMTPMailerDoc>('SMTPMailer', schema);
+export default model<ISMTPMailer, ISMTPMailerModel>('SMTPMailer', schema);

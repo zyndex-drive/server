@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
-import type { IPolicyDoc } from './types';
+import type { IPolicy, IPolicyModel } from './types';
 
-export default new Schema<IPolicyDoc>({
+export default new Schema<IPolicy, IPolicyModel>({
   _id: {
     type: String,
   },

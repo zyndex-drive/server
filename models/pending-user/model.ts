@@ -1,5 +1,5 @@
 import { model } from 'mongoose';
 import schema from './schema';
-import type { IPendingUserDoc } from './types';
+import type { IPendingUserDoc, IPendingUserModel } from './types';
 
-export default model<IPendingUserDoc>('PendingUser', schema);
+export default model<IPendingUserDoc, IPendingUserModel>('PendingUser', schema);

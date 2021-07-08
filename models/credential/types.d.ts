@@ -10,4 +10,4 @@ export interface ICredentials {
 
 export interface ICredentialsDoc extends ICredentials, Document {}
 
-export interface ICredentialsModel extends Model<ICredentials> {}
+export interface ICredentialsModel extends Model<ICredentialsDoc> {}

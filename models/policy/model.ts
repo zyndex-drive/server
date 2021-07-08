@@ -1,5 +1,5 @@
 import { model } from 'mongoose';
 import schema from './schema';
-import type { IPolicyDoc } from './types';
+import type { IPolicy, IPolicyModel } from './types';
 
-export default model<IPolicyDoc>('Policy', schema);
+export default model<IPolicy, IPolicyModel>('Policy', schema);

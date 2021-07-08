@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
-import type { IUserDoc } from './types';
+import type { IUser, IUserModel } from './types';
 
-export default new Schema<IUserDoc>({
+export default new Schema<IUser, IUserModel>({
   _id: {
     type: String,
   },

@@ -1,7 +1,8 @@
 import { Schema } from 'mongoose';
-import type { IFrontendDoc } from './types';
+import { getFrontendUrls as staticGetFrontendUrls } from './statics';
+import type { IFrontend, IFrontendModel } from './types';
 
-export default new Schema<IFrontendDoc>({
+const schema = new Schema<IFrontend, IFrontendModel>({
   _id: {
     type: String,
   },
@@ -49,3 +50,7 @@ export default new Schema<IFrontendDoc>({
     ],
   },
 });
+
+schema.statics.getFrontendUrls = staticGetFrontendUrls;
+
+export default schema;

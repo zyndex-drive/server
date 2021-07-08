@@ -89,7 +89,6 @@ function checkSetupStatus(
   ];
   Promise.all(promises)
     .then((setups) => {
-      console.log(setups);
       if (setups.includes(false)) {
         next();
       } else {

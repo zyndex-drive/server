@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
-import type { IScopeDoc } from './types';
+import type { IScope, IScopeModel } from './types';
 
-export default new Schema<IScopeDoc>({
+export default new Schema<IScope, IScopeModel>({
   _id: {
     type: String,
   },

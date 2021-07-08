@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
-import type { IRoleDoc } from './types';
+import type { IRole, IRoleModel } from './types';
 
-export default new Schema<IRoleDoc>({
+export default new Schema<IRole, IRoleModel>({
   _id: {
     type: String,
   },

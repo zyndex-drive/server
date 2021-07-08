@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
-import type { ICredentialsDoc } from './types';
+import type { ICredentials, ICredentialsModel } from './types';
 
-export default new Schema<ICredentialsDoc>({
+export default new Schema<ICredentials, ICredentialsModel>({
   _id: {
     type: String,
   },

@@ -25,4 +25,6 @@ export interface IFrontend {
 
 export interface IFrontendDoc extends IFrontend, Document {}
 
-export interface IFrontendModel extends Model<IFrontend> {}
+export interface IFrontendModel extends Model<IFrontendDoc> {
+  getFrontendUrls: (this: IFrontendModel) => Promise<IFrontendDoc[]>;
+}

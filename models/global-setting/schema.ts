@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
-import type { IGlobalSettingsDoc } from './types';
+import type { IGlobalSettings, IGlobalSettingsModel } from './types';
 
-export default new Schema<IGlobalSettingsDoc>({
+export default new Schema<IGlobalSettings, IGlobalSettingsModel>({
   _id: {
     type: String,
   },

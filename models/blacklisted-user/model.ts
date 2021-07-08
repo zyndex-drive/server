@@ -1,5 +1,8 @@
 import { model } from 'mongoose';
 import schema from './schema';
-import type { IBlacklistedUserDoc } from './types';
+import type { IBlacklistedUser, IBlacklistedUserModel } from './types';
 
-export default model<IBlacklistedUserDoc>('BlacklistedUser', schema);
+export default model<IBlacklistedUser, IBlacklistedUserModel>(
+  'BlacklistedUser',
+  schema,
+);

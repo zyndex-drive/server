@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
-import type { ISMTPProviderDoc } from './types';
+import type { ISMTPProvider, ISMTPProviderModel } from './types';
 
-export default new Schema<ISMTPProviderDoc>({
+export default new Schema<ISMTPProvider, ISMTPProviderModel>({
   _id: {
     type: String,
   },

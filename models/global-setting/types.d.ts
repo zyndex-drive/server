@@ -15,4 +15,4 @@ export interface IGlobalSettings {
 
 export interface IGlobalSettingsDoc extends IGlobalSettings, Document {}
 
-export interface IGlobalSettingsModel extends Model<IGlobalSettings> {}
+export interface IGlobalSettingsModel extends Model<IGlobalSettingsDoc> {}

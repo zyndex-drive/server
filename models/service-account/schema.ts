@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
-import type { IServiceAccDoc } from './types';
+import type { IServiceAcc, IServiceAccModel } from './types';
 
-export default new Schema<IServiceAccDoc>({
+export default new Schema<IServiceAcc, IServiceAccModel>({
   _id: {
     type: String,
   },

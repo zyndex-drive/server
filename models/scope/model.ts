@@ -1,5 +1,5 @@
 import { model } from 'mongoose';
 import schema from './schema';
-import type { IScopeDoc } from './types';
+import type { IScope, IScopeModel } from './types';
 
-export default model<IScopeDoc>('Scope', schema);
+export default model<IScope, IScopeModel>('Scope', schema);

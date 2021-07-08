@@ -17,4 +17,4 @@ export interface ISMTPProvider {
 
 export interface ISMTPProviderDoc extends ISMTPProvider, Document {}
 
-export interface ISMTPProviderModel extends Model<ISMTPProvider> {}
+export interface ISMTPProviderModel extends Model<ISMTPProviderDoc> {}

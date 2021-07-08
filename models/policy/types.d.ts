@@ -9,4 +9,4 @@ export interface IPolicy {
 
 export interface IPolicyDoc extends IPolicy, Document {}
 
-export interface IPolicyModel extends Model<IPolicy> {}
+export interface IPolicyModel extends Model<IPolicyDoc> {}

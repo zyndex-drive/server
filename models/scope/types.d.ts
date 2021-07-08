@@ -14,4 +14,4 @@ export interface IScope {
 
 export interface IScopeDoc extends IScope, Document {}
 
-export interface IScopeModel extends Model<IScope> {}
+export interface IScopeModel extends Model<IScopeDoc> {}

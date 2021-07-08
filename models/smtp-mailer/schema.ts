@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
-import type { ISMTPMailerDoc } from './types';
+import type { ISMTPMailer, ISMTPMailerModel } from './types';
 
-export default new Schema<ISMTPMailerDoc>({
+export default new Schema<ISMTPMailer, ISMTPMailerModel>({
   _id: {
     type: String,
   },

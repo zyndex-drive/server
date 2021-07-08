@@ -1,5 +1,5 @@
 import { model } from 'mongoose';
 import schema from './schema';
-import type { ISMTPProviderDoc } from './types';
+import type { ISMTPProvider, ISMTPProviderModel } from './types';
 
-export default model<ISMTPProviderDoc>('SMTPProvider', schema);
+export default model<ISMTPProvider, ISMTPProviderModel>('SMTPProvider', schema);

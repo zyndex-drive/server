@@ -14,4 +14,4 @@ export interface ISMTPMailer {
 
 export interface ISMTPMailerDoc extends ISMTPMailer, Document {}
 
-export interface ISMTPMailerModel extends Model<ISMTPMailer> {}
+export interface ISMTPMailerModel extends Model<ISMTPMailerDoc> {}

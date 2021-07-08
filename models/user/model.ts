@@ -1,5 +1,5 @@
 import { model } from 'mongoose';
 import schema from './schema';
-import type { IUserDoc } from './types';
+import type { IUser, IUserModel } from './types';
 
-export default model<IUserDoc>('User', schema);
+export default model<IUser, IUserModel>('User', schema);

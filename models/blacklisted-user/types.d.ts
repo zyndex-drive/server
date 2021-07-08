@@ -14,4 +14,4 @@ export interface IBlacklistedUser {
 
 export interface IBlacklistedUserDoc extends IBlacklistedUser, Document {}
 
-export interface IBlacklistedUserModel extends Model<IBlacklistedUser> {}
+export interface IBlacklistedUserModel extends Model<IBlacklistedUserDoc> {}

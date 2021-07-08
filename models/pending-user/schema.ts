@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
-import type { IPendingUserDoc } from './types';
+import type { IPendingUserDoc, IPendingUserModel } from './types';
 
-export default new Schema<IPendingUserDoc>({
+export default new Schema<IPendingUserDoc, IPendingUserModel>({
   _id: {
     type: String,
   },

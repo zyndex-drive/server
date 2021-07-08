@@ -1,5 +1,5 @@
 import { model } from 'mongoose';
 import schema from './schema';
-import type { IServiceAccDoc } from './types';
+import type { IServiceAcc, IServiceAccModel } from './types';
 
-export default model<IServiceAccDoc>('ServiceAccounts', schema);
+export default model<IServiceAcc, IServiceAccModel>('ServiceAccounts', schema);

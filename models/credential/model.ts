@@ -1,5 +1,5 @@
 import { model } from 'mongoose';
 import schema from './schema';
-import type { ICredentialsDoc } from './types';
+import type { ICredentials, ICredentialsModel } from './types';
 
-export default model<ICredentialsDoc>('Credential', schema);
+export default model<ICredentials, ICredentialsModel>('Credential', schema);

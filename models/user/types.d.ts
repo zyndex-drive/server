@@ -26,4 +26,4 @@ export interface IUser {
 
 export interface IUserDoc extends IUser, Document {}
 
-export interface IUserModel extends Model<IUser> {}
+export interface IUserModel extends Model<IUserDoc> {}
