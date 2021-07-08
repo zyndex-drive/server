@@ -1,3 +1,3 @@
 import type { Document } from 'mongoose';
 
-export type ID<T = Document<T>> = T['_id'] | T;
+export type ID<T extends Document<T>> = T['_id'] | T;
