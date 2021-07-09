@@ -109,3 +109,55 @@ function checkSetupStatus(
 }
 
 export default checkSetupStatus;
+
+/**
+ * Validates the Given Secret with Environment Secret for Setting Up First Time Data
+ *
+ * @param {Request} req - Express Request Object
+ * @param {Response} res - Express Response Object
+ * @param {NextFunction} next - Express NextFunction
+ */
+export function checkFirstSetupPass(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): void {
+  const secret = process.env.SECRET;
+  const errorResponse = (message: string) => ({
+    status: 500,
+    message,
+  });
+  if (secret) {
+    const headerPass = req.headers['X-SECRET-PASS'];
+    if (headerPass && typeof headerPass === 'string') {
+      const correctedSecret = secret.toLowerCase();
+      const correctedHeaderPass = headerPass.toLowerCase();
+      if (correctedHeaderPass === correctedSecret) {
+        next();
+      } else {
+        res
+          .status(403)
+          .json(
+            errorResponse(
+              'Header Secret is Not Matching with the Environment Secret, Kindly Send the Correct Pass',
+            ),
+          );
+      }
+    } else {
+      res
+        .status(403)
+        .json(
+          errorResponse(
+            "Secret is not Passed in the Headers, This Route Requires this 'X-SECRET-PASS' header to be sent",
+          ),
+        );
+    }
+    next();
+  } else {
+    res
+      .status(500)
+      .json(
+        errorResponse('No Secret Set in the Environment, Kindly Set in Vars'),
+      );
+  }
+}
