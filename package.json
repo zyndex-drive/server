@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/zyndex-drive/server#readme",
   "dependencies": {
+    "@godaddy/terminus": "^4.9.0",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
     "crypto-js": "^4.0.0",
@@ -47,6 +48,7 @@
     "@types/crypto-js": "^4.0.1",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.12",
+    "@types/http-server": "^0.12.1",
     "@types/jsonwebtoken": "^8.5.2",
     "@types/md5": "^2.3.0",
     "@types/node": "^15.12.4",

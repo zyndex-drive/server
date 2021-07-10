@@ -1,25 +1,24 @@
 import { Request, Response, NextFunction } from 'express';
-import { Frontends } from '@models';
+import { STATES, connection } from 'mongoose';
 
 /**
- * Checks whether DB is Accessible with Frontend Collection and if not Cancels the Request
+ * Checks whether DB is Accessible by Checking the Mongoose Connection Status
  *
  * @param {Request} req - Express Request Object
  * @param {Response} res - Express Response Object
  * @param {NextFunction} next - Express Next Function
  */
 function corsMiddleware(req: Request, res: Response, next: NextFunction): void {
-  Frontends.getFrontendUrls()
-    .then(() => {
-      next();
-    })
-    .catch((error) => {
-      res.status(500).json({
-        status: 500,
-        message: 'Internal Server Error Related to Database',
-        error,
-      });
+  const mongoState = connection.readyState;
+  if ([0, 2, 3].includes(mongoState)) {
+    res.status(500).json({
+      status: 500,
+      message: 'Internal Server Error Related to Database',
+      mongoStatus: STATES[mongoState],
     });
+  } else {
+    next();
+  }
 }
 
 export default corsMiddleware;

@@ -17,14 +17,16 @@ export default {
     }
     return false;
   },
-  close: (): void => {
-    mongoose.connection
-      .close()
-      .then(() => {
-        console.log('Successfully Closed the Database Connection');
-      })
-      .catch(() => {
-        console.log('Failed to Close Database Connection');
-      });
-  },
+  close: (): Promise<void> =>
+    new Promise<void>((resolve, reject) => {
+      mongoose.connection
+        .close()
+        .then(() => {
+          console.log('Successfully Closed the Database Connection');
+          resolve();
+        })
+        .catch(() => {
+          reject(new Error('Failed to Close Database Connection'));
+        });
+    }),
 };

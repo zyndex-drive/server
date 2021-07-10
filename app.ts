@@ -1,5 +1,6 @@
 // Initialization
 import dotenv from 'dotenv';
+import http from 'http';
 import express from 'express';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
@@ -8,6 +9,9 @@ import xssProtect from 'x-xss-protection';
 // Database
 import mongoose, { Error } from 'mongoose';
 import db from '@helpers/db';
+
+// Health Check Service
+import healthChecker from '@helpers/health-check';
 
 // Middlewares
 import dbChecker from '@middlewares/dbchecker';
@@ -25,6 +29,7 @@ app.use(express.json({ limit: '50kb' }));
 app.use(helmet());
 app.use(xssProtect());
 app.use(mongoSanitize());
+app.use([dbChecker, cors]);
 
 // Connect to Datbase
 db.connect()
@@ -38,7 +43,26 @@ db.connect()
   });
 
 // Use the Router Config from Routes
-app.use('/', dbChecker, cors, router);
+app.use('/', router);
 
-// Listen to the Port
-app.listen(3000);
+// Create http server from express
+const server = http.createServer(app);
+
+// Health Checker
+healthChecker(server);
+
+// listen to port
+const PORT = process.env.PORT;
+try {
+  server.listen(PORT || 3000, () => {
+    console.log('Server Started');
+  });
+  server.once('error', (err) => {
+    console.log(
+      'There was an error starting the server in the error listener:',
+      err,
+    );
+  });
+} catch (e) {
+  console.log('There was an error starting the server:', e);
+}
