@@ -23,7 +23,7 @@ export default {
     scope: mods_scope,
     restrict: mods_restrict,
   },
-  mgr: {
+  manager: {
     policy: mgr_policies,
     scope: mgr_scope,
     restrict: mgr_restrict,

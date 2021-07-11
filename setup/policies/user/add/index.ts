@@ -6,12 +6,12 @@ export default {
     viewer: viewer_add,
     contentMgr: content_mgr_add,
     mods: mod_add,
-    owner: mgr_add,
+    manager: mgr_add,
   },
   promote: {
     contentMgr: self_content_mgr_add,
     mods: self_mod_add,
-    owner: self_mgr_add,
+    manager: self_mgr_add,
   },
 };
 

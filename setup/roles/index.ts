@@ -8,6 +8,12 @@
 
 import { IRole } from '@models/role/types';
 
+// policies
+import ownerPolicies from './policies-map/owner';
+import managerPolicies from './policies-map/manager';
+import moderatorPolicies from './policies-map/moderator';
+import contentMgrPolicies from './policies-map/content-manager';
+
 const IDS = {
   viewer: 'roles@main-0005',
   contentMgr: 'roles@main-0004',
@@ -32,7 +38,7 @@ export const contentMgr: Readonly<IRole> = {
   type: 'main',
   parent_role: IDS.moderator,
   child_role: viewer._id,
-  allowed_policies: [],
+  allowed_policies: contentMgrPolicies,
 };
 
 export const moderator: Readonly<IRole> = {
@@ -42,7 +48,7 @@ export const moderator: Readonly<IRole> = {
   type: 'main',
   parent_role: IDS.owner,
   child_role: IDS.contentMgr,
-  allowed_policies: [],
+  allowed_policies: moderatorPolicies,
 };
 
 export const manager: Readonly<IRole> = {
@@ -52,7 +58,7 @@ export const manager: Readonly<IRole> = {
   type: 'main',
   parent_role: IDS.owner,
   child_role: IDS.moderator,
-  allowed_policies: [],
+  allowed_policies: managerPolicies,
 };
 
 export const owner: Readonly<IRole> = {
@@ -61,7 +67,7 @@ export const owner: Readonly<IRole> = {
   alias: 'Owner',
   type: 'main',
   child_role: IDS.manager,
-  allowed_policies: [],
+  allowed_policies: ownerPolicies,
 };
 
 export const map = [viewer, contentMgr, moderator, owner];

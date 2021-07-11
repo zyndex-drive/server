@@ -48,7 +48,7 @@ app.use('/', router);
 // Create http server from express
 const server = http.createServer(app);
 
-// Health Checker
+// Start the Health Checker
 healthChecker(server);
 
 // listen to port

@@ -1,7 +1,8 @@
 import { Schema } from 'mongoose';
+import { createPolicy } from './statics';
 import type { IPolicy, IPolicyModel } from './types';
 
-export default new Schema<IPolicy, IPolicyModel>({
+const schema = new Schema<IPolicy, IPolicyModel>({
   _id: {
     type: String,
   },
@@ -24,3 +25,7 @@ export default new Schema<IPolicy, IPolicyModel>({
     },
   ],
 });
+
+schema.statics.createPolicy = createPolicy;
+
+export default schema;

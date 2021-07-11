@@ -67,7 +67,7 @@ async function checkDBPresent<T, U extends Model<T>>(
 }
 
 /**
- * Check Whether all the Database Collections are Properly Setup and allows the Setup Route
+ * Checks Whether all the Database Collections are Properly Setup and allows the Setup Route
  *
  * @param {Request} req - Express Request Object
  * @param {Response} res - Express Response Object
@@ -90,6 +90,7 @@ function checkSetupStatus(
   Promise.all(promises)
     .then((setups) => {
       if (setups.includes(false)) {
+        res.locals.setups = true;
         next();
       } else {
         res.status(200).json({
@@ -133,6 +134,7 @@ export function checkSecretPass(
       const correctedSecret = secret.toLowerCase();
       const correctedHeaderPass = headerPass.toLowerCase();
       if (correctedHeaderPass === correctedSecret) {
+        res.locals.secretcheck = true;
         next();
       } else {
         res

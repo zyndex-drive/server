@@ -8,7 +8,7 @@ import { STATES, connection } from 'mongoose';
  * @param {Response} res - Express Response Object
  * @param {NextFunction} next - Express Next Function
  */
-function corsMiddleware(req: Request, res: Response, next: NextFunction): void {
+function dbChecker(req: Request, res: Response, next: NextFunction): void {
   const mongoState = connection.readyState;
   if ([0, 2, 3].includes(mongoState)) {
     res.status(500).json({
@@ -17,8 +17,9 @@ function corsMiddleware(req: Request, res: Response, next: NextFunction): void {
       mongoStatus: STATES[mongoState],
     });
   } else {
+    res.locals.dbcheck = true;
     next();
   }
 }
 
-export default corsMiddleware;
+export default dbChecker;

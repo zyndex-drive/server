@@ -1,0 +1,41 @@
+import {
+  users,
+  frontends,
+  globalSettings,
+  smtpMailers,
+  smtpProviders,
+  roles,
+  policy,
+} from '@setup/policies';
+
+const policies = [
+  users.add.accept.contentMgr._id,
+  users.add.accept.mods._id,
+  users.add.accept.viewer._id,
+  users.blacklist.manager._id,
+  users.blacklist.mods._id,
+  users.blacklist.viewer._id,
+  users.modify.contentMgr.policy._id,
+  users.modify.contentMgr.restrict._id,
+  users.modify.contentMgr.scope._id,
+  users.modify.mods.policy._id,
+  users.modify.mods.restrict._id,
+  users.modify.mods.scope._id,
+  users.modify.viewer.policy._id,
+  users.modify.viewer.restrict._id,
+  users.modify.viewer.scope._id,
+  frontends.edit._id,
+  globalSettings.edit._id,
+  roles.add._id,
+  roles.edit._id,
+  roles.remove._id,
+  policy.edit._id,
+  smtpProviders.add._id,
+  smtpProviders.edit._id,
+  smtpProviders.remove._id,
+  smtpMailers.add._id,
+  smtpMailers.edit._id,
+  smtpMailers.remove._id,
+];
+
+export default policies;
