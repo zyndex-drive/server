@@ -2,14 +2,14 @@
 import express from 'express';
 
 // Sub Routes
-import policy from './policies';
+import policies from './policies';
 
 // Others
 import { map as roleMap } from '@setup/roles';
 
 const router = express.Router();
 
-router.use('/policy', policy);
+router.use('/policies', policies);
 
 router.post('/roles', (req, res) => {
   res.json(roleMap);

@@ -4,11 +4,14 @@ import setupCheck from '@middlewares/first-setup';
 
 // Routes
 import firstSetup from './first-setup';
+import policies from './policies';
 
 // Router
 const router = express.Router();
 
+// Assign Routes
 router.use('/setup', [setupCheck, checkSecretPass], firstSetup);
+router.use('/policies', policies);
 
 // Default Get
 router.get('/', (req, res) => {
