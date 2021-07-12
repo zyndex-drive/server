@@ -1,4 +1,5 @@
-import {
+import createDocument from '@helpers/models/static/create-document';
+import type {
   IBlacklistedUser,
   IBlacklistedUserDoc,
   IBlacklistedUserModel,
@@ -9,20 +10,15 @@ import {
  *
  * @param {IBlacklistedUserModel} this - BlacklistedUser Model
  * @param {IBlacklistedUser} doc - Policy Doc to be Created and Saved
+ * @returns {Promise<IBlacklistedUserDoc>} Promise of Blacklisted User Doc
  */
 export function createBlacklistedUser(
   this: IBlacklistedUserModel,
   doc: IBlacklistedUser,
 ): Promise<IBlacklistedUserDoc> {
-  return new Promise<IBlacklistedUserDoc>((resolve, reject) => {
-    const newDoc = new this(doc);
-    newDoc
-      .save()
-      .then((savedDoc) => {
-        resolve(savedDoc);
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  });
+  return createDocument<
+    IBlacklistedUser,
+    IBlacklistedUserDoc,
+    IBlacklistedUserModel
+  >(this, doc);
 }

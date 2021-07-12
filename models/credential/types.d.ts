@@ -10,4 +10,9 @@ export interface ICredentials {
 
 export interface ICredentialsDoc extends ICredentials, Document {}
 
-export interface ICredentialsModel extends Model<ICredentialsDoc> {}
+export interface ICredentialsModel extends Model<ICredentialsDoc> {
+  createCredentials: (
+    this: ICredentialsModel,
+    doc: ICredentials,
+  ) => Promise<ICredentialsDoc>;
+}
