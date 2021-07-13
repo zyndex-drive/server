@@ -1,7 +1,8 @@
 import { Schema } from 'mongoose';
+import { createDoc, clearAll } from './statics';
 import type { ICredentials, ICredentialsModel } from './types';
 
-export default new Schema<ICredentials, ICredentialsModel>({
+const schema = new Schema<ICredentials, ICredentialsModel>({
   _id: {
     type: String,
   },
@@ -23,3 +24,8 @@ export default new Schema<ICredentials, ICredentialsModel>({
     unique: true,
   },
 });
+
+schema.statics.createDoc = createDoc;
+schema.statics.clearAll = clearAll;
+
+export default schema;

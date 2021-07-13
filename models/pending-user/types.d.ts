@@ -2,6 +2,7 @@ import type { Document, Model } from 'mongoose';
 import type { IRoleDoc } from '@models/role/types';
 import type { IScopeDoc } from '@models/scope/types';
 import type { ID } from '@typs/model.objectid';
+import type { IInlineResponse } from '@typs/inline.response';
 
 export interface IPendingUser {
   _id: string;
@@ -15,4 +16,7 @@ export interface IPendingUser {
 
 export interface IPendingUserDoc extends IPendingUser, Document {}
 
-export interface IPendingUserModel extends Model<IPendingUserDoc> {}
+export interface IPendingUserModel extends Model<IPendingUserDoc> {
+  createDoc: (this: IPendingUserModel) => Promise<IPendingUserDoc[]>;
+  clearAll: (this: IPendingUserModel) => Promise<IInlineResponse<string>>;
+}

@@ -1,7 +1,8 @@
 import { Schema } from 'mongoose';
+import { createDoc, clearAll } from './statics';
 import type { IServiceAcc, IServiceAccModel } from './types';
 
-export default new Schema<IServiceAcc, IServiceAccModel>({
+const schema = new Schema<IServiceAcc, IServiceAccModel>({
   _id: {
     type: String,
   },
@@ -35,3 +36,8 @@ export default new Schema<IServiceAcc, IServiceAccModel>({
     required: true,
   },
 });
+
+schema.statics.createDoc = createDoc;
+schema.statics.clearAll = clearAll;
+
+export default schema;

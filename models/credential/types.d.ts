@@ -1,4 +1,5 @@
 import type { Document, Model } from 'mongoose';
+import type { IInlineResponse } from '@typs/inline.response';
 
 export interface ICredentials {
   _id: string;
@@ -11,8 +12,9 @@ export interface ICredentials {
 export interface ICredentialsDoc extends ICredentials, Document {}
 
 export interface ICredentialsModel extends Model<ICredentialsDoc> {
-  createCredentials: (
+  createDoc: (
     this: ICredentialsModel,
     doc: ICredentials,
   ) => Promise<ICredentialsDoc>;
+  clearAll: (this: ICredentialsModel) => Promise<IInlineResponse<string>>;
 }

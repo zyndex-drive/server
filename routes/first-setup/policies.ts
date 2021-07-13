@@ -16,7 +16,7 @@ router.post('/create', (req, res) => {
   const docs: IPolicyDoc[] = [];
   const pushedStatus: boolean[] = [];
   policyMap.forEach((policy) => {
-    Policies.createPolicy(policy)
+    Policies.createDoc(policy)
       .then((doc) => {
         docs.push(doc);
         pushedStatus.push(true);
@@ -84,7 +84,7 @@ router.post('/status', (req, res) => {
 });
 
 router.post('/reset', (req, res) => {
-  Policies.clearCollection()
+  Policies.clearAll()
     .then((result) => {
       res.status(200).json(result);
     })

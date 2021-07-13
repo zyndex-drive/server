@@ -2,6 +2,7 @@ import type { Document, Model } from 'mongoose';
 import type { IFrontendDoc } from '@models/frontend/types';
 import type { ICredentialsDoc } from '@models/credential/types';
 import type { ID } from '@typs/model.objectid';
+import type { IInlineResponse } from '@typs/inline.response';
 
 export interface IScope {
   _id: string;
@@ -14,4 +15,7 @@ export interface IScope {
 
 export interface IScopeDoc extends IScope, Document {}
 
-export interface IScopeModel extends Model<IScopeDoc> {}
+export interface IScopeModel extends Model<IScopeDoc> {
+  createDoc: (this: IScopeModel) => Promise<IScopeDoc[]>;
+  clearAll: (this: IScopeModel) => Promise<IInlineResponse<string>>;
+}

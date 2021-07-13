@@ -1,7 +1,8 @@
 import { Schema } from 'mongoose';
+import { createDoc, clearAll } from './statics';
 import type { IScope, IScopeModel } from './types';
 
-export default new Schema<IScope, IScopeModel>({
+const schema = new Schema<IScope, IScopeModel>({
   _id: {
     type: String,
   },
@@ -32,3 +33,8 @@ export default new Schema<IScope, IScopeModel>({
     },
   ],
 });
+
+schema.statics.createDoc = createDoc;
+schema.statics.clearAll = clearAll;
+
+export default schema;

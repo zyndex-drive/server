@@ -2,6 +2,7 @@ import type { Document, Model } from 'mongoose';
 import type { IUserDoc } from '@models/user/types';
 import type { IFrontendDoc } from '@models/frontend/types';
 import type { ID } from '@typs/model.objectid';
+import type { IInlineResponse } from '@typs/inline.response';
 
 export interface ISession {
   _id: string;
@@ -14,4 +15,7 @@ export interface ISession {
 
 export interface ISessionDoc extends ISession, Document {}
 
-export interface ISessionModel extends Model<ISessionDoc> {}
+export interface ISessionModel extends Model<ISessionDoc> {
+  createDoc: (this: ISessionModel) => Promise<ISessionDoc[]>;
+  clearAll: (this: ISessionModel) => Promise<IInlineResponse<string>>;
+}

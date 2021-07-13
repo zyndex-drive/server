@@ -1,6 +1,7 @@
 import type { Document, Model } from 'mongoose';
 import type { ICredentialsDoc } from '@models/credential/types';
 import type { ID } from '@typs/model.objectid';
+import type { IInlineResponse } from '@typs/inline.response';
 
 export interface IServiceAcc {
   _id: string;
@@ -18,4 +19,7 @@ export interface IServiceAcc {
 
 export interface IServiceAccDoc extends IServiceAcc, Document {}
 
-export interface IServiceAccModel extends Model<IServiceAccDoc> {}
+export interface IServiceAccModel extends Model<IServiceAccDoc> {
+  createDoc: (this: IServiceAccModel) => Promise<IServiceAccDoc[]>;
+  clearAll: (this: IServiceAccModel) => Promise<IInlineResponse<string>>;
+}

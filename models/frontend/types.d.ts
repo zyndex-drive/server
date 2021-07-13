@@ -4,6 +4,7 @@ import type { ISMTPMailerDoc } from '@models/smtp-mailer/types';
 import type { IRoleDoc } from '@models/role/types';
 import type { IPolicyDoc } from '@models/policy/types';
 import type { ID } from '@typs/model.objectid';
+import type { IInlineResponse } from '@typs/inline.response';
 
 export interface IFrontend {
   _id: string;
@@ -27,4 +28,6 @@ export interface IFrontendDoc extends IFrontend, Document {}
 
 export interface IFrontendModel extends Model<IFrontendDoc> {
   getFrontendUrls: (this: IFrontendModel) => Promise<IFrontendDoc[]>;
+  createDoc: (this: IFrontendModel) => Promise<IFrontendDoc[]>;
+  clearAll: (this: IFrontendModel) => Promise<IInlineResponse<string>>;
 }

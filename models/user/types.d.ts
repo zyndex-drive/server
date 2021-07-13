@@ -3,6 +3,7 @@ import type { IRoleDoc } from '@models/role/types';
 import type { IPolicyDoc } from '@models/policy/types';
 import type { IScopeDoc } from '@models/scope/types';
 import type { ID } from '@typs/model.objectid';
+import type { IInlineResponse } from '@typs/inline.response';
 
 export interface IUser {
   _id: string;
@@ -26,4 +27,7 @@ export interface IUser {
 
 export interface IUserDoc extends IUser, Document {}
 
-export interface IUserModel extends Model<IUserDoc> {}
+export interface IUserModel extends Model<IUserDoc> {
+  createDoc: (this: IUserModel) => Promise<IUserDoc[]>;
+  clearAll: (this: IUserModel) => Promise<IInlineResponse<string>>;
+}

@@ -1,7 +1,8 @@
 import { Schema } from 'mongoose';
+import { createDoc, clearAll } from './statics';
 import type { IGlobalSettings, IGlobalSettingsModel } from './types';
 
-export default new Schema<IGlobalSettings, IGlobalSettingsModel>({
+const schema = new Schema<IGlobalSettings, IGlobalSettingsModel>({
   _id: {
     type: String,
   },
@@ -23,3 +24,8 @@ export default new Schema<IGlobalSettings, IGlobalSettingsModel>({
     enum: ['SMTPMailer', 'SMTPProvider'],
   },
 });
+
+schema.statics.createDoc = createDoc;
+schema.statics.clearAll = clearAll;
+
+export default schema;

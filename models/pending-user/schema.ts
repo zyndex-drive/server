@@ -1,7 +1,8 @@
 import { Schema } from 'mongoose';
+import { createDoc, clearAll } from './statics';
 import type { IPendingUserDoc, IPendingUserModel } from './types';
 
-export default new Schema<IPendingUserDoc, IPendingUserModel>({
+const schema = new Schema<IPendingUserDoc, IPendingUserModel>({
   _id: {
     type: String,
   },
@@ -34,3 +35,8 @@ export default new Schema<IPendingUserDoc, IPendingUserModel>({
     required: true,
   },
 });
+
+schema.statics.createDoc = createDoc;
+schema.statics.clearAll = clearAll;
+
+export default schema;

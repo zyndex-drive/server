@@ -1,7 +1,8 @@
 import { Schema } from 'mongoose';
+import { createDoc, clearAll } from './statics';
 import type { ISMTPMailer, ISMTPMailerModel } from './types';
 
-export default new Schema<ISMTPMailer, ISMTPMailerModel>({
+const schema = new Schema<ISMTPMailer, ISMTPMailerModel>({
   _id: {
     type: String,
   },
@@ -30,3 +31,8 @@ export default new Schema<ISMTPMailer, ISMTPMailerModel>({
     type: Object,
   },
 });
+
+schema.statics.createDoc = createDoc;
+schema.statics.clearAll = clearAll;
+
+export default schema;

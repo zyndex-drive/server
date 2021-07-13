@@ -1,9 +1,13 @@
 import createDocument from '@helpers/models/static/create-document';
+import clearCollection from '@helpers/models/static/clear-collection';
+
+// Types
 import type {
   IBlacklistedUser,
   IBlacklistedUserDoc,
   IBlacklistedUserModel,
 } from './types';
+import type { IInlineResponse } from '@typs/inline.response';
 
 /**
  * Create a Blacklisted User Document and Save it to Database
@@ -12,7 +16,7 @@ import type {
  * @param {IBlacklistedUser} doc - Policy Doc to be Created and Saved
  * @returns {Promise<IBlacklistedUserDoc>} Promise of Blacklisted User Doc
  */
-export function createBlacklistedUser(
+export function createDoc(
   this: IBlacklistedUserModel,
   doc: IBlacklistedUser,
 ): Promise<IBlacklistedUserDoc> {
@@ -21,4 +25,16 @@ export function createBlacklistedUser(
     IBlacklistedUserDoc,
     IBlacklistedUserModel
   >(this, doc);
+}
+
+/**
+ * Clears the Blacklisted User Collection by Deleting all the Records
+ *
+ * @param {IBlacklistedUserModel} this - Blacklisted User Model
+ * @returns {Promise<IInlineResponse<string>>} - Response whether cleared or not
+ */
+export function clearAll(
+  this: IBlacklistedUserModel,
+): Promise<IInlineResponse<string>> {
+  return clearCollection<IBlacklistedUserDoc, IBlacklistedUserModel>(this);
 }

@@ -2,6 +2,7 @@ import type { Document, Model } from 'mongoose';
 import type { IGlobalSettingsDoc } from '@models/global-setting/types';
 import type { IPolicyDoc } from '@models/policy/types';
 import type { ID } from '@typs/model.objectid';
+import type { IInlineResponse } from '@typs/inline.response';
 
 export interface IRole {
   _id: string;
@@ -22,4 +23,7 @@ export interface IRole {
 
 export interface IRoleDoc extends IRole, Document {}
 
-export interface IRoleModel extends Model<IRoleDoc> {}
+export interface IRoleModel extends Model<IRoleDoc> {
+  createDoc: (this: IRoleModel) => Promise<IRoleDoc[]>;
+  clearAll: (this: IRoleModel) => Promise<IInlineResponse<string>>;
+}

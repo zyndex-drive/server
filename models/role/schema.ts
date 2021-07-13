@@ -1,7 +1,8 @@
 import { Schema } from 'mongoose';
+import { createDoc, clearAll } from './statics';
 import type { IRole, IRoleModel } from './types';
 
-export default new Schema<IRole, IRoleModel>({
+const schema = new Schema<IRole, IRoleModel>({
   _id: {
     type: String,
   },
@@ -47,3 +48,8 @@ export default new Schema<IRole, IRoleModel>({
     },
   ],
 });
+
+schema.statics.createDoc = createDoc;
+schema.statics.clearAll = clearAll;
+
+export default schema;

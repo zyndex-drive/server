@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { createPolicy, clearCollection } from './statics';
+import { createDoc, clearAll } from './statics';
 import type { IPolicy, IPolicyModel } from './types';
 
 const schema = new Schema<IPolicy, IPolicyModel>({
@@ -26,7 +26,7 @@ const schema = new Schema<IPolicy, IPolicyModel>({
   ],
 });
 
-schema.statics.createPolicy = createPolicy;
-schema.statics.clearCollection = clearCollection;
+schema.statics.createDoc = createDoc;
+schema.statics.clearAll = clearAll;
 
 export default schema;

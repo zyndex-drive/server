@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { getFrontendUrls as staticGetFrontendUrls } from './statics';
+import { getFrontendUrls, createDoc } from './statics';
 import type { IFrontend, IFrontendModel } from './types';
 
 const schema = new Schema<IFrontend, IFrontendModel>({
@@ -51,6 +51,7 @@ const schema = new Schema<IFrontend, IFrontendModel>({
   },
 });
 
-schema.statics.getFrontendUrls = staticGetFrontendUrls;
+schema.statics.getFrontendUrls = getFrontendUrls;
+schema.statics.createDoc = createDoc;
 
 export default schema;
