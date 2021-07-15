@@ -9,6 +9,9 @@ import {
   Policies,
 } from '@models';
 
+// Response Handlers
+import { internalServerError } from '@/responses/5XX-error-response';
+
 // Type Imports
 import { Request, Response, NextFunction } from 'express';
 import { Error, Model } from 'mongoose';
@@ -100,12 +103,8 @@ function checkSetupStatus(
         });
       }
     })
-    .catch((err) => {
-      res.status(500).json({
-        success: false,
-        setup: false,
-        message: err,
-      });
+    .catch((err: Error) => {
+      internalServerError(res, err.name, err.message);
     });
 }
 
@@ -157,13 +156,10 @@ export function checkSecretPass(
         );
     }
   } else {
-    res
-      .status(500)
-      .json(
-        errorResponse(
-          500,
-          'No Secret Set in the Environment, Kindly Set in Vars',
-        ),
-      );
+    internalServerError(
+      res,
+      'Secret Error',
+      'No Secret Set in the Environment, Kindly Set in Vars',
+    );
   }
 }

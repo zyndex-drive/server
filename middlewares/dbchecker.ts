@@ -1,5 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
 import { STATES, connection } from 'mongoose';
+
+// Types
+import type { Request, Response, NextFunction } from 'express';
+import type { InternalErrorResponse } from '@responses/5XX-error-response';
 
 /**
  * Checks whether DB is Accessible by Checking the Mongoose Connection Status
@@ -11,11 +14,12 @@ import { STATES, connection } from 'mongoose';
 function dbChecker(req: Request, res: Response, next: NextFunction): void {
   const mongoState = connection.readyState;
   if ([0, 2, 3].includes(mongoState)) {
-    res.status(500).json({
+    const result: InternalErrorResponse = {
       status: 500,
+      error: `Database is ${STATES[mongoState]}`,
       message: 'Internal Server Error Related to Database',
-      mongoStatus: STATES[mongoState],
-    });
+    };
+    res.status(500).json(result);
   } else {
     res.locals.dbcheck = true;
     next();

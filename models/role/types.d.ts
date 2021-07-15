@@ -24,6 +24,6 @@ export interface IRole {
 export interface IRoleDoc extends IRole, Document {}
 
 export interface IRoleModel extends Model<IRoleDoc> {
-  createDoc: (this: IRoleModel) => Promise<IRoleDoc[]>;
+  createDoc: (this: IRoleModel, doc: IRole) => Promise<IRoleDoc>;
   clearAll: (this: IRoleModel) => Promise<IInlineResponse<string>>;
 }

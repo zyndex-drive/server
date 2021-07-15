@@ -1,5 +1,12 @@
-import { Request, Response, NextFunction } from 'express';
+// Models
 import { Frontends } from '@models';
+
+// Response Handler
+import { internalServerError } from '@responses/5XX-error-response';
+
+// Types
+import type { Error as MongoError } from 'mongoose';
+import type { Request, Response, NextFunction } from 'express';
 
 /**
  * Checks for the Origin Header and assigns the Cors Header if it is Validated
@@ -24,12 +31,8 @@ function corsMiddleware(req: Request, res: Response, next: NextFunction): void {
       res.setHeader('Access-Control-Allow-Credentials', 'true');
       next();
     })
-    .catch((error) => {
-      res.status(500).json({
-        status: 500,
-        message: 'Internal Server Error Related to Database',
-        error,
-      });
+    .catch((error: MongoError) => {
+      internalServerError(res, error.name, error.message);
     });
 }
 

@@ -1,26 +1,22 @@
 // Initialization
 import express from 'express';
 
-// Response Handlers
-import { internalServerError } from '@responses/5XX-error-response';
-
 // Model
-import { Policies } from '@models';
+import { Roles } from '@models';
 
 // Types
-import type { Error as MongoError } from 'mongoose';
-import type { IPolicyDoc } from '@models/policy/types';
+import { IRoleDoc } from '@models/role/types';
 
 // Others
-import { map as policyMap } from '@setup/policies';
+import { map as rolesMap } from '@setup/roles';
 
 const router = express.Router();
 
 router.post('/add', (req, res) => {
-  const docs: IPolicyDoc[] = [];
+  const docs: IRoleDoc[] = [];
   const pushedStatus: boolean[] = [];
-  policyMap.forEach((policy) => {
-    Policies.createDoc(policy)
+  rolesMap.forEach((role) => {
+    Roles.createDoc(role)
       .then((doc) => {
         docs.push(doc);
         pushedStatus.push(true);
@@ -41,54 +37,62 @@ router.post('/add', (req, res) => {
     res.status(200).json({
       success: true,
       status: 200,
-      message: 'Successfully Posted all the Policy Details to Database',
+      message: 'Successfully Posted all the Roles Details to Database',
       docs,
     });
   }
 });
 
 router.post('/status', (req, res) => {
-  Policies.find({})
-    .then((policies) => {
-      const totalPolicies = policyMap.length;
+  Roles.find({})
+    .then((roles) => {
+      const totalRoles = rolesMap.length;
       const ids = {
-        map: policyMap.map((policy) => policy._id),
-        toCompare: policies.map((policy) => policy._id),
+        map: rolesMap.map((role) => role._id),
+        toCompare: roles.map((role) => role._id),
       };
       const presentStatus: boolean[] = [];
-      ids.map.forEach((policy) => {
-        presentStatus.push(ids.toCompare.includes(policy));
+      ids.map.forEach((role) => {
+        presentStatus.push(ids.toCompare.includes(role));
       });
       const truthy = presentStatus.filter((status) => status).length;
-      if (truthy === totalPolicies) {
+      if (truthy === totalRoles) {
         res.status(200).json({
           status: 200,
           success: true,
           present: true,
-          totalPolicies,
+          totalRoles,
         });
       } else {
         res.status(200).json({
           status: 200,
           success: true,
           present: false,
-          totalPolicies,
-          remainingPolicies: totalPolicies - truthy,
+          totalRoles,
+          remainingRoles: totalRoles - truthy,
         });
       }
     })
-    .catch((error: MongoError) => {
-      internalServerError(res, error.name, error.message);
+    .catch((error) => {
+      res.status(500).json({
+        status: 500,
+        success: false,
+        message: 'Error Occured while Getting Policies data from Database',
+        error,
+      });
     });
 });
 
 router.post('/reset', (req, res) => {
-  Policies.clearAll()
+  Roles.clearAll()
     .then((result) => {
       res.status(200).json(result);
     })
-    .catch((error: MongoError) => {
-      internalServerError(res, error.name, error.message);
+    .catch((error) => {
+      res.status(500).json({
+        success: false,
+        error,
+      });
     });
 });
 
