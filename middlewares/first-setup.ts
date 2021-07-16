@@ -14,7 +14,7 @@ import { internalServerError } from '@/responses/5XX-error-response';
 
 // Type Imports
 import { Request, Response, NextFunction } from 'express';
-import { Error, Model } from 'mongoose';
+import { Error as MongoError, Model } from 'mongoose';
 import { map as roleMap } from '@setup/roles';
 import { map as policyMap } from '@setup/policies';
 
@@ -63,7 +63,7 @@ async function checkDBPresent<T, U extends Model<T>>(
           reject(new Error('Unknown Error while Querying Collection'));
         }
       })
-      .catch((e: Error) => {
+      .catch((e: MongoError) => {
         reject(new Error(`${e.name}: ${e.message}`));
       });
   });
@@ -103,7 +103,7 @@ function checkSetupStatus(
         });
       }
     })
-    .catch((err: Error) => {
+    .catch((err: MongoError) => {
       internalServerError(res, err.name, err.message);
     });
 }

@@ -1,27 +1,44 @@
+import sendResponse from './send-response';
+
+// Types
 import type { Response } from 'express';
 
-export interface InternalErrorResponse {
+export interface IErrorResponse {
   status: number;
+  errorname: string;
   message: string;
-  error: string;
 }
 
 /**
- * Sends a Internal Error Response to the Client
+ * Send a Internal Server Error Response to the Client
  *
  * @param {Response} res - Express Response Object
- * @param {string} [message] Message to be Sent along with 5XX Response (Optional)
- * @param {string} [error] - Error Data to be Sent (Optional)
+ * @param {string} [errorname] Message to be Sent along with 5XX Response (Optional)
+ * @param {string} [message] - Error Data to be Sent (Optional)
  */
 export function internalServerError(
   res: Response,
+  errorname?: string,
   message?: string,
-  error?: string,
 ): void {
-  const result: InternalErrorResponse = {
+  const result: IErrorResponse = {
     status: 500,
-    message: message ? message : 'Internal Server Error',
-    error: error ? error : 'Unknown',
+    errorname: errorname ? errorname : 'Internal Server Error',
+    message: message ? message : 'Unknown',
   };
-  res.status(500).json(result);
+  sendResponse<IErrorResponse>(res, 500, result);
+}
+
+/**
+ * Send a Bad Gateway Error Response to Client
+ *
+ * @param {Response} res - Express Response Object
+ */
+export function badGateway(res: Response): void {
+  const result: IErrorResponse = {
+    status: 502,
+    errorname: 'Bad Gateway',
+    message: 'Received an Invalid response from the upstream server.',
+  };
+  sendResponse<IErrorResponse>(res, 502, result);
 }

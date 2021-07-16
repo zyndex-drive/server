@@ -1,11 +1,15 @@
 // Initialization
 import express from 'express';
 
+// Response Handlers
+import { internalServerError } from '@responses/5XX-error-response';
+
 // Model
 import { Roles } from '@models';
 
 // Types
-import { IRoleDoc } from '@models/role/types';
+import type { Error as MongoError } from 'mongoose';
+import type { IRoleDoc } from '@models/role/types';
 
 // Others
 import { map as rolesMap } from '@setup/roles';
@@ -73,13 +77,8 @@ router.post('/status', (req, res) => {
         });
       }
     })
-    .catch((error) => {
-      res.status(500).json({
-        status: 500,
-        success: false,
-        message: 'Error Occured while Getting Policies data from Database',
-        error,
-      });
+    .catch((error: MongoError) => {
+      internalServerError(res, error.name, error.message);
     });
 });
 
@@ -88,11 +87,8 @@ router.post('/reset', (req, res) => {
     .then((result) => {
       res.status(200).json(result);
     })
-    .catch((error) => {
-      res.status(500).json({
-        success: false,
-        error,
-      });
+    .catch((error: MongoError) => {
+      internalServerError(res, error.name, error.message);
     });
 });
 
