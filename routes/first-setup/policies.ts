@@ -2,7 +2,8 @@
 import express from 'express';
 
 // Response Handlers
-import { internalServerError } from '@responses/5XX-error-response';
+import { okResponse } from '@responses/2XX-response';
+import { internalServerError } from '@responses/5XX-response';
 
 // Model
 import { Policies } from '@models';
@@ -10,6 +11,7 @@ import { Policies } from '@models';
 // Types
 import type { Error as MongoError } from 'mongoose';
 import type { IPolicyDoc } from '@models/policy/types';
+import type { IInlineResponse } from '@typs/inline.response';
 
 // Others
 import { map as policyMap } from '@setup/policies';
@@ -31,19 +33,16 @@ router.post('/add', (req, res) => {
       });
   });
   if (pushedStatus.includes(false)) {
-    res.status(500).json({
-      success: false,
-      message:
-        'Some Internal Error Occured, Not all Records have been Added to Database',
-      docs,
-    });
+    internalServerError(
+      res,
+      'Database',
+      'Some Internal Error Occured, Not all Records have been Added to Database',
+    );
   } else {
-    res.status(200).json({
-      success: true,
-      status: 200,
-      message: 'Successfully Posted all the Policy Details to Database',
-      docs,
-    });
+    okResponse<string>(
+      res,
+      'Successfully Posted all the Policy Details to Database',
+    );
   }
 });
 
@@ -61,20 +60,18 @@ router.post('/status', (req, res) => {
       });
       const truthy = presentStatus.filter((status) => status).length;
       if (truthy === totalPolicies) {
-        res.status(200).json({
-          status: 200,
-          success: true,
+        const result = {
           present: true,
           totalPolicies,
-        });
+        };
+        okResponse<typeof result>(res, result);
       } else {
-        res.status(200).json({
-          status: 200,
-          success: true,
+        const result = {
           present: false,
           totalPolicies,
           remainingPolicies: totalPolicies - truthy,
-        });
+        };
+        okResponse<typeof result>(res, result);
       }
     })
     .catch((error: MongoError) => {
@@ -85,7 +82,7 @@ router.post('/status', (req, res) => {
 router.post('/reset', (req, res) => {
   Policies.clearAll()
     .then((result) => {
-      res.status(200).json(result);
+      okResponse<IInlineResponse<string>>(res, result);
     })
     .catch((error: MongoError) => {
       internalServerError(res, error.name, error.message);

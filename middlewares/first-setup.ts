@@ -10,7 +10,8 @@ import {
 } from '@models';
 
 // Response Handlers
-import { internalServerError } from '@/responses/5XX-error-response';
+import { internalServerError } from '@responses/5XX-response';
+import { badRequest, unAuthorized } from '@responses/4XX-response';
 
 // Type Imports
 import { Request, Response, NextFunction } from 'express';
@@ -123,10 +124,6 @@ export function checkSecretPass(
   next: NextFunction,
 ): void {
   const secret = process.env.SECRET;
-  const errorResponse = (status: number, message: string) => ({
-    status,
-    message,
-  });
   if (secret) {
     const headerPass = req.headers['x-secret-pass'];
     if (headerPass && typeof headerPass === 'string') {
@@ -136,24 +133,13 @@ export function checkSecretPass(
         res.locals.secretcheck = true;
         next();
       } else {
-        res
-          .status(403)
-          .json(
-            errorResponse(
-              403,
-              'Header Secret is Not Matching with the Environment Secret, Kindly Send the Correct Pass',
-            ),
-          );
+        unAuthorized(
+          res,
+          'Header Secret is Not Matching with the Environment Secret, Kindly Send the Correct Pass',
+        );
       }
     } else {
-      res
-        .status(403)
-        .json(
-          errorResponse(
-            403,
-            "Secret is not Passed in the Headers, This Route Requires this 'x-secret-pass' header to be sent",
-          ),
-        );
+      badRequest(res, 'x-secret-pass', 'Request Headers');
     }
   } else {
     internalServerError(

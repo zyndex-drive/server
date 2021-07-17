@@ -2,7 +2,7 @@
 import express from 'express';
 
 // Response Handlers
-import { internalServerError } from '@responses/5XX-error-response';
+import { internalServerError } from '@/responses/5XX-response';
 
 // Model
 import { Roles } from '@models';
