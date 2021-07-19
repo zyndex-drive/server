@@ -47,32 +47,9 @@ router.post('/add', (req, res) => {
 });
 
 router.post('/status', (req, res) => {
-  Policies.find({})
-    .then((policies) => {
-      const totalPolicies = policyMap.length;
-      const ids = {
-        map: policyMap.map((policy) => policy._id),
-        toCompare: policies.map((policy) => policy._id),
-      };
-      const presentStatus: boolean[] = [];
-      ids.map.forEach((policy) => {
-        presentStatus.push(ids.toCompare.includes(policy));
-      });
-      const truthy = presentStatus.filter((status) => status).length;
-      if (truthy === totalPolicies) {
-        const result = {
-          present: true,
-          totalPolicies,
-        };
-        okResponse<typeof result>(res, result);
-      } else {
-        const result = {
-          present: false,
-          totalPolicies,
-          remainingPolicies: totalPolicies - truthy,
-        };
-        okResponse<typeof result>(res, result);
-      }
+  Policies.mapCheck()
+    .then((result) => {
+      okResponse<IInlineResponse<boolean>>(res, result);
     })
     .catch((error: MongoError) => {
       internalServerError(res, error.name, error.message);

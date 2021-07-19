@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { createDoc, clearAll } from './statics';
+import { createDoc, clearAll, mapCheck } from './statics';
 import type { IRole, IRoleModel } from './types';
 
 const schema = new Schema<IRole, IRoleModel>({
@@ -51,5 +51,6 @@ const schema = new Schema<IRole, IRoleModel>({
 
 schema.statics.createDoc = createDoc;
 schema.statics.clearAll = clearAll;
+schema.statics.mapCheck = mapCheck;
 
 export default schema;
