@@ -17,7 +17,7 @@ export interface IFrontend {
         flag: boolean | string | number;
       },
     ];
-    default_mailer: ID<ISMTPMailerDoc>;
+    default_mailer?: ID<ISMTPMailerDoc>;
     disallowed_roles: ID<IRoleDoc>[];
     allowed_policies: ID<IPolicyDoc>[];
     disallowed_policies: ID<IPolicyDoc>[];

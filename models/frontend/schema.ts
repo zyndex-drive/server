@@ -31,6 +31,7 @@ const schema = new Schema<IFrontend, IFrontendModel>({
     default_mailer: {
       type: Schema.Types.ObjectId,
       ref: 'SMTPMailer',
+      required: false,
     },
     disallowed_roles: {
       type: Schema.Types.ObjectId,
