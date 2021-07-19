@@ -5,8 +5,10 @@ import express from 'express';
 import policies from './policies';
 import roles from './roles';
 
+// Router
 const router = express.Router();
 
+// Assign Sub Routes to Setup Route
 router.use('/policies', policies);
 router.use('/roles', roles);
 
