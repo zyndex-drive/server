@@ -29,6 +29,11 @@
     "eslint-plugin-node",
     "eslint-plugin-promise"
   ],
+  "settings": {
+    "node": {
+      "tryExtensions": [".js", ".json", ".node", ".ts", ".d.ts"]
+    }
+  },
   "rules": {
     "linebreak-style": "off",
     "new-cap": "off",
