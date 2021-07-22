@@ -4,9 +4,9 @@
   "description": "Backend Server for Handling Zyndex Frontend",
   "main": "app.js",
   "scripts": {
-    "test": "ts-mocha --paths tests/**/*.spec.ts",
-    "build": "tsc && tsc-alias",
-    "dev": "nodemon -r tsconfig-paths/register app.ts"
+    "test": "set NODE_ENV=test && ts-mocha --paths tests/**/*.spec.ts",
+    "dev": "set NODE_ENV=development && nodemon -r tsconfig-paths/register app.ts",
+    "build": "set NODE_ENV=production && tsc && tsc-alias"
   },
   "repository": {
     "type": "git",
@@ -60,6 +60,7 @@
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "@typescript-eslint/parser": "^4.28.0",
     "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
     "eslint": "^7.29.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-nodejs": "^2.0.0",
