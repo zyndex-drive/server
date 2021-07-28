@@ -5,6 +5,9 @@ import express from 'express';
 import { checkSecretPass } from '@/middlewares/first-setup';
 import setupCheck from '@middlewares/first-setup';
 
+// Response Handlers
+import { okResponse } from '@responses/2XX-response';
+
 // Routes
 import firstSetup from './first-setup';
 import policies from './policies';
@@ -20,7 +23,7 @@ router.use('/roles', roles);
 
 // Default Get
 router.get('/', (req, res) => {
-  res.send('Init the Server');
+  okResponse<string>(res, 'Server Successfully Started');
 });
 
 export default router;
