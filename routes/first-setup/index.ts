@@ -5,6 +5,7 @@ import express from 'express';
 import policies from './policies';
 import roles from './roles';
 import credentials from './credentials';
+import endpointServer from '@/helpers/express/other-handlers/endpoint-server';
 
 // Router
 const router = express.Router();
@@ -13,5 +14,9 @@ const router = express.Router();
 router.use('/policies', policies);
 router.use('/roles', roles);
 router.use('/credentials', credentials);
+
+// Respond with all the Endpoints in the Route
+router.get('/endpoints', (req, res) => endpointServer(res, router));
+router.post('/endpoints', (req, res) => endpointServer(res, router));
 
 export default router;

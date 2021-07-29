@@ -2,8 +2,8 @@
 import express from 'express';
 
 // Response Handlers
-import { okResponse } from '@responses/2XX-response';
-import { internalServerError } from '@responses/5XX-response';
+import { okResponse } from '@/helpers/express/response-handlers/2XX-response';
+import { internalServerError } from '@/helpers/express/response-handlers/5XX-response';
 
 // Model
 import { Roles } from '@models';
@@ -15,6 +15,7 @@ import type { IInlineResponse } from '@typs/inline.response';
 
 // Others
 import { map as rolesMap } from '@setup/roles';
+import endpointServer from '@/helpers/express/other-handlers/endpoint-server';
 
 // Router
 const router = express.Router();
@@ -67,5 +68,9 @@ router.post('/reset', (req, res) => {
       internalServerError(res, error.name, error.message);
     });
 });
+
+// Respond with all the Endpoints in this Route
+router.get('/endpoints', (req, res) => endpointServer(res, router));
+router.post('/endpoints', (req, res) => endpointServer(res, router));
 
 export default router;

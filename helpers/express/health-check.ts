@@ -1,4 +1,4 @@
-import db from './db';
+import db from '../db';
 import type { Server } from 'http';
 import { createTerminus, TerminusOptions } from '@godaddy/terminus';
 

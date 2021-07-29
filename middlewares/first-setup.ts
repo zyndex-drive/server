@@ -10,8 +10,11 @@ import {
 } from '@models';
 
 // Response Handlers
-import { internalServerError } from '@responses/5XX-response';
-import { badRequest, unAuthorized } from '@responses/4XX-response';
+import { internalServerError } from '@/helpers/express/response-handlers/5XX-response';
+import {
+  badRequest,
+  unAuthorized,
+} from '@/helpers/express/response-handlers/4XX-response';
 
 // Type Imports
 import { Request, Response, NextFunction } from 'express';

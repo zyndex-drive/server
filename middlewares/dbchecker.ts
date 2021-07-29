@@ -2,7 +2,7 @@ import { STATES, connection } from 'mongoose';
 
 // Types
 import type { Request, Response, NextFunction } from 'express';
-import type { IErrorResponse } from '@responses/5XX-response';
+import type { IErrorResponse } from '@/helpers/express/response-handlers/5XX-response';
 
 /**
  * Checks whether DB is Accessible by Checking the Mongoose Connection Status

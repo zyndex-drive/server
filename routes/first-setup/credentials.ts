@@ -2,9 +2,9 @@
 import express from 'express';
 
 // Response Handlers
-import { okResponse } from '@responses/2XX-response';
-import { badRequest } from '@responses/4XX-response';
-import { internalServerError } from '@responses/5XX-response';
+import { okResponse } from '@/helpers/express/response-handlers/2XX-response';
+import { badRequest } from '@/helpers/express/response-handlers/4XX-response';
+import { internalServerError } from '@/helpers/express/response-handlers/5XX-response';
 
 // Model
 import { Credentials } from '@models';
@@ -17,6 +17,7 @@ import isundefined from '@helpers/isundefined';
 import type { Error as MongoError } from 'mongoose';
 import type { ICredentials, ICredentialsDoc } from '@models/credential/types';
 import { IInlineResponse } from '@/types/inline.response';
+import endpointServer from '@/helpers/express/other-handlers/endpoint-server';
 
 // Router
 const router = express.Router();
@@ -62,5 +63,9 @@ router.post('/reset', (req, res) => {
       internalServerError(res, error.name, error.message);
     });
 });
+
+// Respond with all the Endpoints in this Route
+router.get('/endpoints', (req, res) => endpointServer(res, router));
+router.post('/endpoints', (req, res) => endpointServer(res, router));
 
 export default router;

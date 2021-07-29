@@ -2,7 +2,7 @@
 import { Frontends } from '@models';
 
 // Response Handler
-import { internalServerError } from '@responses/5XX-response';
+import { internalServerError } from '@/helpers/express/response-handlers/5XX-response';
 
 // Types
 import type { Error as MongoError } from 'mongoose';

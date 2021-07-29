@@ -6,10 +6,10 @@ import server from '@/server';
 
 // Database
 import mongoose, { Error } from 'mongoose';
-import db from '@helpers/db';
+import db from '@/helpers/db';
 
 // Health Check Service
-import healthChecker from '@helpers/health-check';
+import healthChecker from '@/helpers/express/health-check';
 
 // Load ENV Variables to the Process
 dotenv.config();

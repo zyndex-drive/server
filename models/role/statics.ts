@@ -1,5 +1,5 @@
-import createDocument from '@helpers/models/static/create-document';
-import clearCollection from '@helpers/models/static/clear-collection';
+import createDocument from '@/helpers/db/models/static/create-document';
+import clearCollection from '@/helpers/db/models/static/clear-collection';
 import { map as rolesMap } from '@setup/roles';
 
 // Types
