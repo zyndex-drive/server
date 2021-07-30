@@ -7,7 +7,8 @@
     "test": "set NODE_ENV=test && ts-mocha --paths tests/**/*.spec.ts -r 'tests/require'",
     "stest": "set NODE_ENV=test && ts-mocha --paths --require mocha-steps",
     "dev": "set NODE_ENV=development && nodemon --ignore tests/** --ignore test-results/** -r tsconfig-paths/register app.ts",
-    "build": "set NODE_ENV=production && tsc && tsc-alias"
+    "build": "set NODE_ENV=production && tsc && tsc-alias",
+    "serve": "set NODE_ENV=production && cd dist && npm serve"
   },
   "repository": {
     "type": "git",
