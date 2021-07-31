@@ -4,6 +4,7 @@
   "description": "Backend Server for Handling Zyndex Frontend",
   "main": "app.js",
   "scripts": {
+    "release": "standard-version",
     "test": "set NODE_ENV=test && ts-mocha --paths tests/**/*.spec.ts -r 'tests/require'",
     "stest": "set NODE_ENV=test && ts-mocha --paths --require mocha-steps",
     "dev": "set NODE_ENV=development && nodemon --ignore tests/** --ignore test-results/** -r tsconfig-paths/register app.ts",
@@ -75,6 +76,7 @@
     "jsdoc": "^3.6.7",
     "mocha": "^9.0.2",
     "mocha-steps": "^1.3.0",
+    "standard-version": "^9.3.1",
     "ts-mocha": "^8.0.0",
     "tsc-alias": "^1.3.7",
     "tsconfig-paths": "^3.9.0",
