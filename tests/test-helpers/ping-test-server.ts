@@ -1,14 +1,14 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import requester from './requester';
+import { getRequester } from './requester';
 
 chai.use(chaiHttp);
 chai.should();
 
 export default function pingTestServer(done) {
   const { URL } = process.env;
-  return requester(URL, '/', function (err, response) {
-    if (!err) {
+  return getRequester(URL, '/', function (err, response) {
+    if (!err && response.status === 200) {
       response.should.have.status(200);
       response.should.be.a('object');
       response.body.should.have.a.property('status').to.be.eql(200);

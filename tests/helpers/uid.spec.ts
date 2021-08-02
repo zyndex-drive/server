@@ -1,7 +1,7 @@
 import uid, { shortuid } from '../../helpers/uid';
 
 describe('Testing Unique ID Generator', () => {
-  it('Generate a UID String with MD5 (No Prefex)', (done) => {
+  it('Generate a UID String with MD5 (No Prefix)', (done) => {
     uid('supercoool', 'md5')
       .then((string) => {
         string.should.be.a('string');
@@ -24,7 +24,7 @@ describe('Testing Unique ID Generator', () => {
       .catch(done);
   });
 
-  it('Generate a UID String with SHA1 (No Prefex)', (done) => {
+  it('Generate a UID String with SHA1 (No Prefix)', (done) => {
     uid('supercoool', 'sha1')
       .then((string) => {
         const hashRegex = /([0-9a-f]{6})([0-9a-f]{34})/;
