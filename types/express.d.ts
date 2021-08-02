@@ -1,5 +1,6 @@
 declare module 'http' {
   interface IncomingHttpHeaders {
-    'X-SECRET-PASS'?: string;
+    'x-secret-pass'?: string;
+    'x-local-dev-pass'?: string;
   }
 }
