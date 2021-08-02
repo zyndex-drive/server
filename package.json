@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "prepare": "husky install",
+    "stage": "git add",
     "commit": "cz",
     "release": "standard-version",
     "test": "set NODE_ENV=test && ts-mocha --paths tests/**/*.spec.ts -r 'tests/require'",
