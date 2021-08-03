@@ -34,11 +34,7 @@ router.post('/add', (req, res) => {
           client_secret,
           email,
         };
-        const newCredentialDoc: ICredentialsDoc = new Credentials(
-          newCredential,
-        );
-        newCredentialDoc
-          .save()
+        Credentials.createDoc(newCredential)
           .then((savedCreds) => {
             okResponse<ICredentialsDoc>(res, savedCreds);
           })
