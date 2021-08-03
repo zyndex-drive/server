@@ -1,6 +1,6 @@
 {
   "name": "zyndex-server",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Backend Server for Handling Zyndex Frontend",
   "main": "app.js",
   "scripts": {
