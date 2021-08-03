@@ -38,3 +38,18 @@ export function unAuthorized(res: Response, message: string): void {
   };
   sendResponse<IErrorResponse>(res, 400, result);
 }
+
+/**
+ * Send a 404 Not Found Response to Client
+ *
+ * @param {Response} res - Express Response Object
+ * @param {string} message - Message to be Sent along with Not Found Response
+ */
+export function notFound(res: Response, message: string): void {
+  const result: IErrorResponse = {
+    status: 404,
+    errorname: 'Not Found',
+    message,
+  };
+  sendResponse<IErrorResponse>(res, 400, result);
+}
