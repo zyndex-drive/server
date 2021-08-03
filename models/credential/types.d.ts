@@ -17,4 +17,5 @@ export interface ICredentialsModel extends Model<ICredentialsDoc> {
     doc: ICredentials,
   ) => Promise<ICredentialsDoc>;
   clearAll: (this: ICredentialsModel) => Promise<IInlineResponse<string>>;
+  checkID: (this: ICredentialsModel, id: string) => Promise<boolean>;
 }
