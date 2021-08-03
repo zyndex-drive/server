@@ -7,15 +7,15 @@ import type { IInlineResponse } from '@typs/inline.response';
 export interface IScope {
   _id: string;
   name: string;
-  added_at: Date;
+  added_at: number;
   drive_id: string;
-  disallowed_frontends: ID<IFrontendDoc>[];
+  disallowed_frontends?: ID<IFrontendDoc>[];
   related_to: ID<ICredentialsDoc>[];
 }
 
 export interface IScopeDoc extends IScope, Document {}
 
 export interface IScopeModel extends Model<IScopeDoc> {
-  createDoc: (this: IScopeModel) => Promise<IScopeDoc[]>;
+  createDoc: (this: IScopeModel, doc: IScope) => Promise<IScopeDoc>;
   clearAll: (this: IScopeModel) => Promise<IInlineResponse<string>>;
 }
