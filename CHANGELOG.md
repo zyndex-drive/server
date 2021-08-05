@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/zyndex-drive/server/compare/v0.1.4...v0.1.5) (2021-08-05)
+
+
+### Others
+
+* **package.json:** add mocha-html-writer ([5ed22e0](https://github.com/zyndex-drive/server/commit/5ed22e00ccc5c02724897a76b9457d2c88015d8c))
+
+
+### Tests
+
+* **test-report:** add a test report generator with mocha ([9af6f03](https://github.com/zyndex-drive/server/commit/9af6f0335d34ee2f23a45b834891c061d86a7816))
+
 ### [0.1.4](https://github.com/zyndex-drive/server/compare/v0.1.3...v0.1.4) (2021-08-03)
 
 
