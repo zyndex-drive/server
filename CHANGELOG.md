@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6-1](https://github.com/zyndex-drive/server/compare/v0.1.6-0...v0.1.6-1) (2021-08-06)
+
+
+### Features
+
+* **models/tokens:** introduce tokens collection for managing auth tokens ([fdfa176](https://github.com/zyndex-drive/server/commit/fdfa1764fb448729b5e23d8fb247c467bf00a010))
+
+
+### Bug Fixes
+
+* **models/serviceaccounts:** fix type ([4bd4a67](https://github.com/zyndex-drive/server/commit/4bd4a676fc0dd34e10ebc890191ef04da8d2a099))
+
+
+### Others
+
+* **verionrc:** change versionrc file to json file type ([2b551a3](https://github.com/zyndex-drive/server/commit/2b551a367721a5b2b2a08bba2ac9459c943a09ac))
+
+
+### Code Refactoring
+
+* **helpers/classes:** remove class based helpers ([0b3040e](https://github.com/zyndex-drive/server/commit/0b3040e8b48a442a645f2d4d9c7993196acece80))
+
 ### [0.1.6-0](https://github.com/zyndex-drive/server/compare/v0.1.5...v0.1.6-0) (2021-08-06)
 
 ### [0.1.5](https://github.com/zyndex-drive/server/compare/v0.1.4...v0.1.5) (2021-08-05)
