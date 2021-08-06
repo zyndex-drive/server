@@ -5,6 +5,7 @@ export { default as Scopes } from './scope';
 export { default as PendingUsers } from './pending-user';
 export { default as BlacklistUsers } from './blacklisted-user';
 export { default as Credentials } from './credential';
+export { default as Tokens } from './tokens';
 export { default as Roles } from './role';
 export { default as Policies } from './policy';
 export { default as Frontends } from './frontend';
