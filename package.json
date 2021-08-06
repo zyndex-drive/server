@@ -1,13 +1,14 @@
 {
   "name": "zyndex-server",
-  "version": "0.1.5",
+  "version": "0.1.6-0",
   "description": "Backend Server for Handling Zyndex Frontend",
   "main": "app.js",
   "scripts": {
     "prepare": "husky install",
     "stage": "git add",
     "commit": "cz",
-    "release": "standard-version",
+    "release": "standard-version --sign",
+    "prerelease": "standard-version --prerelease --sign",
     "test": "set NODE_ENV=test && ts-mocha --paths tests/**/*.spec.ts -r 'tests/require' --reporter mocha-simple-html-reporter --reporter-options output=test-report.html",
     "stest": "set NODE_ENV=test && ts-mocha --paths -r 'tests/require'",
     "dev": "set NODE_ENV=development && nodemon --ignore tests/** -r tsconfig-paths/register app.ts",
