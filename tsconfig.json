@@ -48,8 +48,8 @@
     "baseUrl": "./" /* Base directory to resolve non-absolute module names. */,
     "paths": {
       "@/*": ["./*"],
-      "@classes/*": ["./helpers/classes/*"],
-      "@classes": ["./helpers/classes"],
+      "@externals/*": ["./helpers/externals/*"],
+      "@externals": ["./helpers/externals"],
       "@helpers/*": ["./helpers/*"],
       "@helpers": ["./helpers"],
       "@middlewares/*": ["./middlewares/*"],
