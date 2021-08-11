@@ -23,8 +23,8 @@ import endpointServer from '@/helpers/express/other-handlers/endpoint-server';
 const router = express.Router();
 
 router.post('/add', (req, res) => {
-  const { alias, client_id, client_secret, email } = req.body;
-  if (!isundefined([alias, client_id, client_secret, email])) {
+  const { alias, client_id, client_secret, redirect_uri, email } = req.body;
+  if (!isundefined([alias, client_id, client_secret, redirect_uri, email])) {
     idGenerator(client_id, 'md5', 'creds')
       .then((newId) => {
         const newCredential: ICredentials = {
@@ -32,6 +32,7 @@ router.post('/add', (req, res) => {
           alias,
           client_id,
           client_secret,
+          redirect_uri,
           email,
         };
         Credentials.createDoc(newCredential)

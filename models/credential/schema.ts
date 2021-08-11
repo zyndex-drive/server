@@ -18,6 +18,10 @@ const schema = new Schema<ICredentials, ICredentialsModel>({
     type: String,
     required: true,
   },
+  redirect_uri: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
