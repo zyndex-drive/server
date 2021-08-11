@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6-2](https://github.com/zyndex-drive/server/compare/v0.1.6-1...v0.1.6-2) (2021-08-11)
+
+
+### Features
+
+* **google-oauth:** add google oauth generator handler for express ([e8a1b74](https://github.com/zyndex-drive/server/commit/e8a1b7455945f4937d1134010b5a3cc9a744f435))
+* **routes/setup/token:** add router for first-setup/token routes ([f65ac4b](https://github.com/zyndex-drive/server/commit/f65ac4b7395efcb28dfeffcf83e570c523c2c6a0))
+* **routes/setup:** add scope, token to main router config ([6983373](https://github.com/zyndex-drive/server/commit/6983373fa4b66dab3b18a552d366cbb7fb96b19f))
+
+
+### Bug Fixes
+
+* **models/credentials:** fix credentials type, add redirect_uri as required ([cac81dc](https://github.com/zyndex-drive/server/commit/cac81dc3e0692c36a03f5daaa590f18ee3e6d325))
+* **package:** fix prepare script ([c4a5064](https://github.com/zyndex-drive/server/commit/c4a5064de92fe99b5ab31e20dc0c216f8747729d))
+
+
+### CI
+
+* **husky:** add linting for commit message ([80e4f05](https://github.com/zyndex-drive/server/commit/80e4f0555f7b111a2c4276d291f587d00c045c69))
+
+
+### Code Refactoring
+
+* **helpers/axios:** refactor axios export command to a single line ([1eaf420](https://github.com/zyndex-drive/server/commit/1eaf420c70975dc9213442de11b5ebc3ac2052dc))
+
+
+### Others
+
+* **tsconfig.json:** fix directory paths for module resolution ([1976f95](https://github.com/zyndex-drive/server/commit/1976f95765ee1d29a3d85bde47227614dd5bb9f2))
+
 ### [0.1.6-1](https://github.com/zyndex-drive/server/compare/v0.1.6-0...v0.1.6-1) (2021-08-06)
 
 
