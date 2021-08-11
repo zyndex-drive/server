@@ -4,7 +4,7 @@
   "description": "Backend Server for Handling Zyndex Frontend",
   "main": "app.js",
   "scripts": {
-    "prepare": "husky install && husky add .husky/commit-msg \"npx --no-install commitlint --edit '$1'\"",
+    "prepare": "husky install && husky add .husky/commit-msg \"npx --no-install commitlint --edit \"$1\"\"",
     "stage": "git add",
     "commit": "cz",
     "release": "standard-version --sign",
