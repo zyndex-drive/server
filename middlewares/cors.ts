@@ -1,4 +1,18 @@
-import { Request, Response, NextFunction } from 'express';
+// Models
+import { Frontends } from '@models';
+
+// Response Handler
+import {
+  unAuthorized,
+  badRequest,
+} from '@/helpers/express/response-handlers/4XX-response';
+import { internalServerError } from '@/helpers/express/response-handlers/5XX-response';
+
+// Types
+import type { Error as MongoError } from 'mongoose';
+import type { Request, Response, NextFunction } from 'express';
+
+const { NODE_ENV } = process.env;
 
 /**
  * Checks for the Origin Header and assigns the Cors Header if it is Validated
@@ -8,21 +22,55 @@ import { Request, Response, NextFunction } from 'express';
  * @param {NextFunction} next - Express Next Function
  */
 function corsMiddleware(req: Request, res: Response, next: NextFunction): void {
-  const allowedDomains: Array<string> = process.env['FRONT']
-    ? JSON.parse(process.env['FRONT'])
-    : [];
-
-  const { origin } = req.headers;
-  if (origin && allowedDomains.indexOf(origin) > -1) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
+  if (NODE_ENV === 'development') {
+    const secret = process.env.LOCAL_SECRET;
+    if (secret) {
+      const headerPass = req.headers['x-local-dev-pass'];
+      if (headerPass) {
+        if (secret === headerPass) {
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+          res.setHeader(
+            'Access-Control-Allow-Headers',
+            'x-local-dev-pass,x-secret-pass,X-Requested-With,content-type, Accept',
+          );
+          next();
+        } else {
+          unAuthorized(
+            res,
+            'Local Dev Secret is not Matching with the sent pass',
+          );
+        }
+      } else {
+        badRequest(res, 'x-local-dev-pass', 'response headers');
+      }
+    } else {
+      internalServerError(
+        res,
+        'Secret Error',
+        'Project not Configured for Local Development',
+      );
+    }
+  } else {
+    Frontends.getFrontendUrls()
+      .then((domains) => {
+        const allowedDomains = domains.map((dom) => dom.domain);
+        const { origin } = req.headers;
+        if (origin && allowedDomains.indexOf(origin) > -1) {
+          res.setHeader('Access-Control-Allow-Origin', origin);
+        }
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+        res.setHeader(
+          'Access-Control-Allow-Headers',
+          'x-local-dev-pass,x-secret-pass,X-Requested-With,content-type, Accept',
+        );
+        res.setHeader('Access-Control-Allow-Credentials', 'true');
+        next();
+      })
+      .catch((error: MongoError) => {
+        internalServerError(res, error.name, error.message);
+      });
   }
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-Requested-With,content-type, Accept',
-  );
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  next();
 }
 
 export default corsMiddleware;
