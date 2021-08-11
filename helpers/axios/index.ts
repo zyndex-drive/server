@@ -1,3 +1,1 @@
-import interceptor from './interceptor';
-
-export default interceptor;
+export { default } from './interceptor';
