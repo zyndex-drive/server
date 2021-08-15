@@ -22,6 +22,11 @@ const schema = new Schema<IToken, ITokenModel>({
     type: String,
     enum: ['Credential', 'ServiceAccount'],
   },
+  expires_at: {
+    type: Date,
+    default: Date.now,
+    required: true,
+  },
   website: {
     type: String,
     required: true,
