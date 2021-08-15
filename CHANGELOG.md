@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-0](https://github.com/zyndex-drive/server/compare/v0.1.6-2...v0.2.0-0) (2021-08-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **models/tokens:** This Commit Changes the way of handling models
+
+### Features
+
+* **drive/scopes:** add drive scopes ([e1ce604](https://github.com/zyndex-drive/server/commit/e1ce604709a7f0ceccd564a780c7b30395dc30c4))
+* **google/api:** add api.ts for centrally handling api routes ([72a4909](https://github.com/zyndex-drive/server/commit/72a49097d006257c66e0907a64145301b750983b))
+* **google:** add function for revoking google oauth token ([8e93b7d](https://github.com/zyndex-drive/server/commit/8e93b7dcae997114e1a5ebb41b7897006664b7e6))
+* **google:** add function for validating oauth token (to be done) ([6ec5e22](https://github.com/zyndex-drive/server/commit/6ec5e220008f56c37a9454471ed2cc9f38e01328))
+* **google:** introduce complete google oauth flow ([0a6d8d8](https://github.com/zyndex-drive/server/commit/0a6d8d872fe0f5158c50eb0c8061a46a0d76f735))
+* **google:** introduce refresh and access token generation helpers ([1b344bd](https://github.com/zyndex-drive/server/commit/1b344bd8e54950d17ba8f5e70a7c367f838cbcd2))
+* **google:** write types for google oauth functions ([8ac4f78](https://github.com/zyndex-drive/server/commit/8ac4f78589e61b9b0d24c43232bfc8120be9eff6))
+* **models/tokens:** introduce token collection ([e8c3344](https://github.com/zyndex-drive/server/commit/e8c3344217396d20ade6bd3cdbb18f79850b91a4))
+* **routes/tokens:** introducing token endpoint for token operations ([3bdcf6f](https://github.com/zyndex-drive/server/commit/3bdcf6ffcaafad74c8e93637f897cdfe2a10984d))
+
+
+### Others
+
+* **package:** add scripts for major, minor and patch releases ([7ea2b16](https://github.com/zyndex-drive/server/commit/7ea2b1690588ffac91f700e9cdaa6f9b8baf31d9))
+
+
+### Code Refactoring
+
+* **google/endpoints:** remove google endpoints file ([5d63ea8](https://github.com/zyndex-drive/server/commit/5d63ea848745442aea52320ef33da93efcb7a18d))
+* **routes/first-setup:** move tokens endpoint to main route ([ed3a25f](https://github.com/zyndex-drive/server/commit/ed3a25ff17aefdfe4f8799fb567829933a37a158))
+
 ### [0.1.6-2](https://github.com/zyndex-drive/server/compare/v0.1.6-1...v0.1.6-2) (2021-08-11)
 
 

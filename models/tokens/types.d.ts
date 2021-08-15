@@ -10,8 +10,9 @@ export interface IToken {
   type: string;
   related_to: ID<ICredentialsDoc> | ID<IServiceAccDoc> | 'other';
   ref_model: string;
+  expires_at: number;
   website: string;
-  additional_tokens: [
+  additional_tokens?: [
     {
       type: string;
       token: string;
@@ -22,6 +23,6 @@ export interface IToken {
 export interface ITokenDoc extends IToken, Document {}
 
 export interface ITokenModel extends Model<ITokenDoc> {
-  createDoc: (this: ITokenModel) => Promise<ITokenDoc[]>;
+  createDoc: (this: ITokenModel, doc: IToken) => Promise<ITokenDoc>;
   clearAll: (this: ITokenModel) => Promise<IInlineResponse<string>>;
 }

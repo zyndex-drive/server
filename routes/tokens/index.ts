@@ -10,8 +10,13 @@ import driveScopes from '@helpers/externals/drive/scopes';
 // Router
 const router = express.Router();
 
-router.use('/auth', (req, res) => {
-  generateOauth(req, res, 'supercool', driveScopes);
+router.get('/auth', (req, res) => {
+  generateOauth(
+    req,
+    res,
+    'creds@eac4ebc910f3a8bbc80230c3f329b752',
+    driveScopes,
+  );
 });
 
 export default router;
