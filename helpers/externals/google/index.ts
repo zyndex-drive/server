@@ -1,1 +1,1 @@
-export { default as endpoints } from './endpoints';
+export { default as api } from './api';
