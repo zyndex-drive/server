@@ -10,7 +10,7 @@ import { internalServerError } from '@/helpers/express/response-handlers/5XX-res
 import { Credentials } from '@models';
 
 // Others
-import idGenerator from '@helpers/uid';
+import { objectID } from '@helpers/uid';
 import isundefined from '@helpers/isundefined';
 
 // Types
@@ -25,26 +25,21 @@ const router = express.Router();
 router.post('/add', (req, res) => {
   const { alias, client_id, client_secret, redirect_uri, email } = req.body;
   if (!isundefined([alias, client_id, client_secret, redirect_uri, email])) {
-    idGenerator(client_id, 'md5', 'creds')
-      .then((newId) => {
-        const newCredential: ICredentials = {
-          _id: newId,
-          alias,
-          client_id,
-          client_secret,
-          redirect_uri,
-          email,
-        };
-        Credentials.createDoc(newCredential)
-          .then((savedCreds) => {
-            okResponse<ICredentialsDoc>(res, savedCreds);
-          })
-          .catch((err: MongoError) => {
-            internalServerError(res, err.name, err.message);
-          });
+    const newID = objectID('c');
+    const newCredential: ICredentials = {
+      _id: newID,
+      alias,
+      client_id,
+      client_secret,
+      redirect_uri,
+      email,
+    };
+    Credentials.createDoc(newCredential)
+      .then((savedCreds) => {
+        okResponse<ICredentialsDoc>(res, savedCreds);
       })
-      .catch((err: string) => {
-        internalServerError(res, 'ID Generator', err);
+      .catch((err: MongoError) => {
+        internalServerError(res, err.name, err.message);
       });
   } else {
     badRequest(res, 'alias, client_id, client_secret, email', 'Request Body');
