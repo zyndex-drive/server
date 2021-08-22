@@ -6,18 +6,19 @@
  */
 
 import type { IPolicy } from '@models/policy/types';
+import { Types } from 'mongoose';
 
-const IDPREFIX = 'usr@add-';
+const objectID = (num: string) => Types.ObjectId(`p-user-a@${num}`);
 
 export const viewer_add: Readonly<IPolicy> = {
-  _id: `${IDPREFIX}0001`,
+  _id: objectID('001'),
   name: 'Add Viewer',
   message: 'Enable Accepting of Requests for Viewers and its Delegates',
   global_flag: true,
 };
 
 export const content_mgr_add: Readonly<IPolicy> = {
-  _id: `${IDPREFIX}0002`,
+  _id: objectID('002'),
   name: 'Add Content Managers',
   message:
     'Enable Accepting of Requests for Content Managers and its Delegates',
@@ -25,21 +26,21 @@ export const content_mgr_add: Readonly<IPolicy> = {
 };
 
 export const mod_add: Readonly<IPolicy> = {
-  _id: `${IDPREFIX}0003`,
+  _id: objectID('003'),
   name: 'Add Moderators',
   message: 'Enable Accepting of Requests for Moderators and its Delegates',
   global_flag: true,
 };
 
 export const mgr_add: Readonly<IPolicy> = {
-  _id: `${IDPREFIX}0004`,
+  _id: objectID('004'),
   name: 'Add Managers',
   message: 'Enable Accepting of Requests for Managers and its Delegates',
   global_flag: true,
 };
 
 export const self_content_mgr_add: Readonly<IPolicy> = {
-  _id: `${IDPREFIX}0005`,
+  _id: objectID('005'),
   name: 'Promote to Content Managers',
   message:
     'Enable Promoting of Users to Content Managers without their Request and its Delegates',
@@ -47,7 +48,7 @@ export const self_content_mgr_add: Readonly<IPolicy> = {
 };
 
 export const self_mod_add: Readonly<IPolicy> = {
-  _id: `${IDPREFIX}0006`,
+  _id: objectID('006'),
   name: 'Promote to Moderators',
   message:
     'Enable Promoting of Users to Moderators without their Request and its Delegates',
@@ -55,7 +56,7 @@ export const self_mod_add: Readonly<IPolicy> = {
 };
 
 export const self_mgr_add: Readonly<IPolicy> = {
-  _id: `${IDPREFIX}0007`,
+  _id: objectID('007'),
   name: 'Promote to Manager',
   message:
     'Enable Promoting of Users to Managers without their Request and its Delegates',
