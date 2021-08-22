@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-1](https://github.com/zyndex-drive/server/compare/v0.2.0-0...v0.2.0-1) (2021-08-22)
+
+
+### Features
+
+* **google-oauth:** finish google oauth setup completely ([a39ca10](https://github.com/zyndex-drive/server/commit/a39ca109556acc69c520f19b7ca9e5bc8bb20756))
+* **helpers/uid:** add method for generating mongodb reference ids ([ab6d10e](https://github.com/zyndex-drive/server/commit/ab6d10efd850c88e3dfc59fd4dc091bb8b6a818e))
+
+
+### Bug Fixes
+
+* **models:** fix models schema from mongo error for _id ([7de01a1](https://github.com/zyndex-drive/server/commit/7de01a150c6b6d5aa09611323317169ef447e4da))
+* **types/objectid:** fix objectid ([80bfc48](https://github.com/zyndex-drive/server/commit/80bfc485ff1fc4d2b59ff53b9eaaf76276b1ddf2))
+
+
+### Code Refactoring
+
+* **routes:** refactor all routes to use new mongo id generator ([9ec17da](https://github.com/zyndex-drive/server/commit/9ec17da5295d899d5086001801a5969708a6afdf))
+* **setup-files:** refactor all setup objects to use mongo id generator ([c5f2cfc](https://github.com/zyndex-drive/server/commit/c5f2cfc2b52d6976010a0f0797e385e3dfd0f1f7))
+
 ## [0.2.0-0](https://github.com/zyndex-drive/server/compare/v0.1.6-2...v0.2.0-0) (2021-08-15)
 
 
