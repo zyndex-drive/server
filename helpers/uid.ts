@@ -1,14 +1,13 @@
 import { customAlphabet } from 'nanoid';
-import md5 from 'md5';
-import sha1 from 'sha1';
+import { Types } from 'mongoose';
 
 const ALPHANUMS =
   '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 const SYMBOLS = '&%^()!@#$*<>?/][}{<>,.|:;';
 const CUSTOM_ALPHA = `${ALPHANUMS}${SYMBOLS}`;
 
-const LONG_LENGTH = 20;
-const SHORT_LENGTH = 10;
+const LONG_LENGTH = 10;
+const SHORT_LENGTH = 8;
 
 const longid = customAlphabet(CUSTOM_ALPHA, LONG_LENGTH);
 const shortid = customAlphabet(ALPHANUMS, SHORT_LENGTH);
@@ -16,33 +15,41 @@ const shortid = customAlphabet(ALPHANUMS, SHORT_LENGTH);
 /**
  * Generates a Long Unique ID with the Given Hash Algorithm
  *
- * @param {string} seeder - String to be Hashed along with ID
- * @param {string} algo - Hash Algorithm to be Used (Accepts md5 or sha1 only). Defaults to md5
  * @param {string} prefix - Prefix to be Added before the UID
  * @returns {string} uid - Long UID
  */
-export default (
-  seeder: string,
-  algo?: string,
-  prefix?: string,
-): Promise<string> =>
-  new Promise<string>((resolve, reject) => {
+function longID(prefix?: string): string {
+  const prefixCheck = prefix ? (prefix.length > 1 ? false : true) : true;
+  if (prefixCheck) {
     try {
       const id = longid();
-      const timeStamp = Date.now();
       const pre = prefix ? `${prefix}@` : '';
-      let hash: string;
-      if (algo && algo === 'sha1') {
-        hash = sha1(`${seeder}-${timeStamp}-${id}`);
-      } else {
-        hash = md5(`${seeder}-${timeStamp}-${id}`);
-      }
-      const uid = `${pre}${hash}`;
-      resolve(uid);
+      const uid = `${pre}${id}`;
+      return uid;
     } catch {
-      reject(new Error('Unable to Generate UID'));
+      throw new Error('Unable to Generate UID');
     }
-  });
+  } else {
+    throw new Error('Prefix Cant be more than one Character');
+  }
+}
+
+export default longID;
+
+/**
+ * Generates a Mongo Reference ID
+ *
+ * @param {string} prefix - prefix to be attached
+ * @returns {Types.ObjectId} - Mongo Object ID
+ */
+export function objectID(prefix?: string): Types.ObjectId {
+  try {
+    const id = Types.ObjectId(longID(prefix));
+    return id;
+  } catch (e) {
+    throw new Error(e);
+  }
+}
 
 /**
  * Generates a Short Unique ID

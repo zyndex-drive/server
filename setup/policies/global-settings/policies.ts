@@ -6,11 +6,12 @@
  */
 
 import { IPolicy } from '@models/policy/types';
+import { Types } from 'mongoose';
 
-const IDPREFIX = 'globals@';
+const objectID = (num: string) => Types.ObjectId(`pol-sett@${num}`);
 
 export const global_settings_edit: Readonly<IPolicy> = {
-  _id: `${IDPREFIX}0001`,
+  _id: objectID('001'),
   name: 'Edit Global Settings',
   message: 'Enable Editing of Global Settings of the Server',
   global_flag: true,

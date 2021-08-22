@@ -4,7 +4,7 @@ import type { IRole, IRoleModel } from './types';
 
 const schema = new Schema<IRole, IRoleModel>({
   _id: {
-    type: String,
+    type: Schema.Types.ObjectId,
   },
   name: {
     type: String,

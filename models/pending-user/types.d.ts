@@ -1,11 +1,11 @@
-import type { Document, Model } from 'mongoose';
+import type { Document, Model, Types } from 'mongoose';
 import type { IRoleDoc } from '@models/role/types';
 import type { IScopeDoc } from '@models/scope/types';
 import type { ID } from '@typs/model.objectid';
 import type { IInlineResponse } from '@typs/inline.response';
 
 export interface IPendingUser {
-  _id: string;
+  _id: Types.ObjectId;
   name: string;
   email: string;
   message: string;

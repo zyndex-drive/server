@@ -1,10 +1,10 @@
-import type { Document, Model } from 'mongoose';
+import type { Document, Model, Types } from 'mongoose';
 import type { ISMTPProviderDoc } from '@models/smtp-provider/types';
 import type { ID } from '@typs/model.objectid';
 import type { IInlineResponse } from '@typs/inline.response';
 
 export interface ISMTPMailer {
-  _id: string;
+  _id: Types.ObjectId;
   name: string;
   email: string;
   password: string;
@@ -16,6 +16,9 @@ export interface ISMTPMailer {
 export interface ISMTPMailerDoc extends ISMTPMailer, Document {}
 
 export interface ISMTPMailerModel extends Model<ISMTPMailerDoc> {
-  createDoc: (this: ISMTPMailerModel) => Promise<ISMTPMailerDoc[]>;
+  createDoc: (
+    this: ISMTPMailerModel,
+    doc: ISMTPMailer,
+  ) => Promise<ISMTPMailerDoc[]>;
   clearAll: (this: ISMTPMailerModel) => Promise<IInlineResponse<string>>;
 }

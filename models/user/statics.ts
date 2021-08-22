@@ -2,7 +2,7 @@ import createDocument from '@/helpers/db/models/static/create-document';
 import clearCollection from '@/helpers/db/models/static/clear-collection';
 
 // Types
-import { IUser, IUserDoc, IUserModel } from './types';
+import type { IUser, IUserDoc, IUserModel } from './types';
 import type { IInlineResponse } from '@typs/inline.response';
 
 /**

@@ -3,7 +3,7 @@ import { Tokens, Credentials } from '@models';
 
 // Others
 import api from './api';
-import uid from '@helpers/uid';
+import { objectID } from '@helpers/uid';
 import { generateRefreshToken, generateAccessToken } from './generate-token';
 import stringizeScopes from './stringize-scope';
 
@@ -68,19 +68,15 @@ function redirectUser(res: Response, id: string, scopes: TGooGScope[]): void {
  * @param {IGoogTokenResponse} accessToken - Access Token Response
  * @returns {Promise<ITokenDoc[]>} - Saved Token Documents
  */
-async function handleTokenSaving(
+function handleTokenSaving(
   credentials: ICredentialsDoc,
-  refreshToken: IGoogTokenResponse,
+  refreshToken: Required<IGoogTokenResponse>,
   accessToken: IGoogTokenResponse,
 ): Promise<ITokenDoc[]> {
-  try {
+  return new Promise<ITokenDoc[]>((resolve, reject) => {
     const now = Date.now();
-    const uid1 =
-      refreshToken.refresh_token &&
-      (await uid(refreshToken.refresh_token, 'sha1', 'token'));
-    const uid2 = await uid(accessToken.access_token, 'sha1', 'token');
-    return new Promise<ITokenDoc[]>((resolve, reject) => {
-      if (refreshToken.refresh_token && uid1) {
+    Promise.all([objectID('t'), objectID('t')])
+      .then(([uid1, uid2]) => {
         const tokensArr: IToken[] = [
           {
             _id: uid1,
@@ -101,30 +97,19 @@ async function handleTokenSaving(
             website: 'google.com',
           },
         ];
-        const tokenDocs: ITokenDoc[] = [];
-        tokensArr.forEach((token) => {
-          Tokens.createDoc(token)
-            .then((tokendoc) => {
-              tokenDocs.push(tokendoc);
-            })
-            .catch((err: MongoError) => {
-              reject(
-                new Error(
-                  `Error While Saving Token in the Database - ${err.name}: ${err.message}`,
-                ),
-              );
-            });
-        });
-        resolve(tokenDocs);
-      } else {
-        reject(
-          new Error('Refresh Token not found in the Response, Kindly Retry'),
-        );
-      }
-    });
-  } catch {
-    throw new Error('Error Occured while Generating a UID');
-  }
+        Tokens.insertMany(tokensArr)
+          .then((tokenDocs) => {
+            resolve(tokenDocs);
+          })
+          .catch((error: MongoError) => {
+            reject(new Error(`${error.name}: ${error.message}`));
+          });
+      })
+      .catch((e) => {
+        console.log(e);
+        reject(new Error('Error Occured while Generating a UID'));
+      });
+  });
 }
 
 /**
@@ -166,6 +151,7 @@ function handleUserAuthorization(
             throw new Error('No Refresh Token Found in Response, Kindly Retry');
           }
         } catch (e) {
+          console.log(e);
           internalServerError(res, 'Token Generation', e);
         }
       } else {

@@ -1,8 +1,8 @@
-import type { Document, Model } from 'mongoose';
+import type { Document, Model, Types } from 'mongoose';
 import type { IInlineResponse } from '@typs/inline.response';
 
 export interface ICredentials {
-  _id: string;
+  _id: Types.ObjectId;
   alias: string;
   client_id: string;
   client_secret: string;
@@ -18,5 +18,5 @@ export interface ICredentialsModel extends Model<ICredentialsDoc> {
     doc: ICredentials,
   ) => Promise<ICredentialsDoc>;
   clearAll: (this: ICredentialsModel) => Promise<IInlineResponse<string>>;
-  checkID: (this: ICredentialsModel, id: string) => Promise<boolean>;
+  checkID: (this: ICredentialsModel, id: Types.ObjectId) => Promise<boolean>;
 }

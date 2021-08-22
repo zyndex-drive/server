@@ -1,3 +1,3 @@
-import type { Document } from 'mongoose';
+import type { Document, Types } from 'mongoose';
 
-export type ID<T extends Document<T>> = T['_id'] | T;
+export type ID<T extends Document<T>> = T['_id'] | Types.ObjectId | T;

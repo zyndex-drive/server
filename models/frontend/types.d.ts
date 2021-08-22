@@ -1,4 +1,4 @@
-import type { Document, Model } from 'mongoose';
+import type { Document, Model, Types } from 'mongoose';
 import type { IGlobalSettingsDoc } from '@models/global-setting/types';
 import type { ISMTPMailerDoc } from '@models/smtp-mailer/types';
 import type { IRoleDoc } from '@models/role/types';
@@ -7,7 +7,7 @@ import type { ID } from '@typs/model.objectid';
 import type { IInlineResponse } from '@typs/inline.response';
 
 export interface IFrontend {
-  _id: string;
+  _id: Types.ObjectId;
   domain: string;
   name: string;
   settings: {

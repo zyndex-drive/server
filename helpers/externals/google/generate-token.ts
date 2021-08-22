@@ -47,13 +47,13 @@ function constructTokenRequestURL(
  * @param {string} scopes - Space Delimited Google API Scopes
  * @returns {Promise<IGoogTokenResponse>} - Returns Token Response
  */
-function tokenRequest(
+function tokenRequest<TokenType>(
   type: string,
   credentials: ICredentialsDoc,
   code: string,
   scopes?: string,
-): Promise<IGoogTokenResponse> {
-  return new Promise<IGoogTokenResponse>((resolve, reject) => {
+): Promise<TokenType> {
+  return new Promise<TokenType>((resolve, reject) => {
     const { url, params } = constructTokenRequestURL(
       credentials,
       type,
@@ -85,14 +85,19 @@ function tokenRequest(
  * @param {ICredentialsDoc} credentials - Credentials Document from Database
  * @param {string} scopes - Space Delimited Google API Scopes
  * @param {string} code - Authorization Code Received after User Authorization
- * @returns {Promise<IGoogTokenResponse>} - Refresh Token Response
+ * @returns {Promise<Required<IGoogTokenResponse>>} - Refresh Token Response
  */
 export function generateRefreshToken(
   credentials: ICredentialsDoc,
   scopes: string,
   code: string,
-): Promise<IGoogTokenResponse> {
-  return tokenRequest('refresh_token', credentials, code, scopes);
+): Promise<Required<IGoogTokenResponse>> {
+  return tokenRequest<Required<IGoogTokenResponse>>(
+    'refresh_token',
+    credentials,
+    code,
+    scopes,
+  );
 }
 
 /**
@@ -106,5 +111,5 @@ export function generateAccessToken(
   credentials: ICredentialsDoc,
   code: string,
 ): Promise<IGoogTokenResponse> {
-  return tokenRequest('access_token', credentials, code);
+  return tokenRequest<IGoogTokenResponse>('access_token', credentials, code);
 }

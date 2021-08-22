@@ -4,7 +4,7 @@ import type { IPendingUserDoc, IPendingUserModel } from './types';
 
 const schema = new Schema<IPendingUserDoc, IPendingUserModel>({
   _id: {
-    type: String,
+    type: Schema.Types.ObjectId,
   },
   name: {
     type: String,

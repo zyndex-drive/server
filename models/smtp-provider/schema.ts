@@ -4,7 +4,7 @@ import type { ISMTPProvider, ISMTPProviderModel } from './types';
 
 const schema = new Schema<ISMTPProvider, ISMTPProviderModel>({
   _id: {
-    type: String,
+    type: Schema.Types.ObjectId,
   },
   name: {
     type: String,

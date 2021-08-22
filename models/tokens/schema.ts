@@ -4,7 +4,7 @@ import type { IToken, ITokenModel } from './types';
 
 const schema = new Schema<IToken, ITokenModel>({
   _id: {
-    type: String,
+    type: Schema.Types.ObjectId,
   },
   token: {
     type: String,

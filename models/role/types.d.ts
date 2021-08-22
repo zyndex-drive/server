@@ -1,11 +1,11 @@
-import type { Document, Model } from 'mongoose';
+import type { Document, Model, Types } from 'mongoose';
 import type { IGlobalSettingsDoc } from '@models/global-setting/types';
 import type { IPolicyDoc } from '@models/policy/types';
 import type { ID } from '@typs/model.objectid';
 import type { IInlineResponse } from '@typs/inline.response';
 
 export interface IRole {
-  _id: string;
+  _id: Types.ObjectId;
   name: string;
   alias: string;
   type: string & ('main' | 'sub');

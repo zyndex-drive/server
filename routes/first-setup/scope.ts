@@ -14,7 +14,7 @@ import { Scopes, Credentials } from '@models';
 
 // Others
 import endpointServer from '@/helpers/express/other-handlers/endpoint-server';
-import idGenerator from '@helpers/uid';
+import { objectID } from '@helpers/uid';
 import isundefined from '@/helpers/isundefined';
 
 // Types
@@ -31,25 +31,20 @@ router.post('/add', (req, res) => {
     Credentials.checkID(credential_id)
       .then((idCheck) => {
         if (idCheck) {
-          idGenerator(drive_id, 'md5', 'scope')
-            .then((newId) => {
-              const newScope: IScope = {
-                _id: newId,
-                name,
-                added_at: Date.now(),
-                drive_id,
-                related_to: [credential_id],
-              };
-              Scopes.createDoc(newScope)
-                .then((savedDoc) => {
-                  okResponse<IScopeDoc>(res, savedDoc);
-                })
-                .catch((err: MongoError) => {
-                  internalServerError(res, err.name, err.message);
-                });
+          const newID = objectID('scope');
+          const newScope: IScope = {
+            _id: newID,
+            name,
+            added_at: Date.now(),
+            drive_id,
+            related_to: [credential_id],
+          };
+          Scopes.createDoc(newScope)
+            .then((savedDoc) => {
+              okResponse<IScopeDoc>(res, savedDoc);
             })
-            .catch((err) => {
-              internalServerError(res, 'ID Generator', err);
+            .catch((err: MongoError) => {
+              internalServerError(res, err.name, err.message);
             });
         } else {
           notFound(

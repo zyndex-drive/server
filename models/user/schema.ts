@@ -4,7 +4,7 @@ import type { IUser, IUserModel } from './types';
 
 const schema = new Schema<IUser, IUserModel>({
   _id: {
-    type: String,
+    type: Schema.Types.ObjectId,
   },
   name: {
     type: String,
