@@ -4,7 +4,7 @@ import type { IScope, IScopeModel } from './types';
 
 const schema = new Schema<IScope, IScopeModel>({
   _id: {
-    type: String,
+    type: Schema.Types.ObjectId,
   },
   name: {
     type: String,

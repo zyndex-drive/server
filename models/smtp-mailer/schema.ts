@@ -4,7 +4,7 @@ import type { ISMTPMailer, ISMTPMailerModel } from './types';
 
 const schema = new Schema<ISMTPMailer, ISMTPMailerModel>({
   _id: {
-    type: String,
+    type: Schema.Types.ObjectId,
   },
   name: {
     type: String,

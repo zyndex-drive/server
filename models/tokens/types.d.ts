@@ -1,11 +1,11 @@
-import type { Document, Model } from 'mongoose';
+import type { Document, Model, Types } from 'mongoose';
 import type { ID } from '@typs/model.objectid';
 import type { IInlineResponse } from '@typs/inline.response';
 import type { ICredentialsDoc } from '@models/credential/types';
 import type { IServiceAccDoc } from '@models/service-account/types';
 
 export interface IToken {
-  _id: string;
+  _id: Types.ObjectId;
   token: string;
   type: string;
   related_to: ID<ICredentialsDoc> | ID<IServiceAccDoc> | 'other';

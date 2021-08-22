@@ -1,4 +1,4 @@
-import type { Document, Model } from 'mongoose';
+import type { Document, Model, Types } from 'mongoose';
 import type { ISMTPMailerDoc } from '@models/smtp-mailer/types';
 import type { ISMTPProviderDoc } from '@models/smtp-provider/types';
 import type { ID } from '@typs/model.objectid';
@@ -7,7 +7,7 @@ import type { IInlineResponse } from '@typs/inline.response';
 type OTHER = boolean | string | number;
 
 export interface IGlobalSettings {
-  _id: string;
+  _id: Types.ObjectId;
   name: string;
   message: string;
   global_flag: OTHER | ID<ISMTPMailerDoc> | ID<ISMTPProviderDoc>;

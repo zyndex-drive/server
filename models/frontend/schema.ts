@@ -4,7 +4,7 @@ import type { IFrontend, IFrontendModel } from './types';
 
 const schema = new Schema<IFrontend, IFrontendModel>({
   _id: {
-    type: String,
+    type: Schema.Types.ObjectId,
   },
   domain: {
     type: String,

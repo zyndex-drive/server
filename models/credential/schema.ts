@@ -4,7 +4,7 @@ import type { ICredentials, ICredentialsModel } from './types';
 
 const schema = new Schema<ICredentials, ICredentialsModel>({
   _id: {
-    type: String,
+    type: Schema.Types.ObjectId,
   },
   alias: {
     type: String,

@@ -4,7 +4,7 @@ import type { IPolicy, IPolicyModel } from './types';
 
 const schema = new Schema<IPolicy, IPolicyModel>({
   _id: {
-    type: String,
+    type: Schema.Types.ObjectId,
   },
   name: {
     type: String,

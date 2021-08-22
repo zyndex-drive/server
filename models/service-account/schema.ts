@@ -4,7 +4,7 @@ import type { IServiceAcc, IServiceAccModel } from './types';
 
 const schema = new Schema<IServiceAcc, IServiceAccModel>({
   _id: {
-    type: String,
+    type: Schema.Types.ObjectId,
   },
   project_id: {
     type: String,

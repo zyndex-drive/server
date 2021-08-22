@@ -2,6 +2,7 @@ import createDocument from '@/helpers/db/models/static/create-document';
 import clearCollection from '@/helpers/db/models/static/clear-collection';
 
 // Types
+import { Types } from 'mongoose';
 import { ICredentials, ICredentialsDoc, ICredentialsModel } from './types';
 import type { IInlineResponse } from '@typs/inline.response';
 import type { Error as MongoError } from 'mongoose';
@@ -39,10 +40,13 @@ export function clearAll(
  * Checks the Credentials Collection for the Given ID
  *
  * @param {ICredentialsModel} this - Credentials Model
- * @param {string} id - Credential ID String
+ * @param {Types.ObjectId} id - Credential ID String
  * @returns {Promise<boolean>} - Response whether true or false
  */
-export function checkID(this: ICredentialsModel, id: string): Promise<boolean> {
+export function checkID(
+  this: ICredentialsModel,
+  id: Types.ObjectId,
+): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
     this.findById(id)
       .then((creds: ICredentialsDoc | null) => {

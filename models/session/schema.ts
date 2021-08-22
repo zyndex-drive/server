@@ -4,7 +4,7 @@ import type { ISession, ISessionModel } from './types';
 
 const schema = new Schema<ISession, ISessionModel>({
   _id: {
-    type: String,
+    type: Schema.Types.ObjectId,
   },
   ip: {
     type: String,

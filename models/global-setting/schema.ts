@@ -4,7 +4,7 @@ import type { IGlobalSettings, IGlobalSettingsModel } from './types';
 
 const schema = new Schema<IGlobalSettings, IGlobalSettingsModel>({
   _id: {
-    type: String,
+    type: Schema.Types.ObjectId,
   },
   name: {
     type: String,
