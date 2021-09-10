@@ -1,6 +1,6 @@
 {
   "name": "zyndex-server",
-  "version": "0.2.0-1",
+  "version": "0.2.0-2",
   "description": "Backend Server for Handling Zyndex Frontend",
   "main": "app.js",
   "scripts": {
@@ -50,6 +50,7 @@
     "mongoose": "^5.12.15",
     "nanoid": "^3.1.23",
     "nodemailer": "^6.6.2",
+    "query-string": "^7.0.1",
     "sha1": "^1.1.1",
     "x-xss-protection": "^2.0.0"
   },

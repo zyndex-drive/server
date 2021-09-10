@@ -4,12 +4,16 @@ import { Tokens, Credentials } from '@models';
 // Others
 import api from './api';
 import { objectID } from '@helpers/uid';
+import { encrypt, decrypt } from '@helpers/crypto';
 import { generateRefreshToken, generateAccessToken } from './generate-token';
 import stringizeScopes from './stringize-scope';
 
 // Response Handlers
 import { okResponse } from '@helpers/express/response-handlers/2XX-response';
-import { notFound } from '@helpers/express/response-handlers/4XX-response';
+import {
+  badRequest,
+  notFound,
+} from '@helpers/express/response-handlers/4XX-response';
 import { internalServerError } from '@helpers/express/response-handlers/5XX-response';
 
 // Types
@@ -24,17 +28,19 @@ import type { IGoogTokenResponse, TGooGScope } from './types';
  *
  * @param {ICredentialsDoc} credentials - Credentials Document from Database
  * @param {TGooGScope[]} scopes - Array of Google Oauth Scopes
+ * @param {string} state - State of the app to be passed
  * @returns {string} - Google Oauth User Consent URL
  */
 function constructOauthURL(
   credentials: ICredentialsDoc,
   scopes: TGooGScope[],
+  state: string,
 ): string {
   const encodedClient_id = encodeURIComponent(credentials.client_id);
   const encodedRedirect_uri = encodeURIComponent(credentials.redirect_uri);
   const scopeParam = stringizeScopes(scopes);
   const encodedScope_param = encodeURIComponent(scopeParam);
-  const params = `client_id=${encodedClient_id}&redirect_uri=${encodedRedirect_uri}&response_type=code&scope=${encodedScope_param}&access_type=offline`;
+  const params = `client_id=${encodedClient_id}&redirect_uri=${encodedRedirect_uri}&response_type=code&scope=${encodedScope_param}&access_type=offline&state=${state}`;
   return `${api.authorize}?${params}`;
 }
 
@@ -49,7 +55,10 @@ function redirectUser(res: Response, id: string, scopes: TGooGScope[]): void {
   Credentials.findById(id)
     .then((credentials: ICredentialsDoc | null) => {
       if (credentials) {
-        const url = constructOauthURL(credentials, scopes);
+        const state = encrypt<ICredentialsDoc['_id']>({
+          data: credentials._id,
+        });
+        const url = constructOauthURL(credentials, scopes, state);
         res.redirect(url);
       } else {
         notFound(res, 'Credential ID Not found in DB, Kindly Recheck');
@@ -168,20 +177,21 @@ function handleUserAuthorization(
  *
  * @param {Request} req - Express Request Object
  * @param {Response} res - Express Response Object
- * @param {string} id - Credentials ID
  * @param {TGooGScope[]} scopes - Google API Scopes
  */
 export default function (
   req: Request,
   res: Response,
-  id: string,
   scopes: TGooGScope[],
 ): void {
-  const { code } = req.query;
-  if (!code) {
-    redirectUser(res, id, scopes);
-  } else {
+  const { creds, code, state } = req.query;
+  if (!code && creds) {
+    redirectUser(res, String(creds), scopes);
+  } else if (code && state) {
     const stringizedCode = String(code);
-    handleUserAuthorization(res, id, stringizedCode, scopes);
+    const credID = decrypt<string>(String(state));
+    handleUserAuthorization(res, credID.data, stringizedCode, scopes);
+  } else {
+    badRequest(res, 'creds', 'Query Parameters');
   }
 }

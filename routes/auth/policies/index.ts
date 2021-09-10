@@ -2,7 +2,7 @@
 import express from 'express';
 
 // Response Handlers
-import { okResponse } from '@/helpers/express/response-handlers/2XX-response';
+import { okResponse } from '@helpers/express/response-handlers/2XX-response';
 
 // Others
 import { map as policyMap } from '@setup/policies';
