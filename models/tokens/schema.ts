@@ -27,6 +27,7 @@ const schema = new Schema<IToken, ITokenModel>({
     default: Date.now,
     required: true,
   },
+  scopes: [{ type: String, required: true }],
   website: {
     type: String,
     required: true,

@@ -4,15 +4,17 @@ import type { ICredentialsDoc } from '@models/credential/types';
 
 export interface IGetAllTokens {
   success: boolean;
+  error?: unknown;
   credential?: ICredentialsDoc;
   serviceAcc?: IServiceAccDoc[];
-  tokens?: ITokenDoc[];
+  tokens?: {
+    access: ITokenDoc[];
+    refresh: ITokenDoc[];
+  };
 }
 
 export interface ITokenResolver {
   success: boolean;
-  token?: ITokenDoc;
-  index?: number;
-  available?: boolean;
-  cred_data?: IGetAllTokens;
+  error?: unknown;
+  tokens: ITokenDoc[];
 }

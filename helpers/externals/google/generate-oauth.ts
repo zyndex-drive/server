@@ -73,12 +73,14 @@ function redirectUser(res: Response, id: string, scopes: TGooGScope[]): void {
  * Saves the Refresh Token and Access Token in the Database for Long Term Use
  *
  * @param {ICredentialsDoc} credentials - Credentials Document from Database
+ * @param {TGooGScope[]} scopes - Google Oauth API Scopes
  * @param {IGoogTokenResponse} refreshToken - Refresh Token Response
  * @param {IGoogTokenResponse} accessToken - Access Token Response
  * @returns {Promise<ITokenDoc[]>} - Saved Token Documents
  */
 function handleTokenSaving(
   credentials: ICredentialsDoc,
+  scopes: TGooGScope[],
   refreshToken: Required<IGoogTokenResponse>,
   accessToken: IGoogTokenResponse,
 ): Promise<ITokenDoc[]> {
@@ -92,6 +94,7 @@ function handleTokenSaving(
             token: refreshToken.refresh_token,
             type: 'refresh',
             related_to: credentials._id,
+            scopes,
             ref_model: 'Credential',
             expires_at: now + 100 * 365 * 24 * 3600 * 1000,
             website: 'google.com',
@@ -101,6 +104,7 @@ function handleTokenSaving(
             token: accessToken.access_token,
             type: 'access',
             related_to: credentials._id,
+            scopes,
             ref_model: 'Credential',
             expires_at: now + accessToken.expires_in * 1000,
             website: 'google.com',
@@ -152,6 +156,7 @@ function handleUserAuthorization(
             );
             const savedDocs = await handleTokenSaving(
               credentials,
+              scopes,
               refreshToken,
               accessToken,
             );

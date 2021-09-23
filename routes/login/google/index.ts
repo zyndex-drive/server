@@ -20,7 +20,7 @@ router.get('/auth/', (req, res) => {
 router.post('/sample/', (req, res) => {
   Credentials.find({})
     .then((result) => {
-      tokenResolver(result[0]._id)
+      tokenResolver(result[0]._id, driveScopes)
         .then((result) => {
           res.json(result);
         })
