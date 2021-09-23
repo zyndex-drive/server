@@ -23,26 +23,37 @@ const { NODE_ENV } = process.env;
  */
 function corsMiddleware(req: Request, res: Response, next: NextFunction): void {
   if (NODE_ENV === 'development') {
+    const reqType = req.method;
     const secret = process.env.LOCAL_SECRET;
     if (secret) {
       const headerPass = req.headers['x-local-dev-pass'];
-      if (headerPass) {
-        if (secret === headerPass) {
-          res.setHeader('Access-Control-Allow-Origin', '*');
-          res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-          res.setHeader(
-            'Access-Control-Allow-Headers',
-            'x-local-dev-pass,x-secret-pass,X-Requested-With,content-type, Accept',
-          );
-          next();
-        } else {
-          unAuthorized(
-            res,
-            'Local Dev Secret is not Matching with the sent pass',
-          );
-        }
+      if (reqType === 'GET') {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+        res.setHeader(
+          'Access-Control-Allow-Headers',
+          'x-local-dev-pass,x-secret-pass,X-Requested-With,content-type, Accept',
+        );
+        next();
       } else {
-        badRequest(res, 'x-local-dev-pass', 'response headers');
+        if (headerPass) {
+          if (secret === headerPass) {
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+            res.setHeader(
+              'Access-Control-Allow-Headers',
+              'x-local-dev-pass,x-secret-pass,X-Requested-With,content-type, Accept',
+            );
+            next();
+          } else {
+            unAuthorized(
+              res,
+              'Local Dev Secret is not Matching with the sent pass',
+            );
+          }
+        } else {
+          badRequest(res, 'x-local-dev-pass', 'response headers');
+        }
       }
     } else {
       internalServerError(

@@ -12,11 +12,11 @@
     "minorrelease": "standard-version --release-as minor --sign",
     "majorrelease": "standard-version --release-as major --sign",
     "push": "git push --follow-tags origin dev",
-    "test": "set NODE_ENV=test && ts-mocha --paths tests/**/*.spec.ts -r 'tests/require' --reporter mocha-simple-html-reporter --reporter-options output=test-report.html",
-    "stest": "set NODE_ENV=test && ts-mocha --paths -r 'tests/require'",
-    "dev": "set NODE_ENV=development && nodemon --ignore tests/** -r tsconfig-paths/register app.ts",
-    "build": "set NODE_ENV=production && tsc && tsc-alias",
-    "serve": "set NODE_ENV=production && cd dist && npm serve"
+    "test": "export NODE_ENV=test && ts-mocha --paths tests/**/*.spec.ts -r 'tests/require' --reporter mocha-simple-html-reporter --reporter-options output=test-report.html",
+    "stest": "export NODE_ENV=test && ts-mocha --paths -r 'tests/require'",
+    "dev": "export NODE_ENV=development && nodemon -r tsconfig-paths/register app.ts",
+    "build": "export NODE_ENV=production && tsc && tsc-alias",
+    "serve": "export NODE_ENV=production && cd dist && npm serve"
   },
   "repository": {
     "type": "git",
