@@ -1,5 +1,5 @@
 import { model } from 'mongoose';
 import schema from './schema';
-import type { IRole, IRoleModel } from './types';
+import type { IRoleDoc, IRoleModel } from './types';
 
-export default model<IRole, IRoleModel>('Role', schema);
+export default model<IRoleDoc, IRoleModel>('Role', schema);

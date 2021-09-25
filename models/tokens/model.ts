@@ -1,5 +1,5 @@
 import { model } from 'mongoose';
 import schema from './schema';
-import type { IToken, ITokenModel } from './types';
+import type { ITokenDoc, ITokenModel } from './types';
 
-export default model<IToken, ITokenModel>('Token', schema);
+export default model<ITokenDoc, ITokenModel>('Token', schema);

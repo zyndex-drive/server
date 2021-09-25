@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 import { createDoc, clearAll } from './statics';
-import type { IServiceAcc, IServiceAccModel } from './types';
+import type { IServiceAccDoc, IServiceAccModel } from './types';
 
-const schema = new Schema<IServiceAcc, IServiceAccModel>({
+const schema = new Schema<IServiceAccDoc, IServiceAccModel>({
   _id: {
     type: Schema.Types.ObjectId,
   },

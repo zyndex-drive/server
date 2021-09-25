@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 import { createDoc, clearAll } from './statics';
-import type { IScope, IScopeModel } from './types';
+import type { IScopeDoc, IScopeModel } from './types';
 
-const schema = new Schema<IScope, IScopeModel>({
+const schema = new Schema<IScopeDoc, IScopeModel>({
   _id: {
     type: Schema.Types.ObjectId,
   },

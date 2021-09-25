@@ -1,8 +1,8 @@
 import { model } from 'mongoose';
 import schema from './schema';
-import type { IGlobalSettings, IGlobalSettingsModel } from './types';
+import type { IGlobalSettingsDoc, IGlobalSettingsModel } from './types';
 
-export default model<IGlobalSettings, IGlobalSettingsModel>(
+export default model<IGlobalSettingsDoc, IGlobalSettingsModel>(
   'GlobalSetting',
   schema,
 );

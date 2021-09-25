@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 import { createDoc, clearAll, checkID } from './statics';
-import type { ICredentials, ICredentialsModel } from './types';
+import type { ICredentialsDoc, ICredentialsModel } from './types';
 
-const schema = new Schema<ICredentials, ICredentialsModel>({
+const schema = new Schema<ICredentialsDoc, ICredentialsModel>({
   _id: {
     type: Schema.Types.ObjectId,
   },

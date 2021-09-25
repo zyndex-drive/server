@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 import { createDoc, clearAll } from './statics';
-import type { IUser, IUserModel } from './types';
+import type { IUserDoc, IUserModel } from './types';
 
-const schema = new Schema<IUser, IUserModel>({
+const schema = new Schema<IUserDoc, IUserModel>({
   _id: {
     type: Schema.Types.ObjectId,
   },
