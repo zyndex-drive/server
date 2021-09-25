@@ -46,8 +46,8 @@ export function objectID(prefix?: string): Types.ObjectId {
   try {
     const id = Types.ObjectId(longID(prefix));
     return id;
-  } catch (e) {
-    throw new Error(e);
+  } catch (e: unknown) {
+    throw new Error(String(e));
   }
 }
 
