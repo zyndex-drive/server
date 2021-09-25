@@ -1,4 +1,4 @@
-import type { TGooGScope } from './types';
+import type { TGooGScope } from '@google/helpers/types';
 
 /**
  * Converts the Array of Scopes to a Scope Parameter

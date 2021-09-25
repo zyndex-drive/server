@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 import { createDoc, clearAll } from './statics';
-import type { ISession, ISessionModel } from './types';
+import type { ISessionDoc, ISessionModel } from './types';
 
-const schema = new Schema<ISession, ISessionModel>({
+const schema = new Schema<ISessionDoc, ISessionModel>({
   _id: {
     type: Schema.Types.ObjectId,
   },

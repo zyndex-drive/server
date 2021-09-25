@@ -23,16 +23,25 @@ import { map as roleMap } from '@setup/roles';
 import { map as policyMap } from '@setup/policies';
 
 // Model Type Imports
-import { ICredentials, ICredentialsModel } from '@models/credential/types';
-import { IFrontend, IFrontendModel } from '@models/frontend/types';
-import { IUser, IUserModel } from '@models/user/types';
-import { IScope, IScopeModel } from '@models/scope/types';
+import {
+  ICredentials,
+  ICredentialsDoc,
+  ICredentialsModel,
+} from '@models/credential/types';
+import {
+  IFrontend,
+  IFrontendDoc,
+  IFrontendModel,
+} from '@models/frontend/types';
+import { IUser, IUserDoc, IUserModel } from '@models/user/types';
+import { IScope, IScopeDoc, IScopeModel } from '@models/scope/types';
 import {
   IGlobalSettings,
+  IGlobalSettingsDoc,
   IGlobalSettingsModel,
 } from '@models/global-setting/types';
-import { IRole, IRoleModel } from '@models/role/types';
-import { IPolicy, IPolicyModel } from '@models/policy/types';
+import { IRole, IRoleDoc, IRoleModel } from '@models/role/types';
+import { IPolicy, IPolicyDoc, IPolicyModel } from '@models/policy/types';
 
 /**
  * Checks the Given DB whether it has any Doc Present and if map is Present, Checks with the map length
@@ -41,14 +50,14 @@ import { IPolicy, IPolicyModel } from '@models/policy/types';
  * @param {map} map - Map to Compare the Records
  * @returns {Promise<boolean>} present - Returns whether true or false
  */
-async function checkDBPresent<T, U extends Model<T>>(
-  db: U,
-  map?: Readonly<T>[],
+async function checkDBPresent<INTERFACE, DOC, MODEL extends Model<DOC>>(
+  db: MODEL,
+  map?: Readonly<INTERFACE>[],
 ): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
     const collections = db.find({}).exec();
     collections
-      .then((result: T[]) => {
+      .then((result: DOC[]) => {
         if (result) {
           if (result.length > 0) {
             if (map) {
@@ -86,13 +95,17 @@ function checkSetupStatus(
   next: NextFunction,
 ): void {
   const promises = [
-    checkDBPresent<ICredentials, ICredentialsModel>(Credentials),
-    checkDBPresent<IFrontend, IFrontendModel>(Frontends),
-    checkDBPresent<IPolicy, IPolicyModel>(Policies, policyMap),
-    checkDBPresent<IRole, IRoleModel>(Roles, roleMap),
-    checkDBPresent<IGlobalSettings, IGlobalSettingsModel>(GlobalSettings),
-    checkDBPresent<IScope, IScopeModel>(Scopes),
-    checkDBPresent<IUser, IUserModel>(Users),
+    checkDBPresent<ICredentials, ICredentialsDoc, ICredentialsModel>(
+      Credentials,
+    ),
+    checkDBPresent<IFrontend, IFrontendDoc, IFrontendModel>(Frontends),
+    checkDBPresent<IPolicy, IPolicyDoc, IPolicyModel>(Policies, policyMap),
+    checkDBPresent<IRole, IRoleDoc, IRoleModel>(Roles, roleMap),
+    checkDBPresent<IGlobalSettings, IGlobalSettingsDoc, IGlobalSettingsModel>(
+      GlobalSettings,
+    ),
+    checkDBPresent<IScope, IScopeDoc, IScopeModel>(Scopes),
+    checkDBPresent<IUser, IUserDoc, IUserModel>(Users),
   ];
   Promise.all(promises)
     .then((setups) => {

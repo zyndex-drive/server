@@ -2,12 +2,12 @@
 import axios from '@helpers/axios';
 
 // Others
-import api from './api';
+import api from '@google/helpers/API';
 
 // Types
 import type { AxiosError } from 'axios';
 import type { ICredentialsDoc } from '@models/credential/types';
-import type { IGoogTokenResponse } from './types';
+import type { IGoogTokenResponse } from '@google/helpers/types';
 
 /**
  * Constructs Google Oauth Token Exchange URL

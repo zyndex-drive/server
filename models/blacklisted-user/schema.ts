@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 import { createDoc, clearAll } from './statics';
-import type { IBlacklistedUser, IBlacklistedUserModel } from './types';
+import type { IBlacklistedUserDoc, IBlacklistedUserModel } from './types';
 
-const schema = new Schema<IBlacklistedUser, IBlacklistedUserModel>({
+const schema = new Schema<IBlacklistedUserDoc, IBlacklistedUserModel>({
   _id: {
     type: Schema.Types.ObjectId,
     ref: 'User',

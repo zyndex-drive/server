@@ -2,32 +2,56 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [0.2.0-2](https://github.com/zyndex-drive/server/compare/v0.2.0-1...v0.2.0-2) (2021-09-10)
+## [0.2.0-3](https://github.com/zyndex-drive/server/compare/v0.2.0-2...v0.2.0-3) (2021-09-25)
 
 
-### Features
+### Bug Fixes
 
-* **crypto:** add crypto helpers for passing state between apis ([ae5efa7](https://github.com/zyndex-drive/server/commit/ae5efa7a0545e7357db0a678e2caf91d2103beb9))
-* **google/drive/drives:** add method for listing drives ([feb4211](https://github.com/zyndex-drive/server/commit/feb421140f965d61dc612c5bd0ae0434790e2bdd))
-* **google/drive/files:** add methods for listing files (wip) ([1b00651](https://github.com/zyndex-drive/server/commit/1b006516facaa78260e3c29db6c9d2beeeeaae57))
-* **google/drive:** implement global drive api request methods ([33a24ac](https://github.com/zyndex-drive/server/commit/33a24ac356c0935bc50cc0a86d6651ca3755ecec))
-* **google/oauth:** implement google oauth route ([90596e4](https://github.com/zyndex-drive/server/commit/90596e422852d8ce96cfbee0ddbc9aa476c8e404))
-* **google/oauth:** implement passing of states between calls ([3f5f692](https://github.com/zyndex-drive/server/commit/3f5f692c36510bc21a0aeb71235db7e09e4794c0))
-* **google/token-resolver:** implement token resolver for google oauth to fetch tokens ([7483c74](https://github.com/zyndex-drive/server/commit/7483c74f7a333d96910f302f7b3900fb50b5bee0))
-* **routes/auth:** add credentials route for accessing and updating credentials ([48563b3](https://github.com/zyndex-drive/server/commit/48563b381e97a162293fbf576de9d5ed833466e1))
+* **middlewares/first-setup:** fix changes to type related to models ([27c5442](https://github.com/zyndex-drive/server/commit/27c54427596eef9d3910b7de53a0f0df7fc2c435))
 
 
-### Build System
+### Others
 
-* **package.json:** add query-string for parsing query parameters ([b9dab1e](https://github.com/zyndex-drive/server/commit/b9dab1eb84fdec8018a94e45f42c96fbaec2d001))
-* **tsconfig.json:** add more path resolvers ([1ca9e40](https://github.com/zyndex-drive/server/commit/1ca9e40f9c178e9edc36228f60d2471b8320ed7c))
+* **environment:** changes required for linux dev ([d9d642d](https://github.com/zyndex-drive/server/commit/d9d642d00c4c35f67488d67efda82782122f0b45))
+* **environment:** move back to windows env ([2b8f159](https://github.com/zyndex-drive/server/commit/2b8f159199a86c5476f99f9332ff5aaa7bf2dbda))
+* **environment:** move to linux environment from windows ([cb665d2](https://github.com/zyndex-drive/server/commit/cb665d23b9324670776626e9d4ccdaa291c50d1b))
+
+
+### CI
+
+* **tsconfig:** fix resolvers ([057baaf](https://github.com/zyndex-drive/server/commit/057baaf51d633eb58a7cb563f2ca8344683df0f2))
 
 
 ### Code Refactoring
 
-* **routes/auth:** move policies and roles inside auth route ([a332ed3](https://github.com/zyndex-drive/server/commit/a332ed3f84be5964752d8e17c547d9bcc9bd7e77))
-* **routes/tokens:** move tokens route to login route ([32f7848](https://github.com/zyndex-drive/server/commit/32f7848fcc6e8f8cf43d61688e2b8fbdb2756801))
-* **routes:** move roles and policies routes inside auth route ([7fc965e](https://github.com/zyndex-drive/server/commit/7fc965e16c2828873b53197b06176e5d3ed3ede5))
+* **externals/google:** move google to a proper folder structure(to root) ([90869d2](https://github.com/zyndex-drive/server/commit/90869d23bd6fc4990daac79e35b3a8bf8af9f024))
+* **google/auth:** fix google auth route to use the refactored structure ([415d851](https://github.com/zyndex-drive/server/commit/415d8511fc6bb6ca2a0b1b0d110fcf5865020ecc))
+* **google:** completely refactor google related files for proper project structure ([ffb0e1b](https://github.com/zyndex-drive/server/commit/ffb0e1b9299f5f03463851edc4ed393d2009046b))
+* **models:** fix typescript document models ([17b4ed8](https://github.com/zyndex-drive/server/commit/17b4ed8ccccec773b0b877a00fd869e2d191c4d7))
+
+## [0.2.0-2](https://github.com/zyndex-drive/server/compare/v0.2.0-1...v0.2.0-2) (2021-09-10)
+
+### Features
+
+- **crypto:** add crypto helpers for passing state between apis ([ae5efa7](https://github.com/zyndex-drive/server/commit/ae5efa7a0545e7357db0a678e2caf91d2103beb9))
+- **google/drive/drives:** add method for listing drives ([feb4211](https://github.com/zyndex-drive/server/commit/feb421140f965d61dc612c5bd0ae0434790e2bdd))
+- **google/drive/files:** add methods for listing files (wip) ([1b00651](https://github.com/zyndex-drive/server/commit/1b006516facaa78260e3c29db6c9d2beeeeaae57))
+- **google/drive:** implement global drive api request methods ([33a24ac](https://github.com/zyndex-drive/server/commit/33a24ac356c0935bc50cc0a86d6651ca3755ecec))
+- **google/oauth:** implement google oauth route ([90596e4](https://github.com/zyndex-drive/server/commit/90596e422852d8ce96cfbee0ddbc9aa476c8e404))
+- **google/oauth:** implement passing of states between calls ([3f5f692](https://github.com/zyndex-drive/server/commit/3f5f692c36510bc21a0aeb71235db7e09e4794c0))
+- **google/token-resolver:** implement token resolver for google oauth to fetch tokens ([7483c74](https://github.com/zyndex-drive/server/commit/7483c74f7a333d96910f302f7b3900fb50b5bee0))
+- **routes/auth:** add credentials route for accessing and updating credentials ([48563b3](https://github.com/zyndex-drive/server/commit/48563b381e97a162293fbf576de9d5ed833466e1))
+
+### Build System
+
+- **package.json:** add query-string for parsing query parameters ([b9dab1e](https://github.com/zyndex-drive/server/commit/b9dab1eb84fdec8018a94e45f42c96fbaec2d001))
+- **tsconfig.json:** add more path resolvers ([1ca9e40](https://github.com/zyndex-drive/server/commit/1ca9e40f9c178e9edc36228f60d2471b8320ed7c))
+
+### Code Refactoring
+
+- **routes/auth:** move policies and roles inside auth route ([a332ed3](https://github.com/zyndex-drive/server/commit/a332ed3f84be5964752d8e17c547d9bcc9bd7e77))
+- **routes/tokens:** move tokens route to login route ([32f7848](https://github.com/zyndex-drive/server/commit/32f7848fcc6e8f8cf43d61688e2b8fbdb2756801))
+- **routes:** move roles and policies routes inside auth route ([7fc965e](https://github.com/zyndex-drive/server/commit/7fc965e16c2828873b53197b06176e5d3ed3ede5))
 
 ## [0.2.0-1](https://github.com/zyndex-drive/server/compare/v0.2.0-0...v0.2.0-1) (2021-08-22)
 

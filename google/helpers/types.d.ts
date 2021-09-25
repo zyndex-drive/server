@@ -4,15 +4,26 @@ import type { ICredentialsDoc } from '@models/credential/types';
 
 export interface IGetAllTokens {
   success: boolean;
+  error?: unknown;
   credential?: ICredentialsDoc;
   serviceAcc?: IServiceAccDoc[];
-  tokens?: ITokenDoc[];
+  tokens?: {
+    access: ITokenDoc[];
+    refresh: ITokenDoc[];
+  };
 }
 
 export interface ITokenResolver {
   success: boolean;
-  token?: ITokenDoc;
-  index?: number;
-  available?: boolean;
-  cred_data?: IGetAllTokens;
+  error?: unknown;
+  tokens: ITokenDoc[];
+}
+
+export type TGooGScope = `https://www.googleapis.com/auth/${string}`;
+
+export interface IGoogTokenResponse {
+  access_token: string;
+  expires_in: number;
+  refresh_token?: string;
+  token_type: string;
 }

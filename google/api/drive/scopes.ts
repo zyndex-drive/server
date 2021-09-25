@@ -1,4 +1,4 @@
-import type { TGooGScope } from '@externals/google/types';
+import type { TGooGScope } from '@google/helpers/types';
 
 const scopes: TGooGScope[] = [
   'https://www.googleapis.com/auth/drive',

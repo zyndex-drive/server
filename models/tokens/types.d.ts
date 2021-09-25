@@ -11,6 +11,7 @@ export interface IToken {
   related_to: ID<ICredentialsDoc> | ID<IServiceAccDoc> | 'other';
   ref_model: string;
   expires_at: number;
+  scopes: string[];
   website: string;
   additional_tokens?: [
     {

@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 import { createDoc, clearAll } from './statics';
-import type { ISMTPMailer, ISMTPMailerModel } from './types';
+import type { ISMTPMailerDoc, ISMTPMailerModel } from './types';
 
-const schema = new Schema<ISMTPMailer, ISMTPMailerModel>({
+const schema = new Schema<ISMTPMailerDoc, ISMTPMailerModel>({
   _id: {
     type: Schema.Types.ObjectId,
   },

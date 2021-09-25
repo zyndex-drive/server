@@ -1,12 +1,12 @@
 // API
-import api from '@drive/drives/API';
+import api from '@google/api/drive/drives/API';
 
 // Drive Request Method
-import { driveRequest } from '@drive/request';
+import { driveRequest } from '@/google/api/drive/request';
 
 // Types
 import type { ITokenDoc } from '@models/tokens/types';
-import type { IDriveResponse } from '@drive/types';
+import type { IDriveResponse } from '@/google/api/drive/types';
 
 /**
  * Lists all Shared Drives in the Respective Account

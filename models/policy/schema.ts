@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 import { createDoc, clearAll, mapCheck } from './statics';
-import type { IPolicy, IPolicyModel } from './types';
+import type { IPolicyDoc, IPolicyModel } from './types';
 
-const schema = new Schema<IPolicy, IPolicyModel>({
+const schema = new Schema<IPolicyDoc, IPolicyModel>({
   _id: {
     type: Schema.Types.ObjectId,
   },

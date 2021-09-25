@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 import { getFrontendUrls, createDoc } from './statics';
-import type { IFrontend, IFrontendModel } from './types';
+import type { IFrontendDoc, IFrontendModel } from './types';
 
-const schema = new Schema<IFrontend, IFrontendModel>({
+const schema = new Schema<IFrontendDoc, IFrontendModel>({
   _id: {
     type: Schema.Types.ObjectId,
   },

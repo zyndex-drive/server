@@ -1,5 +1,5 @@
 import { model } from 'mongoose';
 import schema from './schema';
-import type { ISession, ISessionModel } from './types';
+import type { ISessionDoc, ISessionModel } from './types';
 
-export default model<ISession, ISessionModel>('Session', schema);
+export default model<ISessionDoc, ISessionModel>('Session', schema);

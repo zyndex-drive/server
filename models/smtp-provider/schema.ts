@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 import { createDoc, clearAll } from './statics';
-import type { ISMTPProvider, ISMTPProviderModel } from './types';
+import type { ISMTPProviderDoc, ISMTPProviderModel } from './types';
 
-const schema = new Schema<ISMTPProvider, ISMTPProviderModel>({
+const schema = new Schema<ISMTPProviderDoc, ISMTPProviderModel>({
   _id: {
     type: Schema.Types.ObjectId,
   },

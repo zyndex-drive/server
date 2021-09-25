@@ -2,26 +2,26 @@
 import { Tokens, Credentials } from '@models';
 
 // Others
-import api from './api';
+import api from '@/google/helpers/API';
 import { objectID } from '@helpers/uid';
 import { encrypt, decrypt } from '@helpers/crypto';
-import { generateRefreshToken, generateAccessToken } from './generate-token';
-import stringizeScopes from './stringize-scope';
+import {
+  generateRefreshToken,
+  generateAccessToken,
+} from '@google/handlers/nac/generate-token';
+import stringizeScopes from '@google/helpers/stringize-scope';
 
 // Response Handlers
-import { okResponse } from '@helpers/express/response-handlers/2XX-response';
-import {
-  badRequest,
-  notFound,
-} from '@helpers/express/response-handlers/4XX-response';
-import { internalServerError } from '@helpers/express/response-handlers/5XX-response';
+import { okResponse } from '@responses/2XX-response';
+import { badRequest, notFound } from '@responses/4XX-response';
+import { internalServerError } from '@responses/5XX-response';
 
 // Types
 import type { Request, Response } from 'express';
 import type { Error as MongoError } from 'mongoose';
 import type { ICredentialsDoc } from '@models/credential/types';
 import type { IToken, ITokenDoc } from '@models/tokens/types';
-import type { IGoogTokenResponse, TGooGScope } from './types';
+import type { IGoogTokenResponse, TGooGScope } from '@google/helpers/types';
 
 /**
  * Constructs Google Oauth Authorization URL
@@ -73,12 +73,14 @@ function redirectUser(res: Response, id: string, scopes: TGooGScope[]): void {
  * Saves the Refresh Token and Access Token in the Database for Long Term Use
  *
  * @param {ICredentialsDoc} credentials - Credentials Document from Database
+ * @param {TGooGScope[]} scopes - Google Oauth API Scopes
  * @param {IGoogTokenResponse} refreshToken - Refresh Token Response
  * @param {IGoogTokenResponse} accessToken - Access Token Response
  * @returns {Promise<ITokenDoc[]>} - Saved Token Documents
  */
 function handleTokenSaving(
   credentials: ICredentialsDoc,
+  scopes: TGooGScope[],
   refreshToken: Required<IGoogTokenResponse>,
   accessToken: IGoogTokenResponse,
 ): Promise<ITokenDoc[]> {
@@ -92,6 +94,7 @@ function handleTokenSaving(
             token: refreshToken.refresh_token,
             type: 'refresh',
             related_to: credentials._id,
+            scopes,
             ref_model: 'Credential',
             expires_at: now + 100 * 365 * 24 * 3600 * 1000,
             website: 'google.com',
@@ -101,6 +104,7 @@ function handleTokenSaving(
             token: accessToken.access_token,
             type: 'access',
             related_to: credentials._id,
+            scopes,
             ref_model: 'Credential',
             expires_at: now + accessToken.expires_in * 1000,
             website: 'google.com',
@@ -152,6 +156,7 @@ function handleUserAuthorization(
             );
             const savedDocs = await handleTokenSaving(
               credentials,
+              scopes,
               refreshToken,
               accessToken,
             );
@@ -159,9 +164,9 @@ function handleUserAuthorization(
           } else {
             throw new Error('No Refresh Token Found in Response, Kindly Retry');
           }
-        } catch (e) {
+        } catch (e: unknown) {
           console.log(e);
-          internalServerError(res, 'Token Generation', e);
+          internalServerError(res, 'Token Generation', String(e));
         }
       } else {
         notFound(res, 'Credential ID Not found in DB, Kindly Recheck');

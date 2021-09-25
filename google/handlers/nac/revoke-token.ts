@@ -2,7 +2,7 @@
 import axios from '@helpers/axios';
 
 // Others
-import api from './api';
+import api from '@google/helpers/API';
 
 // Types
 import type { IInlineResponse } from '@typs/inline.response';

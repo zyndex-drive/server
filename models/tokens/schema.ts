@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 import { createDoc, clearAll } from './statics';
-import type { IToken, ITokenModel } from './types';
+import type { ITokenDoc, ITokenModel } from './types';
 
-const schema = new Schema<IToken, ITokenModel>({
+const schema = new Schema<ITokenDoc, ITokenModel>({
   _id: {
     type: Schema.Types.ObjectId,
   },
@@ -27,6 +27,7 @@ const schema = new Schema<IToken, ITokenModel>({
     default: Date.now,
     required: true,
   },
+  scopes: [{ type: String, required: true }],
   website: {
     type: String,
     required: true,
