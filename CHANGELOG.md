@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-3](https://github.com/zyndex-drive/server/compare/v0.2.0-2...v0.2.0-3) (2021-09-25)
+
+
+### Bug Fixes
+
+* **middlewares/first-setup:** fix changes to type related to models ([27c5442](https://github.com/zyndex-drive/server/commit/27c54427596eef9d3910b7de53a0f0df7fc2c435))
+
+
+### Others
+
+* **environment:** changes required for linux dev ([d9d642d](https://github.com/zyndex-drive/server/commit/d9d642d00c4c35f67488d67efda82782122f0b45))
+* **environment:** move back to windows env ([2b8f159](https://github.com/zyndex-drive/server/commit/2b8f159199a86c5476f99f9332ff5aaa7bf2dbda))
+* **environment:** move to linux environment from windows ([cb665d2](https://github.com/zyndex-drive/server/commit/cb665d23b9324670776626e9d4ccdaa291c50d1b))
+
+
+### CI
+
+* **tsconfig:** fix resolvers ([057baaf](https://github.com/zyndex-drive/server/commit/057baaf51d633eb58a7cb563f2ca8344683df0f2))
+
+
+### Code Refactoring
+
+* **externals/google:** move google to a proper folder structure(to root) ([90869d2](https://github.com/zyndex-drive/server/commit/90869d23bd6fc4990daac79e35b3a8bf8af9f024))
+* **google/auth:** fix google auth route to use the refactored structure ([415d851](https://github.com/zyndex-drive/server/commit/415d8511fc6bb6ca2a0b1b0d110fcf5865020ecc))
+* **google:** completely refactor google related files for proper project structure ([ffb0e1b](https://github.com/zyndex-drive/server/commit/ffb0e1b9299f5f03463851edc4ed393d2009046b))
+* **models:** fix typescript document models ([17b4ed8](https://github.com/zyndex-drive/server/commit/17b4ed8ccccec773b0b877a00fd869e2d191c4d7))
+
 ## [0.2.0-2](https://github.com/zyndex-drive/server/compare/v0.2.0-1...v0.2.0-2) (2021-09-10)
 
 ### Features
