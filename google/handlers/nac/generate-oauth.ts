@@ -178,7 +178,7 @@ function handleUserAuthorization(
 }
 
 /**
- * Generate Google Oauth Refresh Token and Authorization Token
+ * Express Handler for Generating Google Oauth Refresh Token and Authorization Token
  *
  * @param {Request} req - Express Request Object
  * @param {Response} res - Express Response Object
