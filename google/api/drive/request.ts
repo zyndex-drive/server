@@ -7,7 +7,7 @@ import axios from '@helpers/axios';
 import serialize from 'query-string';
 
 // Types
-import type { TDriveURLType, IDriveResponse, IDriveRequest } from './types';
+import type { TDriveUrlType, IDriveResponse, IDriveRequest } from './types';
 import type { AxiosError } from 'axios';
 import type { ITokenDoc } from '@models/tokens/types';
 
@@ -15,13 +15,13 @@ import type { ITokenDoc } from '@models/tokens/types';
  * Constructs a Drive API Request URL with Params
  *
  * @param { string } type - get or post Request
- * @param { TDriveURLType } url - API URL
+ * @param { TDriveUrlType } url - API URL
  * @param { Object } params - Query Params for the Route
  * @returns { string } - Constructed URL
  */
 function constructURL(
   type: 'get' | 'post',
-  url: TDriveURLType,
+  url: TDriveUrlType,
   params?: Record<string, string | number | boolean>,
 ): string {
   if (type === 'get' && params) {
@@ -64,14 +64,14 @@ export const driveRequest: IDriveRequest = {
   /**
    * Makes a GET Drive API Request
    *
-   * @param {TDriveURLType} api - Drive API URL
+   * @param {TDriveUrlType} api - Drive API URL
    * @param {ITokenDoc} token - Relevant Token Document from Database
    * @param {Record<string, string | number | boolean>} params - Data to be Embedded in Request
    * @param {Record<string, string>} headers - Additional Headers to be Sent
    * @returns {Promise<IDriveResponse>} - Response from the API
    */
   get: (
-    api: TDriveURLType,
+    api: TDriveUrlType,
     token: ITokenDoc,
     params?: Record<string, string | number | boolean>,
     headers?: Record<string, string>,
@@ -108,14 +108,14 @@ export const driveRequest: IDriveRequest = {
   /**
    * Makes a POST Drive API Request
    *
-   * @param {TDriveURLType} api - Drive API URL
+   * @param {TDriveUrlType} api - Drive API URL
    * @param {ITokenDoc} token - Relevant Token Document from Database
    * @param {Record<string, string | number | boolean>} data - Data to be sent in Request
    * @param {Record<string, string>} headers - Additional Headers to be Sent
    * @returns {Promise<IDriveResponse>} - Response from the API
    */
   post: (
-    api: TDriveURLType,
+    api: TDriveUrlType,
     token: ITokenDoc,
     data?: Record<string, string | number | boolean>,
     headers?: Record<string, string>,

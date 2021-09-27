@@ -1,3 +1,5 @@
+import type { TIAMApiUrlType } from '@google/api/iam/types';
+
 /** API Routes for Managing Google IAM - Service Accounts */
 export default {
   /**
@@ -5,9 +7,9 @@ export default {
    *
    * @module create
    * @param {string} projectID - Resource Name of the Project Associated with the Service Accounts
-   * @returns {string} - API String for Create Route
+   * @returns {TIAMApiUrlType} - API String for Create Route
    */
-  create: (projectID: string): string =>
+  create: (projectID: string): TIAMApiUrlType =>
     `https://iam.googleapis.com/v1/projects/${projectID}/serviceAccounts`,
 
   /**
@@ -16,9 +18,9 @@ export default {
    * @module delete
    * @param {string} projectID - Resource Name of the Project Associated with the Service Accounts
    * @param {string} account - Unique email of Service Account
-   * @returns {string} - API String for Delete Route
+   * @returns {TIAMApiUrlType} - API String for Delete Route
    */
-  delete: (projectID: string, account: string): string =>
+  delete: (projectID: string, account: string): TIAMApiUrlType =>
     `https://iam.googleapis.com/v1/projects/${projectID}/serviceAccounts/${account}`,
 
   /**
@@ -27,9 +29,9 @@ export default {
    * @module disable
    * @param {string} projectID - Resource Name of the Project Associated with the Service Accounts
    * @param {string} account - Unique email of Service Account
-   * @returns {string} - API String for disable Route
+   * @returns {TIAMApiUrlType} - API String for disable Route
    */
-  disable: (projectID: string, account: string): string =>
+  disable: (projectID: string, account: string): TIAMApiUrlType =>
     `https://iam.googleapis.com/v1/projects/${projectID}/serviceAccounts/${account}:disable`,
 
   /**
@@ -38,9 +40,9 @@ export default {
    * @module enable
    * @param {string} projectID - Resource Name of the Project Associated with the Service Accounts
    * @param {string} account - Unique email of Service Account
-   * @returns {string} - API String for enable Route
+   * @returns {TIAMApiUrlType} - API String for enable Route
    */
-  enable: (projectID: string, account: string): string =>
+  enable: (projectID: string, account: string): TIAMApiUrlType =>
     `https://iam.googleapis.com/v1/projects/${projectID}/serviceAccounts/${account}:enable`,
 
   /**
@@ -49,9 +51,9 @@ export default {
    * @module get
    * @param {string} projectID - Resource Name of the Project Associated with the Service Accounts
    * @param {string} account - Unique email of Service Account
-   * @returns {string} - API String for get Route
+   * @returns {TIAMApiUrlType} - API String for get Route
    */
-  get: (projectID: string, account: string): string =>
+  get: (projectID: string, account: string): TIAMApiUrlType =>
     `https://iam.googleapis.com/v1/projects/${projectID}/serviceAccounts/${account}`,
 
   /**
@@ -59,8 +61,8 @@ export default {
    *
    * @module list
    * @param {string} projectID - Resource Name of the Project Associated with the Service Accounts
-   * @returns {string} - API String for list Route
+   * @returns {TIAMApiUrlType} - API String for list Route
    */
-  list: (projectID: string): string =>
+  list: (projectID: string): TIAMApiUrlType =>
     `https://iam.googleapis.com/v1/projects/${projectID}/serviceAccounts`,
 };
