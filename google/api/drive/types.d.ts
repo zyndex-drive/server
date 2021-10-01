@@ -1,6 +1,6 @@
 import type { ITokenDoc } from '@models/tokens/types';
 
-export type TDriveURLType = `https://www.googleapis.com/drive/v3/${string}`;
+export type TDriveUrlType = `https://www.googleapis.com/drive/v3/${string}`;
 
 export interface IDriveResponse {
   success: boolean;
@@ -10,13 +10,13 @@ export interface IDriveResponse {
 
 export interface IDriveRequest {
   get: (
-    api: TDriveURLType,
+    api: TDriveUrlType,
     token: ITokenDoc,
     params?: Record<string, string | number | boolean>,
     headers?: Record<string, string>,
   ) => Promise<IDriveResponse>;
   post: (
-    api: TDriveURLType,
+    api: TDriveUrlType,
     token: ITokenDoc,
     data?: Record<string, string | number | boolean>,
     headers?: Record<string, string>,

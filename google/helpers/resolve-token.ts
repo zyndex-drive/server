@@ -87,7 +87,7 @@ interface IValidityCheck {
  */
 function checkValidity(tokens: ITokenDoc[]): IValidityCheck[] {
   const validityArray = tokens.map((token) => {
-    /** To be in Advance, Checking all Tokens which are Expiring within 15 minutes */
+    /** To be future proof, Checking all Tokens which are Expiring within 15 minutes */
     const currentTime = Date.now() + 15 * 60 * 1000;
     const tokenTime = token.expires_at;
     const response: { token: ITokenDoc; validity: boolean } = {
@@ -119,7 +119,7 @@ function deleteInvalidTokens(tokens: ITokenDoc[]): Promise<void> {
 }
 
 /**
- * Generates a Access Token for the Particular Credentials and Saves it Database
+ * Generates a Access Token for the Particular Credentials and Saves it to Database
  *
  * @param {ICredentialsDoc} credentials - Credentials from Database
  * @param {TGooGScope[]} scopes - Google Oauth API Scopes

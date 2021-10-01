@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-5](https://github.com/zyndex-drive/server/compare/v0.2.0-4...v0.2.0-5) (2021-09-27)
+
+
+### Docs
+
+* **google:** completely document every google api used ([e4f2633](https://github.com/zyndex-drive/server/commit/e4f2633ff98f889f1825e8e79665f1ecfc2843e3))
+
 ## [0.2.0-4](https://github.com/zyndex-drive/server/compare/v0.2.0-3...v0.2.0-4) (2021-09-26)
 
 

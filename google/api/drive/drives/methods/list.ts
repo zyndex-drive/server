@@ -26,5 +26,5 @@ export default function (
     pageToken: pageToken ? pageToken : '',
     q: q ? q : '',
   };
-  return driveRequest.get(api, token, params);
+  return driveRequest.get(api.list, token, params);
 }
