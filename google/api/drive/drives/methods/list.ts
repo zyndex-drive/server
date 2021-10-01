@@ -1,12 +1,13 @@
 // API
 import api from '@google/api/drive/drives/API';
 
-// Drive Request Method
-import { driveRequest } from '@/google/api/drive/request';
+// Google Request Method
+import { googleApiRequest } from '@google/helpers';
 
 // Types
 import type { ITokenDoc } from '@models/tokens/types';
-import type { IDriveResponse } from '@/google/api/drive/types';
+import type { IGoogleResponse } from '@google/helpers/types';
+import type { TDriveUrlType } from '@google/api/drive/types';
 
 /**
  * Lists all Shared Drives in the Respective Account
@@ -14,17 +15,17 @@ import type { IDriveResponse } from '@/google/api/drive/types';
  * @param {ITokenDoc} token - Token Document from Database
  * @param {string} pageToken - Drive API pagination token (optional)
  * @param {string} q - Search String (optional)
- * @returns {Promise<IDriveResponse>} - Promise Resolving to Drives List
+ * @returns {Promise<IGoogleResponse>} - Promise Resolving to Drives List
  */
 export default function (
   token: ITokenDoc,
   pageToken?: string,
   q?: string,
-): Promise<IDriveResponse> {
+): Promise<IGoogleResponse> {
   const params = {
     pageSize: 20,
     pageToken: pageToken ? pageToken : '',
     q: q ? q : '',
   };
-  return driveRequest.get(api.list, token, params);
+  return googleApiRequest.get<TDriveUrlType>(api.list, token, params);
 }

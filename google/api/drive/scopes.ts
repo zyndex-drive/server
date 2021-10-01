@@ -1,6 +1,6 @@
-import type { TGooGScope } from '@google/helpers/types';
+import type { TGoogleApiScope } from '@google/helpers/types';
 
-const scopes: TGooGScope[] = [
+const scopes: TGoogleApiScope[] = [
   'https://www.googleapis.com/auth/drive',
   'https://www.googleapis.com/auth/drive.file',
   'https://www.googleapis.com/auth/drive.metadata',
