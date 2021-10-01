@@ -7,21 +7,21 @@ import axios from '@helpers/axios';
 import serialize from 'query-string';
 
 // Types
-import type { TDriveUrlType, IDriveResponse, IDriveRequest } from './types';
+import type { IGoogleRequest, IGoogleResponse } from './types';
 import type { AxiosError } from 'axios';
 import type { ITokenDoc } from '@models/tokens/types';
 
 /**
- * Constructs a Drive API Request URL with Params
+ * Constructs a Google API Request URL with Params
  *
  * @param { string } type - get or post Request
- * @param { TDriveUrlType } url - API URL
+ * @param { string } url - API URL
  * @param { Object } params - Query Params for the Route
  * @returns { string } - Constructed URL
  */
-function constructURL(
-  type: 'get' | 'post',
-  url: TDriveUrlType,
+function constructURL<T extends string>(
+  type: 'get' | 'post' | 'delete',
+  url: T,
   params?: Record<string, string | number | boolean>,
 ): string {
   if (type === 'get' && params) {
@@ -33,7 +33,7 @@ function constructURL(
 }
 
 /**
- * Constructs Header Object for Drive Api Request
+ * Constructs Header Object for Google Api Request
  *
  * @param { string } type - get or post Request
  * @param {ITokenDoc} token - Token Document from Database
@@ -41,7 +41,7 @@ function constructURL(
  * @returns {object} - Header Object
  */
 function constructHeaders(
-  type: 'get' | 'post',
+  type: 'get' | 'post' | 'delete',
   token: ITokenDoc,
   headers?: Record<string, string>,
 ): Record<string, string> {
@@ -60,39 +60,42 @@ function constructHeaders(
   }
 }
 
-export const driveRequest: IDriveRequest = {
+/**
+ * Google API Requester and Response Handlers
+ */
+const googleRequest: IGoogleRequest = {
   /**
-   * Makes a GET Drive API Request
+   * Makes a GET Google API Request
    *
-   * @param {TDriveUrlType} api - Drive API URL
+   * @param {string} api - Google API URL
    * @param {ITokenDoc} token - Relevant Token Document from Database
    * @param {Record<string, string | number | boolean>} params - Data to be Embedded in Request
    * @param {Record<string, string>} headers - Additional Headers to be Sent
-   * @returns {Promise<IDriveResponse>} - Response from the API
+   * @returns {Promise<IGoogleResponse>} - Response from the API
    */
-  get: (
-    api: TDriveUrlType,
+  get: <T extends string>(
+    api: T,
     token: ITokenDoc,
     params?: Record<string, string | number | boolean>,
     headers?: Record<string, string>,
-  ): Promise<IDriveResponse> =>
-    new Promise<IDriveResponse>((resolve, reject) => {
-      const url = constructURL('get', api, params);
+  ): Promise<IGoogleResponse> =>
+    new Promise<IGoogleResponse>((resolve, reject) => {
+      const url = constructURL<T>('get', api, params);
       const getHeaders = constructHeaders('get', token, headers);
       axios
-        .get<IDriveResponse>(url, {
+        .get<IGoogleResponse>(url, {
           headers: getHeaders,
         })
         .then((response) => {
           if (response.status === 200) {
-            const funcResponse: IDriveResponse = {
+            const funcResponse: IGoogleResponse = {
               success: true,
               data: response.data,
               error: null,
             };
             resolve(funcResponse);
           } else {
-            const funcResponse: IDriveResponse = {
+            const funcResponse: IGoogleResponse = {
               success: false,
               data: null,
               error: null,
@@ -101,42 +104,43 @@ export const driveRequest: IDriveRequest = {
           }
         })
         .catch((error: AxiosError) => {
+          console.log(error.response && error.response.data);
           reject(new Error(`${error.name}: ${error.message}`));
         });
     }),
 
   /**
-   * Makes a POST Drive API Request
+   * Makes a POST Google API Request
    *
-   * @param {TDriveUrlType} api - Drive API URL
+   * @param {string} api - Google API URL
    * @param {ITokenDoc} token - Relevant Token Document from Database
    * @param {Record<string, string | number | boolean>} data - Data to be sent in Request
    * @param {Record<string, string>} headers - Additional Headers to be Sent
-   * @returns {Promise<IDriveResponse>} - Response from the API
+   * @returns {Promise<IGoogleResponse>} - Response from the API
    */
-  post: (
-    api: TDriveUrlType,
+  post: <T extends string>(
+    api: T,
     token: ITokenDoc,
     data?: Record<string, string | number | boolean>,
     headers?: Record<string, string>,
-  ): Promise<IDriveResponse> =>
-    new Promise<IDriveResponse>((resolve, reject) => {
-      const url = constructURL('post', api);
+  ): Promise<IGoogleResponse> =>
+    new Promise<IGoogleResponse>((resolve, reject) => {
+      const url = constructURL<T>('post', api);
       const getHeaders = constructHeaders('post', token, headers);
       axios
-        .post<IDriveResponse>(url, data, {
+        .post<IGoogleResponse>(url, data, {
           headers: getHeaders,
         })
         .then((response) => {
           if (response.status === 200) {
-            const funcResponse: IDriveResponse = {
+            const funcResponse: IGoogleResponse = {
               success: true,
               data: response.data,
               error: null,
             };
             resolve(funcResponse);
           } else {
-            const funcResponse: IDriveResponse = {
+            const funcResponse: IGoogleResponse = {
               success: false,
               data: null,
               error: null,
@@ -149,3 +153,5 @@ export const driveRequest: IDriveRequest = {
         });
     }),
 };
+
+export default googleRequest;

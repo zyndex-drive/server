@@ -48,7 +48,7 @@ import { IPolicy, IPolicyDoc, IPolicyModel } from '@models/policy/types';
  *
  * @param {Model} db - Model to Search the Records
  * @param {map} map - Map to Compare the Records
- * @returns {Promise<boolean>} present - Returns whether true or false
+ * @returns {Promise<boolean>} - Returns whether true or false
  */
 async function checkDBPresent<INTERFACE, DOC, MODEL extends Model<DOC>>(
   db: MODEL,
