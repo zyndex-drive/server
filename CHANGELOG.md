@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-7](https://github.com/zyndex-drive/server/compare/v0.2.0-6...v0.2.0-7) (2021-10-01)
+
+
+### Features
+
+* **google/service-account:** add access token generation method for service account ([6716569](https://github.com/zyndex-drive/server/commit/671656973122a3b6bbc00054a389380f729fc27a))
+* **google/service-account:** handler for saving checking and saving service account token ([5d0ae5b](https://github.com/zyndex-drive/server/commit/5d0ae5bcb0b9832d6bc2cc05385f38a6ea4ad871))
+
+
+### Bug Fixes
+
+* **google/signjwt:** fix jwt signature method to use scopes provided ([9dd9661](https://github.com/zyndex-drive/server/commit/9dd96617b8f248d583b6203fc29696cca7369e3f))
+
+
+### Docs
+
+* **google/handlers:** document google oauth method handlers ([fb6270d](https://github.com/zyndex-drive/server/commit/fb6270d58c443909ec1785cf0cff341c0242b345))
+
 ## [0.2.0-6](https://github.com/zyndex-drive/server/compare/v0.2.0-5...v0.2.0-6) (2021-10-01)
 
 
