@@ -6,7 +6,7 @@ import { generateAccessToken } from '@google/handlers/nac/generate-token';
 import { objectID } from '@/helpers/uid';
 
 // Types
-import type { TGooGScope } from '@google/helpers/types';
+import type { TGoogleApiScope } from '@google/helpers/types';
 import type { ICredentials, ICredentialsDoc } from '@models/credential/types';
 import type { IToken, ITokenDoc } from '@models/tokens/types';
 // import type { IServiceAccDoc } from '@models/service-account/types';
@@ -122,13 +122,13 @@ function deleteInvalidTokens(tokens: ITokenDoc[]): Promise<void> {
  * Generates a Access Token for the Particular Credentials and Saves it to Database
  *
  * @param {ICredentialsDoc} credentials - Credentials from Database
- * @param {TGooGScope[]} scopes - Google Oauth API Scopes
+ * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
  * @param {ITokenDoc} refreshToken - Refresh Token Document from Database
  * @returns {Promise<ITokenDoc>} - Generated Access Token
  */
 function generateTokenSave(
   credentials: ICredentialsDoc,
-  scopes: TGooGScope[],
+  scopes: TGoogleApiScope[],
   refreshToken: ITokenDoc,
 ): Promise<ITokenDoc> {
   return new Promise<ITokenDoc>((resolve, reject) => {
@@ -173,12 +173,12 @@ function generateTokenSave(
  * Checks Validity of Access Tokens and Refreshes it
  *
  * @param { IGetAllTokens } tokenData - Response from GetallTokens Function
- * @param { TGooGScope[] } scopes - Google Oauth API Scopes
+ * @param { TGoogleApiScope[] } scopes - Google Oauth API Scopes
  * @returns { IGetAllTokens } - Active Tokens
  */
 function checkTokenRefreshit(
   tokenData: IGetAllTokens,
-  scopes: TGooGScope[],
+  scopes: TGoogleApiScope[],
 ): Promise<IGetAllTokens> {
   return new Promise<IGetAllTokens>((resolve, reject) => {
     const { success, credential, tokens } = tokenData;
@@ -256,12 +256,12 @@ function checkTokenRefreshit(
  * Resolves a Access Token for the Respective Google Credential ID
  *
  * @param { string } credentialID - Credentials ID From Database
- * @param { TGooGScope[] } scopes - Google OAuth API Scopes
+ * @param { TGoogleApiScope[] } scopes - Google OAuth API Scopes
  * @returns { Promise<ITokenResolver> } - Resolves a Token to use in Google API
  */
 export default function (
   credentialID: ICredentials['_id'],
-  scopes: TGooGScope[],
+  scopes: TGoogleApiScope[],
 ): Promise<ITokenResolver> {
   return new Promise<ITokenResolver>((resolve, reject) => {
     getAllTokens(credentialID)

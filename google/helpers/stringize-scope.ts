@@ -1,12 +1,12 @@
-import type { TGooGScope } from '@google/helpers/types';
+import type { TGoogleApiScope } from '@google/helpers/types';
 
 /**
  * Converts the Array of Scopes to a Scope Parameter
  *
- * @param {TGooGScope} scopes - Array of Google API Scopes
+ * @param {TGoogleApiScope} scopes - Array of Google API Scopes
  * @returns {string} - Space Delimited Scopes
  */
-export default function (scopes: TGooGScope[]): string {
+export default function (scopes: TGoogleApiScope[]): string {
   let scopeString = '';
   scopes.forEach((scope, index) => {
     if (index === scopes.length - 1) {
