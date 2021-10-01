@@ -1,5 +1,5 @@
-import type { TGooGScope } from '@google/helpers/types';
+import type { TGoogleApiScope } from '@google/helpers/types';
 
 export default [
   'https://www.googleapis.com/auth/cloud-platform',
-] as TGooGScope[];
+] as TGoogleApiScope[];
