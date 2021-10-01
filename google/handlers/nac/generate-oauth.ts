@@ -21,26 +21,30 @@ import type { Request, Response } from 'express';
 import type { Error as MongoError } from 'mongoose';
 import type { ICredentialsDoc } from '@models/credential/types';
 import type { IToken, ITokenDoc } from '@models/tokens/types';
-import type { IGoogTokenResponse, TGooGScope } from '@google/helpers/types';
+import type {
+  IGoogTokenResponse,
+  TGoogleApiScope,
+} from '@google/helpers/types';
 
 /**
  * Constructs Google Oauth Authorization URL
  *
  * @param {ICredentialsDoc} credentials - Credentials Document from Database
- * @param {TGooGScope[]} scopes - Array of Google Oauth Scopes
+ * @param {TGoogleApiScope[]} scopes - Array of Google Oauth Scopes
  * @param {string} state - State of the app to be passed
  * @returns {string} - Google Oauth User Consent URL
  */
 function constructOauthURL(
   credentials: ICredentialsDoc,
-  scopes: TGooGScope[],
+  scopes: TGoogleApiScope[],
   state: string,
 ): string {
   const encodedClient_id = encodeURIComponent(credentials.client_id);
   const encodedRedirect_uri = encodeURIComponent(credentials.redirect_uri);
+  const encodedState = encodeURIComponent(state);
   const scopeParam = stringizeScopes(scopes);
   const encodedScope_param = encodeURIComponent(scopeParam);
-  const params = `client_id=${encodedClient_id}&redirect_uri=${encodedRedirect_uri}&response_type=code&scope=${encodedScope_param}&access_type=offline&state=${state}`;
+  const params = `client_id=${encodedClient_id}&redirect_uri=${encodedRedirect_uri}&response_type=code&scope=${encodedScope_param}&access_type=offline&state=${encodedState}`;
   return `${api.authorize}?${params}`;
 }
 
@@ -49,15 +53,20 @@ function constructOauthURL(
  *
  * @param {Response} res - Express Response Object
  * @param {string} id - Credentials ID
- * @param {TGooGScope[]} scopes - Google API Scopes
+ * @param {TGoogleApiScope[]} scopes - Google API Scopes
  */
-function redirectUser(res: Response, id: string, scopes: TGooGScope[]): void {
+function redirectUser(
+  res: Response,
+  id: string,
+  scopes: TGoogleApiScope[],
+): void {
   Credentials.findById(id)
     .then((credentials: ICredentialsDoc | null) => {
       if (credentials) {
         const state = encrypt<ICredentialsDoc['_id']>({
           data: credentials._id,
         });
+        console.log(state);
         const url = constructOauthURL(credentials, scopes, state);
         res.redirect(url);
       } else {
@@ -73,14 +82,14 @@ function redirectUser(res: Response, id: string, scopes: TGooGScope[]): void {
  * Saves the Refresh Token and Access Token in the Database for Long Term Use
  *
  * @param {ICredentialsDoc} credentials - Credentials Document from Database
- * @param {TGooGScope[]} scopes - Google Oauth API Scopes
+ * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
  * @param {IGoogTokenResponse} refreshToken - Refresh Token Response
  * @param {IGoogTokenResponse} accessToken - Access Token Response
  * @returns {Promise<ITokenDoc[]>} - Saved Token Documents
  */
 function handleTokenSaving(
   credentials: ICredentialsDoc,
-  scopes: TGooGScope[],
+  scopes: TGoogleApiScope[],
   refreshToken: Required<IGoogTokenResponse>,
   accessToken: IGoogTokenResponse,
 ): Promise<ITokenDoc[]> {
@@ -131,13 +140,13 @@ function handleTokenSaving(
  * @param {Response} res - Express Response Object
  * @param {string} id - Credentials ID
  * @param {string} code - Authorization Code Received from Google Server
- * @param {TGooGScope[]} scopes - Google API Scopes
+ * @param {TGoogleApiScope[]} scopes - Google API Scopes
  */
 function handleUserAuthorization(
   res: Response,
   id: string,
   code: string,
-  scopes: TGooGScope[],
+  scopes: TGoogleApiScope[],
 ) {
   Credentials.findById(id)
     .then(async (credentials: ICredentialsDoc | null) => {
@@ -182,19 +191,20 @@ function handleUserAuthorization(
  *
  * @param {Request} req - Express Request Object
  * @param {Response} res - Express Response Object
- * @param {TGooGScope[]} scopes - Google API Scopes
+ * @param {TGoogleApiScope[]} scopes - Google API Scopes
  */
 export default function (
   req: Request,
   res: Response,
-  scopes: TGooGScope[],
+  scopes: TGoogleApiScope[],
 ): void {
   const { creds, code, state } = req.query;
+  console.log(code, creds, String(state));
   if (!code && creds) {
     redirectUser(res, String(creds), scopes);
   } else if (code && state) {
     const stringizedCode = String(code);
-    const credID = decrypt<string>(String(state));
+    const credID = decrypt<string>(decodeURIComponent(String(state)));
     handleUserAuthorization(res, credID.data, stringizedCode, scopes);
   } else {
     badRequest(res, 'creds', 'Query Parameters');
