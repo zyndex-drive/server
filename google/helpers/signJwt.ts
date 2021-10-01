@@ -1,3 +1,8 @@
+// Others
+import { stringizeScope } from '@google/helpers';
+
+// Types
+import type { TGoogleApiScope } from '@google/helpers/types';
 import type { IServiceAccDoc } from '@models/service-account/types';
 
 const subtleCrypto = new SubtleCrypto();
@@ -91,22 +96,26 @@ async function createSignature(
   key: CryptoKey,
 ): Promise<ArrayBuffer> {
   const textBuffer = stringToArrayBuffer(text);
-  return subtleCrypto.sign('RSASSA-PKCS1-v1_5', key, textBuffer);
+  const jwtKey = subtleCrypto.sign('RSASSA-PKCS1-v1_5', key, textBuffer);
+  return jwtKey;
 }
 
 /**
  * Creates a JWT Token for a Service Account to Generate Access Token
  *
  * @param {IServiceAccDoc} serviceAccount - ServiceAccount Document from Database
+ * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
  * @returns {string} - JWT Signature for the Service Account
  */
 export default async function (
   serviceAccount: IServiceAccDoc,
+  scopes: TGoogleApiScope[],
 ): Promise<string> {
   const iat = Date.now() / 1000;
+  const stringizedScopes = stringizeScope(scopes);
   const payload = {
     iss: serviceAccount.private_key.id,
-    scope: 'https://www.googleapis.com/auth/drive',
+    scope: stringizedScopes,
     aud: 'https://oauth2.googleapis.com/token',
     exp: iat + 3600,
     iat,
@@ -115,11 +124,9 @@ export default async function (
   const encHeader = Buffer.from(JSON.stringify(jwtHeader)).toString('base64');
   const key = await importPrivateKey(serviceAccount.private_key.key);
   const signed = await createSignature(encHeader + '.' + encPayload, key);
-  return (
-    encHeader +
-    '.' +
-    encPayload +
-    '.' +
-    arrayBufferToBase64(signed).replace(/\//g, '_').replace(/\+/g, '-')
-  );
+  const jwtSignature = arrayBufferToBase64(signed)
+    .replace(/\//g, '_')
+    .replace(/\+/g, '-');
+  const jwtToken = `${encHeader}.${encPayload}.${jwtSignature}`;
+  return jwtToken;
 }
