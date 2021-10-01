@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-6](https://github.com/zyndex-drive/server/compare/v0.2.0-5...v0.2.0-6) (2021-10-01)
+
+
+### Features
+
+* **google/api/iam:** add api methods for iam projects ([eae25e4](https://github.com/zyndex-drive/server/commit/eae25e42a507230e3e5da4f39c2f170b3bfbe3c4))
+* **google/iam/service-acc:** add api methods for iam - service account ([c17a437](https://github.com/zyndex-drive/server/commit/c17a4377b3057044fd10755aaa0490d15416da46))
+* **google/iam:** consolidate api methods and api routes for google iam ([0add635](https://github.com/zyndex-drive/server/commit/0add6353d467c7d45f119ce9275f4e28c9f2e11e))
+* **google/jwt:** add helpers, methods and functions for generating a service account jwt signature ([d190854](https://github.com/zyndex-drive/server/commit/d190854e5eefef41994cb241feacd8c8eae20fab))
+
+
+### Others
+
+* **middlewares:** change comments ([8e7860b](https://github.com/zyndex-drive/server/commit/8e7860b54a473dd719fd679315cac27353f93623))
+
+
+### Code Refactoring
+
+* **google/drives:** move request method to global scope to use by all apis ([0a3a450](https://github.com/zyndex-drive/server/commit/0a3a4506681d763f25d7d941b84f6198cf33c5e1))
+* **google/helpers:** add google api requester and other misc oauth helpers ([6b92b80](https://github.com/zyndex-drive/server/commit/6b92b80fadc3cab006b6eb5a66e6f25c1fef58fb))
+* **google/oauth-helper:** refactor oauth generate method to use latest changes ([5fd58fc](https://github.com/zyndex-drive/server/commit/5fd58fc05000f2ea511566cf3315b943db038e53))
+* **routes/login:** refactor to use new changes ([94aaf60](https://github.com/zyndex-drive/server/commit/94aaf607083b0230c3eb31a2834658aa94d53518))
+
 ## [0.2.0-5](https://github.com/zyndex-drive/server/compare/v0.2.0-4...v0.2.0-5) (2021-09-27)
 
 
