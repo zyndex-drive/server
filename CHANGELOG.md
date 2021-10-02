@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-9](https://github.com/zyndex-drive/server/compare/v0.2.0-8...v0.2.0-9) (2021-10-02)
+
+
+### Bug Fixes
+
+* **google/jwt:** fix jwt - add crypto module ([1cf09c5](https://github.com/zyndex-drive/server/commit/1cf09c55cddea0f9396406c3fcb3b801ac0596ac))
+
+
+### Build System
+
+* **crypto:** add node-webcrypto module for cryptographic function ([10c0fca](https://github.com/zyndex-drive/server/commit/10c0fca283bade027810e68a9455fac978b54edb))
+
 ## [0.2.0-8](https://github.com/zyndex-drive/server/compare/v0.2.0-7...v0.2.0-8) (2021-10-02)
 
 
