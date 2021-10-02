@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-10](https://github.com/zyndex-drive/server/compare/v0.2.0-9...v0.2.0-10) (2021-10-02)
+
+
+### Features
+
+* **google/iam:** add iam - service account methods ([49e2e3f](https://github.com/zyndex-drive/server/commit/49e2e3fbceea3e4230f88461b29ec2f3ea511c15))
+* **google/iam:** append iam api methods to main API Array ([0c7ea84](https://github.com/zyndex-drive/server/commit/0c7ea8451145d3e15c8395dd2d7745cf6ded0ec9))
+* **google/requester:** add delete request method for google api requester ([b473c53](https://github.com/zyndex-drive/server/commit/b473c5397393697c1642998322dc44571f3334c0))
+
+
+### Bug Fixes
+
+* **models/service-account:** add unique id prop for service account model ([504567d](https://github.com/zyndex-drive/server/commit/504567d2cdea57c2adef2cf809af732fd2d5d93b))
+
+
+### Code Refactoring
+
+* **google/api:** append api methods to main api array ([0e81661](https://github.com/zyndex-drive/server/commit/0e816618b9ea773e818f615ebc2bc282f6830d70))
+* **google/routes:** rename api.ts to routes.ts for name conflict ([e4aefba](https://github.com/zyndex-drive/server/commit/e4aefba8a3307446312a03fc7d31c77192149e68))
+* **routes/login:** use the refactor google api methods ([b8613a1](https://github.com/zyndex-drive/server/commit/b8613a10853a0761ca3fedfdbf01dd6d7fa15829))
+
 ## [0.2.0-9](https://github.com/zyndex-drive/server/compare/v0.2.0-8...v0.2.0-9) (2021-10-02)
 
 

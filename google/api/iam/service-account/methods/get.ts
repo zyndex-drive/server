@@ -14,7 +14,7 @@ import type { TIAMApiUrlType } from '@google/api/iam/types';
  *
  * @param {ITokenDoc} token - Token Document from Database
  * @param {string} projectID - Project ID to which service accounts are to be fetched
- * @param {string} serviceAccEmail - Unique Email of Service Account
+ * @param {string} serviceAccEmail - Unique Email or ID of Service Account
  * @returns {Promise<IGoogleResponse>} - Promise Resolving to Details of Service Account
  */
 export default function (

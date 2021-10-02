@@ -48,7 +48,13 @@ export interface IGoogleRequest {
   post: <T extends string>(
     api: T,
     token: ITokenDoc,
-    data?: Record<string, string | number | boolean>,
+    data?: Record<string, unknown>,
+    headers?: Record<string, string>,
+  ) => Promise<IGoogleResponse>;
+  delete: <T extends string>(
+    api: T,
+    token: ITokenDoc,
+    data?: Record<string, unknown>,
     headers?: Record<string, string>,
   ) => Promise<IGoogleResponse>;
 }
