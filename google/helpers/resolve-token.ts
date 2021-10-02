@@ -2,14 +2,15 @@
 import { Credentials, Tokens, ServiceAccs } from '@models';
 
 // Others
-import { generateAccessToken } from '@google/handlers/nac/generate-token';
+import { generateAccessToken as generateNormalAccessToken } from '@google/handlers/nac/generate-token';
+import { generateAccessToken as generateServiceAccessToken } from '@google/handlers/sac/generate-token';
 import { objectID } from '@/helpers/uid';
 
 // Types
 import type { TGoogleApiScope } from '@google/helpers/types';
 import type { ICredentials, ICredentialsDoc } from '@models/credential/types';
 import type { IToken, ITokenDoc } from '@models/tokens/types';
-// import type { IServiceAccDoc } from '@models/service-account/types';
+import type { IServiceAccDoc } from '@models/service-account/types';
 import type { Error as MongoError } from 'mongoose';
 import type { ITokenResolver, IGetAllTokens } from '@google/helpers/types';
 
@@ -33,23 +34,36 @@ function getAllTokens(
           ServiceAccs.find({ related_to: credential._id })
             .then((serviceAccs) => {
               response.serviceAcc = serviceAccs;
+              const serviceAccountIds = serviceAccs.map(
+                (account) => account._id,
+              );
               const tokenFindParam = [
                 { related_to: credential._id },
-                ...serviceAccs.map((account) => ({ related_to: account._id })),
+                ...serviceAccountIds.map((id) => ({ related_to: id })),
               ];
               Tokens.find({
                 $or: tokenFindParam,
               })
                 .then((tokens) => {
                   if (tokens.length > 0) {
-                    const accessTokens = tokens.filter(
-                      (token) => token.type === 'access',
+                    const normalAccessTokens = tokens.filter(
+                      (token) =>
+                        token.type === 'access' &&
+                        token.ref_model === 'Credential',
+                    );
+                    const serviceAccessTokens = tokens.filter(
+                      (token) =>
+                        token.type === 'access' &&
+                        token.ref_model === 'ServiceAccount',
                     );
                     const refreshTokens = tokens.filter(
                       (token) => token.type === 'refresh',
                     );
                     response.tokens = {
-                      access: accessTokens,
+                      access: {
+                        normal: normalAccessTokens,
+                        service: serviceAccessTokens,
+                      },
                       refresh: refreshTokens,
                     };
                     response.success = true;
@@ -90,7 +104,7 @@ function checkValidity(tokens: ITokenDoc[]): IValidityCheck[] {
     /** To be future proof, Checking all Tokens which are Expiring within 15 minutes */
     const currentTime = Date.now() + 15 * 60 * 1000;
     const tokenTime = token.expires_at;
-    const response: { token: ITokenDoc; validity: boolean } = {
+    const response: IValidityCheck = {
       token,
       validity: false,
     };
@@ -126,13 +140,13 @@ function deleteInvalidTokens(tokens: ITokenDoc[]): Promise<void> {
  * @param {ITokenDoc} refreshToken - Refresh Token Document from Database
  * @returns {Promise<ITokenDoc>} - Generated Access Token
  */
-function generateTokenSave(
+function generateNormalTokenSave(
   credentials: ICredentialsDoc,
   scopes: TGoogleApiScope[],
   refreshToken: ITokenDoc,
 ): Promise<ITokenDoc> {
   return new Promise<ITokenDoc>((resolve, reject) => {
-    generateAccessToken(credentials, refreshToken.token)
+    generateNormalAccessToken(credentials, refreshToken.token)
       .then((response) => {
         const uid = objectID('t');
         const now = Date.now();
@@ -160,14 +174,116 @@ function generateTokenSave(
   });
 }
 
-// interface IServiceAccountTokenHandler {
-//   serviceAcc: IServiceAccDoc;
-//   token: ITokenDoc;
-// }
+/**
+ * Generates a Access Token for Service Account and Saves it to Database
+ *
+ * @param {IServiceAccDoc} account - Service Account Document from Database
+ * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
+ * @returns {Promise<ITokenDoc>} - Generated Access Token
+ */
+function generateServiceTokenSave(
+  account: IServiceAccDoc,
+  scopes: TGoogleApiScope[],
+): Promise<ITokenDoc> {
+  return new Promise<ITokenDoc>((resolve, reject) => {
+    generateServiceAccessToken(account, scopes)
+      .then((response) => {
+        const uid = objectID('t');
+        const now = Date.now();
+        const token: IToken = {
+          _id: uid,
+          token: response.access_token,
+          type: 'access',
+          related_to: account._id,
+          scopes,
+          ref_model: 'ServiceAccount',
+          expires_at: now + response.expires_in * 1000,
+          website: 'google.com',
+        };
+        Tokens.createDoc(token)
+          .then((savedToken) => {
+            resolve(savedToken);
+          })
+          .catch((err: MongoError) => {
+            reject(new Error(`${err.name}: ${err.message}`));
+          });
+      })
+      .catch((err) => {
+        reject(new Error(err));
+      });
+  });
+}
 
-// function serviceAccountTokenHandler(serviceAccs: IServiceAccDoc[]): IServiceAccountTokenHandler[] {
-
-// }
+/**
+ * Handles Access Token Generation for Service Account Accounts
+ *
+ * @param {IGetAllTokens} tokenData - Response from GetallTokens Function
+ * @param {TGoogleApiScope} scopes - Google Oauth API Scopes
+ * @returns {Promise<ITokenDoc | false>} - Access Token for Each Service Account
+ */
+function serviceAccountTokenHandler(
+  tokenData: IGetAllTokens,
+  scopes: TGoogleApiScope[],
+): Promise<ITokenDoc[] | false> {
+  return new Promise<ITokenDoc[] | false>((resolve, reject) => {
+    const { serviceAcc } = tokenData;
+    if (serviceAcc) {
+      const { tokens } = tokenData;
+      if (tokens && tokens.access.service) {
+        const validityArray = checkValidity(tokens.access.service);
+        const validTokens = validityArray
+          .filter((token) => token.validity)
+          .map((token) => token.token);
+        const invalidTokens = validityArray
+          .filter((token) => !token.validity)
+          .map((token) => token.token);
+        deleteInvalidTokens(invalidTokens)
+          .then(() => {
+            if (validTokens.length > 0) {
+              resolve(validTokens);
+            } else {
+              const tokenArray: ITokenDoc[] = [];
+              serviceAcc.forEach((account) => {
+                generateServiceTokenSave(account, scopes)
+                  .then((serviceToken) => {
+                    tokenArray.push(serviceToken);
+                  })
+                  .catch((err: MongoError) => {
+                    reject(new Error(`${err.name}: ${err.message}`));
+                  });
+              });
+              if (tokenArray.length > 1) {
+                resolve(tokenArray);
+              } else {
+                resolve(false);
+              }
+            }
+          })
+          .catch((err: string) => {
+            reject(new Error(err));
+          });
+      } else {
+        const tokenArray: ITokenDoc[] = [];
+        serviceAcc.forEach((account) => {
+          generateServiceTokenSave(account, scopes)
+            .then((serviceToken) => {
+              tokenArray.push(serviceToken);
+            })
+            .catch((err: MongoError) => {
+              reject(new Error(`${err.name}: ${err.message}`));
+            });
+        });
+        if (tokenArray.length > 1) {
+          resolve(tokenArray);
+        } else {
+          resolve(false);
+        }
+      }
+    } else {
+      resolve(false);
+    }
+  });
+}
 
 /**
  * Checks Validity of Access Tokens and Refreshes it
@@ -181,21 +297,24 @@ function checkTokenRefreshit(
   scopes: TGoogleApiScope[],
 ): Promise<IGetAllTokens> {
   return new Promise<IGetAllTokens>((resolve, reject) => {
-    const { success, credential, tokens } = tokenData;
+    const { success, credential, serviceAcc, tokens } = tokenData;
     if (success && credential && tokens) {
       const { access, refresh } = tokens;
       if (refresh.length > 0) {
         const response: IGetAllTokens = {
           success: false,
           credential,
+          serviceAcc,
         };
-        if (access.length === 0) {
-          generateTokenSave(credential, scopes, refresh[0])
+        if (access.normal.length === 0) {
+          generateNormalTokenSave(credential, scopes, refresh[0])
             .then((savedToken) => {
               response.success = false;
               response.tokens = {
                 refresh,
-                access: [savedToken],
+                access: {
+                  normal: [savedToken],
+                },
               };
               resolve(response);
             })
@@ -203,7 +322,7 @@ function checkTokenRefreshit(
               reject(new Error(err));
             });
         } else {
-          const validityArray = checkValidity(access);
+          const validityArray = checkValidity(access.normal);
           const validTokens = validityArray
             .filter((token) => token.validity)
             .map((token) => token.token);
@@ -216,15 +335,19 @@ function checkTokenRefreshit(
               if (validTokens.length > 0) {
                 response.tokens = {
                   refresh,
-                  access: validTokens,
+                  access: {
+                    normal: validTokens,
+                  },
                 };
                 resolve(response);
               } else {
-                generateTokenSave(credential, scopes, refresh[0])
+                generateNormalTokenSave(credential, scopes, refresh[0])
                   .then((savedToken) => {
                     response.tokens = {
                       refresh,
-                      access: [savedToken],
+                      access: {
+                        normal: [savedToken],
+                      },
                     };
                     resolve(response);
                   })
@@ -253,7 +376,7 @@ function checkTokenRefreshit(
 }
 
 /**
- * Resolves a Access Token for the Respective Google Credential ID
+ * Resolves a Access Token for the Respective Google Credential ID (Incl. Service Accounts)
  *
  * @param { string } credentialID - Credentials ID From Database
  * @param { TGoogleApiScope[] } scopes - Google OAuth API Scopes
@@ -269,11 +392,34 @@ export default function (
         checkTokenRefreshit(credentialData, scopes)
           .then((validTokens) => {
             if (validTokens.tokens) {
-              const response: ITokenResolver = {
-                success: true,
-                tokens: validTokens.tokens.access,
-              };
-              resolve(response);
+              serviceAccountTokenHandler(credentialData, scopes)
+                .then((serviceTokens) => {
+                  if (validTokens.tokens) {
+                    if (serviceTokens) {
+                      const response: ITokenResolver = {
+                        success: true,
+                        tokens: [
+                          ...validTokens.tokens.access.normal,
+                          ...serviceTokens,
+                        ],
+                      };
+                      resolve(response);
+                    } else {
+                      const response: ITokenResolver = {
+                        success: true,
+                        tokens: validTokens.tokens.access.normal,
+                      };
+                      resolve(response);
+                    }
+                  } else {
+                    reject(new Error('No Possible Tokens Found or Generated'));
+                  }
+                })
+                .catch(() => {
+                  reject(
+                    new Error('Error While Fetching Service Account Tokens'),
+                  );
+                });
             } else {
               reject(new Error('No Tokens Found'));
             }

@@ -15,7 +15,7 @@ import type {
 } from '@google/helpers/types';
 
 /**
- * Saves the Refresh Token and Access Token in the Database for Long Term Use
+ * Saves the Access Token in the Database for Long Term Use
  *
  * @param {IServiceAccDoc} account - Credentials Document from Database
  * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
