@@ -3,7 +3,9 @@ import express from 'express';
 
 // Google Oauth
 import { normalAccountHandler, oauthHelpers } from '@google';
-import projectsList from '@google/api/iam/projects/methods/list';
+
+// Google API Methods
+import { iam } from '@google/api';
 
 // Google Drive
 import driveScopes from '@google/api/drive/scopes';
@@ -24,7 +26,8 @@ router.post('/sample/', (req, res) => {
       oauthHelpers
         .resolveToken(result[0]._id, [...driveScopes, ...scopesss])
         .then((result) => {
-          projectsList(result.tokens[0])
+          iam.projects
+            .list(result.tokens[0])
             .then((res2) => {
               res.json({ res2, result });
             })
