@@ -1,3 +1,6 @@
+// Crypto
+import { Crypto } from 'node-webcrypto-ossl';
+
 // Others
 import { stringizeScope } from '@google/helpers';
 
@@ -5,7 +8,8 @@ import { stringizeScope } from '@google/helpers';
 import type { TGoogleApiScope } from '@google/helpers/types';
 import type { IServiceAccDoc } from '@models/service-account/types';
 
-const subtleCrypto = new SubtleCrypto();
+const crypto = new Crypto();
+const subtleCrypto = crypto.subtle;
 
 const jwtHeader = {
   alg: 'RS256',
