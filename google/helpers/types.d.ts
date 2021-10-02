@@ -10,7 +10,10 @@ export interface IGetAllTokens {
   credential?: ICredentialsDoc;
   serviceAcc?: IServiceAccDoc[];
   tokens?: {
-    access: ITokenDoc[];
+    access: {
+      normal: ITokenDoc[];
+      service?: ITokenDoc[];
+    };
     refresh: ITokenDoc[];
   };
 }
