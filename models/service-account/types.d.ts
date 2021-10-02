@@ -6,6 +6,7 @@ import type { IInlineResponse } from '@typs/inline.response';
 export interface IServiceAcc {
   _id: Types.ObjectId;
   project_id: string;
+  unique_id: string;
   private_key: {
     id: string;
     key: string;

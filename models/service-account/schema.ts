@@ -10,6 +10,10 @@ const schema = new Schema<IServiceAccDoc, IServiceAccModel>({
     type: String,
     required: true,
   },
+  unique_id: {
+    type: String,
+    required: true,
+  },
   private_key: {
     id: {
       type: String,
