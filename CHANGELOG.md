@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-8](https://github.com/zyndex-drive/server/compare/v0.2.0-7...v0.2.0-8) (2021-10-02)
+
+
+### Features
+
+* **google/resolve-token:** add service account token resolver to google oauth helpers ([422de8a](https://github.com/zyndex-drive/server/commit/422de8a9e72059136c27f4a70594d3db112616ba))
+
+
+### Code Refactoring
+
+* **google/jwt:** rename jwt file ([fb1c778](https://github.com/zyndex-drive/server/commit/fb1c778161e42064224780125b813b56ead4ce42))
+
 ## [0.2.0-7](https://github.com/zyndex-drive/server/compare/v0.2.0-6...v0.2.0-7) (2021-10-01)
 
 
