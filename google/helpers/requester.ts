@@ -8,7 +8,7 @@ import serialize from 'query-string';
 
 // Types
 import type { IGoogleRequest, IGoogleResponse } from './types';
-import type { AxiosError } from 'axios';
+import type { AxiosError, AxiosResponse } from 'axios';
 import type { ITokenDoc } from '@models/tokens/types';
 
 /**
@@ -61,6 +61,30 @@ function constructHeaders(
 }
 
 /**
+ * Handles API Response from Google API Request
+ *
+ * @param {AxiosResponse} response - API Response from the Request
+ * @returns {IGoogleResponse} - Modified Response
+ */
+function handleResponse(response: AxiosResponse): IGoogleResponse {
+  if (response.status === 200) {
+    const funcResponse: IGoogleResponse = {
+      success: true,
+      data: response.data,
+      error: null,
+    };
+    return funcResponse;
+  } else {
+    const funcResponse: IGoogleResponse = {
+      success: false,
+      data: null,
+      error: null,
+    };
+    return funcResponse;
+  }
+}
+
+/**
  * Google API Requester and Response Handlers
  */
 const googleRequest: IGoogleRequest = {
@@ -87,24 +111,10 @@ const googleRequest: IGoogleRequest = {
           headers: getHeaders,
         })
         .then((response) => {
-          if (response.status === 200) {
-            const funcResponse: IGoogleResponse = {
-              success: true,
-              data: response.data,
-              error: null,
-            };
-            resolve(funcResponse);
-          } else {
-            const funcResponse: IGoogleResponse = {
-              success: false,
-              data: null,
-              error: null,
-            };
-            resolve(funcResponse);
-          }
+          const resp = handleResponse(response);
+          resolve(resp);
         })
         .catch((error: AxiosError) => {
-          console.log(error.response && error.response.data);
           reject(new Error(`${error.name}: ${error.message}`));
         });
     }),
@@ -121,7 +131,7 @@ const googleRequest: IGoogleRequest = {
   post: <T extends string>(
     api: T,
     token: ITokenDoc,
-    data?: Record<string, string | number | boolean>,
+    data?: Record<string, unknown>,
     headers?: Record<string, string>,
   ): Promise<IGoogleResponse> =>
     new Promise<IGoogleResponse>((resolve, reject) => {
@@ -132,21 +142,40 @@ const googleRequest: IGoogleRequest = {
           headers: getHeaders,
         })
         .then((response) => {
-          if (response.status === 200) {
-            const funcResponse: IGoogleResponse = {
-              success: true,
-              data: response.data,
-              error: null,
-            };
-            resolve(funcResponse);
-          } else {
-            const funcResponse: IGoogleResponse = {
-              success: false,
-              data: null,
-              error: null,
-            };
-            resolve(funcResponse);
-          }
+          const resp = handleResponse(response);
+          resolve(resp);
+        })
+        .catch((error: AxiosError) => {
+          reject(new Error(`${error.name}: ${error.message}`));
+        });
+    }),
+
+  /**
+   * Makes a DELETE Google API Request
+   *
+   * @param {string} api - Google API URL
+   * @param {ITokenDoc} token - Relevant Token Document from Database
+   * @param {Record<string, string | number | boolean>} data - Data to be sent in Request
+   * @param {Record<string, string>} headers - Additional Headers to be Sent
+   * @returns {Promise<IGoogleResponse>} - Response from the API
+   */
+  delete: <T extends string>(
+    api: T,
+    token: ITokenDoc,
+    data?: Record<string, unknown>,
+    headers?: Record<string, string>,
+  ): Promise<IGoogleResponse> =>
+    new Promise<IGoogleResponse>((resolve, reject) => {
+      const url = constructURL<T>('post', api);
+      const getHeaders = constructHeaders('post', token, headers);
+      axios
+        .delete<IGoogleResponse>(url, {
+          headers: getHeaders,
+          data,
+        })
+        .then((response) => {
+          const resp = handleResponse(response);
+          resolve(resp);
         })
         .catch((error: AxiosError) => {
           reject(new Error(`${error.name}: ${error.message}`));
