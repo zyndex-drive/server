@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-11](https://github.com/zyndex-drive/server/compare/v0.2.0-10...v0.2.0-11) (2021-10-04)
+
+
+### Features
+
+* **google/drives:** add api methods for google/drive/drives and about routes ([994f4bd](https://github.com/zyndex-drive/server/commit/994f4bd836b8925a226587e428ca604a8634b874))
+* **google/requester:** add type hintings for google request and response ([d3fb195](https://github.com/zyndex-drive/server/commit/d3fb195221ff1c6e4f2b4d8eaae930c0af89807d))
+
+
+### Build System
+
+* **package:** add uuid package ([ec92b2c](https://github.com/zyndex-drive/server/commit/ec92b2c3d326785e51acfe27635c83a9105839e1))
+
 ## [0.2.0-10](https://github.com/zyndex-drive/server/compare/v0.2.0-9...v0.2.0-10) (2021-10-02)
 
 
