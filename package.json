@@ -53,6 +53,7 @@
     "nodemailer": "^6.6.2",
     "query-string": "^7.0.1",
     "sha1": "^1.1.1",
+    "uuid": "^8.3.2",
     "x-xss-protection": "^2.0.0"
   },
   "devDependencies": {
@@ -72,6 +73,7 @@
     "@types/node": "^15.12.4",
     "@types/nodemailer": "^6.4.2",
     "@types/sha1": "^1.1.2",
+    "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "@typescript-eslint/parser": "^4.28.0",
     "chai": "^4.3.4",
