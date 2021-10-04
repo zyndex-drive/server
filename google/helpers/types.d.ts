@@ -32,29 +32,34 @@ export interface IGoogTokenResponse {
   token_type: string;
 }
 
-export interface IGoogleResponse {
+export interface IGoogleResponse<T = Record<unknown, unknown>> {
   success: boolean;
-  data?: unknown;
+  data?: T;
   error?: unknown;
 }
 
 export interface IGoogleRequest {
-  get: <T extends string>(
+  get: <T extends string, U = Record<unknown, unknown>>(
     api: T,
     token: ITokenDoc,
     params?: Record<string, string | number | boolean>,
     headers?: Record<string, string>,
-  ) => Promise<IGoogleResponse>;
-  post: <T extends string>(
+  ) => Promise<IGoogleResponse<U>>;
+  post: <
+    T extends string,
+    U = Record<unknown, unknown>,
+    V = Record<unknown, unknown>,
+  >(
+    api: T,
+    token: ITokenDoc,
+    data?: U,
+    params?: Record<string, string>,
+    headers?: Record<string, string>,
+  ) => Promise<IGoogleResponse<V>>;
+  delete: <T extends string, U = Record<unknown, unknown>>(
     api: T,
     token: ITokenDoc,
     data?: Record<string, unknown>,
     headers?: Record<string, string>,
-  ) => Promise<IGoogleResponse>;
-  delete: <T extends string>(
-    api: T,
-    token: ITokenDoc,
-    data?: Record<string, unknown>,
-    headers?: Record<string, string>,
-  ) => Promise<IGoogleResponse>;
+  ) => Promise<IGoogleResponse<U>>;
 }
