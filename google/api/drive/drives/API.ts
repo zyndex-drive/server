@@ -27,4 +27,14 @@ export default {
    * @returns {TDriveUrlType} - API String for create route
    */
   create: 'https://www.googleapis.com/drive/v3/drives' as TDriveUrlType,
+
+  /**
+   * Google Drive API for Updating Details a Shared Drive
+   *
+   * @module update
+   * @param {string} driveId - The ID of the shared drive
+   * @returns {TDriveUrlType} - API String for update route
+   */
+  update: (driveId: string): TDriveUrlType =>
+    `https://www.googleapis.com/drive/v3/drives/${driveId}`,
 };
