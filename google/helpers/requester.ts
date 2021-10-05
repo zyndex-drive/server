@@ -107,7 +107,7 @@ const googleRequest: IGoogleRequest = {
       const url = constructURL<T>(api, params);
       const getHeaders = constructHeaders('get', token, headers);
       axios
-        .get<IGoogleResponse<U>>(url, {
+        .get<U>(url, {
           headers: getHeaders,
         })
         .then((response) => {
@@ -144,7 +144,7 @@ const googleRequest: IGoogleRequest = {
       const url = constructURL<T>(api, params);
       const getHeaders = constructHeaders('post', token, headers);
       axios
-        .post<IGoogleResponse<V>>(url, data, {
+        .post<V>(url, data, {
           headers: getHeaders,
         })
         .then((response) => {
@@ -175,7 +175,7 @@ const googleRequest: IGoogleRequest = {
       const url = constructURL<T>(api);
       const getHeaders = constructHeaders('post', token, headers);
       axios
-        .delete<IGoogleResponse<U>>(url, {
+        .delete<U>(url, {
           headers: getHeaders,
           data,
         })
