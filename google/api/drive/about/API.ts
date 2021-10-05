@@ -1,4 +1,4 @@
-import type { TDriveUrlType } from '../types';
+import type { TDriveUrlType } from '@google/api/drive/types';
 
 /** API Routes for Getting Information about drives in Google Drive */
 export default {

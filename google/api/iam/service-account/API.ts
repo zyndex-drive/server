@@ -1,4 +1,4 @@
-import type { TIAMApiUrlType } from '@google/api/iam/types';
+import type { TIAMApiUrlType } from '@google/api/iam/service-account/types';
 
 /** API Routes for Managing Google IAM - Service Accounts */
 export default {
