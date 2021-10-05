@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-12](https://github.com/zyndex-drive/server/compare/v0.2.0-11...v0.2.0-12) (2021-10-05)
+
+
+### Features
+
+* **google/api:** update existing methods to new requester type hintings ([4f23dd0](https://github.com/zyndex-drive/server/commit/4f23dd02a1c2dc333100c1c216271c0b5b8a8ca7))
+* **google/requester:** add complete type hintings for requester ([2155e16](https://github.com/zyndex-drive/server/commit/2155e16925a86a5dc3022c85c44a4e2ae7d5162c))
+
 ## [0.2.0-11](https://github.com/zyndex-drive/server/compare/v0.2.0-10...v0.2.0-11) (2021-10-04)
 
 
