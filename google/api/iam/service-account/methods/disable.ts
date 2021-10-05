@@ -7,7 +7,7 @@ import { googleApiRequest } from '@google/helpers';
 // Types
 import type { ITokenDoc } from '@models/tokens/types';
 import type { IGoogleResponse } from '@google/helpers/types';
-import type { TIAMApiUrlType } from '@google/api/iam/types';
+import type { TIAMApiUrlType } from '@google/api/iam/service-account/types';
 
 /**
  * Disables a Service Account Temporarirly

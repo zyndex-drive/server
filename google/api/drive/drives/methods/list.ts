@@ -8,6 +8,15 @@ import { googleApiRequest } from '@google/helpers';
 import type { ITokenDoc } from '@models/tokens/types';
 import type { IGoogleResponse } from '@google/helpers/types';
 import type { TDriveUrlType } from '@google/api/drive/types';
+import type { IDriveResourceType } from '@google/api/drive/drives/types';
+
+// Custom Types
+
+interface IDrivesList {
+  kind: 'drive#driveList';
+  nextPageToken?: string;
+  drives: IDriveResourceType[];
+}
 
 /**
  * Lists all Shared Drives in the Respective Account
@@ -21,11 +30,15 @@ export default function (
   token: ITokenDoc,
   pageToken?: string,
   q?: string,
-): Promise<IGoogleResponse> {
+): Promise<IGoogleResponse<IDrivesList>> {
   const params = {
     pageSize: 20,
     pageToken: pageToken ? pageToken : '',
     q: q ? q : '',
   };
-  return googleApiRequest.get<TDriveUrlType>(api.list, token, params);
+  return googleApiRequest.get<TDriveUrlType, IDrivesList>(
+    api.list,
+    token,
+    params,
+  );
 }

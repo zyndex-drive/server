@@ -1,4 +1,4 @@
-import type { TCloudApiUrlType } from '@google/api/iam/types';
+import type { TCloudApiUrlType } from '@google/api/iam/projects/types';
 
 /** API Routes for Managing Google IAM - Projects in Google Cloud Console */
 export default {

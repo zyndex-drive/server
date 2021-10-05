@@ -1,4 +1,4 @@
-export interface IDriveResourceType {
+export interface IDriveResourceDetails {
   name: string;
   capabilities: {
     canAddChildren: boolean;
@@ -20,11 +20,16 @@ export interface IDriveResourceType {
     canShare: boolean;
     canTrashChildren: boolean;
   };
-  createdTime: Date;
   restrictions: {
     adminManagedRestrictions: boolean;
     copyRequiresWriterPermission: boolean;
     domainUsersOnly: boolean;
     driveMembersOnly: boolean;
   };
+}
+
+export interface IDriveResourceType extends IDriveResourceDetails {
+  id: string;
+  createdTime: string;
+  hidden: boolean;
 }

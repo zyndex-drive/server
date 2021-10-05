@@ -12,15 +12,27 @@ import type { ITokenDoc } from '@models/tokens/types';
 import type { IGoogleResponse } from '@google/helpers/types';
 import type {
   TIAMApiUrlType,
-  IServiceAccountDetails,
-} from '@google/api/iam/types';
+  IServiceAccountResource,
+} from '@google/api/iam/service-account/types';
 
+// Custom Types
+
+interface IServiceAccountDetails {
+  name: string;
+  displayName: string;
+  description: string;
+}
+
+interface IServiceAccCreatePostData {
+  accountId: string;
+  serviceAccount: IServiceAccountDetails;
+}
+
+// Code
 const ALPHAS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 const NUMS = '0123456789';
 const ALPHANUMS = `${ALPHAS}${NUMS}`;
-
 const LENGTH = 6;
-
 const alphaUid = customAlphabet(ALPHAS, LENGTH);
 const alphaNumUid = customAlphabet(ALPHANUMS, LENGTH);
 
@@ -42,18 +54,22 @@ function generateAccountId(): string {
  * @param {ITokenDoc} token - Token Document from Database
  * @param {string} projectID - Project ID to which service account is to be Created
  * @param {IServiceAccountDetails} serviceAccountDetails - Object Containing Details of the Service Account
- * @returns {Promise<IGoogleResponse>} - Promise Resolving to Details of Created Service Account
+ * @returns {Promise<IGoogleResponse<IServiceAccountResource>>} - Promise Resolving to Details of Created Service Account
  */
 export default function (
   token: ITokenDoc,
   projectID: string,
   serviceAccountDetails: IServiceAccountDetails,
-): Promise<IGoogleResponse> {
+): Promise<IGoogleResponse<IServiceAccountResource>> {
   const uid = generateAccountId();
   const apiUrl = api.create(projectID);
-  const data = {
+  const data: IServiceAccCreatePostData = {
     accountId: uid,
     serviceAccount: serviceAccountDetails,
   };
-  return googleApiRequest.post<TIAMApiUrlType>(apiUrl, token, data);
+  return googleApiRequest.post<
+    TIAMApiUrlType,
+    IServiceAccCreatePostData,
+    IServiceAccountResource
+  >(apiUrl, token, data);
 }

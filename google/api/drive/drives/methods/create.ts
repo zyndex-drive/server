@@ -11,28 +11,31 @@ import { googleApiRequest } from '@google/helpers';
 import type { ITokenDoc } from '@models/tokens/types';
 import type { IGoogleResponse } from '@google/helpers/types';
 import type { TDriveUrlType } from '@google/api/drive/types';
-import type { IDriveResourceType } from '@google/api/drive/drives/types';
+import type {
+  IDriveResourceDetails,
+  IDriveResourceType,
+} from '@google/api/drive/drives/types';
 
 /**
  * Gets Details about a Shared Drive
  *
  * @param {ITokenDoc} token - Token Document from Database
  * @param {IDriveResourceType} driveResource - Details for Creating Shared Drive
- * @returns {Promise<IGoogleResponse>} - Promise Resolving to Details
+ * @returns {Promise<IGoogleResponse<IDriveResourceType>>} - Promise Resolving to Details
  */
 export default function (
   token: ITokenDoc,
-  driveResource: IDriveResourceType,
-): Promise<IGoogleResponse> {
+  driveResource: IDriveResourceDetails,
+): Promise<IGoogleResponse<IDriveResourceType>> {
   const requestId = uuidv4();
   const params = {
     requestId,
+    fields: 'name,id,capabilities,createdTime,hidden,restrictions',
   };
   const apiUrl = api.create;
-  return googleApiRequest.post<TDriveUrlType, IDriveResourceType>(
-    apiUrl,
-    token,
-    driveResource,
-    params,
-  );
+  return googleApiRequest.post<
+    TDriveUrlType,
+    IDriveResourceDetails,
+    IDriveResourceType
+  >(apiUrl, token, driveResource, params);
 }
