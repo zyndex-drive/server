@@ -56,6 +56,17 @@ export interface IGoogleRequest {
     params?: Record<string, string>,
     headers?: Record<string, string>,
   ) => Promise<IGoogleResponse<V>>;
+  patch: <
+    T extends string,
+    U = Record<unknown, unknown>,
+    V = Record<unknown, unknown>,
+  >(
+    api: T,
+    token: ITokenDoc,
+    data?: U,
+    params?: Record<string, string>,
+    headers?: Record<string, string>,
+  ) => Promise<IGoogleResponse<V>>;
   delete: <T extends string, U = Record<unknown, unknown>>(
     api: T,
     token: ITokenDoc,
