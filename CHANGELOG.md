@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-13](https://github.com/zyndex-drive/server/compare/v0.2.0-12...v0.2.0-13) (2021-10-06)
+
+
+### Features
+
+* **google/drive:** add method exports for google/drive ([ae104bc](https://github.com/zyndex-drive/server/commit/ae104bca3c08477f9261cd8ada4f536e61f0c423))
+* **google/drives:** add api methods for drive/drives ([479faab](https://github.com/zyndex-drive/server/commit/479faabe02f852fba83b519e6fd08cfa4816e9e3))
+* **google/drives:** add api methods for drive/permissions ([46f2505](https://github.com/zyndex-drive/server/commit/46f25053a5e92f28c95a8f7d30f3104f3b5c0d5e))
+* **google/requester:** add patch request method for google/requester function ([59af9c5](https://github.com/zyndex-drive/server/commit/59af9c51a8f5f9054be96a8265e5882652a674bf))
+
+
+### Others
+
+* **google/iam:** add scope exports ([e92534a](https://github.com/zyndex-drive/server/commit/e92534a9d3e300c9a73cdd28374ccfdab8f61c99))
+
+
+### Docs
+
+* **google/drive:** add api documentation for drive/files ([b30bd10](https://github.com/zyndex-drive/server/commit/b30bd104bbc365dea4a999eb68bca7c928ae56fd))
+
+
+### Code Refactoring
+
+* **google/api:** add default exports ([4c985ba](https://github.com/zyndex-drive/server/commit/4c985ba1851deb003647d92ff9ce82ecd8275c5a))
+
 ## [0.2.0-12](https://github.com/zyndex-drive/server/compare/v0.2.0-11...v0.2.0-12) (2021-10-05)
 
 
