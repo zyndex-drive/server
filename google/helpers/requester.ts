@@ -157,6 +157,43 @@ const googleRequest: IGoogleRequest = {
     }),
 
   /**
+   * Makes a POST Google API Request
+   *
+   * @param {string} api - Google API URL
+   * @param {ITokenDoc} token - Relevant Token Document from Database
+   * @param {Record<string, string | number | boolean>} data - Data to be sent in Request
+   * @param {Record<string, string | number | boolean>} params - params to be attached to URL
+   * @param {Record<string, string>} headers - Additional Headers to be Sent
+   * @returns {Promise<IGoogleResponse>} - Response from the API
+   */
+  patch: <
+    T extends string,
+    U = Record<string, unknown>,
+    V = Record<string, unknown>,
+  >(
+    api: T,
+    token: ITokenDoc,
+    data?: U,
+    params?: Record<string, string>,
+    headers?: Record<string, string>,
+  ): Promise<IGoogleResponse<V>> =>
+    new Promise<IGoogleResponse<V>>((resolve, reject) => {
+      const url = constructURL<T>(api, params);
+      const getHeaders = constructHeaders('post', token, headers);
+      axios
+        .patch<V>(url, data, {
+          headers: getHeaders,
+        })
+        .then((response) => {
+          const resp = handleResponse<V>(response);
+          resolve(resp);
+        })
+        .catch((error: AxiosError) => {
+          reject(new Error(`${error.name}: ${error.message}`));
+        });
+    }),
+
+  /**
    * Makes a DELETE Google API Request
    *
    * @param {string} api - Google API URL

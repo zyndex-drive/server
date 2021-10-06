@@ -1,11 +1,13 @@
-import get from './get';
 import list from './list';
+import get from './get';
 import create from './create';
 import update from './update';
+import { default as Delete } from './delete';
 
 export default {
-  get,
   list,
+  get,
   create,
   update,
+  delete: Delete,
 };
