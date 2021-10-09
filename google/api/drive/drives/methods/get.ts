@@ -4,6 +4,10 @@ import api from '@google/api/drive/drives/API';
 // Google Request Method
 import { googleApiRequest } from '@google/helpers';
 
+// Other Helpers
+import fields from '@google/api/drive/drives/fields';
+import { constructFields } from '@google/helpers';
+
 // Types
 import type { ITokenDoc } from '@models/tokens/types';
 import type { IGoogleResponse } from '@google/helpers/types';
@@ -22,7 +26,7 @@ export default function (
   driveId: string,
 ): Promise<IGoogleResponse<IDriveResourceType>> {
   const params = {
-    fields: 'name,id,capabilities,createdTime,hidden,restrictions',
+    fields: constructFields(fields),
   };
   return googleApiRequest.get<TDriveUrlType, IDriveResourceType>(
     api.get(driveId),

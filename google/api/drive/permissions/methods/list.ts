@@ -4,6 +4,10 @@ import api from '@google/api/drive/permissions/API';
 // Google Request Method
 import { googleApiRequest } from '@google/helpers';
 
+// Other Helpers
+import fields from '@google/api/drive/permissions/fields';
+import { constructFields } from '@google/helpers';
+
 // Types
 import type { ITokenDoc } from '@models/tokens/types';
 import type { IGoogleResponse } from '@google/helpers/types';
@@ -15,7 +19,7 @@ import type { IDrivePermissionResource } from '@google/api/drive/permissions/typ
 interface IPermissionsList {
   kind: 'drive#permissionList';
   nextPageToken?: string;
-  drives: IDrivePermissionResource[];
+  permissions: IDrivePermissionResource[];
 }
 
 /**
@@ -30,7 +34,7 @@ export default function (
   fileId: string,
 ): Promise<IGoogleResponse<IPermissionsList>> {
   const params = {
-    fields: 'id,type,emailAddress,role,domain,photoLink,permissionDetails',
+    fields: constructFields(fields, 'permissions'),
   };
   const url = api.list(fileId);
   return googleApiRequest.get<TDriveUrlType, IPermissionsList>(

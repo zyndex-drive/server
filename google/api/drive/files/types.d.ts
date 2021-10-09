@@ -1,4 +1,5 @@
-import { IDrivePermissionResource } from '@google/api/drive/permissions/types';
+import type { IDrivePermissionResource } from '@google/api/drive/permissions/types';
+import type { TGoogleMimeType } from '@google/helpers/types';
 
 export type TOrderbyValues =
   | 'createdTime'
@@ -14,6 +15,20 @@ export interface IDriveFileSearchDetails {
   orderBy?: `${TOrderbyValues}${' desc' | ''}`;
   supportsAllDrives?: boolean;
   pageToken?: string;
+}
+
+export interface IDriveFileAdvancedSearch {
+  positive?: {
+    name?: string | string[];
+    mimeType?: TGoogleMimeType | TGoogleMimeType[];
+    fileExtension?: string | string[];
+    size?: `${'>' | '<'} ${number}`;
+  };
+  negative?: {
+    name?: string | string[];
+    mimeType?: TGoogleMimeType | TGoogleMimeType[];
+    fileExtension?: string | string[];
+  };
 }
 
 export interface IDriveFileDetails {

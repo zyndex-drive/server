@@ -4,6 +4,10 @@ import api from '@google/api/drive/drives/API';
 // Google Request Method
 import { googleApiRequest } from '@google/helpers';
 
+// Other Helpers
+import fields from '@google/api/drive/drives/fields';
+import { constructFields } from '@google/helpers';
+
 // Types
 import type { ITokenDoc } from '@models/tokens/types';
 import type { IGoogleResponse } from '@google/helpers/types';
@@ -27,7 +31,7 @@ export default function (
   drivePatchData: Partial<IDriveResourceDetails>,
 ): Promise<IGoogleResponse<IDriveResourceType>> {
   const params = {
-    fields: 'name,id,capabilities,createdTime,hidden,restrictions',
+    fields: constructFields(fields),
   };
   const url = api.update(driveId);
   return googleApiRequest.patch<

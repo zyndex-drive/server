@@ -8,6 +8,7 @@ import {
 
 export { api as oauthAuthenticationApis } from './helpers';
 export { api as oauthRouteApis } from './routes';
+export { scopes as oauthScopes } from './api';
 
 export { default as normalAccountHandler } from './handlers/nac';
 export { default as serviceAccountHandler } from './handlers/sac';
