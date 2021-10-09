@@ -12,7 +12,7 @@ export interface IDrivePermissionDetails {
   ];
 }
 
-export interface IDrivePermissionResource extends IDrivePermissionResource {
+export interface IDrivePermissionResource extends IDrivePermissionDetails {
   id: string;
   domain: string;
   photoLink: string;

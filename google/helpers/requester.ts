@@ -115,7 +115,7 @@ const googleRequest: IGoogleRequest = {
           resolve(resp);
         })
         .catch((error: AxiosError) => {
-          reject(new Error(`${error.name}: ${error.message}`));
+          reject(error);
         });
     }),
 
@@ -152,7 +152,7 @@ const googleRequest: IGoogleRequest = {
           resolve(resp);
         })
         .catch((error: AxiosError) => {
-          reject(new Error(`${error.name}: ${error.message}`));
+          reject(error);
         });
     }),
 
@@ -189,7 +189,7 @@ const googleRequest: IGoogleRequest = {
           resolve(resp);
         })
         .catch((error: AxiosError) => {
-          reject(new Error(`${error.name}: ${error.message}`));
+          reject(error);
         });
     }),
 
@@ -221,7 +221,7 @@ const googleRequest: IGoogleRequest = {
           resolve(resp);
         })
         .catch((error: AxiosError) => {
-          reject(new Error(`${error.name}: ${error.message}`));
+          reject(error);
         });
     }),
 };

@@ -31,12 +31,41 @@ export default {
     `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`,
 
   /**
+   * Google Drive API for Copying Files
+   *
+   * @module copy
+   * @param {string} fileId - The ID of the file
+   * @returns {TDriveUrlType} - API String for copy Route
+   */
+  copy: (fileId: string): TDriveUrlType =>
+    `https://www.googleapis.com/drive/v3/files/${fileId}/copy`,
+
+  /**
    * Google Drive API for Uploading File
    *
    * @module create
-   * @returns {TDriveUrlType} - API String for Create Route
    */
-  create: 'https://www.googleapis.com/upload/drive/v3/files' as TDriveUploadUrl,
+  create: {
+    /**
+     * Metadata Upload
+     */
+    metadata: 'https://www.googleapis.com/drive/v3/files' as TDriveUrlType,
+
+    /**
+     * File Upload
+     */
+    upload:
+      'https://www.googleapis.com/upload/drive/v3/files' as TDriveUploadUrl,
+  },
+
+  /**
+   * Google Drive API for Generating IDs for Uploading Files
+   *
+   * @module generateid
+   * @returns {TDriveUrlType} - API String for generateid Route
+   */
+  generateId:
+    'https://www.googleapis.com/drive/v3/files/generateIds' as TDriveUrlType,
 
   /**
    * Google Drive API for Deleting a File
