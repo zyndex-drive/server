@@ -423,19 +423,22 @@ body {
                     <li><span id="toggle-passes" class="toggle-passes">show failures only</span></li>
                 </ul>
                 <ul class="mocha-stats">
-                    <li class="passes">passes: <em>5</em></li>
+                    <li class="passes">passes: <em>0</em></li>
                     <li class="pending">pending: <em>8</em></li>
-                    <li class="failures">failures: <em>2</em></li>
-                    <li class="duration">duration: <em>107ms</em></li>
+                    <li class="failures">failures: <em>7</em></li>
+                    <li class="duration">duration: <em>77ms</em></li>
                 </ul>
             </div>
-            <ul id="report"><li class="suite"><h1>Testing Unique ID Generator</h1><ul><li class="test pass fast"><h2>Generate a UID String with MD5 (No Prefix)<span class="duration">11ms</span></h2><pre><code>uid_1.default(&#x27;supercoool&#x27;, &#x27;md5&#x27;)
+            <ul id="report"><li class="suite"><h1>Testing Unique ID Generator</h1><ul><li class="test fail"><h2>Generate a UID String with MD5 (No Prefix)</h2><pre><code>(0, uid_1.default)(&#x27;supercoool&#x27;, &#x27;md5&#x27;)
     .then(function (string) {
     string.should.be.a(&#x27;string&#x27;);
     string.length.should.be.equal(32);
     done();
 })
-    .catch(done);</code></pre></li><li class="test pass fast"><h2>Generate a UID String with MD5<span class="duration">2ms</span></h2><pre><code>uid_1.default(&#x27;supercoool&#x27;, &#x27;md5&#x27;, &#x27;testing&#x27;)
+    .catch(done);</code></pre><pre class="error">Error: Prefix Cant be more than one Character
+    at longID (helpers\uid.ts:33:11)
+    at Context.&#x3C;anonymous&#x3E; (tests\helpers\uid.spec.ts:5:8)
+    at processImmediate (internal/timers.js:464:21)</pre></li><li class="test fail"><h2>Generate a UID String with MD5</h2><pre><code>(0, uid_1.default)(&#x27;supercoool&#x27;, &#x27;md5&#x27;, &#x27;testing&#x27;)
     .then(function (string) {
     var uidregex = /(?&#x3C;prefix&#x3E;testing@)(?&#x3C;hash&#x3E;[A-Za-z0-9].+)/;
     var hashRegex = /^[a-f0-9]{32}$/i;
@@ -444,14 +447,20 @@ body {
     hashRegex.test(hash).should.be.true;
     done();
 })
-    .catch(done);</code></pre></li><li class="test pass fast"><h2>Generate a UID String with SHA1 (No Prefix)<span class="duration">1ms</span></h2><pre><code>uid_1.default(&#x27;supercoool&#x27;, &#x27;sha1&#x27;)
+    .catch(done);</code></pre><pre class="error">Error: Prefix Cant be more than one Character
+    at longID (helpers\uid.ts:33:11)
+    at Context.&#x3C;anonymous&#x3E; (tests\helpers\uid.spec.ts:15:8)
+    at processImmediate (internal/timers.js:464:21)</pre></li><li class="test fail"><h2>Generate a UID String with SHA1 (No Prefix)</h2><pre><code>(0, uid_1.default)(&#x27;supercoool&#x27;, &#x27;sha1&#x27;)
     .then(function (string) {
     var hashRegex = /([0-9a-f]{6})([0-9a-f]{34})/;
     string.should.be.a(&#x27;string&#x27;);
     hashRegex.test(string).should.be.true;
     done();
 })
-    .catch(done);</code></pre></li><li class="test pass fast"><h2>Generate a UID String with SHA1<span class="duration">2ms</span></h2><pre><code>uid_1.default(&#x27;supercoool&#x27;, &#x27;sha1&#x27;, &#x27;testing&#x27;)
+    .catch(done);</code></pre><pre class="error">Error: Prefix Cant be more than one Character
+    at longID (helpers\uid.ts:33:11)
+    at Context.&#x3C;anonymous&#x3E; (tests\helpers\uid.spec.ts:28:8)
+    at processImmediate (internal/timers.js:464:21)</pre></li><li class="test fail"><h2>Generate a UID String with SHA1</h2><pre><code>(0, uid_1.default)(&#x27;supercoool&#x27;, &#x27;sha1&#x27;, &#x27;testing&#x27;)
     .then(function (string) {
     var uidregex = /(?&#x3C;prefix&#x3E;testing@)(?&#x3C;hash&#x3E;[A-Za-z0-9].+)/;
     var hashRegex = /([0-9a-f]{6})([0-9a-f]{34})/;
@@ -460,10 +469,15 @@ body {
     hashRegex.test(hash).should.be.true;
     done();
 })
-    .catch(done);</code></pre></li><li class="test pass fast"><h2>Generate a Short UID<span class="duration">1ms</span></h2><pre><code>var id = uid_1.shortuid();
+    .catch(done);</code></pre><pre class="error">Error: Prefix Cant be more than one Character
+    at longID (helpers\uid.ts:33:11)
+    at Context.&#x3C;anonymous&#x3E; (tests\helpers\uid.spec.ts:39:8)
+    at processImmediate (internal/timers.js:464:21)</pre></li><li class="test fail"><h2>Generate a Short UID</h2><pre><code>var id = (0, uid_1.shortuid)();
 id.should.be.a(&#x27;string&#x27;);
 id.length.should.be.eql(10);
-done();</code></pre></li></ul></li><li class="suite"><h1>Ping the Test Server</h1><ul><li class="test fail"><h2>Pings the Server and Gets the Status of the Server</h2><pre><code>var context = this;
+done();</code></pre><pre class="error">AssertionError: expected 8 to deeply equal 10
+    at Context.&#x3C;anonymous&#x3E; (tests\helpers\uid.spec.ts:54:25)
+    at processImmediate (internal/timers.js:464:21)</pre></li></ul></li><li class="suite"><h1>Ping the Test Server</h1><ul><li class="test fail"><h2>Pings the Server and Gets the Status of the Server</h2><pre><code>var context = this;
     function onError() {
       markRemainingTestsAndSubSuitesAsPending(context.test);
       process.removeListener(&#x27;uncaughtException&#x27;, onError);
@@ -502,7 +516,7 @@ done();</code></pre></li></ul></li><li class="suite"><h1>Ping the Test Server</h
       onError();
       throw ex;
     }</code></pre><pre class="error">Error: connect ECONNREFUSED 127.0.0.1:3000
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1146:16)</pre></li><li class="test pass pending"><h2>Add Default Policies to Database</h2></li><li class="test pass pending"><h2>Check Status of Policies Added Before</h2></li><li class="test pass pending"><h2>Reset Default Policies added before</h2></li><li class="test pass pending"><h2>Add Default Roles to Database</h2></li><li class="test pass pending"><h2>Check Status of Roles Added before</h2></li><li class="test pass pending"><h2>Reset Default Roles added before</h2></li><li class="test pass pending"><h2>Add Sample Credentials to Database</h2></li><li class="test pass pending"><h2>Reset Test Credentials added before</h2></li></ul></li></ul>
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1148:16)</pre></li><li class="test pass pending"><h2>Add Default Policies to Database</h2></li><li class="test pass pending"><h2>Check Status of Policies Added Before</h2></li><li class="test pass pending"><h2>Reset Default Policies added before</h2></li><li class="test pass pending"><h2>Add Default Roles to Database</h2></li><li class="test pass pending"><h2>Check Status of Roles Added before</h2></li><li class="test pass pending"><h2>Reset Default Roles added before</h2></li><li class="test pass pending"><h2>Add Sample Credentials to Database</h2></li><li class="test pass pending"><h2>Reset Test Credentials added before</h2></li></ul></li></ul>
         </div>
         <script>
         function hideSuitesWithout(className) {

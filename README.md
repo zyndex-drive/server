@@ -1,4 +1,4 @@
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![CodeFactor](https://www.codefactor.io/repository/github/zyndex-drive/server/badge)](https://www.codefactor.io/repository/github/zyndex-drive/server) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/eb407e2317b24cb69b85f5fb0718ed21)](https://www.codacy.com/gh/zyndex-drive/server/dashboard?utm_source=github.com&utm_medium=referral&utm_content=zyndex-drive/server&utm_campaign=Badge_Grade) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 # 1. Zyndex Drive
 
