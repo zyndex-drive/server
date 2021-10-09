@@ -1,0 +1,16 @@
+version = 1
+
+test_patterns = ["tests/**"]
+
+exclude_patterns = [
+    ".github/**",
+    "test-report.html"
+]
+
+[[analyzers]]
+name = "javascript"
+enabled = true
+
+[[analyzers]]
+name = "shell"
+enabled = true
