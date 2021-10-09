@@ -1,0 +1,8 @@
+# that are pushed to a pull request
+commits:
+  - action: label
+    pattern: /merge when passing/i
+    # specify which user this action applies to
+    user: "maintainer"
+    labels: 
+      - merge when passing
