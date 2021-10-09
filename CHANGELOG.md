@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-15](https://github.com/zyndex-drive/server/compare/v0.2.0-14...v0.2.0-15) (2021-10-09)
+
+
+### Features
+
+* **google/drive:** add api methods for drive/files route ([a6a7bd2](https://github.com/zyndex-drive/server/commit/a6a7bd250545d3c01b55d8be80d891a7c1135a84))
+* **google/helpers:** add function to construct google fields parameter ([5402fd1](https://github.com/zyndex-drive/server/commit/5402fd11719d59205682d26c0c4b9bf71808e3dd))
+
+
+### Docs
+
+* **readme:** add code quality badges ([464cf0b](https://github.com/zyndex-drive/server/commit/464cf0bd12d5cf77d67af4ffd0ec46d7c3c72d49))
+
+
+### Build System
+
+* **package:** add got package for managing streaming requests ([b52c80c](https://github.com/zyndex-drive/server/commit/b52c80c5044b834ca3c1a691cf267ffe6ee52513))
+
 ## [0.2.0-14](https://github.com/zyndex-drive/server/compare/v0.2.0-13...v0.2.0-14) (2021-10-09)
 
 

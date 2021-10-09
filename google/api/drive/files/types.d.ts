@@ -1,5 +1,21 @@
 import { IDrivePermissionResource } from '@google/api/drive/permissions/types';
 
+export type TOrderbyValues =
+  | 'createdTime'
+  | 'folder'
+  | 'modifiedTime'
+  | 'name'
+  | 'quotaBytesUsed';
+
+export interface IDriveFileSearchDetails {
+  corpora: 'user' | 'drive' | 'domain' | 'allDrives';
+  driveId?: string;
+  includeItemsFromAllDrives?: boolean;
+  orderBy?: `${TOrderbyValues}${' desc' | ''}`;
+  supportsAllDrives?: boolean;
+  pageToken?: string;
+}
+
 export interface IDriveFileDetails {
   id: string;
   name: string;
