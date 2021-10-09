@@ -4,6 +4,10 @@ import api from '@google/api/drive/drives/API';
 // Google Request Method
 import { googleApiRequest } from '@google/helpers';
 
+// Other Helpers
+import fields from '@google/api/drive/drives/fields';
+import { constructFields } from '@google/helpers';
+
 // Types
 import type { ITokenDoc } from '@models/tokens/types';
 import type { IGoogleResponse } from '@google/helpers/types';
@@ -32,7 +36,7 @@ export default function (
   q?: string,
 ): Promise<IGoogleResponse<IDrivesList>> {
   const params = {
-    pageSize: 20,
+    fields: constructFields(fields, 'drives'),
     pageToken: pageToken ? pageToken : '',
     q: q ? q : '',
   };

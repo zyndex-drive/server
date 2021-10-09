@@ -7,6 +7,10 @@ import { v4 as uuidv4 } from 'uuid';
 // Google Request Method
 import { googleApiRequest } from '@google/helpers';
 
+// Other Helpers
+import fields from '@google/api/drive/drives/fields';
+import { constructFields } from '@google/helpers';
+
 // Types
 import type { ITokenDoc } from '@models/tokens/types';
 import type { IGoogleResponse } from '@google/helpers/types';
@@ -30,7 +34,7 @@ export default function (
   const requestId = uuidv4();
   const params = {
     requestId,
-    fields: 'name,id,capabilities,createdTime,hidden,restrictions',
+    fields: constructFields(fields),
   };
   const apiUrl = api.create;
   return googleApiRequest.post<

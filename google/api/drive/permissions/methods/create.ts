@@ -4,6 +4,10 @@ import api from '@google/api/drive/permissions/API';
 // Google Request Method
 import { googleApiRequest } from '@google/helpers';
 
+// Other Helpers
+import fields from '@google/api/drive/permissions/fields';
+import { constructFields } from '@google/helpers';
+
 // Types
 import type { ITokenDoc } from '@models/tokens/types';
 import type { IGoogleResponse } from '@google/helpers/types';
@@ -27,7 +31,7 @@ export default function (
   permissionDetails: IDrivePermissionDetails,
 ): Promise<IGoogleResponse<IDrivePermissionResource>> {
   const params = {
-    fields: 'id,type,emailAddress,role,domain,photoLink,permissionDetails',
+    fields: constructFields(fields),
   };
   const url = api.create(fileId);
   return googleApiRequest.post<
