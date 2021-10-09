@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-14](https://github.com/zyndex-drive/server/compare/v0.2.0-13...v0.2.0-14) (2021-10-09)
+
+
+### Features
+
+* **google/api:** add api doc for google/drive/files and fix google requester ([c5291bb](https://github.com/zyndex-drive/server/commit/c5291bb9263f428cac12810007f66d047aea740d))
+
 ## [0.2.0-13](https://github.com/zyndex-drive/server/compare/v0.2.0-12...v0.2.0-13) (2021-10-06)
 
 
