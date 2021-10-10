@@ -17,7 +17,7 @@ export interface IDriveFileSearchDetails {
   pageToken?: string;
 }
 
-export interface IDriveFileAdvancedSearch {
+export interface IDriveFileAdvancedQuery {
   positive?: {
     name?: string | string[];
     mimeType?: TGoogleMimeType | TGoogleMimeType[];
