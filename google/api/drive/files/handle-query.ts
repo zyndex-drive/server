@@ -1,4 +1,4 @@
-import type { IDriveFileAdvancedSearch } from './types';
+import type { IDriveFileAdvancedQuery } from './types';
 
 const inValue = (value: string, handler: string): string =>
   `${handler} contains '${value}'`;
@@ -13,10 +13,10 @@ const arrayHandler = (
 ): string => {
   let query = '';
   for (let i = 0; i < queryArray.length; i++) {
-    if (i < queryArray.length - 1) {
-      query += `${func(queryArray[i], handler)} and `;
-    } else {
+    if (i === queryArray.length - 1) {
       query += func(queryArray[i], handler);
+    } else {
+      query += `${func(queryArray[i], handler)} and `;
     }
   }
   return query;
@@ -26,27 +26,52 @@ const checknHandle = (
   handler: string,
   func: (v: string, h: string) => string,
   prop?: string | string[],
-): string => {
+): string | false => {
   if (prop) {
     if (Array.isArray(prop)) {
-      const query = arrayHandler(prop, handler, inValue);
+      const query = arrayHandler(prop, handler, func);
       return query;
     } else {
       const query = func(prop, handler);
       return query;
     }
   }
-  return '';
+  return false;
+};
+
+const boolChecker = (arrays: (string | false)[]): string[] => {
+  const allowedValues: string[] = [];
+  arrays.forEach((value) => {
+    if (value) {
+      allowedValues.push(value);
+    }
+  });
+  return allowedValues;
+};
+
+const arrayChecker = (arrays: string[][]): string[][] => {
+  const allowedArrays: string[][] = [];
+  arrays.forEach((arr) => {
+    if (arr.length > 0) {
+      allowedArrays.push(arr);
+    }
+  });
+  return allowedArrays;
 };
 
 const andHandler = (arrays: string[][]): string => {
   let mainQuery = '';
   arrays.forEach((mainArr, mainIndex) => {
     mainArr.forEach((subArray, subIndex) => {
-      if (mainIndex < arrays.length - 1 && subIndex < mainArr.length - 1) {
-        mainQuery += `${subArray} and `;
-      } else {
+      if (arrays.length === 1 && mainArr.length === 1) {
+        mainQuery = `${subArray}`;
+      } else if (
+        mainIndex === arrays.length - 1 &&
+        subIndex === mainArr.length - 1
+      ) {
         mainQuery += `${subArray}`;
+      } else {
+        mainQuery += `${subArray} and `;
       }
     });
   });
@@ -56,10 +81,10 @@ const andHandler = (arrays: string[][]): string => {
 /**
  * Constructs a Advanced Drive Search Parameter
  *
- * @param {IDriveFileAdvancedSearch} query - Query Options
+ * @param {IDriveFileAdvancedQuery} query - Query Options
  * @returns {string} - Constructed Query String
  */
-export default function (query: IDriveFileAdvancedSearch): string {
+export default function (query: IDriveFileAdvancedQuery): string {
   const positiveArray: string[] = [];
   const negativeArray: string[] = [];
   if (query.positive) {
@@ -72,7 +97,9 @@ export default function (query: IDriveFileAdvancedSearch): string {
       positive.fileExtension,
     );
     const sizeQuery = positive.size ? numberValue(positive.size, 'size') : '';
-    positiveArray.push(nameQuery, mimeQuery, fileExtQuery, sizeQuery);
+    positiveArray.push(
+      ...boolChecker([nameQuery, mimeQuery, fileExtQuery, sizeQuery]),
+    );
   }
   if (query.negative) {
     const { negative } = query;
@@ -83,8 +110,8 @@ export default function (query: IDriveFileAdvancedSearch): string {
       notinValue,
       negative.fileExtension,
     );
-    negativeArray.push(nameQuery, mimeQuery, fileExtQuery);
+    negativeArray.push(...boolChecker([nameQuery, mimeQuery, fileExtQuery]));
   }
-  const mainQuery = andHandler([positiveArray, negativeArray]);
+  const mainQuery = andHandler(arrayChecker([positiveArray, negativeArray]));
   return mainQuery;
 }
