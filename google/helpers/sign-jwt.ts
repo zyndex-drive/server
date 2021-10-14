@@ -127,7 +127,7 @@ export default async function (
   const encPayload = Buffer.from(JSON.stringify(payload)).toString('base64');
   const encHeader = Buffer.from(JSON.stringify(jwtHeader)).toString('base64');
   const key = await importPrivateKey(serviceAccount.private_key.key);
-  const signed = await createSignature(encHeader + '.' + encPayload, key);
+  const signed = await createSignature(`${encHeader}.${encPayload}`, key);
   const jwtSignature = arrayBufferToBase64(signed)
     .replace(/\//g, '_')
     .replace(/\+/g, '-');

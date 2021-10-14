@@ -6,7 +6,11 @@ import {
   googleApiRequest,
 } from './helpers';
 
-export { api as oauthAuthenticationApis } from './helpers';
+export {
+  api as oauthAuthenticationApis,
+  mimeArray,
+  mimeTypes,
+} from './helpers';
 export { api as oauthRouteApis } from './routes';
 export { scopes as oauthScopes } from './api';
 
