@@ -1,3 +1,4 @@
+import type { GotReturn } from 'got';
 import type { ITokenDoc } from '@models/tokens/types';
 import type { IServiceAccDoc } from '@models/service-account/types';
 import type { ICredentialsDoc } from '@models/credential/types';
@@ -73,6 +74,11 @@ export interface IGoogleRequest {
     data?: Record<string, unknown>,
     headers?: Record<string, string>,
   ) => Promise<IGoogleResponse<U>>;
+  stream: <T extends string>(
+    api: T,
+    token: ITokenDoc,
+    params?: Record<string, string>,
+  ) => GotReturn;
 }
 
 export type TGoogleMimeType =

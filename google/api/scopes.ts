@@ -5,6 +5,6 @@ import iamScopes from './iam/scopes';
  * Consolidated Google Oauth Scopes
  */
 export default {
-  drives: driveScopes,
+  drive: driveScopes,
   iam: iamScopes,
 };

@@ -8,8 +8,7 @@ import { normalAccountHandler, oauthHelpers } from '@google';
 import { iam } from '@google/api';
 
 // Google Drive
-import driveScopes from '@google/api/drive/scopes';
-import scopesss from '@google/api/iam/scopes';
+import { oauthScopes } from '@google';
 import { Credentials } from '@models';
 
 // Router
@@ -17,14 +16,17 @@ const router = express.Router();
 
 // Google Oauth Login Route
 router.get('/auth/', (req, res) => {
-  normalAccountHandler.generateOauth(req, res, [...driveScopes, ...scopesss]);
+  normalAccountHandler.generateOauth(req, res, [
+    ...oauthScopes.drive,
+    ...oauthScopes.iam,
+  ]);
 });
 
 router.post('/sample/', (req, res) => {
   Credentials.find({})
     .then((result) => {
       oauthHelpers
-        .resolveToken(result[0]._id, [...driveScopes, ...scopesss])
+        .resolveToken(result[0]._id, [...oauthScopes.drive, ...oauthScopes.iam])
         .then((result) => {
           iam.projects
             .list(result.tokens[0])
