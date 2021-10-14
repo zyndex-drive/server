@@ -2,6 +2,7 @@
 
 // Import Axios
 import axios from '@helpers/axios';
+import got from 'got';
 
 // Others
 import serialize from 'query-string';
@@ -9,6 +10,7 @@ import serialize from 'query-string';
 // Types
 import type { IGoogleRequest, IGoogleResponse } from './types';
 import type { AxiosError, AxiosResponse } from 'axios';
+import type { GotReturn } from 'got';
 import type { ITokenDoc } from '@models/tokens/types';
 
 /**
@@ -224,6 +226,25 @@ const googleRequest: IGoogleRequest = {
           reject(error);
         });
     }),
-};
 
+  /**
+   * Makes a Streaming Request to Google API
+   *
+   * @param {string} api - Google API URL
+   * @param {ITokenDoc} token - Relevant Token Document from Database
+   * @param {Record<string, string | number | boolean>} params - params to be attached to URL
+   * @returns {GotReturn} - Response from the API
+   */
+  stream: <T extends string>(
+    api: T,
+    token: ITokenDoc,
+    params?: Record<string, string>,
+  ): GotReturn => {
+    const url = constructURL<T>(api, params);
+    const getHeaders = constructHeaders('get', token);
+    return got.stream(url, {
+      headers: getHeaders,
+    });
+  },
+};
 export default googleRequest;
