@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-18](https://github.com/zyndex-drive/server/compare/v0.2.0-17...v0.2.0-18) (2021-10-14)
+
+
+### Features
+
+* **google/drive:** implement download method for drive/files ([fadfdc7](https://github.com/zyndex-drive/server/commit/fadfdc79ccce36411e413855661659215d8c9818))
+* **google/misc:** add mimetypes, consolidated scopes, other miscs ([3be9cc7](https://github.com/zyndex-drive/server/commit/3be9cc7dbcae3a99995835205b0b175e66b54dcc))
+* **google/requester:** implement stream method for google requester ([3fbe000](https://github.com/zyndex-drive/server/commit/3fbe000c95ae56f3dec2cca93b95a14dc61d8095))
+
 ## [0.2.0-17](https://github.com/zyndex-drive/server/compare/v0.2.0-16...v0.2.0-17) (2021-10-10)
 
 
