@@ -2,13 +2,13 @@
 import express from 'express';
 
 // Google Oauth
-import { normalAccountHandler, oauthHelpers } from '@google';
+import { normalAccountHandler, oauthHelpers } from '@plugins/google';
 
 // Google API Methods
-import { iam } from '@google/api';
+import { iam } from '@plugins/google/api';
 
 // Google Drive
-import { oauthScopes } from '@google';
+import { oauthScopes } from '@plugins/google';
 import { Credentials } from '@models';
 
 // Router

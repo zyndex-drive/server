@@ -4,12 +4,12 @@ import express from 'express';
 // Middlewares
 
 // Response Handlers
-import { okResponse } from '@helpers/express/response-handlers/2XX-response';
+import { okResponse } from '@plugins/server/responses';
 
 // Routes
 import policies from './policies';
 import roles from './roles';
-import endpointServer from '@helpers/express/other-handlers/endpoint-server';
+import { endpointServer } from '@plugins/server/helpers';
 
 // Router
 const router = express.Router();

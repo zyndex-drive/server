@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-19](https://github.com/zyndex-drive/server/compare/v0.2.0-18...v0.2.0-19) (2021-11-01)
+
+
+### Code Refactoring
+
+* massive refactor of entire folder structure of the project ([8142533](https://github.com/zyndex-drive/server/commit/8142533296e6bc34e1c89458238ca5b231b03509))
+
 ## [0.2.0-18](https://github.com/zyndex-drive/server/compare/v0.2.0-17...v0.2.0-18) (2021-10-14)
 
 
