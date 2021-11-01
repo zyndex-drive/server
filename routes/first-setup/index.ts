@@ -6,7 +6,7 @@ import policies from './policies';
 import roles from './roles';
 import credentials from './credentials';
 import scopes from './scope';
-import endpointServer from '@/helpers/express/other-handlers/endpoint-server';
+import { endpointServer } from '@plugins/server';
 
 // Router
 const router = express.Router();

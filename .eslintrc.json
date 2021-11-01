@@ -50,6 +50,7 @@
     "node/no-missing-import": "off",
     "object-curly-spacing": "off",
     "semi": "off",
+    "node/no-unsupported-features/node-builtins": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-empty-interface": [
       "error",

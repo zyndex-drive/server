@@ -16,7 +16,7 @@
     "stest": "set NODE_ENV=test && ts-mocha --paths -r 'tests/require'",
     "dev": "set NODE_ENV=development && nodemon --ignore tests/ -r tsconfig-paths/register app.ts",
     "build": "set NODE_ENV=production && tsc && tsc-alias",
-    "serve": "set NODE_ENV=production && cd dist && npm serve"
+    "serve": "set NODE_ENV=production && cd dist && node app.js"
   },
   "repository": {
     "type": "git",
@@ -46,6 +46,7 @@
     "express-mongo-sanitize": "^2.1.0",
     "got": "^11.8.2",
     "helmet": "^4.6.0",
+    "jose": "^4.1.2",
     "jsonwebtoken": "^8.5.1",
     "md5": "^2.3.0",
     "mongoose": "^5.12.15",

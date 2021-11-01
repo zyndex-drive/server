@@ -2,8 +2,7 @@
 import express from 'express';
 
 // Response Handlers
-import { okResponse } from '@/helpers/express/response-handlers/2XX-response';
-import { internalServerError } from '@/helpers/express/response-handlers/5XX-response';
+import { okResponse, internalServerError } from '@plugins/server/responses';
 
 // Model
 import { Roles } from '@models';
@@ -14,8 +13,8 @@ import type { IRoleDoc } from '@models/role/types';
 import type { IInlineResponse } from '@typs/inline.response';
 
 // Others
-import { map as rolesMap } from '@setup/roles';
-import endpointServer from '@/helpers/express/other-handlers/endpoint-server';
+import { map as rolesMap } from '@plugins/templates/roles';
+import { endpointServer } from '@plugins/server/helpers';
 
 // Router
 const router = express.Router();

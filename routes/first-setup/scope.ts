@@ -3,19 +3,18 @@ import express from 'express';
 
 // Response Handlers
 import {
+  okResponse,
+  internalServerError,
   badRequest,
   notFound,
-} from '@/helpers/express/response-handlers/4XX-response';
-import { okResponse } from '@/helpers/express/response-handlers/2XX-response';
-import { internalServerError } from '@/helpers/express/response-handlers/5XX-response';
+} from '@plugins/server/responses';
 
 // Model
 import { Scopes, Credentials } from '@models';
 
 // Others
-import endpointServer from '@/helpers/express/other-handlers/endpoint-server';
-import { objectID } from '@helpers/uid';
-import isundefined from '@/helpers/isundefined';
+import { endpointServer } from '@plugins/server';
+import { objectID, isUndefined } from '@plugins/misc';
 
 // Types
 import type { Error as MongoError } from 'mongoose';
@@ -27,7 +26,7 @@ const router = express.Router();
 
 router.post('/add', (req, res) => {
   const { name, drive_id, credential_id } = req.body;
-  if (!isundefined([name, drive_id, credential_id])) {
+  if (!isUndefined([name, drive_id, credential_id])) {
     Credentials.checkID(credential_id)
       .then((idCheck) => {
         if (idCheck) {

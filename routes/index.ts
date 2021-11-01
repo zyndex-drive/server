@@ -2,16 +2,16 @@
 import express from 'express';
 
 // Middlewares
-import { checkSecretPass } from '@/middlewares/first-setup';
-import setupCheck from '@middlewares/first-setup';
+import { checkSecretPass } from '@plugins/server/middlewares';
+import setupCheck from '@plugins/server/middlewares/first-setup';
 
 // Response Handlers
-import { okResponse } from '@/helpers/express/response-handlers/2XX-response';
+import { okResponse } from '@plugins/server/responses';
 
 // Routes
 import firstSetup from './first-setup';
 import login from './login';
-import endpointServer from '@/helpers/express/other-handlers/endpoint-server';
+import { endpointServer } from '@plugins/server/helpers';
 
 // Router
 const router = express.Router();

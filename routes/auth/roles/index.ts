@@ -2,14 +2,14 @@
 import express from 'express';
 
 // Response Handlers
-import { okResponse } from '@/helpers/express/response-handlers/2XX-response';
+import { okResponse } from '@plugins/server/responses';
 
 // Others
-import { map as rolesMap } from '@setup/roles';
+import { map as rolesMap } from '@plugins/templates/roles';
 
 // Types
 import type { IRole } from '@models/role/types';
-import endpointServer from '@/helpers/express/other-handlers/endpoint-server';
+import { endpointServer } from '@plugins/server/helpers';
 
 // Router
 const router = express.Router();

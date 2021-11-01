@@ -1,6 +1,6 @@
-import createDocument from '@/helpers/db/models/static/create-document';
-import clearCollection from '@/helpers/db/models/static/clear-collection';
-import { map as rolesMap } from '@setup/roles';
+import { createDocument, clearCollection } from '@plugins/db';
+
+import { map as rolesMap } from '@plugins/templates/roles';
 
 // Types
 import { IRole, IRoleDoc, IRoleModel } from './types';

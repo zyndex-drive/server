@@ -1,5 +1,4 @@
-import createDocument from '@/helpers/db/models/static/create-document';
-import clearCollection from '@/helpers/db/models/static/clear-collection';
+import { createDocument, clearCollection } from '@plugins/db';
 
 // Types
 import { IPendingUser, IPendingUserDoc, IPendingUserModel } from './types';

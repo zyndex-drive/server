@@ -1,6 +1,6 @@
-import createDocument from '@/helpers/db/models/static/create-document';
-import clearCollection from '@/helpers/db/models/static/clear-collection';
-import { map as policyMap } from '@setup/policies';
+import { createDocument, clearCollection } from '@plugins/db';
+
+import { map as policyMap } from '@plugins/templates/policies';
 
 // Types
 import { IPolicy, IPolicyDoc, IPolicyModel } from './types';
