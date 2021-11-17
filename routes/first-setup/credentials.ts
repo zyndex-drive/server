@@ -18,7 +18,7 @@ import { objectID, isUndefined } from '@plugins/misc';
 import type { Error as MongoError } from 'mongoose';
 import type { ICredentials, ICredentialsDoc } from '@models/credential/types';
 import { IInlineResponse } from '@/types/inline.response';
-import { endpointServer } from '@plugins/server';
+import { EndpointGenerator } from '@plugins/server/generators';
 
 // Router
 const router = express.Router();
@@ -58,7 +58,8 @@ router.post('/reset', (req, res) => {
 });
 
 // Respond with all the Endpoints in this Route
-router.get('/endpoints', (req, res) => endpointServer(res, router));
-router.post('/endpoints', (req, res) => endpointServer(res, router));
+router.post('/endpoints', (req, res) =>
+  new EndpointGenerator(res, router).endpoints(),
+);
 
 export default router;
