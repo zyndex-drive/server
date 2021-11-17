@@ -6,7 +6,7 @@ import policies from './policies';
 import roles from './roles';
 import credentials from './credentials';
 import scopes from './scope';
-import { endpointServer } from '@plugins/server';
+import { EndpointGenerator } from '@plugins/server/generators';
 
 // Router
 const router = express.Router();
@@ -18,7 +18,8 @@ router.use('/credentials', credentials);
 router.use('/scopes', scopes);
 
 // Respond with all the Endpoints in the Route
-router.get('/endpoints', (req, res) => endpointServer(res, router));
-router.post('/endpoints', (req, res) => endpointServer(res, router));
+router.post('/endpoints', (req, res) =>
+  new EndpointGenerator(res, router).endpoints(),
+);
 
 export default router;

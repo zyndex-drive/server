@@ -5,7 +5,8 @@ import dotenv from 'dotenv';
 import server from '@plugins/server';
 
 // Database
-import mongoose, { Error } from 'mongoose';
+import mongoose from 'mongoose';
+import type { Error as mongoError } from 'mongoose';
 import db from '@plugins/db';
 
 // Health Check Service
@@ -14,29 +15,30 @@ import { healthCheckService } from '@plugins/server/helpers';
 // Load ENV Variables to the Process
 dotenv.config();
 
-// Connect to Datbase
-db.connect()
-  .then((mongo: typeof mongoose | boolean) => {
-    if (mongo) {
-      console.log('Database Connected');
-    } else {
-      console.log('No Database Url is Found in Environment Variables');
-      server.close();
-    }
-  })
-  .catch((err: Error) => {
-    console.log(`${err.name}: ${err.message}`);
-    server.close();
-  });
-
 // Start the Health Checker Service
 healthCheckService(server);
 
-// listen to port
+// Create Server and Listen on PORT
 const PORT = process.env.PORT;
 try {
   server.listen(PORT || 3000, () => {
     console.log('Server Started');
+    console.log('Connecting to Database');
+
+    // Connect to Datbase
+    db.connect()
+      .then((mongo: typeof mongoose | boolean) => {
+        if (mongo) {
+          console.log('Database Connected');
+        } else {
+          console.log('No Database Url is Found in Environment Variables');
+          server.close();
+        }
+      })
+      .catch((err: mongoError) => {
+        console.log(`${err.name}: ${err.message}`);
+        server.close();
+      });
   });
   server.once('error', (err) => {
     console.log(

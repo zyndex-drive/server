@@ -13,7 +13,7 @@ import {
 import { Scopes, Credentials } from '@models';
 
 // Others
-import { endpointServer } from '@plugins/server';
+import { EndpointGenerator } from '@plugins/server/generators';
 import { objectID, isUndefined } from '@plugins/misc';
 
 // Types
@@ -86,7 +86,8 @@ router.post('/reset', (req, res) => {
 });
 
 // Respond with all the Endpoints in this Route
-router.get('/endpoints', (req, res) => endpointServer(res, router));
-router.post('/endpoints', (req, res) => endpointServer(res, router));
+router.post('/endpoints', (req, res) =>
+  new EndpointGenerator(res, router).endpoints(),
+);
 
 export default router;

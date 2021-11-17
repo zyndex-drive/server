@@ -1,2 +1,6 @@
 export { default } from './db';
-export { createDocument, clearCollection } from './helpers';
+export {
+  createDocument,
+  createMultipleDocuments,
+  clearCollection,
+} from './helpers';

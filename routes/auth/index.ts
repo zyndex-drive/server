@@ -19,8 +19,9 @@ router.use('/policies', policies);
 router.use('/roles', roles);
 
 // Respond with all the Endpoints in this Route
-router.get('/endpoints', (req, res) => endpointServer(res, router));
-router.post('/endpoints', (req, res) => endpointServer(res, router));
+router.post('/endpoints', (req, res) =>
+  new EndpointGenerator(res, router).endpoints(),
+);
 
 // Default Get
 router.get('/', (req, res) => {

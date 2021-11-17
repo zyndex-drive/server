@@ -19,7 +19,8 @@ router.post('/list', (req, res) => {
 });
 
 // Respond with all the Endpoints in this Route
-router.get('/endpoints', (req, res) => endpointServer(res, router));
-router.post('/endpoints', (req, res) => endpointServer(res, router));
+router.post('/endpoints', (req, res) =>
+  new EndpointGenerator(res, router).endpoints(),
+);
 
 export default router;

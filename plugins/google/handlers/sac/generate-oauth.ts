@@ -3,6 +3,7 @@ import { Tokens, ServiceAccs } from '@models';
 
 // Others
 import { objectID } from '@plugins/misc';
+import { encrypt } from '@plugins/crypto';
 import { generateAccessToken } from '@plugins/google/handlers/sac/generate-token';
 
 // Types
@@ -32,7 +33,7 @@ function handleTokenSaving(
     const uid = objectID('t');
     const tokenGen: IToken = {
       _id: uid,
-      token: accessToken.access_token,
+      token: encrypt.str(accessToken.access_token),
       type: 'access',
       related_to: account._id,
       scopes,
