@@ -66,7 +66,7 @@ function redirectUser(
   Credentials.findById(id)
     .then((credentials: ICredentialsDoc | null) => {
       if (credentials) {
-        const state = encrypt<ICredentialsDoc['_id']>({
+        const state = encrypt.obj<ICredentialsDoc['_id']>({
           data: credentials._id,
         });
         console.log(state);
@@ -103,7 +103,7 @@ function handleTokenSaving(
         const tokensArr: IToken[] = [
           {
             _id: uid1,
-            token: refreshToken.refresh_token,
+            token: encrypt.str(refreshToken.refresh_token),
             type: 'refresh',
             related_to: credentials._id,
             scopes,
@@ -113,7 +113,7 @@ function handleTokenSaving(
           },
           {
             _id: uid2,
-            token: accessToken.access_token,
+            token: encrypt.str(accessToken.access_token),
             type: 'access',
             related_to: credentials._id,
             scopes,
@@ -207,7 +207,7 @@ export default function (
     redirectUser(res, String(creds), scopes);
   } else if (code && state) {
     const stringizedCode = String(code);
-    const credID = decrypt<string>(decodeURIComponent(String(state)));
+    const credID = decrypt.obj<string>(decodeURIComponent(String(state)));
     handleUserAuthorization(res, credID.data, stringizedCode, scopes);
   } else {
     badRequest(res, 'creds', 'Query Parameters');
