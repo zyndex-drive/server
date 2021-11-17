@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-20](https://github.com/zyndex-drive/server/compare/v0.2.0-19...v0.2.0-20) (2021-11-17)
+
+
+### Features
+
+* **plugins/crypto:** add function for encrypting strings ([598397f](https://github.com/zyndex-drive/server/commit/598397f29d837c28671e86f6496c3c5b456702cd))
+* **plugins/db:** write function to encrypt particular fields before saving to database ([eb38db9](https://github.com/zyndex-drive/server/commit/eb38db931eb666c0102efa159f2951796029cd1e))
+
+
+### Bug Fixes
+
+* **server:** connect to database only when server is live ([7e9e50a](https://github.com/zyndex-drive/server/commit/7e9e50aa4a0fbd22b24b8c6a13b1d90664b222a2))
+
+
+### Code Refactoring
+
+* **plugins/templates:** rename variable names to follow camelCasing ([636597f](https://github.com/zyndex-drive/server/commit/636597fb83d430a292fff1c04d23c5998c46257b))
+* **server/endpoints:** refactor server/endpoint generator function into a class ([4d339eb](https://github.com/zyndex-drive/server/commit/4d339eb7a3eb7d107acb6b8e2aafb47f101c06ac))
+
 ## [0.2.0-19](https://github.com/zyndex-drive/server/compare/v0.2.0-18...v0.2.0-19) (2021-11-01)
 
 
