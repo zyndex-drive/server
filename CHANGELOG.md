@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-21](https://github.com/zyndex-drive/server/compare/v0.2.0-20...v0.2.0-21) (2021-11-20)
+
+
+### Features
+
+* **crypto:** add functions for encrypt/decrypt objects and strings ([55a99cd](https://github.com/zyndex-drive/server/commit/55a99cdf313187352b6a1c2fd9e49d8f36e95e81))
+* **models:** add more static functions to all models, use base types for easy workflow ([646ac44](https://github.com/zyndex-drive/server/commit/646ac449216ed4ecf20e2e1623c9128db44e214d))
+* **plugins/db:** enable support for encrypting and decrypting fields in the database ([84ca98d](https://github.com/zyndex-drive/server/commit/84ca98d3efe786e2095423074f72d07d46e81f71))
+
+
+### Code Refactoring
+
+* **models:** create a base model type ([206c3fc](https://github.com/zyndex-drive/server/commit/206c3fcf65097129a5f1e987b867532652d4a07d))
+* **plugins/db/statics:** move db static functions to seperate statics folder ([9da4254](https://github.com/zyndex-drive/server/commit/9da4254f4f2bf46c94f99f3dc45550f2e539b612))
+* **plugins/google:** refactor encrypt and decrypt functions ([bc4512a](https://github.com/zyndex-drive/server/commit/bc4512aecfc358ea0eb77b6956d2e783a2dcd6cf))
+* **plugins/server:** refactor endpoint generator to a class ([28569fe](https://github.com/zyndex-drive/server/commit/28569fe6378c94d8b742f1e320ff91ab75ca7759))
+* **routes:** update all routes to use the new endpointgenerator class ([df5684c](https://github.com/zyndex-drive/server/commit/df5684ca1d9d2ec799bc6a73e82cae018b7034de))
+
 ## [0.2.0-20](https://github.com/zyndex-drive/server/compare/v0.2.0-19...v0.2.0-20) (2021-11-17)
 
 
