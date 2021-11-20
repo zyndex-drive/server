@@ -22,7 +22,7 @@ export class EndpointGenerator {
   /**
    * Serve the Endpoints
    */
-  endpoints(): void {
+  serve(): void {
     okResponse<Routes>(this.response, getRoutes(this.router));
   }
 }
