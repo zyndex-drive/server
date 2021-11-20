@@ -66,10 +66,7 @@ function redirectUser(
   Credentials.findById(id)
     .then((credentials: ICredentialsDoc | null) => {
       if (credentials) {
-        const state = encrypt.obj<ICredentialsDoc['_id']>({
-          data: credentials._id,
-        });
-        console.log(state);
+        const state = encrypt.str(String(credentials._id));
         const url = constructOauthURL(credentials, scopes, state);
         res.redirect(url);
       } else {
@@ -207,8 +204,8 @@ export default function (
     redirectUser(res, String(creds), scopes);
   } else if (code && state) {
     const stringizedCode = String(code);
-    const credID = decrypt.obj<string>(decodeURIComponent(String(state)));
-    handleUserAuthorization(res, credID.data, stringizedCode, scopes);
+    const credID = decrypt.str(decodeURIComponent(String(state)));
+    handleUserAuthorization(res, credID, stringizedCode, scopes);
   } else {
     badRequest(res, 'creds', 'Query Parameters');
   }
