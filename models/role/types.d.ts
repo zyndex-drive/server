@@ -1,4 +1,5 @@
-import type { Document, Model, Types } from 'mongoose';
+import type { Document, Types } from 'mongoose';
+import type { IBaseModel } from '../types';
 import type { IGlobalSettingsDoc } from '@models/global-setting/types';
 import type { IPolicyDoc } from '@models/policy/types';
 import type { ID } from '@typs/model.objectid';
@@ -23,8 +24,6 @@ export interface IRole {
 
 export interface IRoleDoc extends IRole, Document {}
 
-export interface IRoleModel extends Model<IRoleDoc> {
-  createDoc: (this: IRoleModel, doc: IRole) => Promise<IRoleDoc>;
-  clearAll: (this: IRoleModel) => Promise<IInlineResponse<string>>;
+export interface IRoleModel extends IBaseModel<IRole, IRoleDoc> {
   mapCheck: (this: IRoleModel) => Promise<IInlineResponse<boolean>>;
 }

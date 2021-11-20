@@ -1,8 +1,8 @@
-import type { Document, Model, Types } from 'mongoose';
+import type { Document, Types } from 'mongoose';
+import type { IBaseModel } from '../types';
 import type { IUserDoc } from '@models/user/types';
 import type { IFrontendDoc } from '@models/frontend/types';
 import type { ID } from '@typs/model.objectid';
-import type { IInlineResponse } from '@typs/inline.response';
 
 export interface ISession {
   _id: Types.ObjectId;
@@ -15,7 +15,4 @@ export interface ISession {
 
 export interface ISessionDoc extends ISession, Document {}
 
-export interface ISessionModel extends Model<ISessionDoc> {
-  createDoc: (this: ISessionModel, doc: ISession) => Promise<ISessionDoc[]>;
-  clearAll: (this: ISessionModel) => Promise<IInlineResponse<string>>;
-}
+export interface ISessionModel extends IBaseModel<ISession, ISessionDoc> {}

@@ -1,8 +1,8 @@
-import type { Document, Model, Types } from 'mongoose';
+import type { Document, Types } from 'mongoose';
+import type { IBaseModel } from '../types';
 import type { ISMTPMailerDoc } from '@models/smtp-mailer/types';
 import type { ISMTPProviderDoc } from '@models/smtp-provider/types';
 import type { ID } from '@typs/model.objectid';
-import type { IInlineResponse } from '@typs/inline.response';
 
 type OTHER = boolean | string | number;
 
@@ -16,7 +16,5 @@ export interface IGlobalSettings {
 
 export interface IGlobalSettingsDoc extends IGlobalSettings, Document {}
 
-export interface IGlobalSettingsModel extends Model<IGlobalSettingsDoc> {
-  createDoc: (this: IGlobalSettingsModel) => Promise<IGlobalSettingsDoc[]>;
-  clearAll: (this: IGlobalSettingsModel) => Promise<IInlineResponse<string>>;
-}
+export interface IGlobalSettingsModel
+  extends IBaseModel<IGlobalSettings, IGlobalSettingsDoc> {}

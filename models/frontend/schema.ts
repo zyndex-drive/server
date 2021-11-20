@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { getFrontendUrls, createDoc } from './statics';
+import appendStatics from './statics';
 import type { IFrontendDoc, IFrontendModel } from './types';
 
 const schema = new Schema<IFrontendDoc, IFrontendModel>({
@@ -52,7 +52,4 @@ const schema = new Schema<IFrontendDoc, IFrontendModel>({
   },
 });
 
-schema.statics.getFrontendUrls = getFrontendUrls;
-schema.statics.createDoc = createDoc;
-
-export default schema;
+export default appendStatics(schema);

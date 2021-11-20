@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { createDoc, clearAll, checkID } from './statics';
+import appendStatics from './statics';
 import type { ICredentialsDoc, ICredentialsModel } from './types';
 
 const schema = new Schema<ICredentialsDoc, ICredentialsModel>({
@@ -29,8 +29,4 @@ const schema = new Schema<ICredentialsDoc, ICredentialsModel>({
   },
 });
 
-schema.statics.createDoc = createDoc;
-schema.statics.clearAll = clearAll;
-schema.statics.checkID = checkID;
-
-export default schema;
+export default appendStatics(schema);
