@@ -1,6 +1,6 @@
-import type { Document, Model, Types } from 'mongoose';
+import type { Document, Types } from 'mongoose';
+import type { IBaseModel } from '../types';
 import type { ID } from '@typs/model.objectid';
-import type { IInlineResponse } from '@typs/inline.response';
 import type { ICredentialsDoc } from '@models/credential/types';
 import type { IServiceAccDoc } from '@models/service-account/types';
 
@@ -23,7 +23,4 @@ export interface IToken {
 
 export interface ITokenDoc extends IToken, Document {}
 
-export interface ITokenModel extends Model<ITokenDoc> {
-  createDoc: (this: ITokenModel, doc: IToken) => Promise<ITokenDoc>;
-  clearAll: (this: ITokenModel) => Promise<IInlineResponse<string>>;
-}
+export interface ITokenModel extends IBaseModel<IToken, ITokenDoc> {}

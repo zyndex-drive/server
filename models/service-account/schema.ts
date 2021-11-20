@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { createDoc, clearAll } from './statics';
+import appendStatics from './statics';
 import type { IServiceAccDoc, IServiceAccModel } from './types';
 
 const schema = new Schema<IServiceAccDoc, IServiceAccModel>({
@@ -41,7 +41,4 @@ const schema = new Schema<IServiceAccDoc, IServiceAccModel>({
   },
 });
 
-schema.statics.createDoc = createDoc;
-schema.statics.clearAll = clearAll;
-
-export default schema;
+export default appendStatics(schema);

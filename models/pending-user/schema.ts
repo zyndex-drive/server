@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { createDoc, clearAll } from './statics';
+import appendStatics from './statics';
 import type { IPendingUserDoc, IPendingUserModel } from './types';
 
 const schema = new Schema<IPendingUserDoc, IPendingUserModel>({
@@ -36,7 +36,4 @@ const schema = new Schema<IPendingUserDoc, IPendingUserModel>({
   },
 });
 
-schema.statics.createDoc = createDoc;
-schema.statics.clearAll = clearAll;
-
-export default schema;
+export default appendStatics(schema);

@@ -19,7 +19,7 @@ router.use('/scopes', scopes);
 
 // Respond with all the Endpoints in the Route
 router.post('/endpoints', (req, res) =>
-  new EndpointGenerator(res, router).endpoints(),
+  new EndpointGenerator(res, router).serve(),
 );
 
 export default router;

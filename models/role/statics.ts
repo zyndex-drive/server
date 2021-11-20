@@ -1,10 +1,14 @@
-import { createDocument, clearCollection } from '@plugins/db';
+import {
+  createDocument,
+  createMultipleDocuments,
+  clearCollection,
+} from '@plugins/db/statics';
 
 import { map as rolesMap } from '@plugins/templates/roles';
 
 // Types
 import { IRole, IRoleDoc, IRoleModel } from './types';
-import { Error as MongoError } from 'mongoose';
+import { Error as MongoError, Schema } from 'mongoose';
 import type { IInlineResponse } from '@typs/inline.response';
 
 /**
@@ -16,6 +20,20 @@ import type { IInlineResponse } from '@typs/inline.response';
  */
 export function createDoc(this: IRoleModel, doc: IRole): Promise<IRoleDoc> {
   return createDocument<IRole, IRoleDoc, IRoleModel>(this, doc);
+}
+
+/**
+ * Create Multiple Role Document and Save it to Database
+ *
+ * @param {IRoleModel} this - Role Model
+ * @param {IRole[]} docs - Role Docs to be Created and Saved
+ * @returns {Promise<IRoleDoc[]>} - Promise Returning Saved Documents
+ */
+export function createMultiDoc(
+  this: IRoleModel,
+  docs: IRole[],
+): Promise<IRoleDoc[]> {
+  return createMultipleDocuments<IRole, IRoleDoc, IRoleModel>(this, docs);
 }
 
 /**
@@ -69,4 +87,20 @@ export function mapCheck(this: IRoleModel): Promise<IInlineResponse<boolean>> {
         reject(new Error(`${err.name}: ${err.message}`));
       });
   });
+}
+
+/**
+ * Appends all the Static Helpers with Schema
+ *
+ * @param {Schema<IRoleDoc, IRoleModel>} schema - Model Schema
+ * @returns {Schema<IRoleDoc, IRoleModel>} - Schema with Static Helpers
+ */
+export default function (
+  schema: Schema<IRoleDoc, IRoleModel>,
+): Schema<IRoleDoc, IRoleModel> {
+  schema.statics.createDoc = createDoc;
+  schema.statics.createMultiDoc = createMultiDoc;
+  schema.statics.clearAll = clearAll;
+  schema.statics.mapCheck = mapCheck;
+  return schema;
 }

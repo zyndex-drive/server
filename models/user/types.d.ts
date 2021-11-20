@@ -1,9 +1,9 @@
-import type { Document, Model, Types } from 'mongoose';
+import type { Document, Types } from 'mongoose';
+import type { IBaseModel } from '../types';
 import type { IRoleDoc } from '@models/role/types';
 import type { IPolicyDoc } from '@models/policy/types';
 import type { IScopeDoc } from '@models/scope/types';
 import type { ID } from '@typs/model.objectid';
-import type { IInlineResponse } from '@typs/inline.response';
 
 export interface IUser {
   _id: Types.ObjectId;
@@ -27,7 +27,4 @@ export interface IUser {
 
 export interface IUserDoc extends IUser, Document {}
 
-export interface IUserModel extends Model<IUserDoc> {
-  createDoc: (this: IUserModel, doc: IUser) => Promise<IUserDoc[]>;
-  clearAll: (this: IUserModel) => Promise<IInlineResponse<string>>;
-}
+export interface IUserModel extends IBaseModel<IUser, IUserDoc> {}

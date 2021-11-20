@@ -1,7 +1,12 @@
-import { createDocument, clearCollection } from '@plugins/db';
+import {
+  createDocument,
+  createMultipleDocuments,
+  clearCollection,
+} from '@plugins/db/statics';
 
 // Types
-import { IFrontend, IFrontendDoc, IFrontendModel } from './types';
+import type { IFrontend, IFrontendDoc, IFrontendModel } from './types';
+import type { Schema } from 'mongoose';
 import type { IInlineResponse } from '@typs/inline.response';
 
 /**
@@ -16,6 +21,23 @@ export function createDoc(
   doc: IFrontend,
 ): Promise<IFrontendDoc> {
   return createDocument<IFrontend, IFrontendDoc, IFrontendModel>(this, doc);
+}
+
+/**
+ * Creates Multiple Frontend Document and Saves it to Database
+ *
+ * @param {IFrontendModel} this - Frontend Model
+ * @param {IFrontend[]} docs - Frontend Docs to be Created and Saved
+ * @returns {Promise<IFrontendDoc[]>} - Promise Returning Saved Documents
+ */
+export function createMultiDoc(
+  this: IFrontendModel,
+  docs: IFrontend[],
+): Promise<IFrontendDoc[]> {
+  return createMultipleDocuments<IFrontend, IFrontendDoc, IFrontendModel>(
+    this,
+    docs,
+  );
 }
 
 /**
@@ -40,4 +62,20 @@ export async function getFrontendUrls(
   this: IFrontendModel,
 ): Promise<IFrontendDoc[]> {
   return this.find({}, '_id domain name');
+}
+
+/**
+ * Appends all the Static Helpers with Schema
+ *
+ * @param {Schema<IFrontendDoc, IFrontendModel>} schema - Model Schema
+ * @returns {Schema<IFrontendDoc, IFrontendModel>} - Schema with Static Helpers
+ */
+export default function (
+  schema: Schema<IFrontendDoc, IFrontendModel>,
+): Schema<IFrontendDoc, IFrontendModel> {
+  schema.statics.getFrontendUrls = getFrontendUrls;
+  schema.statics.createDoc = createDoc;
+  schema.statics.createMultiDoc = createMultiDoc;
+  schema.statics.clearAll = clearAll;
+  return schema;
 }

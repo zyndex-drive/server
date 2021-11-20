@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { createDoc, clearAll, mapCheck } from './statics';
+import appendStatics from './statics';
 import type { IRoleDoc, IRoleModel } from './types';
 
 const schema = new Schema<IRoleDoc, IRoleModel>({
@@ -49,8 +49,4 @@ const schema = new Schema<IRoleDoc, IRoleModel>({
   ],
 });
 
-schema.statics.createDoc = createDoc;
-schema.statics.clearAll = clearAll;
-schema.statics.mapCheck = mapCheck;
-
-export default schema;
+export default appendStatics(schema);

@@ -1,4 +1,4 @@
-import encryptFields from './encrypt-fields';
+import { encryptFields } from '@plugins/db/helpers';
 import type { Document, Model, Error as MongoError } from 'mongoose';
 
 const encryptDocs = <T>(docs: T[], encryptedFields?: string[]): T[] => {

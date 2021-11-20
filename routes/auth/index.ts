@@ -20,7 +20,7 @@ router.use('/roles', roles);
 
 // Respond with all the Endpoints in this Route
 router.post('/endpoints', (req, res) =>
-  new EndpointGenerator(res, router).endpoints(),
+  new EndpointGenerator(res, router).serve(),
 );
 
 // Default Get

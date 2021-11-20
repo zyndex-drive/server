@@ -32,13 +32,13 @@ const decrypt: IDecryptFunction = {
    * @param {string} cryptText - Data to be Decrypted
    * @returns { string } - Decrypted Object
    */
-  obj: <T>(cryptText: string): ICryptoObjData<T> => {
+  obj: <T>(cryptText: string): T => {
     const PASSPHRASE = process.env.GLOBAL_PASSPHRASE;
     if (PASSPHRASE) {
       const decryptedData: ICryptoObjData<T> = JSON.parse(
         crypto.AES.decrypt(cryptText, PASSPHRASE).toString(crypto.enc.Utf8),
       );
-      return decryptedData;
+      return decryptedData.data;
     } else {
       throw new Error('Passphrase not set in Variables, Kindly Set that');
     }

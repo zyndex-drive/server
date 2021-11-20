@@ -1,7 +1,12 @@
-import { createDocument, clearCollection } from '@plugins/db';
+import {
+  createDocument,
+  createMultipleDocuments,
+  clearCollection,
+} from '@plugins/db/statics';
 
 // Types
-import { ISession, ISessionDoc, ISessionModel } from './types';
+import type { ISession, ISessionDoc, ISessionModel } from './types';
+import type { Schema } from 'mongoose';
 import type { IInlineResponse } from '@typs/inline.response';
 
 /**
@@ -19,6 +24,23 @@ export function createDoc(
 }
 
 /**
+ * Creates Multiple Session Document and Save it to Database
+ *
+ * @param {ISessionModel} this - Session Model
+ * @param {ISession[]} docs - Session Documents to be Created and Saved
+ * @returns {Promise<ISessionDoc>} - Promise Returning Saved Documents
+ */
+export function createMultiDoc(
+  this: ISessionModel,
+  docs: ISession[],
+): Promise<ISessionDoc[]> {
+  return createMultipleDocuments<ISession, ISessionDoc, ISessionModel>(
+    this,
+    docs,
+  );
+}
+
+/**
  * Clears the Session Collection by Deleting all the Records
  *
  * @param {ISessionModel} this - Session Model
@@ -28,4 +50,19 @@ export function clearAll(
   this: ISessionModel,
 ): Promise<IInlineResponse<string>> {
   return clearCollection<ISessionDoc, ISessionModel>(this);
+}
+
+/**
+ * Appends all the Static Helpers with Schema
+ *
+ * @param {Schema<ISessionDoc, ISessionModel>} schema - Model Schema
+ * @returns {Schema<ISessionDoc, ISessionModel>} - Schema with Static Helpers
+ */
+export default function (
+  schema: Schema<ISessionDoc, ISessionModel>,
+): Schema<ISessionDoc, ISessionModel> {
+  schema.statics.createDoc = createDoc;
+  schema.statics.createMultiDoc = createMultiDoc;
+  schema.statics.clearAll = clearAll;
+  return schema;
 }

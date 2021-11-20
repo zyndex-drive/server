@@ -1,10 +1,14 @@
-import { createDocument, clearCollection } from '@plugins/db';
+import {
+  createDocument,
+  createMultipleDocuments,
+  clearCollection,
+} from '@plugins/db/statics';
 
 import { map as policyMap } from '@plugins/templates/policies';
 
 // Types
-import { IPolicy, IPolicyDoc, IPolicyModel } from './types';
-import { Error as MongoError } from 'mongoose';
+import type { IPolicy, IPolicyDoc, IPolicyModel } from './types';
+import type { Error as MongoError, Schema } from 'mongoose';
 import type { IInlineResponse } from '@typs/inline.response';
 
 /**
@@ -19,6 +23,20 @@ export function createDoc(
   doc: IPolicy,
 ): Promise<IPolicyDoc> {
   return createDocument<IPolicy, IPolicyDoc, IPolicyModel>(this, doc);
+}
+
+/**
+ * Create Multiple Policy Document and Save it to Database
+ *
+ * @param {IPolicyModel} this - Policy Model
+ * @param {IPolicy[]} docs - Policy Docs to be Created and Saved
+ * @returns {Promise<IPolicyDoc[]>} Promise of Policy Docs
+ */
+export function createMultiDoc(
+  this: IPolicyModel,
+  docs: IPolicy[],
+): Promise<IPolicyDoc[]> {
+  return createMultipleDocuments<IPolicy, IPolicyDoc, IPolicyModel>(this, docs);
 }
 
 /**
@@ -73,4 +91,20 @@ export function mapCheck(
         reject(new Error(`${err.name}: ${err.message}`));
       });
   });
+}
+
+/**
+ * Appends all the Static Helpers with Schema
+ *
+ * @param {Schema<IPolicyDoc, IPolicyModel>} schema - Model Schema
+ * @returns {Schema<IPolicyDoc, IPolicyModel>} - Schema with Static Helpers
+ */
+export default function (
+  schema: Schema<IPolicyDoc, IPolicyModel>,
+): Schema<IPolicyDoc, IPolicyModel> {
+  schema.statics.createDoc = createDoc;
+  schema.statics.createMultiDoc = createMultiDoc;
+  schema.statics.clearAll = clearAll;
+  schema.statics.mapCheck = mapCheck;
+  return schema;
 }

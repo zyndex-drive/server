@@ -21,10 +21,12 @@ import type {
  * Fetches all the Data in the Database Related to a Credential ID
  *
  * @param { string } credentialID - Credential ID from the Database
+ * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
  * @returns { IGetAllTokens } - Data Related to Credential ID
  */
 function getAllTokens(
   credentialID: ICredentials['_id'],
+  scopes: TGoogleApiScope[],
 ): Promise<IGetAllTokens> {
   return new Promise<IGetAllTokens>((resolve, reject) => {
     const response: IGetAllTokens = {
@@ -41,8 +43,8 @@ function getAllTokens(
                 (account) => account._id,
               );
               const tokenFindParam = [
-                { related_to: credential._id },
-                ...serviceAccountIds.map((id) => ({ related_to: id })),
+                { related_to: credential._id, scopes },
+                ...serviceAccountIds.map((id) => ({ related_to: id, scopes })),
               ];
               Tokens.find({
                 $or: tokenFindParam,
@@ -390,7 +392,7 @@ export default function (
   scopes: TGoogleApiScope[],
 ): Promise<ITokenResolver> {
   return new Promise<ITokenResolver>((resolve, reject) => {
-    getAllTokens(credentialID)
+    getAllTokens(credentialID, scopes)
       .then((credentialData) => {
         checkTokenRefreshit(credentialData, scopes)
           .then((validTokens) => {

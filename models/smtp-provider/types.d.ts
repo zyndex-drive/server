@@ -1,5 +1,5 @@
-import type { Document, Model, Types } from 'mongoose';
-import type { IInlineResponse } from '@typs/inline.response';
+import type { Document, Types } from 'mongoose';
+import type { IBaseModel } from '../types';
 
 export interface ISMTPProvider {
   _id: Types.ObjectId;
@@ -18,10 +18,5 @@ export interface ISMTPProvider {
 
 export interface ISMTPProviderDoc extends ISMTPProvider, Document {}
 
-export interface ISMTPProviderModel extends Model<ISMTPProviderDoc> {
-  createDoc: (
-    this: ISMTPProviderModel,
-    doc: ISMTPProvider,
-  ) => Promise<ISMTPProviderDoc[]>;
-  clearAll: (this: ISMTPProviderModel) => Promise<IInlineResponse<string>>;
-}
+export interface ISMTPProviderModel
+  extends IBaseModel<ISMTPProvider, ISMTPProviderDoc> {}

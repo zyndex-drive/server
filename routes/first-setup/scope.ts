@@ -87,7 +87,7 @@ router.post('/reset', (req, res) => {
 
 // Respond with all the Endpoints in this Route
 router.post('/endpoints', (req, res) =>
-  new EndpointGenerator(res, router).endpoints(),
+  new EndpointGenerator(res, router).serve(),
 );
 
 export default router;

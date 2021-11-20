@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { createDoc, clearAll } from './statics';
+import appendStatics from './statics';
 import type { IGlobalSettingsDoc, IGlobalSettingsModel } from './types';
 
 const schema = new Schema<IGlobalSettingsDoc, IGlobalSettingsModel>({
@@ -25,7 +25,4 @@ const schema = new Schema<IGlobalSettingsDoc, IGlobalSettingsModel>({
   },
 });
 
-schema.statics.createDoc = createDoc;
-schema.statics.clearAll = clearAll;
-
-export default schema;
+export default appendStatics(schema);

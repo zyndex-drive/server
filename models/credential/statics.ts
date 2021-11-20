@@ -1,7 +1,12 @@
-import { createDocument, clearCollection } from '@plugins/db';
+import {
+  createDocument,
+  createMultipleDocuments,
+  clearCollection,
+} from '@plugins/db/statics';
+import encryptedFields from './encrypted-fields';
 
 // Types
-import { Types } from 'mongoose';
+import type { Types, Schema } from 'mongoose';
 import { ICredentials, ICredentialsDoc, ICredentialsModel } from './types';
 import type { IInlineResponse } from '@typs/inline.response';
 import type { Error as MongoError } from 'mongoose';
@@ -20,7 +25,26 @@ export function createDoc(
   return createDocument<ICredentials, ICredentialsDoc, ICredentialsModel>(
     this,
     doc,
+    encryptedFields,
   );
+}
+
+/**
+ * Create Multiple Credential Documents and Save it to Database
+ *
+ * @param {ICredentialsModel} this - BlacklistedUser Model
+ * @param {ICredentials[]} docs - Credentials Documents to be Created and Saved
+ * @returns {Promise<ICredentialsDoc[]>} - Promise Returning Saved Documents
+ */
+export function createMultiDoc(
+  this: ICredentialsModel,
+  docs: ICredentials[],
+): Promise<ICredentialsDoc[]> {
+  return createMultipleDocuments<
+    ICredentials,
+    ICredentialsDoc,
+    ICredentialsModel
+  >(this, docs, encryptedFields);
 }
 
 /**
@@ -59,4 +83,20 @@ export function checkID(
         reject(new Error(`${err.name}: ${err.message}`));
       });
   });
+}
+
+/**
+ * Appends all the Static Helpers with Schema
+ *
+ * @param {Schema<ICredentialsDoc, ICredentialsModel>} schema - Model Schema
+ * @returns {Schema<ICredentialsDoc, ICredentialsModel>} - Schema with Static Helpers
+ */
+export default function (
+  schema: Schema<ICredentialsDoc, ICredentialsModel>,
+): Schema<ICredentialsDoc, ICredentialsModel> {
+  schema.statics.createDoc = createDoc;
+  schema.statics.createMultiDoc = createMultiDoc;
+  schema.statics.clearAll = clearAll;
+  schema.statics.checkID = checkID;
+  return schema;
 }
