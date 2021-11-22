@@ -1,6 +1,6 @@
 {
   "name": "zyndex-server",
-  "version": "0.2.0-21",
+  "version": "0.2.0-22",
   "description": "Backend Server for Handling Zyndex Frontend",
   "main": "app.js",
   "scripts": {
@@ -41,6 +41,7 @@
     "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
     "crypto-js": "^4.0.0",
+    "dot-prop": "^6.0.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-mongo-sanitize": "^2.1.0",
@@ -105,5 +106,6 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "packageManager": "yarn@3.1.0"
 }

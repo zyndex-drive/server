@@ -9,7 +9,7 @@ import { map as policyMap } from '@plugins/templates/policies';
 
 // Types
 import type { IPolicy } from '@models/policy/types';
-import { endpointServer } from '@plugins/server/helpers';
+import { EndpointGenerator } from '@plugins/server/generators';
 
 // Router
 const router = express.Router();

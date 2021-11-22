@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-22](https://github.com/zyndex-drive/server/compare/v0.2.0-21...v0.2.0-22) (2021-11-22)
+
+
+### Bug Fixes
+
+* **typos:** fix import typos to various files ([f30006f](https://github.com/zyndex-drive/server/commit/f30006ffec7b7ebe5b02d87ea8646bdc1f895fd0))
+
+
+### Build System
+
+* **manager:** move to yarn v2 package manager for better management ([4333235](https://github.com/zyndex-drive/server/commit/4333235ce3b2a64d40b36a55a200b3d08299d0c1))
+* **yarn:** add plugins for updating packages and installing typescript packagex ([a044923](https://github.com/zyndex-drive/server/commit/a044923070b25c259932a518e7c7bbd8777fea67))
+
 ## [0.2.0-21](https://github.com/zyndex-drive/server/compare/v0.2.0-20...v0.2.0-21) (2021-11-20)
 
 

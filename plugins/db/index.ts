@@ -3,4 +3,4 @@ export {
   createDocument,
   createMultipleDocuments,
   clearCollection,
-} from './helpers';
+} from './statics';

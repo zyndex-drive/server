@@ -14,7 +14,7 @@ import type { IInlineResponse } from '@typs/inline.response';
 
 // Others
 import { map as rolesMap } from '@plugins/templates/roles';
-import { endpointServer } from '@plugins/server/helpers';
+import { EndpointGenerator } from '@plugins/server/generators';
 
 // Router
 const router = express.Router();
