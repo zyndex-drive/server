@@ -3,6 +3,7 @@ import {
   createMultipleDocuments,
   clearCollection,
 } from '@plugins/db/statics';
+import encryptedFields from './encrypted-fields';
 
 // Types
 import type {
@@ -28,7 +29,7 @@ export function createDoc(
     IBlacklistedUser,
     IBlacklistedUserDoc,
     IBlacklistedUserModel
-  >(this, doc);
+  >(this, doc, encryptedFields);
 }
 
 /**
@@ -46,7 +47,7 @@ export function createMultiDoc(
     IBlacklistedUser,
     IBlacklistedUserDoc,
     IBlacklistedUserModel
-  >(this, docs);
+  >(this, docs, encryptedFields);
 }
 
 /**

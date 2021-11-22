@@ -3,6 +3,7 @@ import {
   createMultipleDocuments,
   clearCollection,
 } from '@plugins/db/statics';
+import encryptedFields from './encrypted-fields';
 
 // Types
 import type { IPendingUser, IPendingUserDoc, IPendingUserModel } from './types';
@@ -23,6 +24,7 @@ export function createDoc(
   return createDocument<IPendingUser, IPendingUserDoc, IPendingUserModel>(
     this,
     doc,
+    encryptedFields,
   );
 }
 
@@ -41,7 +43,7 @@ export function createMultiDoc(
     IPendingUser,
     IPendingUserDoc,
     IPendingUserModel
-  >(this, docs);
+  >(this, docs, encryptedFields);
 }
 
 /**

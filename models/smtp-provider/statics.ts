@@ -3,6 +3,7 @@ import {
   createMultipleDocuments,
   clearCollection,
 } from '@plugins/db/statics';
+import encryptedFields from './encrypted-fields';
 
 // Types
 import type {
@@ -27,6 +28,7 @@ export function createDoc(
   return createDocument<ISMTPProvider, ISMTPProviderDoc, ISMTPProviderModel>(
     this,
     doc,
+    encryptedFields,
   );
 }
 
@@ -45,7 +47,7 @@ export function createMultiDoc(
     ISMTPProvider,
     ISMTPProviderDoc,
     ISMTPProviderModel
-  >(this, docs);
+  >(this, docs, encryptedFields);
 }
 
 /**

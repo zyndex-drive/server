@@ -3,6 +3,7 @@ import {
   createMultipleDocuments,
   clearCollection,
 } from '@plugins/db/statics';
+import encryptedFields from './encrypted-fields';
 
 // Types
 import type { ISMTPMailer, ISMTPMailerDoc, ISMTPMailerModel } from './types';
@@ -23,6 +24,7 @@ export function createDoc(
   return createDocument<ISMTPMailer, ISMTPMailerDoc, ISMTPMailerModel>(
     this,
     doc,
+    encryptedFields,
   );
 }
 
@@ -40,6 +42,7 @@ export function createMultiDoc(
   return createMultipleDocuments<ISMTPMailer, ISMTPMailerDoc, ISMTPMailerModel>(
     this,
     docs,
+    encryptedFields,
   );
 }
 
