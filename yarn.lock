@@ -60,7 +60,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/cli@npm:^13.1.0":
+"@commitlint/cli@npm:^13.2.1":
   version: 13.2.1
   resolution: "@commitlint/cli@npm:13.2.1"
   dependencies:
@@ -79,7 +79,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/config-conventional@npm:^13.1.0":
+"@commitlint/config-conventional@npm:^13.2.0":
   version: 13.2.0
   resolution: "@commitlint/config-conventional@npm:13.2.0"
   dependencies:
@@ -541,7 +541,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chai@npm:*, @types/chai@npm:4, @types/chai@npm:^4.2.21":
+"@types/chai@npm:*, @types/chai@npm:4, @types/chai@npm:^4.2.22":
   version: 4.2.22
   resolution: "@types/chai@npm:4.2.22"
   checksum: dca66a263b25c26112c0a8c6df20316412fa54b557443a108836c07cee961aa56cc5b1763273f69eb450c83ca9f28069ff78b617bffc01806cdd83afc1c20c2a
@@ -564,7 +564,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/crypto-js@npm:^4.0.1":
+"@types/crypto-js@npm:^4.0.2":
   version: 4.0.2
   resolution: "@types/crypto-js@npm:4.0.2"
   checksum: b9d03b6cc1152f0c817b3555e0638d87b62dcc4edfd886d409b50aa68dbe3017727f8fed634b8b4b10b0796e0cdd35379c50abfb28d3226666fdc908844e5934
@@ -600,7 +600,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express@npm:^4.17.12":
+"@types/express@npm:^4.17.13":
   version: 4.17.13
   resolution: "@types/express@npm:4.17.13"
   dependencies:
@@ -667,7 +667,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jsonwebtoken@npm:^8.5.2":
+"@types/jsonwebtoken@npm:^8.5.6":
   version: 8.5.6
   resolution: "@types/jsonwebtoken@npm:8.5.6"
   dependencies:
@@ -685,7 +685,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/md5@npm:^2.3.0":
+"@types/md5@npm:^2.3.1":
   version: 2.3.1
   resolution: "@types/md5@npm:2.3.1"
   dependencies:
@@ -732,14 +732,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^15.12.4":
+"@types/node@npm:^15.14.9":
   version: 15.14.9
   resolution: "@types/node@npm:15.14.9"
   checksum: 49f7f0522a3af4b8389aee660e88426490cd54b86356672a1fedb49919a8797c00d090ec2dcc4a5df34edc2099d57fc2203d796c4e7fbd382f2022ccd789eee7
   languageName: node
   linkType: hard
 
-"@types/nodemailer@npm:^6.4.2":
+"@types/nodemailer@npm:^6.4.4":
   version: 6.4.4
   resolution: "@types/nodemailer@npm:6.4.4"
   dependencies:
@@ -795,7 +795,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/sha1@npm:^1.1.2":
+"@types/sha1@npm:^1.1.3":
   version: 1.1.3
   resolution: "@types/sha1@npm:1.1.3"
   dependencies:
@@ -821,7 +821,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/uuid@npm:^8.3.1":
+"@types/uuid@npm:^8.3.3":
   version: 8.3.3
   resolution: "@types/uuid@npm:8.3.3"
   checksum: 3f340155bb1161f9ffa7163926d6222fea8f3505c23619b72bcc230883354926672c08a06510c7a543f73553c792a84444cc1744cff631b4ba988763e4bd7a8f
@@ -844,7 +844,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^4.28.0":
+"@typescript-eslint/eslint-plugin@npm:^4.33.0":
   version: 4.33.0
   resolution: "@typescript-eslint/eslint-plugin@npm:4.33.0"
   dependencies:
@@ -882,7 +882,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^4.28.0":
+"@typescript-eslint/parser@npm:^4.33.0":
   version: 4.33.0
   resolution: "@typescript-eslint/parser@npm:4.33.0"
   dependencies:
@@ -1251,12 +1251,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.21.1":
-  version: 0.21.4
-  resolution: "axios@npm:0.21.4"
+"axios@npm:^0.24.0":
+  version: 0.24.0
+  resolution: "axios@npm:0.24.0"
   dependencies:
-    follow-redirects: ^1.14.0
-  checksum: 44245f24ac971e7458f3120c92f9d66d1fc695e8b97019139de5b0cc65d9b8104647db01e5f46917728edfc0cfd88eb30fc4c55e6053eef4ace76768ce95ff3c
+    follow-redirects: ^1.14.4
+  checksum: 468cf496c08a6aadfb7e699bebdac02851e3043d4e7d282350804ea8900e30d368daa6e3cd4ab83b8ddb5a3b1e17a5a21ada13fc9cebd27b74828f47a4236316
   languageName: node
   linkType: hard
 
@@ -2062,7 +2062,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crypto-js@npm:^4.0.0":
+"crypto-js@npm:^4.1.1":
   version: 4.1.1
   resolution: "crypto-js@npm:4.1.1"
   checksum: b3747c12ee3a7632fab3b3e171ea50f78b182545f0714f6d3e7e2858385f0f4101a15f2517e033802ce9d12ba50a391575ff4638c9de3dd9b2c4bc47768d5425
@@ -2609,7 +2609,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-import@npm:^2.23.4":
+"eslint-plugin-import@npm:^2.25.3":
   version: 2.25.3
   resolution: "eslint-plugin-import@npm:2.25.3"
   dependencies:
@@ -2632,7 +2632,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^35.4.0":
+"eslint-plugin-jsdoc@npm:^35.5.1":
   version: 35.5.1
   resolution: "eslint-plugin-jsdoc@npm:35.5.1"
   dependencies:
@@ -2667,7 +2667,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-promise@npm:^5.1.0":
+"eslint-plugin-promise@npm:^5.1.1":
   version: 5.1.1
   resolution: "eslint-plugin-promise@npm:5.1.1"
   peerDependencies:
@@ -2720,7 +2720,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^7.29.0":
+"eslint@npm:^7.32.0":
   version: 7.32.0
   resolution: "eslint@npm:7.32.0"
   dependencies:
@@ -3134,7 +3134,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.14.0":
+"follow-redirects@npm:^1.14.4":
   version: 1.14.5
   resolution: "follow-redirects@npm:1.14.5"
   peerDependenciesMeta:
@@ -3491,7 +3491,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"got@npm:^11.8.2":
+"got@npm:^11.8.3":
   version: 11.8.3
   resolution: "got@npm:11.8.3"
   dependencies:
@@ -3723,7 +3723,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^7.0.1":
+"husky@npm:^7.0.4":
   version: 7.0.4
   resolution: "husky@npm:7.0.4"
   bin:
@@ -4186,7 +4186,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jose@npm:^4.1.2":
+"jose@npm:^4.3.7":
   version: 4.3.7
   resolution: "jose@npm:4.3.7"
   checksum: 3f62324bd1920d8c487641ab56fa568a48b4bdb149bf95e070cbbbc97b68b617d8562e64dbd02cc900f8f02f332a964819b42ccf03d23417ac30f4beaf0e3d9e
@@ -5009,7 +5009,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mocha@npm:^9.0.2":
+"mocha@npm:^9.1.3":
   version: 9.1.3
   resolution: "mocha@npm:9.1.3"
   dependencies:
@@ -5090,7 +5090,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mongoose@npm:^5.12.15":
+"mongoose@npm:^5.13.13":
   version: 5.13.13
   resolution: "mongoose@npm:5.13.13"
   dependencies:
@@ -5192,7 +5192,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.1.23":
+"nanoid@npm:^3.1.30":
   version: 3.1.30
   resolution: "nanoid@npm:3.1.30"
   bin:
@@ -5275,7 +5275,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nodemailer@npm:^6.6.2":
+"nodemailer@npm:^6.7.1":
   version: 6.7.1
   resolution: "nodemailer@npm:6.7.1"
   checksum: eee52610fa2836e6ca2338cc2e3e0dc551b58b9675abf993c33ede668075ef8fa3ad295e913384c37efaaeb4576bb8619883fa31439c55a9d2ab1b332f9bde13
@@ -6500,7 +6500,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"standard-version@npm:^9.3.1":
+"standard-version@npm:^9.3.2":
   version: 9.3.2
   resolution: "standard-version@npm:9.3.2"
   dependencies:
@@ -6904,7 +6904,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsc-alias@npm:^1.3.7":
+"tsc-alias@npm:^1.4.1":
   version: 1.4.1
   resolution: "tsc-alias@npm:1.4.1"
   dependencies:
@@ -6920,7 +6920,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsconfig-paths@npm:^3.11.0, tsconfig-paths@npm:^3.5.0, tsconfig-paths@npm:^3.9.0":
+"tsconfig-paths@npm:^3.11.0, tsconfig-paths@npm:^3.12.0, tsconfig-paths@npm:^3.5.0":
   version: 3.12.0
   resolution: "tsconfig-paths@npm:3.12.0"
   dependencies:
@@ -7018,7 +7018,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.3.4, typescript@npm:^4.4.3":
+"typescript@npm:^4.4.3, typescript@npm:^4.5.2":
   version: 4.5.2
   resolution: "typescript@npm:4.5.2"
   bin:
@@ -7028,7 +7028,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.3.4#~builtin<compat/typescript>, typescript@patch:typescript@^4.4.3#~builtin<compat/typescript>":
+"typescript@patch:typescript@^4.4.3#~builtin<compat/typescript>, typescript@patch:typescript@^4.5.2#~builtin<compat/typescript>":
   version: 4.5.2
   resolution: "typescript@patch:typescript@npm%3A4.5.2#~builtin<compat/typescript>::version=4.5.2&hash=ddd1e8"
   bin:
@@ -7404,66 +7404,66 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "zyndex-server@workspace:."
   dependencies:
-    "@commitlint/cli": ^13.1.0
-    "@commitlint/config-conventional": ^13.1.0
+    "@commitlint/cli": ^13.2.1
+    "@commitlint/config-conventional": ^13.2.0
     "@godaddy/terminus": ^4.9.0
     "@types/bcrypt": ^5.0.0
-    "@types/chai": ^4.2.21
+    "@types/chai": ^4.2.22
     "@types/chai-as-promised": ^7.1.4
-    "@types/crypto-js": ^4.0.1
+    "@types/crypto-js": ^4.0.2
     "@types/dotenv": ^8.2.0
     "@types/expect": ^24.3.0
-    "@types/express": ^4.17.12
+    "@types/express": ^4.17.13
     "@types/http-server": ^0.12.1
-    "@types/jsonwebtoken": ^8.5.2
-    "@types/md5": ^2.3.0
+    "@types/jsonwebtoken": ^8.5.6
+    "@types/md5": ^2.3.1
     "@types/mocha": ^8.2.3
-    "@types/node": ^15.12.4
-    "@types/nodemailer": ^6.4.2
-    "@types/sha1": ^1.1.2
-    "@types/uuid": ^8.3.1
-    "@typescript-eslint/eslint-plugin": ^4.28.0
-    "@typescript-eslint/parser": ^4.28.0
-    axios: ^0.21.1
+    "@types/node": ^15.14.9
+    "@types/nodemailer": ^6.4.4
+    "@types/sha1": ^1.1.3
+    "@types/uuid": ^8.3.3
+    "@typescript-eslint/eslint-plugin": ^4.33.0
+    "@typescript-eslint/parser": ^4.33.0
+    axios: ^0.24.0
     bcrypt: ^5.0.1
     chai: ^4.3.4
     chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
     commitizen: ^4.2.4
-    crypto-js: ^4.0.0
+    crypto-js: ^4.1.1
     cz-conventional-changelog: ^3.3.0
     dot-prop: ^6.0.1
     dotenv: ^10.0.0
-    eslint: ^7.29.0
+    eslint: ^7.32.0
     eslint-config-google: ^0.14.0
     eslint-config-nodejs: ^2.0.0
-    eslint-plugin-import: ^2.23.4
-    eslint-plugin-jsdoc: ^35.4.0
+    eslint-plugin-import: ^2.25.3
+    eslint-plugin-jsdoc: ^35.5.1
     eslint-plugin-node: ^11.1.0
-    eslint-plugin-promise: ^5.1.0
+    eslint-plugin-promise: ^5.1.1
     express: ^4.17.1
     express-mongo-sanitize: ^2.1.0
-    got: ^11.8.2
+    got: ^11.8.3
     helmet: ^4.6.0
-    husky: ^7.0.1
-    jose: ^4.1.2
+    husky: ^7.0.4
+    jose: ^4.3.7
     jsdoc: ^3.6.7
     jsonwebtoken: ^8.5.1
     md5: ^2.3.0
-    mocha: ^9.0.2
+    mocha: ^9.1.3
     mocha-simple-html-reporter: ^2.0.0
     mocha-steps: ^1.3.0
-    mongoose: ^5.12.15
-    nanoid: ^3.1.23
+    mongoose: ^5.13.13
+    nanoid: ^3.1.30
     node-webcrypto-ossl: ^2.1.3
-    nodemailer: ^6.6.2
+    nodemailer: ^6.7.1
     query-string: ^7.0.1
     sha1: ^1.1.1
-    standard-version: ^9.3.1
+    standard-version: ^9.3.2
     ts-mocha: ^8.0.0
-    tsc-alias: ^1.3.7
-    tsconfig-paths: ^3.9.0
-    typescript: ^4.3.4
+    tsc-alias: ^1.4.1
+    tsconfig-paths: ^3.12.0
+    typescript: ^4.5.2
     uuid: ^8.3.2
     x-xss-protection: ^2.0.0
   languageName: unknown
