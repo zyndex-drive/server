@@ -3,6 +3,7 @@ import {
   createMultipleDocuments,
   clearCollection,
 } from '@plugins/db/statics';
+import encryptedFields from './encrypted-fields';
 
 // Types
 import type { IUser, IUserDoc, IUserModel } from './types';
@@ -17,7 +18,11 @@ import type { IInlineResponse } from '@typs/inline.response';
  * @returns {Promise<IUserDoc>} - Promise Returning Saved Document
  */
 export function createDoc(this: IUserModel, doc: IUser): Promise<IUserDoc> {
-  return createDocument<IUser, IUserDoc, IUserModel>(this, doc);
+  return createDocument<IUser, IUserDoc, IUserModel>(
+    this,
+    doc,
+    encryptedFields,
+  );
 }
 
 /**
@@ -31,7 +36,11 @@ export function createMultiDoc(
   this: IUserModel,
   docs: IUser[],
 ): Promise<IUserDoc[]> {
-  return createMultipleDocuments<IUser, IUserDoc, IUserModel>(this, docs);
+  return createMultipleDocuments<IUser, IUserDoc, IUserModel>(
+    this,
+    docs,
+    encryptedFields,
+  );
 }
 
 /**

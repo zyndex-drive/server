@@ -3,6 +3,7 @@ import {
   createMultipleDocuments,
   clearCollection,
 } from '@plugins/db/statics';
+import encryptedFields from './encrypted-fields';
 
 // Types
 import type { IToken, ITokenDoc, ITokenModel } from './types';
@@ -17,7 +18,11 @@ import type { IInlineResponse } from '@typs/inline.response';
  * @returns {Promise<ITokenDoc>} - Promise Returning Saved Document
  */
 export function createDoc(this: ITokenModel, doc: IToken): Promise<ITokenDoc> {
-  return createDocument<IToken, ITokenDoc, ITokenModel>(this, doc);
+  return createDocument<IToken, ITokenDoc, ITokenModel>(
+    this,
+    doc,
+    encryptedFields,
+  );
 }
 
 /**
@@ -31,7 +36,11 @@ export function createMultiDoc(
   this: ITokenModel,
   docs: IToken[],
 ): Promise<ITokenDoc[]> {
-  return createMultipleDocuments<IToken, ITokenDoc, ITokenModel>(this, docs);
+  return createMultipleDocuments<IToken, ITokenDoc, ITokenModel>(
+    this,
+    docs,
+    encryptedFields,
+  );
 }
 
 /**
