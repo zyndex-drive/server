@@ -9,7 +9,7 @@ import { map as rolesMap } from '@plugins/templates/roles';
 
 // Types
 import type { IRole } from '@models/role/types';
-import { endpointServer } from '@plugins/server/helpers';
+import { EndpointGenerator } from '@plugins/server/generators';
 
 // Router
 const router = express.Router();

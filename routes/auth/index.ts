@@ -9,7 +9,7 @@ import { okResponse } from '@plugins/server/responses';
 // Routes
 import policies from './policies';
 import roles from './roles';
-import { endpointServer } from '@plugins/server/helpers';
+import { EndpointGenerator } from '@plugins/server/generators';
 
 // Router
 const router = express.Router();
