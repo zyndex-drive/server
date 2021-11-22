@@ -1,25 +1,5 @@
 import { encrypt, decrypt } from '@plugins/crypto';
-import type { IEncryptFunction, IDecryptFunction } from '@plugins/crypto/types';
-
-type iterFunc = IEncryptFunction | IDecryptFunction;
-
-const iterateNFunc = <T>(
-  obj: T,
-  func: iterFunc,
-  encryptedFields?: string[],
-): T => {
-  const modObj = obj;
-  for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      if (encryptedFields && encryptedFields.includes(key)) {
-        if (typeof obj[key] === 'string') {
-          Object.defineProperty(modObj, key, func.str(String(obj[key])));
-        }
-      }
-    }
-  }
-  return modObj;
-};
+import dotProp from 'dot-prop';
 
 /**
  * Encrypts Particular Fields in a Object
@@ -29,8 +9,25 @@ const iterateNFunc = <T>(
  * @returns {Object} Object with Encrypted Fields
  */
 export function encryptFields<T>(obj: T, encryptedFields?: string[]): T {
-  const modifiedObj = iterateNFunc<T>(obj, encrypt, encryptedFields);
-  return modifiedObj;
+  let modObj = obj;
+  if (encryptedFields) {
+    encryptedFields.forEach((field) => {
+      if (dotProp.has(obj, field)) {
+        const inValue = dotProp.get(obj, field);
+        let encryptedValue: string;
+        if (typeof inValue === 'string') {
+          encryptedValue = encrypt.str(inValue);
+        } else {
+          const cryptoData = {
+            data: inValue,
+          };
+          encryptedValue = encrypt.obj<unknown>(cryptoData);
+        }
+        modObj = dotProp.set(modObj, field, encryptedValue);
+      }
+    });
+  }
+  return modObj;
 }
 
 /**
@@ -41,6 +38,18 @@ export function encryptFields<T>(obj: T, encryptedFields?: string[]): T {
  * @returns {Object} Object with Decrypted Fields
  */
 export function decryptFields<T>(obj: T, encryptedFields?: string[]): T {
-  const modifiedObj = iterateNFunc<T>(obj, decrypt, encryptedFields);
-  return modifiedObj;
+  let modObj = obj;
+  if (encryptedFields) {
+    encryptedFields.forEach((field) => {
+      if (dotProp.has(obj, field)) {
+        const inValue = dotProp.get(obj, field);
+        let decryptedValue;
+        if (typeof inValue === 'string') {
+          decryptedValue = decrypt.str(inValue);
+        }
+        modObj = dotProp.set(modObj, field, decryptedValue);
+      }
+    });
+  }
+  return modObj;
 }
