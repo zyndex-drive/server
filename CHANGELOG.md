@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-23](https://github.com/zyndex-drive/server/compare/v0.2.0-22...v0.2.0-23) (2021-11-22)
+
+
+### Build System 🏗
+
+* **packages:** update packages to latest versions ([caa6167](https://github.com/zyndex-drive/server/commit/caa6167310a8879a3d59565a2bae1d4da1ec67e6))
+
+
+### Styling 🎨
+
+* **changelog:** add emoji headlines for automated changelogs ([a409941](https://github.com/zyndex-drive/server/commit/a409941cdea28ab906620ba6c7843a40d2a9bc96))
+
+
+### Features 🔥
+
+* **db/encrypt:** add support for multi-level encryption of objects in database ([dfda3c0](https://github.com/zyndex-drive/server/commit/dfda3c0b1f470a6d9f55d1c18e432fe4fa50d73a))
+* **models:** add encrypted fields for models ([b16ec6b](https://github.com/zyndex-drive/server/commit/b16ec6bae4f443f41d9a55c5d45c7f2db949b708))
+
 ## [0.2.0-22](https://github.com/zyndex-drive/server/compare/v0.2.0-21...v0.2.0-22) (2021-11-22)
 
 
