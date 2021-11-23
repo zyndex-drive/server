@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-25](https://github.com/zyndex-drive/server/compare/v0.2.0-24...v0.2.0-25) (2021-11-23)
+
+
+### CI 🛠
+
+* **deepsource:** remove deepsource pipeline ([188bfea](https://github.com/zyndex-drive/server/commit/188bfea8ed318df15a30e8868af8cbe31518a403))
+
 ## [0.2.0-24](https://github.com/zyndex-drive/server/compare/v0.2.0-23...v0.2.0-24) (2021-11-23)
 
 
