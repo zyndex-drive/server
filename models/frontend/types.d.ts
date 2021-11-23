@@ -27,5 +27,10 @@ export interface IFrontend {
 export interface IFrontendDoc extends IFrontend, Document {}
 
 export interface IFrontendModel extends IBaseModel<IFrontend, IFrontendDoc> {
+  /**
+   * Get all the Frontend URL's From the Collection
+   *
+   * @returns {IFrontendDoc[]} list of frontend Data
+   */
   getFrontendUrls: (this: IFrontendModel) => Promise<IFrontendDoc[]>;
 }
