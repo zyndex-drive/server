@@ -25,5 +25,10 @@ export interface IRole {
 export interface IRoleDoc extends IRole, Document {}
 
 export interface IRoleModel extends IBaseModel<IRole, IRoleDoc> {
+  /**
+   * Checks the Predefined map of Roles with the Docs present in Database
+   *
+   * @returns {Promise<IInlineResponse<boolean>>} - Response whether map is matching or not
+   */
   mapCheck: (this: IRoleModel) => Promise<IInlineResponse<boolean>>;
 }

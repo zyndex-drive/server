@@ -12,5 +12,10 @@ export interface IPolicy {
 export interface IPolicyDoc extends IPolicy, Document {}
 
 export interface IPolicyModel extends IBaseModel<IPolicy, IPolicyDoc> {
+  /**
+   * Checks the Predefined map of Policies with the Docs present in Database
+   *
+   * @returns {Promise<IInlineResponse<boolean>>} - Response whether map is matching or not
+   */
   mapCheck: (this: IPolicyModel) => Promise<IInlineResponse<boolean>>;
 }
