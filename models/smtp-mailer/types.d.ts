@@ -15,5 +15,4 @@ export interface ISMTPMailer {
 
 export interface ISMTPMailerDoc extends ISMTPMailer, Document {}
 
-export interface ISMTPMailerModel
-  extends IBaseModel<ISMTPMailer, ISMTPMailerDoc> {}
+export interface ISMTPMailerModel extends IBaseModel<ISMTPMailerDoc> {}

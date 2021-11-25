@@ -11,7 +11,7 @@ export interface IPolicy {
 
 export interface IPolicyDoc extends IPolicy, Document {}
 
-export interface IPolicyModel extends IBaseModel<IPolicy, IPolicyDoc> {
+export interface IPolicyModel extends IBaseModel<IPolicyDoc> {
   /**
    * Checks the Predefined map of Policies with the Docs present in Database
    *

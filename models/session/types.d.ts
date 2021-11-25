@@ -15,4 +15,4 @@ export interface ISession {
 
 export interface ISessionDoc extends ISession, Document {}
 
-export interface ISessionModel extends IBaseModel<ISession, ISessionDoc> {}
+export interface ISessionModel extends IBaseModel<ISessionDoc> {}

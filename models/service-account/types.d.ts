@@ -20,5 +20,4 @@ export interface IServiceAcc {
 
 export interface IServiceAccDoc extends IServiceAcc, Document {}
 
-export interface IServiceAccModel
-  extends IBaseModel<IServiceAcc, IServiceAccDoc> {}
+export interface IServiceAccModel extends IBaseModel<IServiceAccDoc> {}

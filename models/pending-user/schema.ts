@@ -1,8 +1,9 @@
 import { Schema } from 'mongoose';
 import appendStatics from './statics';
-import type { IPendingUserDoc, IPendingUserModel } from './types';
+import { cryptoPlugin } from '@plugins/db/plugins';
+import type { IPendingUser, IPendingUserDoc, IPendingUserModel } from './types';
 
-const schema = new Schema<IPendingUserDoc, IPendingUserModel>({
+const schema = new Schema<IPendingUserDoc, IPendingUserModel, IPendingUser>({
   _id: {
     type: Schema.Types.ObjectId,
   },
@@ -13,6 +14,7 @@ const schema = new Schema<IPendingUserDoc, IPendingUserModel>({
   email: {
     type: String,
     required: true,
+    encrypt: true,
   },
   message: {
     type: String,
@@ -31,9 +33,9 @@ const schema = new Schema<IPendingUserDoc, IPendingUserModel>({
   ],
   requested_at: {
     type: Date,
-    default: Date.now,
     required: true,
   },
 });
 
+schema.plugin(cryptoPlugin<IPendingUser, IPendingUserDoc, IPendingUserModel>());
 export default appendStatics(schema);

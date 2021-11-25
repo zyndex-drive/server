@@ -1,53 +1,9 @@
-import {
-  createDocument,
-  createMultipleDocuments,
-  clearCollection,
-} from '@plugins/db/statics';
+import { clearCollection } from '@plugins/db/statics';
 
 // Types
-import type {
-  IGlobalSettings,
-  IGlobalSettingsDoc,
-  IGlobalSettingsModel,
-} from './types';
+import type { IGlobalSettingsDoc, IGlobalSettingsModel } from './types';
 import type { Schema } from 'mongoose';
 import type { IInlineResponse } from '@typs/inline.response';
-
-/**
- * Create a Global Setting's Document and Save it to Database
- *
- * @param {IGlobalSettingsModel} this - Global Setting's Model
- * @param {IGlobalSettings} doc - Global Setting's Doc to be Created and Saved
- * @returns {Promise<IGlobalSettingsDoc>} - Promise Returning Saved Document
- */
-export function createDoc(
-  this: IGlobalSettingsModel,
-  doc: IGlobalSettings,
-): Promise<IGlobalSettingsDoc> {
-  return createDocument<
-    IGlobalSettings,
-    IGlobalSettingsDoc,
-    IGlobalSettingsModel
-  >(this, doc);
-}
-
-/**
- * Create Multiple Global Setting Documents and Save it to Database
- *
- * @param {IGlobalSettingsModel} this - Global Settings Model
- * @param {IGlobalSettings[]} docs - Global Settings Doc to be Created and Saved
- * @returns {Promise<IGlobalSettingsDoc>} - Promise Returning Saved Document
- */
-export function createMultiDoc(
-  this: IGlobalSettingsModel,
-  docs: IGlobalSettings[],
-): Promise<IGlobalSettingsDoc[]> {
-  return createMultipleDocuments<
-    IGlobalSettings,
-    IGlobalSettingsDoc,
-    IGlobalSettingsModel
-  >(this, docs);
-}
 
 /**
  * Clears the Global Settings Collection by Deleting all the Records
@@ -70,8 +26,6 @@ export function clearAll(
 export default function (
   schema: Schema<IGlobalSettingsDoc, IGlobalSettingsModel>,
 ): Schema<IGlobalSettingsDoc, IGlobalSettingsModel> {
-  schema.statics.createDoc = createDoc;
-  schema.statics.createMultiDoc = createMultiDoc;
   schema.statics.clearAll = clearAll;
   return schema;
 }

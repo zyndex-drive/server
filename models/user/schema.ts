@@ -1,8 +1,9 @@
 import { Schema } from 'mongoose';
 import appendStatics from './statics';
-import type { IUserDoc, IUserModel } from './types';
+import { cryptoPlugin, hashPlugin } from '@plugins/db/plugins';
+import type { IUser, IUserDoc, IUserModel } from './types';
 
-const schema = new Schema<IUserDoc, IUserModel>({
+const schema = new Schema<IUserDoc, IUserModel, IUser>({
   _id: {
     type: Schema.Types.ObjectId,
   },
@@ -15,15 +16,15 @@ const schema = new Schema<IUserDoc, IUserModel>({
     lowercase: true,
     required: true,
     unique: true,
+    encrypt: true,
   },
   avatar: {
     type: String,
     lowercase: true,
   },
   registered_at: {
-    type: Number,
+    type: Date,
     required: true,
-    default: Date.now,
   },
   verified_at: {
     type: Date,
@@ -53,7 +54,7 @@ const schema = new Schema<IUserDoc, IUserModel>({
   ],
   password: {
     type: String,
-    default: null,
+    hash: true,
   },
   allowed_policies: [
     {
@@ -68,5 +69,8 @@ const schema = new Schema<IUserDoc, IUserModel>({
     },
   ],
 });
+
+schema.plugin(cryptoPlugin<IUser, IUserDoc, IUserModel>());
+schema.plugin(hashPlugin<IUser, IUserDoc, IUserModel>());
 
 export default appendStatics(schema);

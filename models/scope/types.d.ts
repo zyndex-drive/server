@@ -15,4 +15,4 @@ export interface IScope {
 
 export interface IScopeDoc extends IScope, Document {}
 
-export interface IScopeModel extends IBaseModel<IScope, IScopeDoc> {}
+export interface IScopeModel extends IBaseModel<IScopeDoc> {}

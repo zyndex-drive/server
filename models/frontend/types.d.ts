@@ -26,7 +26,7 @@ export interface IFrontend {
 
 export interface IFrontendDoc extends IFrontend, Document {}
 
-export interface IFrontendModel extends IBaseModel<IFrontend, IFrontendDoc> {
+export interface IFrontendModel extends IBaseModel<IFrontendDoc> {
   /**
    * Get all the Frontend URL's From the Collection
    *

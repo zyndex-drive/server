@@ -1,14 +1,16 @@
 import { Schema } from 'mongoose';
 import appendStatics from './statics';
-import type { ITokenDoc, ITokenModel } from './types';
+import { cryptoPlugin } from '@plugins/db/plugins';
+import type { IToken, ITokenDoc, ITokenModel } from './types';
 
-const schema = new Schema<ITokenDoc, ITokenModel>({
+const schema = new Schema<ITokenDoc, ITokenModel, IToken>({
   _id: {
     type: Schema.Types.ObjectId,
   },
   token: {
     type: String,
     required: true,
+    encrypt: true,
   },
   type: {
     type: String,
@@ -23,8 +25,7 @@ const schema = new Schema<ITokenDoc, ITokenModel>({
     enum: ['Credential', 'ServiceAccount'],
   },
   expires_at: {
-    type: Date,
-    default: Date.now,
+    type: Number,
     required: true,
   },
   scopes: [{ type: String, required: true }],
@@ -44,4 +45,5 @@ const schema = new Schema<ITokenDoc, ITokenModel>({
   ],
 });
 
+schema.plugin(cryptoPlugin<IToken, ITokenDoc, ITokenModel>());
 export default appendStatics(schema);

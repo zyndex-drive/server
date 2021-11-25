@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 import appendStatics from './statics';
-import type { IPolicyDoc, IPolicyModel } from './types';
+import type { IPolicy, IPolicyDoc, IPolicyModel } from './types';
 
-const schema = new Schema<IPolicyDoc, IPolicyModel>({
+const schema = new Schema<IPolicyDoc, IPolicyModel, IPolicy>({
   _id: {
     type: Schema.Types.ObjectId,
   },
@@ -18,12 +18,6 @@ const schema = new Schema<IPolicyDoc, IPolicyModel>({
     type: Boolean,
     required: true,
   },
-  allowed_roles: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Role',
-    },
-  ],
 });
 
 export default appendStatics(schema);

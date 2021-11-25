@@ -1,8 +1,13 @@
 import { Schema } from 'mongoose';
 import appendStatics from './statics';
-import type { ISMTPProviderDoc, ISMTPProviderModel } from './types';
+import { cryptoPlugin } from '@plugins/db/plugins';
+import type {
+  ISMTPProvider,
+  ISMTPProviderDoc,
+  ISMTPProviderModel,
+} from './types';
 
-const schema = new Schema<ISMTPProviderDoc, ISMTPProviderModel>({
+const schema = new Schema<ISMTPProviderDoc, ISMTPProviderModel, ISMTPProvider>({
   _id: {
     type: Schema.Types.ObjectId,
   },
@@ -38,7 +43,11 @@ const schema = new Schema<ISMTPProviderDoc, ISMTPProviderModel>({
   dkim_key: {
     type: String,
     required: true,
+    encrypt: true,
   },
 });
 
+schema.plugin(
+  cryptoPlugin<ISMTPProvider, ISMTPProviderDoc, ISMTPProviderModel>(),
+);
 export default appendStatics(schema);

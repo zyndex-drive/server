@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 import appendStatics from './statics';
-import type { IRoleDoc, IRoleModel } from './types';
+import type { IRole, IRoleDoc, IRoleModel } from './types';
 
-const schema = new Schema<IRoleDoc, IRoleModel>({
+const schema = new Schema<IRoleDoc, IRoleModel, IRole>({
   _id: {
     type: Schema.Types.ObjectId,
   },

@@ -1,8 +1,9 @@
 import { Schema } from 'mongoose';
 import appendStatics from './statics';
-import type { ISMTPMailerDoc, ISMTPMailerModel } from './types';
+import { cryptoPlugin } from '@plugins/db/plugins';
+import type { ISMTPMailer, ISMTPMailerDoc, ISMTPMailerModel } from './types';
 
-const schema = new Schema<ISMTPMailerDoc, ISMTPMailerModel>({
+const schema = new Schema<ISMTPMailerDoc, ISMTPMailerModel, ISMTPMailer>({
   _id: {
     type: Schema.Types.ObjectId,
   },
@@ -13,10 +14,12 @@ const schema = new Schema<ISMTPMailerDoc, ISMTPMailerModel>({
   email: {
     type: String,
     required: true,
+    encrypt: true,
   },
   password: {
     type: String,
     required: true,
+    encrypt: true,
   },
   type: {
     type: String,
@@ -32,4 +35,5 @@ const schema = new Schema<ISMTPMailerDoc, ISMTPMailerModel>({
   },
 });
 
+schema.plugin(cryptoPlugin<ISMTPMailer, ISMTPMailerDoc, ISMTPMailerModel>());
 export default appendStatics(schema);

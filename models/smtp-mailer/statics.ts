@@ -1,50 +1,9 @@
-import {
-  createDocument,
-  createMultipleDocuments,
-  clearCollection,
-} from '@plugins/db/statics';
-import encryptedFields from './encrypted-fields';
+import { clearCollection } from '@plugins/db/statics';
 
 // Types
-import type { ISMTPMailer, ISMTPMailerDoc, ISMTPMailerModel } from './types';
+import type { ISMTPMailerDoc, ISMTPMailerModel } from './types';
 import type { Schema } from 'mongoose';
 import type { IInlineResponse } from '@typs/inline.response';
-
-/**
- * Create a SMTP Mailer Document and Save it to Database
- *
- * @param {ISMTPMailerModel} this - SMTP Mailer Model
- * @param {ISMTPMailer} doc - SMTP Mailer to be Created and Saved
- * @returns {Promise<ISMTPMailerDoc>} - Promise Returning Saved Document
- */
-export function createDoc(
-  this: ISMTPMailerModel,
-  doc: ISMTPMailer,
-): Promise<ISMTPMailerDoc> {
-  return createDocument<ISMTPMailer, ISMTPMailerDoc, ISMTPMailerModel>(
-    this,
-    doc,
-    encryptedFields,
-  );
-}
-
-/**
- * Create a SMTP Mailer Document and Save it to Database
- *
- * @param {ISMTPMailerModel} this - SMTP Mailer Model
- * @param {ISMTPMailer[]} docs - SMTP Mailer to be Created and Saved
- * @returns {Promise<ISMTPMailerDoc[]>} - Promise Returning Saved Document
- */
-export function createMultiDoc(
-  this: ISMTPMailerModel,
-  docs: ISMTPMailer[],
-): Promise<ISMTPMailerDoc[]> {
-  return createMultipleDocuments<ISMTPMailer, ISMTPMailerDoc, ISMTPMailerModel>(
-    this,
-    docs,
-    encryptedFields,
-  );
-}
 
 /**
  * Clears the SMTP Mailer Collection by Deleting all the Records
@@ -67,8 +26,6 @@ export function clearAll(
 export default function (
   schema: Schema<ISMTPMailerDoc, ISMTPMailerModel>,
 ): Schema<ISMTPMailerDoc, ISMTPMailerModel> {
-  schema.statics.createDoc = createDoc;
-  schema.statics.createMultiDoc = createMultiDoc;
   schema.statics.clearAll = clearAll;
   return schema;
 }

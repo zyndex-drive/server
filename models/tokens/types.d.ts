@@ -23,4 +23,4 @@ export interface IToken {
 
 export interface ITokenDoc extends IToken, Document {}
 
-export interface ITokenModel extends IBaseModel<IToken, ITokenDoc> {}
+export interface ITokenModel extends IBaseModel<ITokenDoc> {}

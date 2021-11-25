@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 import appendStatics from './statics';
-import type { IScopeDoc, IScopeModel } from './types';
+import type { IScope, IScopeDoc, IScopeModel } from './types';
 
-const schema = new Schema<IScopeDoc, IScopeModel>({
+const schema = new Schema<IScopeDoc, IScopeModel, IScope>({
   _id: {
     type: Schema.Types.ObjectId,
   },
@@ -11,9 +11,8 @@ const schema = new Schema<IScopeDoc, IScopeModel>({
     required: true,
   },
   added_at: {
-    type: Date,
+    type: Number,
     required: true,
-    default: Date.now,
   },
   drive_id: {
     type: String,

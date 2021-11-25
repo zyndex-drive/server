@@ -1,43 +1,11 @@
-import {
-  createDocument,
-  createMultipleDocuments,
-  clearCollection,
-} from '@plugins/db/statics';
+import { clearCollection } from '@plugins/db/statics';
 
 import { map as policyMap } from '@plugins/templates/policies';
 
 // Types
-import type { IPolicy, IPolicyDoc, IPolicyModel } from './types';
+import type { IPolicyDoc, IPolicyModel } from './types';
 import type { Error as MongoError, Schema } from 'mongoose';
 import type { IInlineResponse } from '@typs/inline.response';
-
-/**
- * Create a Policy Document and Save it to Database
- *
- * @param {IPolicyModel} this - Policy Model
- * @param {IPolicy} doc - Policy Doc to be Created and Saved
- * @returns {Promise<IPolicyDoc>} Promise of Policy Doc
- */
-export function createDoc(
-  this: IPolicyModel,
-  doc: IPolicy,
-): Promise<IPolicyDoc> {
-  return createDocument<IPolicy, IPolicyDoc, IPolicyModel>(this, doc);
-}
-
-/**
- * Create Multiple Policy Document and Save it to Database
- *
- * @param {IPolicyModel} this - Policy Model
- * @param {IPolicy[]} docs - Policy Docs to be Created and Saved
- * @returns {Promise<IPolicyDoc[]>} Promise of Policy Docs
- */
-export function createMultiDoc(
-  this: IPolicyModel,
-  docs: IPolicy[],
-): Promise<IPolicyDoc[]> {
-  return createMultipleDocuments<IPolicy, IPolicyDoc, IPolicyModel>(this, docs);
-}
 
 /**
  * Clears the Policy Collection by Deleting all the Records
@@ -102,8 +70,6 @@ export function mapCheck(
 export default function (
   schema: Schema<IPolicyDoc, IPolicyModel>,
 ): Schema<IPolicyDoc, IPolicyModel> {
-  schema.statics.createDoc = createDoc;
-  schema.statics.createMultiDoc = createMultiDoc;
   schema.statics.clearAll = clearAll;
   schema.statics.mapCheck = mapCheck;
   return schema;
