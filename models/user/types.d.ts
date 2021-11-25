@@ -10,8 +10,8 @@ export interface IUser {
   name: string;
   email: string;
   avatar: string;
-  registered_at: Date;
-  verified_at: Date;
+  registered_at: number;
+  verified_at: number;
   token_hash: string;
   restricted: boolean;
   role: [

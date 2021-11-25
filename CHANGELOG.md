@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-27](https://github.com/zyndex-drive/server/compare/v0.2.0-26...v0.2.0-27) (2021-11-25)
+
+
+### Features 🔥
+
+* **models:** add a new model - templates for managing email templates ([4b33fe9](https://github.com/zyndex-drive/server/commit/4b33fe91140f10c996a67d34b09af68bc5edaada))
+* **plugins/db:** write a base64 encode plugin for mongoose ([d07a652](https://github.com/zyndex-drive/server/commit/d07a652de61776091dc97cddd670164172c90927))
+
+
+### Bug Fixes 🛠
+
+* **models:** fix types for various models ([17919b2](https://github.com/zyndex-drive/server/commit/17919b2f5f79fd1b05b2296fa808a5e6bfabbd0e))
+
 ## [0.2.0-26](https://github.com/zyndex-drive/server/compare/v0.2.0-25...v0.2.0-26) (2021-11-25)
 
 

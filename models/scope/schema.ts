@@ -13,6 +13,7 @@ const schema = new Schema<IScopeDoc, IScopeModel, IScope>({
   added_at: {
     type: Number,
     required: true,
+    default: Date.now,
   },
   drive_id: {
     type: String,

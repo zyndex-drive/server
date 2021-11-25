@@ -11,7 +11,7 @@ export interface IGlobalSettings {
   name: string;
   message: string;
   global_flag: OTHER | ID<ISMTPMailerDoc> | ID<ISMTPProviderDoc>;
-  reference?: 'SMTPMailer' | 'SMTPProvider';
+  reference?: 'SMTPMailer' | 'SMTPProvider' | 'MailTemplates';
 }
 
 export interface IGlobalSettingsDoc extends IGlobalSettings, Document {}

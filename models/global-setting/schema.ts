@@ -29,7 +29,7 @@ const schema = new Schema<
   },
   reference: {
     type: String,
-    enum: ['SMTPMailer', 'SMTPProvider'],
+    enum: ['SMTPMailer', 'SMTPProvider', 'MailTemplates'],
   },
 });
 
