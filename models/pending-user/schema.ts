@@ -32,8 +32,9 @@ const schema = new Schema<IPendingUserDoc, IPendingUserModel, IPendingUser>({
     },
   ],
   requested_at: {
-    type: Date,
+    type: Number,
     required: true,
+    default: Date.now,
   },
 });
 

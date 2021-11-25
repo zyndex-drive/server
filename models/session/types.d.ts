@@ -10,7 +10,7 @@ export interface ISession {
   user_id: ID<IUserDoc>;
   frontend: ID<IFrontendDoc>;
   token_secret: string;
-  issued_at: Date;
+  issued_at: number;
 }
 
 export interface ISessionDoc extends ISession, Document {}

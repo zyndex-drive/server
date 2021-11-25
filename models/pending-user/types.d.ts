@@ -11,7 +11,7 @@ export interface IPendingUser {
   message: string;
   role: ID<IRoleDoc>;
   scopes: ID<IScopeDoc>;
-  requested_at: Date;
+  requested_at: number;
 }
 
 export interface IPendingUserDoc extends IPendingUser, Document {}

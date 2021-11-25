@@ -26,8 +26,9 @@ const schema = new Schema<ISessionDoc, ISessionModel, ISession>({
     unique: true,
   },
   issued_at: {
-    type: Date,
+    type: Number,
     required: true,
+    default: Date.now,
   },
 });
 
