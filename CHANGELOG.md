@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-26](https://github.com/zyndex-drive/server/compare/v0.2.0-25...v0.2.0-26) (2021-11-25)
+
+
+### Code Refactoring 🖌
+
+* **db/statics:** remove static helpers as it is implemented in plugin ([58328d9](https://github.com/zyndex-drive/server/commit/58328d9daa4203db1d00b07923a39e0d3b11a0d8))
+* **plugins/google:** refactor to latest changes in models ([a870db9](https://github.com/zyndex-drive/server/commit/a870db9401fab961c55d20ffb9f856de5addc093))
+* **routes:** refactor to reflect latest changes in models ([8dad14b](https://github.com/zyndex-drive/server/commit/8dad14b80ba9ce60d6ccdf80ba56b304d760b2d0))
+
+
+### Features 🔥
+
+* **db/helpers:** write a bcrypt hasher for helping db functions ([0b66cb3](https://github.com/zyndex-drive/server/commit/0b66cb35c93d9709940806893ccf2491cee7db45))
+* **db/plugins:** write a crypto mongoose plugin ([b3292fb](https://github.com/zyndex-drive/server/commit/b3292fb5971822975aaf119763dd13d6284b9dad))
+* **db/plugins:** write a hash mongoose plugin ([254dad7](https://github.com/zyndex-drive/server/commit/254dad7f5e8846c4bdcb0ca40c46e7ca0b7fdd79))
+* **db/plugins:** write a schema parser for parsing schemas from mongoose ([d4a91eb](https://github.com/zyndex-drive/server/commit/d4a91eb55a3f14a0d23025e2642a16860fa4df7f))
+* **models:** use the new crypto and hash plugin ([b32d483](https://github.com/zyndex-drive/server/commit/b32d483f451534cb6867447ecf84bd3af20b5764))
+
 ## [0.2.0-25](https://github.com/zyndex-drive/server/compare/v0.2.0-24...v0.2.0-25) (2021-11-23)
 
 
