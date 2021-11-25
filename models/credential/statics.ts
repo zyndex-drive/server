@@ -1,51 +1,10 @@
-import {
-  createDocument,
-  createMultipleDocuments,
-  clearCollection,
-} from '@plugins/db/statics';
-import encryptedFields from './encrypted-fields';
+import { clearCollection } from '@plugins/db/statics';
 
 // Types
 import type { Types, Schema } from 'mongoose';
-import { ICredentials, ICredentialsDoc, ICredentialsModel } from './types';
+import { ICredentialsDoc, ICredentialsModel } from './types';
 import type { IInlineResponse } from '@typs/inline.response';
 import type { Error as MongoError } from 'mongoose';
-
-/**
- * Create a Credential Document and Save it to Database
- *
- * @param {ICredentialsModel} this - BlacklistedUser Model
- * @param {ICredentials} doc - Credentials Doc to be Created and Saved
- * @returns {Promise<ICredentialsDoc>} - Promise Returning Saved Document
- */
-export function createDoc(
-  this: ICredentialsModel,
-  doc: ICredentials,
-): Promise<ICredentialsDoc> {
-  return createDocument<ICredentials, ICredentialsDoc, ICredentialsModel>(
-    this,
-    doc,
-    encryptedFields,
-  );
-}
-
-/**
- * Create Multiple Credential Documents and Save it to Database
- *
- * @param {ICredentialsModel} this - BlacklistedUser Model
- * @param {ICredentials[]} docs - Credentials Documents to be Created and Saved
- * @returns {Promise<ICredentialsDoc[]>} - Promise Returning Saved Documents
- */
-export function createMultiDoc(
-  this: ICredentialsModel,
-  docs: ICredentials[],
-): Promise<ICredentialsDoc[]> {
-  return createMultipleDocuments<
-    ICredentials,
-    ICredentialsDoc,
-    ICredentialsModel
-  >(this, docs, encryptedFields);
-}
 
 /**
  * Clears the Credentials Collection by Deleting all the Records
@@ -94,8 +53,6 @@ export function checkID(
 export default function (
   schema: Schema<ICredentialsDoc, ICredentialsModel>,
 ): Schema<ICredentialsDoc, ICredentialsModel> {
-  schema.statics.createDoc = createDoc;
-  schema.statics.createMultiDoc = createMultiDoc;
   schema.statics.clearAll = clearAll;
   schema.statics.checkID = checkID;
   return schema;

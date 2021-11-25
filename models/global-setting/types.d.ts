@@ -16,5 +16,4 @@ export interface IGlobalSettings {
 
 export interface IGlobalSettingsDoc extends IGlobalSettings, Document {}
 
-export interface IGlobalSettingsModel
-  extends IBaseModel<IGlobalSettings, IGlobalSettingsDoc> {}
+export interface IGlobalSettingsModel extends IBaseModel<IGlobalSettingsDoc> {}

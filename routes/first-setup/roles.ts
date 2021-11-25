@@ -23,7 +23,7 @@ router.post('/add', (req, res) => {
   const docs: IRoleDoc[] = [];
   const pushedStatus: boolean[] = [];
   rolesMap.forEach((role) => {
-    Roles.createDoc(role)
+    Roles.create(role)
       .then((doc) => {
         docs.push(doc);
         pushedStatus.push(true);

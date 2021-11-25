@@ -1,50 +1,9 @@
-import {
-  createDocument,
-  createMultipleDocuments,
-  clearCollection,
-} from '@plugins/db/statics';
-import encryptedFields from './encrypted-fields';
+import { clearCollection } from '@plugins/db/statics';
 
 // Types
-import type { IServiceAcc, IServiceAccDoc, IServiceAccModel } from './types';
+import type { IServiceAccDoc, IServiceAccModel } from './types';
 import type { Schema } from 'mongoose';
 import type { IInlineResponse } from '@typs/inline.response';
-
-/**
- * Create a Service Account Document and Save it to Database
- *
- * @param {IServiceAccModel} this - Service Account Model
- * @param {IServiceAcc} doc - Service Account to be Created and Saved
- * @returns {Promise<IServiceAccDoc>} - Promise Returning Saved Document
- */
-export function createDoc(
-  this: IServiceAccModel,
-  doc: IServiceAcc,
-): Promise<IServiceAccDoc> {
-  return createDocument<IServiceAcc, IServiceAccDoc, IServiceAccModel>(
-    this,
-    doc,
-    encryptedFields,
-  );
-}
-
-/**
- * Creates Multiple Service Account Document and Save it to Database
- *
- * @param {IServiceAccModel} this - Service Account Model
- * @param {IServiceAcc[]} docs - Service Account Documents to be Created and Saved
- * @returns {Promise<IServiceAccDoc[]>} - Promise Returning Saved Documents
- */
-export function createMultiDoc(
-  this: IServiceAccModel,
-  docs: IServiceAcc[],
-): Promise<IServiceAccDoc[]> {
-  return createMultipleDocuments<IServiceAcc, IServiceAccDoc, IServiceAccModel>(
-    this,
-    docs,
-    encryptedFields,
-  );
-}
 
 /**
  * Clears the Service Account Collection by Deleting all the Records
@@ -67,8 +26,6 @@ export function clearAll(
 export default function (
   schema: Schema<IServiceAccDoc, IServiceAccModel>,
 ): Schema<IServiceAccDoc, IServiceAccModel> {
-  schema.statics.createDoc = createDoc;
-  schema.statics.createMultiDoc = createMultiDoc;
   schema.statics.clearAll = clearAll;
   return schema;
 }

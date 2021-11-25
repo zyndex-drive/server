@@ -1,40 +1,11 @@
-import {
-  createDocument,
-  createMultipleDocuments,
-  clearCollection,
-} from '@plugins/db/statics';
+import { clearCollection } from '@plugins/db/statics';
 
 import { map as rolesMap } from '@plugins/templates/roles';
 
 // Types
-import { IRole, IRoleDoc, IRoleModel } from './types';
+import { IRoleDoc, IRoleModel } from './types';
 import { Error as MongoError, Schema } from 'mongoose';
 import type { IInlineResponse } from '@typs/inline.response';
-
-/**
- * Create a Role Document and Save it to Database
- *
- * @param {IRoleModel} this - Role Model
- * @param {IRole} doc - Role Doc to be Created and Saved
- * @returns {Promise<IRoleDoc>} - Promise Returning Saved Document
- */
-export function createDoc(this: IRoleModel, doc: IRole): Promise<IRoleDoc> {
-  return createDocument<IRole, IRoleDoc, IRoleModel>(this, doc);
-}
-
-/**
- * Create Multiple Role Document and Save it to Database
- *
- * @param {IRoleModel} this - Role Model
- * @param {IRole[]} docs - Role Docs to be Created and Saved
- * @returns {Promise<IRoleDoc[]>} - Promise Returning Saved Documents
- */
-export function createMultiDoc(
-  this: IRoleModel,
-  docs: IRole[],
-): Promise<IRoleDoc[]> {
-  return createMultipleDocuments<IRole, IRoleDoc, IRoleModel>(this, docs);
-}
 
 /**
  * Clears the Role Collection by Deleting all the Records
@@ -98,8 +69,6 @@ export function mapCheck(this: IRoleModel): Promise<IInlineResponse<boolean>> {
 export default function (
   schema: Schema<IRoleDoc, IRoleModel>,
 ): Schema<IRoleDoc, IRoleModel> {
-  schema.statics.createDoc = createDoc;
-  schema.statics.createMultiDoc = createMultiDoc;
   schema.statics.clearAll = clearAll;
   schema.statics.mapCheck = mapCheck;
   return schema;

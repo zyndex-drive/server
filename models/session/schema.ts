@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 import appendStatics from './statics';
-import type { ISessionDoc, ISessionModel } from './types';
+import type { ISession, ISessionDoc, ISessionModel } from './types';
 
-const schema = new Schema<ISessionDoc, ISessionModel>({
+const schema = new Schema<ISessionDoc, ISessionModel, ISession>({
   _id: {
     type: Schema.Types.ObjectId,
   },
@@ -28,7 +28,6 @@ const schema = new Schema<ISessionDoc, ISessionModel>({
   issued_at: {
     type: Date,
     required: true,
-    default: Date.now,
   },
 });
 

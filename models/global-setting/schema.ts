@@ -1,8 +1,16 @@
 import { Schema } from 'mongoose';
 import appendStatics from './statics';
-import type { IGlobalSettingsDoc, IGlobalSettingsModel } from './types';
+import type {
+  IGlobalSettings,
+  IGlobalSettingsDoc,
+  IGlobalSettingsModel,
+} from './types';
 
-const schema = new Schema<IGlobalSettingsDoc, IGlobalSettingsModel>({
+const schema = new Schema<
+  IGlobalSettingsDoc,
+  IGlobalSettingsModel,
+  IGlobalSettings
+>({
   _id: {
     type: Schema.Types.ObjectId,
   },

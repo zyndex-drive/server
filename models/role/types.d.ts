@@ -24,7 +24,7 @@ export interface IRole {
 
 export interface IRoleDoc extends IRole, Document {}
 
-export interface IRoleModel extends IBaseModel<IRole, IRoleDoc> {
+export interface IRoleModel extends IBaseModel<IRoleDoc> {
   /**
    * Checks the Predefined map of Roles with the Docs present in Database
    *

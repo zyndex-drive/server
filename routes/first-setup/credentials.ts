@@ -35,7 +35,7 @@ router.post('/add', (req, res) => {
       redirect_uri,
       email,
     };
-    Credentials.createDoc(newCredential)
+    Credentials.create(newCredential)
       .then((savedCreds) => {
         okResponse<ICredentialsDoc>(res, savedCreds);
       })

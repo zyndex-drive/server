@@ -23,7 +23,7 @@ router.post('/add', (req, res) => {
   const docs: IPolicyDoc[] = [];
   const pushedStatus: boolean[] = [];
   policyMap.forEach((policy) => {
-    Policies.createDoc(policy)
+    Policies.create(policy)
       .then((doc) => {
         docs.push(doc);
         pushedStatus.push(true);

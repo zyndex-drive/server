@@ -1,8 +1,17 @@
 import { Schema } from 'mongoose';
 import appendStatics from './statics';
-import type { IBlacklistedUserDoc, IBlacklistedUserModel } from './types';
+import { cryptoPlugin } from '@plugins/db/plugins';
+import type {
+  IBlacklistedUser,
+  IBlacklistedUserDoc,
+  IBlacklistedUserModel,
+} from './types';
 
-const schema = new Schema<IBlacklistedUserDoc, IBlacklistedUserModel>({
+const schema = new Schema<
+  IBlacklistedUserDoc,
+  IBlacklistedUserModel,
+  IBlacklistedUser
+>({
   _id: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -14,11 +23,11 @@ const schema = new Schema<IBlacklistedUserDoc, IBlacklistedUserModel>({
   email: {
     type: String,
     required: true,
+    encrypt: true,
   },
   blacklisted_from: {
     type: Date,
     required: true,
-    default: Date.now(),
   },
   role: {
     type: Schema.Types.ObjectId,
@@ -32,4 +41,7 @@ const schema = new Schema<IBlacklistedUserDoc, IBlacklistedUserModel>({
   },
 });
 
+schema.plugin(
+  cryptoPlugin<IBlacklistedUser, IBlacklistedUserDoc, IBlacklistedUserModel>(),
+);
 export default appendStatics(schema);

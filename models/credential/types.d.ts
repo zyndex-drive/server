@@ -17,8 +17,7 @@ export interface ICredentials {
 
 export interface ICredentialsDoc extends ICredentials, Document {}
 
-export interface ICredentialsModel
-  extends IBaseModel<ICredentials, ICredentialsDoc> {
+export interface ICredentialsModel extends IBaseModel<ICredentialsDoc> {
   /**
    * Checks the Credentials Collection for the Given ID
    *

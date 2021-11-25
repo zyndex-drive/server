@@ -1,8 +1,9 @@
 import { Schema } from 'mongoose';
 import appendStatics from './statics';
-import type { IServiceAccDoc, IServiceAccModel } from './types';
+import { cryptoPlugin } from '@plugins/db/plugins';
+import type { IServiceAcc, IServiceAccDoc, IServiceAccModel } from './types';
 
-const schema = new Schema<IServiceAccDoc, IServiceAccModel>({
+const schema = new Schema<IServiceAccDoc, IServiceAccModel, IServiceAcc>({
   _id: {
     type: Schema.Types.ObjectId,
   },
@@ -22,16 +23,19 @@ const schema = new Schema<IServiceAccDoc, IServiceAccModel>({
     key: {
       type: String,
       required: true,
+      encrypt: true,
     },
   },
   client: {
     id: {
       type: String,
       required: true,
+      encrypt: true,
     },
     email: {
       type: String,
       required: true,
+      encrypt: true,
     },
   },
   related_to: {
@@ -41,4 +45,5 @@ const schema = new Schema<IServiceAccDoc, IServiceAccModel>({
   },
 });
 
+schema.plugin(cryptoPlugin<IServiceAcc, IServiceAccDoc, IServiceAccModel>());
 export default appendStatics(schema);

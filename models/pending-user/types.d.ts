@@ -16,5 +16,4 @@ export interface IPendingUser {
 
 export interface IPendingUserDoc extends IPendingUser, Document {}
 
-export interface IPendingUserModel
-  extends IBaseModel<IPendingUser, IPendingUserDoc> {}
+export interface IPendingUserModel extends IBaseModel<IPendingUserDoc> {}

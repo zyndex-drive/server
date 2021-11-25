@@ -41,7 +41,7 @@ function handleTokenSaving(
       expires_at: now + accessToken.expires_in * 1000,
       website: 'google.com',
     };
-    Tokens.createDoc(tokenGen)
+    Tokens.create(tokenGen)
       .then((tokenDoc) => {
         resolve(tokenDoc);
       })

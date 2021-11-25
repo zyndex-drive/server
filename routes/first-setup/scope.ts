@@ -38,7 +38,7 @@ router.post('/add', (req, res) => {
             drive_id,
             related_to: [credential_id],
           };
-          Scopes.createDoc(newScope)
+          Scopes.create(newScope)
             .then((savedDoc) => {
               okResponse<IScopeDoc>(res, savedDoc);
             })
