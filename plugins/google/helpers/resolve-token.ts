@@ -165,7 +165,7 @@ function generateNormalTokenSave(
           expires_at: now + response.expires_in * 1000,
           website: 'google.com',
         };
-        Tokens.createDoc(token)
+        Tokens.create(token)
           .then((savedToken) => {
             resolve(savedToken);
           })
@@ -205,7 +205,7 @@ function generateServiceTokenSave(
           expires_at: now + response.expires_in * 1000,
           website: 'google.com',
         };
-        Tokens.createDoc(token)
+        Tokens.create(token)
           .then((savedToken) => {
             resolve(savedToken);
           })

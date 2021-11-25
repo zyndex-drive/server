@@ -1,6 +1,2 @@
 export { default } from './db';
-export {
-  createDocument,
-  createMultipleDocuments,
-  clearCollection,
-} from './statics';
+export { clearCollection } from './statics';
