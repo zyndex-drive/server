@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "prepare": "husky install && husky add .husky/commit-msg \"npx --no-install commitlint --edit \"$1\"\"",
-    "git:stage": "git select-interactive",
+    "git:stage": "git add",
     "git:commit": "cz",
     "git:push": "git push --follow-tags origin dev",
     "release:pre": "standard-version --prerelease --sign",
@@ -95,7 +95,6 @@
     "eslint-plugin-jsdoc": "^35.5.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.1",
-    "git-select-interactive": "^0.3.2",
     "husky": "^7.0.4",
     "jsdoc": "^3.6.7",
     "mocha": "^9.1.3",
