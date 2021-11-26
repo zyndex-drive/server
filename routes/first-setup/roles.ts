@@ -61,7 +61,6 @@ router.post('/reset', (req, res) => {
   Roles.clearAll()
     .then((result) => {
       okResponse<IInlineResponse<string>>(res, result);
-      res.status(200).json(result);
     })
     .catch((error: MongoError) => {
       internalServerError(res, error.name, error.message);
