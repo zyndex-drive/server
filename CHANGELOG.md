@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-28](https://github.com/zyndex-drive/server/compare/v0.2.0-27...v0.2.0-28) (2021-11-26)
+
+
+### Tests 🧪
+
+* refactor all tests to seperate files and seperate api and unit tests ([0875840](https://github.com/zyndex-drive/server/commit/0875840b126172269af90e1e2ff217e5c3599166))
+* **tests:** add chai-each package ([e9ad014](https://github.com/zyndex-drive/server/commit/e9ad01485f5755d2766973763a0e94837b6ae373))
+
+
+### Bug Fixes 🛠
+
+* **setup/roles:** fix redundant respose which crashed server ([dae65a6](https://github.com/zyndex-drive/server/commit/dae65a6880c53394c1ad3b698a0533cbcd7f0de4))
+
 ## [0.2.0-27](https://github.com/zyndex-drive/server/compare/v0.2.0-26...v0.2.0-27) (2021-11-25)
 
 

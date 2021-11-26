@@ -1497,6 +1497,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chai-each@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "chai-each@npm:0.0.1"
+  checksum: bc4dc57fd60687a2dbe212e4a9cfc6e4598931749f66a48d3aa800dd821ec3f7e31bd53937fb16ff6f5936be94e11e50f3baee4b243a838ceeb46e6b7bfa72e3
+  languageName: node
+  linkType: hard
+
 "chai-http@npm:^4.3.0":
   version: 4.3.0
   resolution: "chai-http@npm:4.3.0"
@@ -7428,6 +7435,7 @@ __metadata:
     bcrypt: ^5.0.1
     chai: ^4.3.4
     chai-as-promised: ^7.1.1
+    chai-each: ^0.0.1
     chai-http: ^4.3.0
     commitizen: ^4.2.4
     crypto-js: ^4.1.1
