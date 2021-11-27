@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Development Server",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["serve:dev"],
+      "outputCapture": "std"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Production Server",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["serve"],
+      "outputCapture": "std"
+    }
+  ]
+}

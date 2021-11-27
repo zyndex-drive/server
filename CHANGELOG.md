@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-29](https://github.com/zyndex-drive/server/compare/v0.2.0-28...v0.2.0-29) (2021-11-27)
+
+
+### Others 🔧
+
+* **vscode:** add vscode launch configurations ([1acd7a8](https://github.com/zyndex-drive/server/commit/1acd7a8ba282b5669516101a22e16ce2b7fc518c))
+
+
+### CI 🛠
+
+* **scripts:** add deploy and build scripts for ci ([7b7b8a5](https://github.com/zyndex-drive/server/commit/7b7b8a5ff939d42486b9fa54ab884cd2281a74cc))
+* **travis:** add travis-ci configuration ([cedea5c](https://github.com/zyndex-drive/server/commit/cedea5c322bd60ab75528f4c1dcad763d95e001f))
+* **yarn:** add yarn workspace and version plugins, update package.json script ([23116de](https://github.com/zyndex-drive/server/commit/23116de666c8f27dc669f3e2c9c5045720e90f1a))
+
 ## [0.2.0-28](https://github.com/zyndex-drive/server/compare/v0.2.0-27...v0.2.0-28) (2021-11-26)
 
 
