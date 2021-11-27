@@ -19,7 +19,7 @@
     "test:report": "set NODE_ENV=test && ts-mocha --paths tests/api/**/*.spec.ts -r 'tests/require' --reporter mocha-simple-html-reporter --reporter-options output=test-report.html",
     "serve:dev": "set NODE_ENV=development && nodemon --ignore tests/ -r tsconfig-paths/register app.ts",
     "build": "set NODE_ENV=production && tsc && tsc-alias",
-    "serve": "set NODE_ENV=production && cd dist && node app.js"
+    "serve": "set NODE_ENV=production && node app.js"
   },
   "repository": {
     "type": "git",
