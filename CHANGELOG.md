@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-30](https://github.com/zyndex-drive/server/compare/v0.2.0-29...v0.2.0-30) (2021-11-27)
+
+
+### Bug Fixes 🛠
+
+* **models:** fix encrypt settings for some models ([59b59d4](https://github.com/zyndex-drive/server/commit/59b59d4be973d41ebd71330c69f4b5e71f6323b8))
+
+
+### Others 🔧
+
+* **vscode:** add vscode build and test tasks ([9a5c047](https://github.com/zyndex-drive/server/commit/9a5c047085eab195bc550d58cd31291411c6b4b6))
+
+
+### CI 🛠
+
+* **scripts:** update build scripts, remove travis-ci ([11edd05](https://github.com/zyndex-drive/server/commit/11edd05d31221d53ef6d87add5a58cc64ae46e55))
+
 ## [0.2.0-29](https://github.com/zyndex-drive/server/compare/v0.2.0-28...v0.2.0-29) (2021-11-27)
 
 
