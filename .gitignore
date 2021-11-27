@@ -114,3 +114,4 @@ dist
 # Code Editor Files
 .vscode/*
 !.vscode/launch.json
+!.vscode/tasks.json

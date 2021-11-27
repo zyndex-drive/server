@@ -5,12 +5,13 @@ yarn build
 
 echo "Doing Some Miscellaneous things to make build ready"
 cd dist
-mkdir .yarn .yarn/plugins .yarn/releases
+mkdir .yarn
 
 cp ../package.json ./
+cp ../yarn.lock ./
 cp ../.yarnrc.yml ./
-cp ../.yarn/plugins ./.yarn/plugins
-cp ../.yarn/releases ./.yarn/releases
+cp -r ../.yarn/plugins ./.yarn/
+cp -r ../.yarn/releases ./.yarn/
 
 echo "Installing Production Dependencies"
 yarn workspaces focus --production
