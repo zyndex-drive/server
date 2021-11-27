@@ -112,4 +112,5 @@ dist
 .tern-port
 
 # Code Editor Files
-.vscode
+.vscode/*
+!.vscode/launch.json
