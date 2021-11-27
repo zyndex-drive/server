@@ -1,0 +1,69 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "label": "Build TS Files",
+      "detail": "set NODE_ENV=production && tsc && tsc-alias"
+    },
+    {
+      "type": "npm",
+      "script": "test",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "label": "Run Comprehensive Tests",
+      "detail": "set NODE_ENV=test && ts-mocha --paths tests/**/*.spec.ts -r 'tests/require'"
+    },
+    {
+      "type": "npm",
+      "script": "test:api",
+      "problemMatcher": [],
+      "label": "Run API Tests",
+      "detail": "set NODE_ENV=test && ts-mocha --paths tests/api/**/*.spec.ts -r 'tests/require'"
+    },
+    {
+      "type": "npm",
+      "script": "test:unit",
+      "problemMatcher": [],
+      "label": "Run Unit Tests",
+      "detail": "set NODE_ENV=test && ts-mocha --paths tests/unit/**/*.spec.ts -r 'tests/require'"
+    },
+    {
+      "type": "npm",
+      "script": "release:pre",
+      "problemMatcher": [],
+      "label": "Bump Prerelease",
+      "detail": "standard-version --prerelease --sign"
+    },
+    {
+      "type": "npm",
+      "script": "release:minor",
+      "problemMatcher": [],
+      "label": "Bump Minor Release",
+      "detail": "standard-version --release-as minor --sign"
+    },
+    {
+      "type": "npm",
+      "script": "release:patch",
+      "problemMatcher": [],
+      "label": "Bump Patch Release",
+      "detail": "standard-version --release-as patch --sign"
+    },
+    {
+      "type": "npm",
+      "script": "release:major",
+      "problemMatcher": [],
+      "label": "Bump Major Release",
+      "detail": "standard-version --release-as major --sign"
+    }
+  ]
+}
