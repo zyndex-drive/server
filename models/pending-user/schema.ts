@@ -10,11 +10,11 @@ const schema = new Schema<IPendingUserDoc, IPendingUserModel, IPendingUser>({
   name: {
     type: String,
     required: true,
+    encrypt: true,
   },
   email: {
     type: String,
     required: true,
-    encrypt: true,
   },
   message: {
     type: String,

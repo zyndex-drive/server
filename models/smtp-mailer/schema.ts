@@ -14,7 +14,6 @@ const schema = new Schema<ISMTPMailerDoc, ISMTPMailerModel, ISMTPMailer>({
   email: {
     type: String,
     required: true,
-    encrypt: true,
   },
   password: {
     type: String,

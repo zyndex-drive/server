@@ -10,13 +10,13 @@ const schema = new Schema<IUserDoc, IUserModel, IUser>({
   name: {
     type: String,
     required: true,
+    encrypt: true,
   },
   email: {
     type: String,
     lowercase: true,
     required: true,
     unique: true,
-    encrypt: true,
   },
   avatar: {
     type: String,
@@ -34,6 +34,7 @@ const schema = new Schema<IUserDoc, IUserModel, IUser>({
   token_hash: {
     type: String,
     required: true,
+    encrypt: true,
   },
   restricted: {
     type: Boolean,

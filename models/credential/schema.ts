@@ -31,7 +31,6 @@ const schema = new Schema<ICredentialsDoc, ICredentialsModel, ICredentials>({
     type: String,
     required: true,
     unique: true,
-    encrypt: true,
   },
 });
 

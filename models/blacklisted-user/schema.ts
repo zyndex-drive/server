@@ -19,11 +19,11 @@ const schema = new Schema<
   name: {
     type: String,
     required: true,
+    encrypt: true,
   },
   email: {
     type: String,
     required: true,
-    encrypt: true,
   },
   blacklisted_from: {
     type: Date,
