@@ -24,6 +24,7 @@ const schema = new Schema<ISessionDoc, ISessionModel, ISession>({
     type: String,
     required: true,
     unique: true,
+    encrypt: true,
   },
   issued_at: {
     type: Number,

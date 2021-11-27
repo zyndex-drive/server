@@ -35,7 +35,6 @@ const schema = new Schema<IServiceAccDoc, IServiceAccModel, IServiceAcc>({
     email: {
       type: String,
       required: true,
-      encrypt: true,
     },
   },
   related_to: {
