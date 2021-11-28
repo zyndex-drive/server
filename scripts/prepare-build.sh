@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+echo "Removing Old Build Files"
+cd dist
+rm -rf *
+rm -rf .yarn
+rm .yarnrc.yml
+cd ..
+
 echo "Building Typescript Files"
 yarn build:tsc
 
@@ -10,11 +17,13 @@ mkdir .yarn
 cp ../package.json ./
 cp ../yarn.lock ./
 cp ../.yarnrc.yml ./
+cp ../README.md ./
+cp ../LICENSE ./
 cp -r ../.yarn/plugins ./.yarn/
 cp -r ../.yarn/releases ./.yarn/
 
-echo "Installing Production Dependencies"
-yarn workspaces focus --production
+echo "Pushing into Repo"
+git add .
+git commit -m "$1"
+git push --follow-tags origin build
 
-echo "Ready to Rock!"
-echo "type > 'yarn serve' to start the server"
