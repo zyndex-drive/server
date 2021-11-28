@@ -4,6 +4,7 @@ echo "Removing Old Build Files"
 cd dist
 rm -rf *
 rm -rf .yarn
+rm .gitignore
 rm .yarnrc.yml
 cd ..
 
@@ -19,6 +20,7 @@ cp ../yarn.lock ./
 cp ../.yarnrc.yml ./
 cp ../README.md ./
 cp ../LICENSE ./
+cp ../.gitignore ./
 cp -r ../.yarn/plugins ./.yarn/
 cp -r ../.yarn/releases ./.yarn/
 
