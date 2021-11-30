@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Building Typescript Files"
-yarn build
+yarn build:tsc
 
 echo "Doing Some Miscellaneous things to make build ready"
 cd dist

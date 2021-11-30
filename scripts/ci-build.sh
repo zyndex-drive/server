@@ -4,7 +4,7 @@ echo "Installing Dependencies for Building"
 yarn --immutable
 
 echo "Building Typescript Files"
-yarn build
+yarn build:tsc
 
 echo "Doing Some Miscellaneous things to make build ready"
 cd dist
