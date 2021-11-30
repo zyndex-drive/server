@@ -1,6 +1,6 @@
 {
   "name": "zyndex-server",
-  "version": "0.2.0-31",
+  "version": "0.2.0-32",
   "description": "Backend Server for Handling Zyndex Frontend",
   "main": "app.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "test:single": "set NODE_ENV=test && ts-mocha -r 'tests/require'",
     "test:report": "set NODE_ENV=test && ts-mocha --paths tests/api/**/*.spec.ts -r 'tests/require' --reporter mocha-simple-html-reporter --reporter-options output=test-report.html",
     "serve:dev": "set NODE_ENV=development && nodemon --ignore tests/ -r tsconfig-paths/register app.ts",
-    "build:tsc": "set NODE_ENV=production && tsc && tsc-alias",
+    "build:tsc": "set NODE_ENV=production && webpack",
     "build:prepare": "bash ./scripts/prepare-build.sh",
     "start": "set NODE_ENV=production && node app.js"
   },
@@ -102,10 +102,15 @@
     "mocha-simple-html-reporter": "^2.0.0",
     "mocha-steps": "^1.3.0",
     "standard-version": "^9.3.2",
+    "ts-loader": "^9.2.6",
     "ts-mocha": "^8.0.0",
     "tsc-alias": "^1.4.1",
     "tsconfig-paths": "^3.12.0",
-    "typescript": "^4.5.2"
+    "tsconfig-paths-webpack-plugin": "^3.5.2",
+    "typescript": "^4.5.2",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1",
+    "webpack-node-externals": "^3.0.0"
   },
   "config": {
     "commitizen": {
