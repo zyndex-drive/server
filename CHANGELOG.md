@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-31](https://github.com/zyndex-drive/server/compare/v0.2.0-30...v0.2.0-31) (2021-11-30)
+
+
+### CI 🛠
+
+* **build:** add support for minification for final code ([9c993dd](https://github.com/zyndex-drive/server/commit/9c993dd465fe45d917724a5be3162a9c81f3ef59))
+* **scripts:** update build and deploy scripts ([836d93d](https://github.com/zyndex-drive/server/commit/836d93d185765d062b70d0eb4e090a131b0919e2))
+* **scripts:** update deploy script ([a8de306](https://github.com/zyndex-drive/server/commit/a8de306e812ba370256ea5bf1203238aff9be87a))
+
 ## [0.2.0-30](https://github.com/zyndex-drive/server/compare/v0.2.0-29...v0.2.0-30) (2021-11-27)
 
 
