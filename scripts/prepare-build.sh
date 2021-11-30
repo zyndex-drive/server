@@ -10,9 +10,7 @@ cd ..
 
 echo "Building Typescript Files"
 yarn build:tsc
-
-echo "Obfuscating Code"
-bash ./scripts/obfuscate.sh
+cp -r ./out ./dist
 
 echo "Doing Some Miscellaneous things to make build ready"
 cd dist
@@ -30,9 +28,9 @@ cp -r ../.yarn/releases ./.yarn/
 
 echo "Pushing into Repo"
 git add .
-git commit -m "$1"
-git tag -s -a "$1"
-git push --follow-tags origin build
+git commit -m "release: $1"
+git tag -s -a "$1" "release: $1"
+git push --follow-tags origin master
 
 echo "Cleaning Directory"
 cd ..
