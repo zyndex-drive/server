@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-33](https://github.com/zyndex-drive/server/compare/v0.2.0-32...v0.2.0-33) (2021-11-30)
+
+
+### Build System 🏗
+
+* remove obfuscation ([2f7716c](https://github.com/zyndex-drive/server/commit/2f7716c9ab7d7898968be85e6ada7e1f45055803))
+
 ## [0.2.0-32](https://github.com/zyndex-drive/server/compare/v0.2.0-31...v0.2.0-32) (2021-11-30)
 
 
