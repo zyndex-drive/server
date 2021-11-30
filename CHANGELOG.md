@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-32](https://github.com/zyndex-drive/server/compare/v0.2.0-31...v0.2.0-32) (2021-11-30)
+
+
+### CI 🛠
+
+* **build:** update build script ([6ad0e4a](https://github.com/zyndex-drive/server/commit/6ad0e4a757e3e8130d3af2c683642e553cb3c4ab))
+
+
+### Build System 🏗
+
+* **webpack:** add webpack to bundle all the files to a single file ([d6ae2d9](https://github.com/zyndex-drive/server/commit/d6ae2d9854f98086c1b5d43f43c52b3b451ead2f))
+
 ## [0.2.0-31](https://github.com/zyndex-drive/server/compare/v0.2.0-30...v0.2.0-31) (2021-11-30)
 
 
