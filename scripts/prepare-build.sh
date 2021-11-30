@@ -29,7 +29,7 @@ cp -r ../.yarn/releases ./.yarn/
 echo "Pushing into Repo"
 git add .
 git commit -m "release: $1"
-git tag -s -a "$1" "release: $1"
+git tag -s -a "$1" -m "release: $1"
 git push --follow-tags origin master
 
 echo "Cleaning Directory"
