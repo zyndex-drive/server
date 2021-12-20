@@ -8,7 +8,7 @@ import type { IUserDoc } from '@models/user/types';
 import type { IScopeDoc } from '@models/scope/types';
 
 /**
- * Accept a Request from User as a Viewer Role for the Particular Scope
+ * Accept a User as a Viewer for the Particular Scope
  *
  * @param {IUserDoc} admin - Admin User with which to Create the User
  * @param {string} scope - Scope for which User Should be Accepted
