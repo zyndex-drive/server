@@ -21,8 +21,8 @@ export interface IUser {
     },
   ];
   password: string;
-  allowed_policies: ID<IPolicyDoc>[];
-  disallowed_policies: ID<IPolicyDoc>[];
+  allowed_policies?: ID<IPolicyDoc>[];
+  disallowed_policies?: ID<IPolicyDoc>[];
 }
 
 export interface IUserDoc extends IUser, Document {}
