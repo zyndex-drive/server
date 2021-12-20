@@ -11,12 +11,10 @@ export interface IFrontend {
   domain: string;
   name: string;
   settings: {
-    specifics: [
-      {
-        setting: ID<IGlobalSettingsDoc>;
-        flag: boolean | string | number;
-      },
-    ];
+    specifics: {
+      setting: ID<IGlobalSettingsDoc>;
+      flag: boolean | string | number;
+    }[];
     default_mailer?: ID<ISMTPMailerDoc>;
     disallowed_roles: ID<IRoleDoc>[];
     allowed_policies: ID<IPolicyDoc>[];

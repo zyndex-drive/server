@@ -54,8 +54,8 @@ export const moderator: Readonly<IRole> = {
 
 export const manager: Readonly<IRole> = {
   _id: IDS.manager,
-  name: 'Owner',
-  alias: 'Owner',
+  name: 'Manager',
+  alias: 'Manager',
   type: 'main',
   parent_role: IDS.owner,
   child_role: IDS.moderator,

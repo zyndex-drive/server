@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-35](https://github.com/zyndex-drive/server/compare/v0.2.0-34...v0.2.0-35) (2021-12-20)
+
+
+### Code Refactoring 🖌
+
+* **templates:** refactor policy, role templates to use the new objectid function ([05c86ce](https://github.com/zyndex-drive/server/commit/05c86cecfcf51a487455b6f372277307f2abd283))
+
+
+### Bug Fixes 🛠
+
+* **models:** update some model type configurations ([361ea6b](https://github.com/zyndex-drive/server/commit/361ea6b8d9baccf44aad0a87e0336d074939afc6))
+
+
+### Features 🔥
+
+* **auth:** auth plugin - viewer accept function ([ca80236](https://github.com/zyndex-drive/server/commit/ca802369abb430e0df32a48e3c31dbbdc42fc3b1))
+* **auth:** auth plugin - viewer blacklist function ([90c3a02](https://github.com/zyndex-drive/server/commit/90c3a024f1c58bbd84f9d512783faa8f72b774c6))
+* **auth:** update policy-checker function to use heirarchy checker ([627eccd](https://github.com/zyndex-drive/server/commit/627eccd20fdde69d9030aa78dcb6028cb006b0aa))
+* **plugins/auth:** write a new heirarchy checker for auth plugin ([712e655](https://github.com/zyndex-drive/server/commit/712e655c061c77d90efb2bd087e0f870eb2bea1e))
+
 ## [0.2.0-34](https://github.com/zyndex-drive/server/compare/v0.2.0-33...v0.2.0-34) (2021-12-20)
 
 

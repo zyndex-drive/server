@@ -13,12 +13,10 @@ export interface IToken {
   expires_at: number;
   scopes: string[];
   website: string;
-  additional_tokens?: [
-    {
-      type: string;
-      token: string;
-    },
-  ];
+  additional_tokens?: {
+    type: string;
+    token: string;
+  }[];
 }
 
 export interface ITokenDoc extends IToken, Document {}

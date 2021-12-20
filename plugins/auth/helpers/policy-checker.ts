@@ -1,4 +1,5 @@
 import { Roles } from '@models';
+import { heirarchyChecker } from './heirarchy';
 
 import type { IUserDoc } from '@models/user/types';
 import type { IRoleDoc } from '@models/role/types';
@@ -24,7 +25,7 @@ const checkPolicyArray = (
   new Promise<IPolicyChecker[]>((resolve) => {
     const policyChecker: IPolicyChecker[] = [];
     policies.forEach((policy, index) => {
-      const policyId = policy._id;
+      const policyId = policy.code;
       const policyBool = userPolicies.includes(String(policyId));
       policyChecker.push({
         policy: String(policyId),
@@ -36,22 +37,34 @@ const checkPolicyArray = (
     });
   });
 
-const getUserPolicies = (userRole: string): Promise<string[]> =>
-  new Promise<string[]>((resolve, reject) => {
+interface IDeeperRoles {
+  roleDoc: IRoleDoc;
+  allowedPolicies: ID<IPolicyDoc>[];
+}
+
+const getDeeperRoles = (
+  adminRole: string,
+  otherPolicies?: ID<IPolicyDoc>[],
+): Promise<IDeeperRoles> =>
+  new Promise<IDeeperRoles>((resolve, reject) => {
     let userType = '';
-    let roleId = userRole;
+    let roleId = adminRole;
+    let userPolicies: ID<IPolicyDoc>[] = otherPolicies ? otherPolicies : [];
     while (userType !== 'main') {
       Roles.findById(roleId)
         .then((roleDoc: IRoleDoc | null) => {
           if (roleDoc) {
             userType = roleDoc.type;
-            const userPolicies = roleDoc.allowed_policies;
-            const stringizedPolicies = convertObjectID(userPolicies);
+            userPolicies = [...roleDoc.allowed_policies, ...userPolicies];
             if (roleDoc.delgates_from) {
               roleId = String(roleDoc.delgates_from);
             }
             if (userType === 'main') {
-              resolve(stringizedPolicies);
+              const deeperRoles: IDeeperRoles = {
+                roleDoc,
+                allowedPolicies: userPolicies,
+              };
+              resolve(deeperRoles);
             }
           } else {
             reject(new Error("Cannot Find User's Role Details"));
@@ -63,41 +76,91 @@ const getUserPolicies = (userRole: string): Promise<string[]> =>
     }
   });
 
+const getUserPolicies = (
+  adminRole: string,
+  otherPolicies?: ID<IPolicyDoc>[],
+  user?: IUserDoc,
+): Promise<string[]> =>
+  new Promise<string[]>((resolve, reject) => {
+    if (user) {
+      getDeeperRoles(String(user._id))
+        .then((userDeepRole) => {
+          const { roleDoc } = userDeepRole;
+          getDeeperRoles(adminRole, otherPolicies)
+            .then((deepRoles) => {
+              const { roleDoc: adminRoleDoc, allowedPolicies } = deepRoles;
+              if (heirarchyChecker(adminRoleDoc, roleDoc)) {
+                resolve(convertObjectID(allowedPolicies));
+              } else {
+                reject(
+                  new Error(
+                    'This Admin Cannot Perform this action against this User',
+                  ),
+                );
+              }
+            })
+            .catch((err: string) => {
+              reject(new Error(err));
+            });
+        })
+        .catch((err: string) => {
+          reject(new Error(err));
+        });
+    } else {
+      getDeeperRoles(adminRole, otherPolicies)
+        .then((deepRoles) => {
+          const { allowedPolicies } = deepRoles;
+          resolve(convertObjectID(allowedPolicies));
+        })
+        .catch((err: string) => {
+          reject(new Error(err));
+        });
+    }
+  });
+
 /**
  * Checks the Given Policies to the Given User for the Particular Scope
  *
  * @param {IPolicy[]} policies - Array of Policies to Check
  * @param {string} scope - Scope ID for which Policies to be checked
- * @param {IUserDoc} user - User to which Policy is to be Checked
+ * @param {IUserDoc} admin - User to which Policy is to be Checked
+ * @param {IUserDoc} user - User to whom function is applied
  */
 export function checkPolicy(
   policies: IPolicy[],
   scope: IScopeDoc['_id'],
-  user: IUserDoc,
+  admin: IUserDoc,
+  user?: IUserDoc,
 ): Promise<true> {
   return new Promise<true>((resolve, reject) => {
-    const [userRole] = user.role.filter((role) => role.scope === scope);
-    getUserPolicies(String(userRole.role))
-      .then((userPolicies: string[]) => {
-        checkPolicyArray(policies, userPolicies)
-          .then((policyChecker) => {
-            const allPoliciesBoolean = policyChecker.map(
-              (policy) => policy.value,
-            );
-            if (allPoliciesBoolean.includes(false)) {
-              reject(
-                new Error('This User Does not have Access to this Function'),
+    const [userRole] = admin.role.filter((role) => role.scope === scope);
+    if (!admin.restricted) {
+      getUserPolicies(String(userRole.role), admin.allowed_policies, user)
+        .then((userPolicies: string[]) => {
+          checkPolicyArray(policies, userPolicies)
+            .then((policyChecker) => {
+              const allPoliciesBoolean = policyChecker.map(
+                (policy) => policy.value,
               );
-            } else {
-              resolve(true);
-            }
-          })
-          .catch(() => {
-            reject(new Error('Unable to Validate User Policies'));
-          });
-      })
-      .catch((err: string) => {
-        reject(new Error(err));
-      });
+              if (allPoliciesBoolean.includes(false)) {
+                reject(
+                  new Error('This User Does not have Access to this Function'),
+                );
+              } else {
+                resolve(true);
+              }
+            })
+            .catch(() => {
+              reject(new Error('Unable to Validate User Policies'));
+            });
+        })
+        .catch((err: string) => {
+          reject(new Error(err));
+        });
+    } else {
+      reject(
+        new Error('This User Account is Restricted, Cannot do any function'),
+      );
+    }
   });
 }

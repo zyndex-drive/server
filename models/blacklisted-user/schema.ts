@@ -26,14 +26,23 @@ const schema = new Schema<
     required: true,
   },
   blacklisted_from: {
-    type: Date,
+    type: Number,
     required: true,
   },
-  role: {
-    type: Schema.Types.ObjectId,
-    ref: 'Role',
-    required: true,
-  },
+  role: [
+    {
+      scope: {
+        type: Schema.Types.ObjectId,
+        ref: 'Scope',
+        required: true,
+      },
+      role: {
+        type: Schema.Types.ObjectId,
+        ref: 'Role',
+        required: true,
+      },
+    },
+  ],
   flagged_by: {
     type: Schema.Types.ObjectId,
     ref: 'User',
