@@ -10,8 +10,10 @@ export interface IPendingUser {
   email: string;
   message: string;
   role: ID<IRoleDoc>;
-  scopes: ID<IScopeDoc>;
+  scopes: ID<IScopeDoc>[];
   requested_at: number;
+  accepted?: boolean;
+  accepted_at?: number;
 }
 
 export interface IPendingUserDoc extends IPendingUser, Document {}

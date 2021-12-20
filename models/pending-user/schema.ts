@@ -36,6 +36,14 @@ const schema = new Schema<IPendingUserDoc, IPendingUserModel, IPendingUser>({
     required: true,
     default: Date.now,
   },
+  accepted: {
+    type: Boolean,
+    default: false,
+  },
+  accepted_at: {
+    type: Number,
+    default: Date.now,
+  },
 });
 
 schema.plugin(cryptoPlugin<IPendingUser, IPendingUserDoc, IPendingUserModel>());
