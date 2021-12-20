@@ -6,12 +6,12 @@
  */
 
 import { IPolicy } from '@models/policy/types';
-import { Types } from 'mongoose';
+import { objectID } from '@plugins/misc/uid';
 
-const objectID = (num: string) => Types.ObjectId(`pol-policy@${num}`);
-
+const CODE = 'pol';
 export const policies_edit: Readonly<IPolicy> = {
-  _id: objectID('1'),
+  _id: objectID('p'),
+  code: `${CODE}edit`,
   name: 'Edit Policies',
   message: 'Enable Editing of Organisation Policies',
   global_flag: true,

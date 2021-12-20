@@ -6,26 +6,28 @@
  */
 
 import { IPolicy } from '@models/policy/types';
-import { Types } from 'mongoose';
+import { objectID } from '@plugins/misc/uid';
 
-const objectID = (num: string) => Types.ObjectId(`pol-cred@${num}`);
-
+const CODE = 'creds';
 export const creds_add: Readonly<IPolicy> = {
-  _id: objectID('001'),
+  _id: objectID('p'),
+  code: `${CODE}add`,
   name: 'Add Credentials to DB',
   message: 'Enable Adding of Credentials from Database',
   global_flag: true,
 };
 
 export const creds_edit: Readonly<IPolicy> = {
-  _id: objectID('002'),
+  _id: objectID('p'),
+  code: `${CODE}edit`,
   name: 'Edit Credentials in DB',
   message: 'Enable Editing of Credentials from Database',
   global_flag: true,
 };
 
 export const creds_rm: Readonly<IPolicy> = {
-  _id: objectID('003'),
+  _id: objectID('p'),
+  code: `${CODE}rm`,
   name: 'Remove Credentials from DB',
   message: 'Enable Removal of Credentials from Database',
   global_flag: true,

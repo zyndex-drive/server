@@ -6,33 +6,37 @@
  */
 
 import type { IPolicy } from '@models/policy/types';
-import { Types } from 'mongoose';
+import { objectID } from '@plugins/misc/uid';
 
-const objectID = (num: string) => Types.ObjectId(`p-user-b@${num}`);
+const CODE = 'usr';
 
 export const viewer_blist: Readonly<IPolicy> = {
-  _id: objectID('001'),
+  _id: objectID('p'),
+  code: `${CODE}blistvwr`,
   name: 'Blacklist Viewer',
   message: 'Enable Blacklisting of Viewers and its Delegates',
   global_flag: true,
 };
 
 export const content_mgr_blist: Readonly<IPolicy> = {
-  _id: objectID('002'),
+  _id: objectID('p'),
+  code: `${CODE}blistcntmgr`,
   name: 'Blacklist Content Managers',
   message: 'Enable Blacklisting of Content Managers and its Delegates',
   global_flag: true,
 };
 
 export const mod_blist: Readonly<IPolicy> = {
-  _id: objectID('003'),
+  _id: objectID('p'),
+  code: `${CODE}blistmod`,
   name: 'Blacklist Moderators',
   message: 'Enable Blacklisting of Moderators and its Delegates',
   global_flag: true,
 };
 
 export const mgr_blist: Readonly<IPolicy> = {
-  _id: objectID('004'),
+  _id: objectID('p'),
+  code: `${CODE}blistmgr`,
   name: 'Blacklist Managers',
   message: 'Enable Blacklisting of Managers and its Delegates',
   global_flag: true,

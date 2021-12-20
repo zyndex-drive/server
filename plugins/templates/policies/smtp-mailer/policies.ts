@@ -6,26 +6,29 @@
  */
 
 import { IPolicy } from '@models/policy/types';
-import { Types } from 'mongoose';
+import { objectID } from '@plugins/misc/uid';
 
-const objectID = (num: string) => Types.ObjectId(`pol-smpm@${num}`);
+const CODE = 'smtpmail';
 
 export const smtp_mailer_add: Readonly<IPolicy> = {
-  _id: objectID('001'),
+  _id: objectID('p'),
+  code: `${CODE}add`,
   name: 'Add SMTP Emails Accounts',
   message: 'Enable Adding of SMTP Emails Accounts to Database',
   global_flag: true,
 };
 
 export const smtp_mailer_edit: Readonly<IPolicy> = {
-  _id: objectID('002'),
+  _id: objectID('p'),
+  code: `${CODE}edit`,
   name: 'Edit SMTP Emails Accounts',
   message: 'Enable Editing of SMTP Emails Accounts in Database',
   global_flag: true,
 };
 
 export const smtp_mailer_rm: Readonly<IPolicy> = {
-  _id: objectID('003'),
+  _id: objectID('p'),
+  code: `${CODE}rm`,
   name: 'Remove SMTP Emails Accounts',
   message: 'Enable Removal of SMTP Emails Accounts from Database',
   global_flag: true,
