@@ -7,7 +7,7 @@
  */
 
 import { IRole } from '@models/role/types';
-import { Types } from 'mongoose';
+import { objectID } from '@plugins/misc/uid';
 
 // policies
 import ownerPolicies from './policies-map/owner';
@@ -15,14 +15,12 @@ import managerPolicies from './policies-map/manager';
 import moderatorPolicies from './policies-map/moderator';
 import contentMgrPolicies from './policies-map/content-manager';
 
-const objectID = (num: string) => Types.ObjectId(`rol-main@${num}`);
-
 const IDS = {
-  viewer: objectID('001'),
-  contentMgr: objectID('002'),
-  moderator: objectID('003'),
-  manager: objectID('004'),
-  owner: objectID('005'),
+  viewer: objectID('r'),
+  contentMgr: objectID('r'),
+  moderator: objectID('r'),
+  manager: objectID('r'),
+  owner: objectID('r'),
 };
 
 export const viewer: Readonly<IRole> = {

@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-34](https://github.com/zyndex-drive/server/compare/v0.2.0-33...v0.2.0-34) (2021-12-20)
+
+
+### Build System 🏗
+
+* fix build script to remove obfuscation ([a009ac3](https://github.com/zyndex-drive/server/commit/a009ac3096093a92c0280e97df523d2decee0b5c))
+* update build script ([d076707](https://github.com/zyndex-drive/server/commit/d0767075b496af4c92e0ba383e0bd68e7fca5c57))
+
+
+### Features 🔥
+
+* **models:** update pending-user schema type ([443754f](https://github.com/zyndex-drive/server/commit/443754f4a349e2b91a06b706b1cee1db10418136))
+* **plugins/auth:** auth plugin - viewer accept function ([d214c99](https://github.com/zyndex-drive/server/commit/d214c99416ddd7258b7e5c3805dac183c4549846))
+* **plugins/auth:** create a helper function for checking user policies ([4d9c32c](https://github.com/zyndex-drive/server/commit/4d9c32c1b454881ce3c1e8ec502b0f9ae8046180))
+
+
+### Code Refactoring 🖌
+
+* **templates:** fix objectid in role templates ([eb84cb9](https://github.com/zyndex-drive/server/commit/eb84cb90f4b461257620652aa770198d0f28e81f))
+
+
+### Bug Fixes 🛠
+
+* **models:** fix user types ([03297cc](https://github.com/zyndex-drive/server/commit/03297cc36ad6bbe1d9b9a8b8221531ec1a656ec7))
+* **types:** fix object id type ([13b5a00](https://github.com/zyndex-drive/server/commit/13b5a00350c0b44e786d4cae54aedd2b7dc7481c))
+
 ## [0.2.0-33](https://github.com/zyndex-drive/server/compare/v0.2.0-32...v0.2.0-33) (2021-11-30)
 
 
