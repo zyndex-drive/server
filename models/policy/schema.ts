@@ -10,6 +10,10 @@ const schema = new Schema<IPolicyDoc, IPolicyModel, IPolicy>({
     type: String,
     required: true,
   },
+  code: {
+    type: String,
+    required: true,
+  },
   message: {
     type: String,
     required: true,

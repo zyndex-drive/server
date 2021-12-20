@@ -2,14 +2,18 @@ import type { Document } from 'mongoose';
 import type { IBaseModel } from '../types';
 import type { IRoleDoc } from '@models/role/types';
 import type { IUserDoc } from '@models/user/types';
+import type { IScopeDoc } from '@models/scope/types';
 import type { ID } from '@typs/model.objectid';
 
 export interface IBlacklistedUser {
   _id: ID<IUserDoc>;
   name: string;
   email: string;
-  blacklisted_from: Date;
-  role: ID<IRoleDoc>;
+  blacklisted_from: number;
+  role: {
+    scope: ID<IScopeDoc>;
+    role: ID<IRoleDoc>;
+  }[];
   flagged_by: ID<IUserDoc>;
 }
 

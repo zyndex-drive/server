@@ -4,6 +4,7 @@ import type { IInlineResponse } from '@types/inline.response';
 
 export interface IPolicy {
   _id: Types.ObjectId;
+  code: string;
   name: string;
   message: string;
   global_flag: boolean;
