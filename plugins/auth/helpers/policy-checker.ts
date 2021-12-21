@@ -1,4 +1,5 @@
 import { Roles } from '@models';
+import { retrievePolicies as getPolicyDocuments } from './policy-retriever';
 import { heirarchyChecker } from './heirarchy';
 
 import type { IUserDoc } from '@models/user/types';
@@ -18,23 +19,54 @@ const convertObjectID = (idArray: ID<IPolicyDoc>[]): string[] => {
   return convertedArr;
 };
 
-const checkPolicyArray = (
-  policies: IPolicy[],
-  userPolicies: string[],
-): Promise<IPolicyChecker[]> =>
-  new Promise<IPolicyChecker[]>((resolve) => {
-    const policyChecker: IPolicyChecker[] = [];
-    policies.forEach((policy, index) => {
-      const policyId = policy.code;
-      const policyBool = userPolicies.includes(String(policyId));
-      policyChecker.push({
-        policy: String(policyId),
-        value: policyBool,
-      });
-      if (index === policies.length - 1) {
-        resolve(policyChecker);
+const checkGlobalFlags = (policyDocs: IPolicyDoc[]): Promise<boolean> =>
+  new Promise<boolean>((resolve, reject) => {
+    const flags: boolean[] = [];
+    policyDocs.forEach((policy, index) => {
+      flags.push(policy.global_flag);
+      if (index === policyDocs.length - 1) {
+        if (!flags.includes(false)) {
+          resolve(true);
+        } else {
+          reject(
+            new Error(
+              'Global Flag is Turned off, Turn on to perform this Action',
+            ),
+          );
+        }
       }
     });
+  });
+
+const checkPolicyArray = (
+  policyDocs: IPolicyDoc[],
+  userPolicies: string[],
+): Promise<IPolicyChecker[]> =>
+  new Promise<IPolicyChecker[]>((resolve, reject) => {
+    checkGlobalFlags(policyDocs)
+      .then((enabled) => {
+        if (enabled) {
+          const policyChecker: IPolicyChecker[] = [];
+          policyDocs.forEach((policy, index) => {
+            const policyId = policy._id;
+            const policyBool = userPolicies.includes(String(policyId));
+            policyChecker.push({
+              policy: String(policyId),
+              value: policyBool,
+            });
+            if (index === policyDocs.length - 1) {
+              resolve(policyChecker);
+            }
+          });
+        } else {
+          reject(
+            new Error(
+              'Global Flag is Turned off, Turn on to perform this Action',
+            ),
+          );
+        }
+      })
+      .catch((err: string) => reject(new Error(err)));
   });
 
 interface IDeeperRoles {
@@ -83,25 +115,22 @@ const getUserPolicies = (
 ): Promise<string[]> =>
   new Promise<string[]>((resolve, reject) => {
     if (user) {
-      getDeeperRoles(String(user._id))
-        .then((userDeepRole) => {
+      Promise.all([
+        getDeeperRoles(String(user._id)),
+        getDeeperRoles(adminRole, otherPolicies),
+      ])
+        .then(([userDeepRole, deepRoles]) => {
           const { roleDoc } = userDeepRole;
-          getDeeperRoles(adminRole, otherPolicies)
-            .then((deepRoles) => {
-              const { roleDoc: adminRoleDoc, allowedPolicies } = deepRoles;
-              if (heirarchyChecker(adminRoleDoc, roleDoc)) {
-                resolve(convertObjectID(allowedPolicies));
-              } else {
-                reject(
-                  new Error(
-                    'This Admin Cannot Perform this action against this User',
-                  ),
-                );
-              }
-            })
-            .catch((err: string) => {
-              reject(new Error(err));
-            });
+          const { roleDoc: adminRoleDoc, allowedPolicies } = deepRoles;
+          if (heirarchyChecker(adminRoleDoc, roleDoc)) {
+            resolve(convertObjectID(allowedPolicies));
+          } else {
+            reject(
+              new Error(
+                'This Admin Cannot Perform this action against this User',
+              ),
+            );
+          }
         })
         .catch((err: string) => {
           reject(new Error(err));
@@ -124,7 +153,7 @@ const getUserPolicies = (
  * @param {IPolicy[]} policies - Array of Policies to Check
  * @param {string} scope - Scope ID for which Policies to be checked
  * @param {IUserDoc} admin - User to which Policy is to be Checked
- * @param {IUserDoc} user - User to whom function is applied
+ * @param {IUserDoc} user - User to whom Action is applied
  */
 export function checkPolicy(
   policies: IPolicy[],
@@ -135,23 +164,24 @@ export function checkPolicy(
   return new Promise<true>((resolve, reject) => {
     const [userRole] = admin.role.filter((role) => role.scope === scope);
     if (!admin.restricted) {
-      getUserPolicies(String(userRole.role), admin.allowed_policies, user)
-        .then((userPolicies: string[]) => {
-          checkPolicyArray(policies, userPolicies)
+      getPolicyDocuments(policies)
+        .then((policyDocs) => {
+          getUserPolicies(String(userRole.role), admin.allowed_policies, user)
+            .then((userPolicies) => checkPolicyArray(policyDocs, userPolicies))
             .then((policyChecker) => {
               const allPoliciesBoolean = policyChecker.map(
                 (policy) => policy.value,
               );
               if (allPoliciesBoolean.includes(false)) {
                 reject(
-                  new Error('This User Does not have Access to this Function'),
+                  new Error('This User Does not have Access to this Action'),
                 );
               } else {
                 resolve(true);
               }
             })
-            .catch(() => {
-              reject(new Error('Unable to Validate User Policies'));
+            .catch((err: string) => {
+              reject(new Error(err));
             });
         })
         .catch((err: string) => {
@@ -159,7 +189,7 @@ export function checkPolicy(
         });
     } else {
       reject(
-        new Error('This User Account is Restricted, Cannot do any function'),
+        new Error('This User Account is Restricted, Cannot do any Action'),
       );
     }
   });
