@@ -13,6 +13,7 @@ const schema = new Schema<IPolicyDoc, IPolicyModel, IPolicy>({
   code: {
     type: String,
     required: true,
+    unique: true,
   },
   message: {
     type: String,
