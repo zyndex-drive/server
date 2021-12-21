@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-36](https://github.com/zyndex-drive/server/compare/v0.2.0-35...v0.2.0-36) (2021-12-21)
+
+
+### Bug Fixes 🛠
+
+* **models/policy:** fix policy model schema ([856923a](https://github.com/zyndex-drive/server/commit/856923a6922a8bd635a4c32cf0747567888bb0e1))
+
+
+### Features 🔥
+
+* **plugins/auth:** use policy documents from the database to check policies ([4ff04f8](https://github.com/zyndex-drive/server/commit/4ff04f8b18a407b31beacaa36fb86f693e91aed7))
+
+
+### Code Refactoring 🖌
+
+* **plugins/google:** fix the callback hell with .then chaining ([c614139](https://github.com/zyndex-drive/server/commit/c614139bd77d1a2ba93a3406f5f9ef7447cc8c60))
+
 ## [0.2.0-35](https://github.com/zyndex-drive/server/compare/v0.2.0-34...v0.2.0-35) (2021-12-20)
 
 
