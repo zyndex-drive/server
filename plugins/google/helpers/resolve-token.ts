@@ -393,48 +393,39 @@ export default function (
 ): Promise<ITokenResolver> {
   return new Promise<ITokenResolver>((resolve, reject) => {
     getAllTokens(credentialID, scopes)
-      .then((credentialData) => {
-        checkTokenRefreshit(credentialData, scopes)
-          .then((validTokens) => {
-            if (validTokens.tokens) {
-              serviceAccountTokenHandler(credentialData, scopes)
-                .then((serviceTokens) => {
-                  if (validTokens.tokens) {
-                    if (serviceTokens) {
-                      const response: ITokenResolver = {
-                        success: true,
-                        tokens: [
-                          ...validTokens.tokens.access.normal,
-                          ...serviceTokens,
-                        ],
-                      };
-                      resolve(response);
-                    } else {
-                      const response: ITokenResolver = {
-                        success: true,
-                        tokens: validTokens.tokens.access.normal,
-                      };
-                      resolve(response);
-                    }
-                  } else {
-                    reject(new Error('No Possible Tokens Found or Generated'));
-                  }
-                })
-                .catch(() => {
-                  reject(
-                    new Error('Error While Fetching Service Account Tokens'),
-                  );
-                });
-            } else {
-              reject(new Error('No Tokens Found'));
-            }
-          })
-          .catch((err: string) => {
-            reject(new Error(err));
-          });
+      .then((credentialData) =>
+        Promise.all([
+          credentialData,
+          checkTokenRefreshit(credentialData, scopes),
+        ]),
+      )
+      .then(([credentialData, validTokens]) =>
+        Promise.all([
+          validTokens,
+          serviceAccountTokenHandler(credentialData, scopes),
+        ]),
+      )
+      .then(([validTokens, serviceTokens]) => {
+        if (validTokens.tokens) {
+          if (serviceTokens) {
+            const response: ITokenResolver = {
+              success: true,
+              tokens: [...validTokens.tokens.access.normal, ...serviceTokens],
+            };
+            resolve(response);
+          } else {
+            const response: ITokenResolver = {
+              success: true,
+              tokens: validTokens.tokens.access.normal,
+            };
+            resolve(response);
+          }
+        } else {
+          reject(new Error('No Tokens Found'));
+        }
       })
       .catch((err: string) => {
-        reject(err);
+        reject(new Error(err));
       });
   });
 }
