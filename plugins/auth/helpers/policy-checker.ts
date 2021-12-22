@@ -165,24 +165,26 @@ export function checkPolicy(
     const [userRole] = admin.role.filter((role) => role.scope === scope);
     if (!admin.restricted) {
       getPolicyDocuments(policies)
-        .then((policyDocs) => {
-          getUserPolicies(String(userRole.role), admin.allowed_policies, user)
-            .then((userPolicies) => checkPolicyArray(policyDocs, userPolicies))
-            .then((policyChecker) => {
-              const allPoliciesBoolean = policyChecker.map(
-                (policy) => policy.value,
-              );
-              if (allPoliciesBoolean.includes(false)) {
-                reject(
-                  new Error('This User Does not have Access to this Action'),
-                );
-              } else {
-                resolve(true);
-              }
-            })
-            .catch((err: string) => {
-              reject(new Error(err));
-            });
+        .then((policyDocs) =>
+          Promise.all([
+            policyDocs,
+            getUserPolicies(
+              String(userRole.role),
+              admin.allowed_policies,
+              user,
+            ),
+          ]),
+        )
+        .then(([policyDocs, userPolicies]) =>
+          checkPolicyArray(policyDocs, userPolicies),
+        )
+        .then((policyChecker) => policyChecker.map((policy) => policy.value))
+        .then((allPoliciesBoolean) => {
+          if (allPoliciesBoolean.includes(false)) {
+            reject(new Error('This User Does not have Access to this Action'));
+          } else {
+            resolve(true);
+          }
         })
         .catch((err: string) => {
           reject(new Error(err));

@@ -112,10 +112,8 @@ const googleRequest: IGoogleRequest = {
         .get<U>(url, {
           headers: getHeaders,
         })
-        .then((response) => {
-          const resp = handleResponse<U>(response);
-          resolve(resp);
-        })
+        .then((response) => handleResponse<U>(response))
+        .then(resolve)
         .catch((error: AxiosError) => {
           reject(error);
         });
@@ -149,10 +147,8 @@ const googleRequest: IGoogleRequest = {
         .post<V>(url, data, {
           headers: getHeaders,
         })
-        .then((response) => {
-          const resp = handleResponse<V>(response);
-          resolve(resp);
-        })
+        .then((response) => handleResponse<V>(response))
+        .then(resolve)
         .catch((error: AxiosError) => {
           reject(error);
         });
@@ -186,10 +182,8 @@ const googleRequest: IGoogleRequest = {
         .patch<V>(url, data, {
           headers: getHeaders,
         })
-        .then((response) => {
-          const resp = handleResponse<V>(response);
-          resolve(resp);
-        })
+        .then((response) => handleResponse<V>(response))
+        .then(resolve)
         .catch((error: AxiosError) => {
           reject(error);
         });
@@ -218,10 +212,8 @@ const googleRequest: IGoogleRequest = {
           headers: getHeaders,
           data,
         })
-        .then((response) => {
-          const resp = handleResponse<U>(response);
-          resolve(resp);
-        })
+        .then((response) => handleResponse<U>(response))
+        .then(resolve)
         .catch((error: AxiosError) => {
           reject(error);
         });

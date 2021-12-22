@@ -17,78 +17,82 @@ import type {
   IGetAllTokens,
 } from '@plugins/google/helpers/types';
 
+const handleCredential = (
+  credential: ICredentialsDoc | null,
+  scopes: TGoogleApiScope[],
+): Promise<IGetAllTokens> =>
+  new Promise<IGetAllTokens>((resolve, reject) => {
+    const response: IGetAllTokens = {
+      success: false,
+    };
+    if (credential) {
+      response.credential = credential;
+      ServiceAccs.find({ related_to: credential._id })
+        .then((serviceAccs) => {
+          response.serviceAcc = serviceAccs;
+          const serviceAccountIds = serviceAccs.map((account) => account._id);
+          const tokenFindParam = {
+            $or: [
+              { related_to: credential._id, scopes },
+              ...serviceAccountIds.map((id) => ({ related_to: id, scopes })),
+            ],
+          };
+          return tokenFindParam;
+        })
+        .then((searchParam) => Tokens.find(searchParam))
+        .then((tokens) => {
+          if (tokens.length > 0) {
+            const normalAccessTokens = tokens.filter(
+              (token) =>
+                token.type === 'access' && token.ref_model === 'Credential',
+            );
+            const serviceAccessTokens = tokens.filter(
+              (token) =>
+                token.type === 'access' && token.ref_model === 'ServiceAccount',
+            );
+            const refreshTokens = tokens.filter(
+              (token) => token.type === 'refresh',
+            );
+            response.tokens = {
+              access: {
+                normal: normalAccessTokens,
+                service: serviceAccessTokens,
+              },
+              refresh: refreshTokens,
+            };
+            response.success = true;
+            return response;
+          } else {
+            response.success = false;
+            return response;
+          }
+        })
+        .then(resolve)
+        .catch((error: MongoError) => {
+          reject(new Error(`${error.name}: ${error.message}`));
+        });
+    } else {
+      reject(new Error('Credentials ID Not Found in the Database'));
+    }
+  });
+
 /**
  * Fetches all the Data in the Database Related to a Credential ID
  *
- * @param { string } credentialID - Credential ID from the Database
+ * @param {string} credentialID - Credential ID from the Database
  * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
- * @returns { IGetAllTokens } - Data Related to Credential ID
+ * @returns {IGetAllTokens} - Data Related to Credential ID
  */
 function getAllTokens(
   credentialID: ICredentials['_id'],
   scopes: TGoogleApiScope[],
 ): Promise<IGetAllTokens> {
   return new Promise<IGetAllTokens>((resolve, reject) => {
-    const response: IGetAllTokens = {
-      success: false,
-    };
     Credentials.findById(credentialID)
-      .then((credential) => {
-        if (credential) {
-          response.credential = credential;
-          ServiceAccs.find({ related_to: credential._id })
-            .then((serviceAccs) => {
-              response.serviceAcc = serviceAccs;
-              const serviceAccountIds = serviceAccs.map(
-                (account) => account._id,
-              );
-              const tokenFindParam = [
-                { related_to: credential._id, scopes },
-                ...serviceAccountIds.map((id) => ({ related_to: id, scopes })),
-              ];
-              Tokens.find({
-                $or: tokenFindParam,
-              })
-                .then((tokens) => {
-                  if (tokens.length > 0) {
-                    const normalAccessTokens = tokens.filter(
-                      (token) =>
-                        token.type === 'access' &&
-                        token.ref_model === 'Credential',
-                    );
-                    const serviceAccessTokens = tokens.filter(
-                      (token) =>
-                        token.type === 'access' &&
-                        token.ref_model === 'ServiceAccount',
-                    );
-                    const refreshTokens = tokens.filter(
-                      (token) => token.type === 'refresh',
-                    );
-                    response.tokens = {
-                      access: {
-                        normal: normalAccessTokens,
-                        service: serviceAccessTokens,
-                      },
-                      refresh: refreshTokens,
-                    };
-                    response.success = true;
-                    resolve(response);
-                  } else {
-                    response.success = false;
-                    resolve(response);
-                  }
-                })
-                .catch((error: MongoError) => {
-                  reject(new Error(`${error.name}: ${error.message}`));
-                });
-            })
-            .catch((error: MongoError) => {
-              reject(new Error(`${error.name}: ${error.message}`));
-            });
-        }
-      })
-      .catch((error: MongoError) => {
-        reject(new Error(`${error.name}: ${error.message}`));
+      .then((credential) => handleCredential(credential, scopes))
+      .then(resolve)
+      .catch((err: string) => {
+        reject(new Error(err));
       });
   });
 }
@@ -166,14 +170,12 @@ function generateNormalTokenSave(
           website: 'google.com',
         };
         Tokens.create(token)
-          .then((savedToken) => {
-            resolve(savedToken);
-          })
+          .then(resolve)
           .catch((err: MongoError) => {
             reject(new Error(`${err.name}: ${err.message}`));
           });
       })
-      .catch((err) => {
+      .catch((err: string) => {
         reject(new Error(err));
       });
   });
@@ -213,7 +215,7 @@ function generateServiceTokenSave(
             reject(new Error(`${err.name}: ${err.message}`));
           });
       })
-      .catch((err) => {
+      .catch((err: string) => {
         reject(new Error(err));
       });
   });
@@ -293,9 +295,9 @@ function serviceAccountTokenHandler(
 /**
  * Checks Validity of Access Tokens and Refreshes it
  *
- * @param { IGetAllTokens } tokenData - Response from GetallTokens Function
- * @param { TGoogleApiScope[] } scopes - Google Oauth API Scopes
- * @returns { IGetAllTokens } - Active Tokens
+ * @param {IGetAllTokens} tokenData - Response from GetallTokens Function
+ * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
+ * @returns {IGetAllTokens} - Active Tokens
  */
 function checkTokenRefreshit(
   tokenData: IGetAllTokens,
@@ -383,9 +385,9 @@ function checkTokenRefreshit(
 /**
  * Resolves a Access Token for the Respective Google Credential ID (Incl. Service Accounts)
  *
- * @param { string } credentialID - Credentials ID From Database
- * @param { TGoogleApiScope[] } scopes - Google OAuth API Scopes
- * @returns { Promise<ITokenResolver> } - Resolves a Token to use in Google API
+ * @param {string} credentialID - Credentials ID From Database
+ * @param {TGoogleApiScope[]} scopes - Google OAuth API Scopes
+ * @returns {Promise<ITokenResolver>} - Resolves a Token to use in Google API
  */
 export default function (
   credentialID: ICredentials['_id'],

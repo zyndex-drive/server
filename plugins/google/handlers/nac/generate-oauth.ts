@@ -95,41 +95,33 @@ function handleTokenSaving(
 ): Promise<ITokenDoc[]> {
   return new Promise<ITokenDoc[]>((resolve, reject) => {
     const now = Date.now();
-    Promise.all([objectID('t'), objectID('t')])
-      .then(([uid1, uid2]) => {
-        const tokensArr: IToken[] = [
-          {
-            _id: uid1,
-            token: encrypt.str(refreshToken.refresh_token),
-            type: 'refresh',
-            related_to: credentials._id,
-            scopes,
-            ref_model: 'Credential',
-            expires_at: now + 100 * 365 * 24 * 3600 * 1000,
-            website: 'google.com',
-          },
-          {
-            _id: uid2,
-            token: encrypt.str(accessToken.access_token),
-            type: 'access',
-            related_to: credentials._id,
-            scopes,
-            ref_model: 'Credential',
-            expires_at: now + accessToken.expires_in * 1000,
-            website: 'google.com',
-          },
-        ];
-        Tokens.insertMany(tokensArr)
-          .then((tokenDocs) => {
-            resolve(tokenDocs);
-          })
-          .catch((error: MongoError) => {
-            reject(new Error(`${error.name}: ${error.message}`));
-          });
-      })
-      .catch((e) => {
-        console.log(e);
-        reject(new Error('Error Occured while Generating a UID'));
+    const [uid1, uid2] = [objectID('t'), objectID('t')];
+    const tokensArr: IToken[] = [
+      {
+        _id: uid1,
+        token: encrypt.str(refreshToken.refresh_token),
+        type: 'refresh',
+        related_to: credentials._id,
+        scopes,
+        ref_model: 'Credential',
+        expires_at: now + 100 * 365 * 24 * 3600 * 1000,
+        website: 'google.com',
+      },
+      {
+        _id: uid2,
+        token: encrypt.str(accessToken.access_token),
+        type: 'access',
+        related_to: credentials._id,
+        scopes,
+        ref_model: 'Credential',
+        expires_at: now + accessToken.expires_in * 1000,
+        website: 'google.com',
+      },
+    ];
+    Tokens.insertMany(tokensArr)
+      .then(resolve)
+      .catch((error: MongoError) => {
+        reject(new Error(`${error.name}: ${error.message}`));
       });
   });
 }
@@ -199,7 +191,6 @@ export default function (
   scopes: TGoogleApiScope[],
 ): void {
   const { creds, code, state } = req.query;
-  console.log(code, creds, String(state));
   if (!code && creds) {
     redirectUser(res, String(creds), scopes);
   } else if (code && state) {
