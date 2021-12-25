@@ -20,6 +20,9 @@ app.use(xssProtect());
 app.use(mongoSanitize());
 app.use([dbChecker, cors]);
 
+// Serve Public Assets
+app.use(express.static('views'));
+
 // Use the Router Config from Routes
 app.use('/', router);
 
