@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-37](https://github.com/zyndex-drive/server/compare/v0.2.0-36...v0.2.0-37) (2021-12-25)
+
+
+### Code Refactoring 🖌
+
+* fix callback hell by using function chaining ([37719d8](https://github.com/zyndex-drive/server/commit/37719d87e97a9029f83742b9ee209ceaa3f3d750))
+* **plugins:** refactor auth files to use promise chaining ([929fb62](https://github.com/zyndex-drive/server/commit/929fb622cd339a0c1a1134dfbc510314ed46571a))
+
+
+### Features 🔥
+
+* **routes:** serve index file to get request ([2f2dddb](https://github.com/zyndex-drive/server/commit/2f2dddb98fa680ec45b4e7a98cb5af4b6c682193))
+* **views:** add html files ([52a2b4c](https://github.com/zyndex-drive/server/commit/52a2b4c985fab89d747a4ddcfafd9ae6d8e42c35))
+
 ## [0.2.0-36](https://github.com/zyndex-drive/server/compare/v0.2.0-35...v0.2.0-36) (2021-12-21)
 
 
