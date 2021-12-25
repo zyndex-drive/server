@@ -67,13 +67,10 @@ export default function (
       .then((serviceAccDoc) => {
         if (serviceAccDoc) {
           generateAccessToken(serviceAccDoc, scopes)
-            .then((accessToken) => {
-              handleTokenSaving(serviceAccDoc, scopes, accessToken)
-                .then(resolve)
-                .catch((err) => {
-                  reject(new Error(String(err)));
-                });
-            })
+            .then((accessToken) =>
+              handleTokenSaving(serviceAccDoc, scopes, accessToken),
+            )
+            .then(resolve)
             .catch((err: unknown) => {
               reject(new Error(String(err)));
             });

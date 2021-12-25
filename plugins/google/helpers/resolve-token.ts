@@ -9,7 +9,7 @@ import { objectID } from '@plugins/misc';
 // Types
 import type { TGoogleApiScope } from '@plugins/google/helpers/types';
 import type { ICredentials, ICredentialsDoc } from '@models/credential/types';
-import type { IToken, ITokenDoc } from '@models/tokens/types';
+import type { ITokenDoc } from '@models/tokens/types';
 import type { IServiceAccDoc } from '@models/service-account/types';
 import type { Error as MongoError } from 'mongoose';
 import type {
@@ -156,25 +156,19 @@ function generateNormalTokenSave(
 ): Promise<ITokenDoc> {
   return new Promise<ITokenDoc>((resolve, reject) => {
     generateNormalAccessToken(credentials, refreshToken.token)
-      .then((response) => {
-        const uid = objectID('t');
-        const now = Date.now();
-        const token: IToken = {
-          _id: uid,
-          token: response.access_token,
-          type: 'access',
-          related_to: credentials._id,
-          scopes,
-          ref_model: 'Credential',
-          expires_at: now + response.expires_in * 1000,
-          website: 'google.com',
-        };
-        Tokens.create(token)
-          .then(resolve)
-          .catch((err: MongoError) => {
-            reject(new Error(`${err.name}: ${err.message}`));
-          });
-      })
+      .then((response) => Promise.all([response, objectID('t'), Date.now()]))
+      .then(([response, uid, now]) => ({
+        _id: uid,
+        token: response.access_token,
+        type: 'access',
+        related_to: credentials._id,
+        scopes,
+        ref_model: 'Credential',
+        expires_at: now + response.expires_in * 1000,
+        website: 'google.com',
+      }))
+      .then((token) => Tokens.create(token))
+      .then(resolve)
       .catch((err: string) => {
         reject(new Error(err));
       });
@@ -194,27 +188,19 @@ function generateServiceTokenSave(
 ): Promise<ITokenDoc> {
   return new Promise<ITokenDoc>((resolve, reject) => {
     generateServiceAccessToken(account, scopes)
-      .then((response) => {
-        const uid = objectID('t');
-        const now = Date.now();
-        const token: IToken = {
-          _id: uid,
-          token: response.access_token,
-          type: 'access',
-          related_to: account._id,
-          scopes,
-          ref_model: 'ServiceAccount',
-          expires_at: now + response.expires_in * 1000,
-          website: 'google.com',
-        };
-        Tokens.create(token)
-          .then((savedToken) => {
-            resolve(savedToken);
-          })
-          .catch((err: MongoError) => {
-            reject(new Error(`${err.name}: ${err.message}`));
-          });
-      })
+      .then((response) => Promise.all([response, objectID('t'), Date.now()]))
+      .then(([response, uid, now]) => ({
+        _id: uid,
+        token: response.access_token,
+        type: 'access',
+        related_to: account._id,
+        scopes,
+        ref_model: 'ServiceAccount',
+        expires_at: now + response.expires_in * 1000,
+        website: 'google.com',
+      }))
+      .then((token) => Tokens.create(token))
+      .then(resolve)
       .catch((err: string) => {
         reject(new Error(err));
       });
