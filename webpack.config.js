@@ -1,5 +1,7 @@
 const nodeExternals = require('webpack-node-externals');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const WebpackObfuscator = require('webpack-obfuscator');
 const path = require('path');
 
 module.exports = {
@@ -22,6 +24,23 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new WebpackObfuscator(
+      {
+        compact: true,
+        target: 'node',
+      },
+      ['views/**'],
+    ),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'views'),
+          to: path.resolve(__dirname, 'out', 'views'),
+        },
+      ],
+    }),
+  ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     plugins: [new TsconfigPathsPlugin()],
