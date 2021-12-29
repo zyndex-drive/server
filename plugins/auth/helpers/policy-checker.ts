@@ -1,6 +1,9 @@
 import { Roles } from '@models';
 import { retrievePolicies as getPolicyDocuments } from './policy-retriever';
-import { heirarchyChecker } from './heirarchy';
+import {
+  heirarchyChecker,
+  getHighestHeirarchy as getHighestHeir,
+} from './heirarchy';
 
 import type { IUserDoc } from '@models/user/types';
 import type { IPendingUserDoc } from '@models/pending-user/types';
@@ -109,6 +112,47 @@ export const getDeeperRoles = (
     }
   });
 
+interface IUserRole {
+  scope: ID<IScopeDoc>;
+  role: ID<IRoleDoc>;
+}
+
+const getHighestHeirarchy = (roles: IUserRole[]): Promise<IDeeperRoles> =>
+  new Promise<IDeeperRoles>((resolve, reject) => {
+    const heirarchies: { role: string; deepRoles: IDeeperRoles }[] = [];
+    roles.forEach((role, index) => {
+      getDeeperRoles(String(role.role))
+        .then((deepRoles) =>
+          heirarchies.push({
+            role: deepRoles.roleDoc.name,
+            deepRoles,
+          }),
+        )
+        .then(() => {
+          if (index === roles.length - 1) {
+            const roleDocs = heirarchies.map(
+              (heirarchy) => heirarchy.deepRoles.roleDoc,
+            );
+            getHighestHeir(roleDocs)
+              .then((highestRole) =>
+                heirarchies.filter(
+                  (heirarchy) => heirarchy.role === highestRole.name,
+                ),
+              )
+              .then(([highestDeepestRole]) =>
+                resolve(highestDeepestRole.deepRoles),
+              )
+              .catch((err: string) => {
+                reject(new Error(err));
+              });
+          }
+        })
+        .catch((err: string) => {
+          reject(new Error(err));
+        });
+    });
+  });
+
 const getUserPolicies = (
   adminRole: string,
   otherPolicies?: ID<IPolicyDoc>[],
@@ -120,6 +164,27 @@ const getUserPolicies = (
       const [userRole] = user.roles.filter((role) => role.scope === scope);
       Promise.all([
         getDeeperRoles(String(userRole.role)),
+        getDeeperRoles(adminRole, otherPolicies),
+      ])
+        .then(([userDeepRole, deepRoles]) => {
+          const { roleDoc } = userDeepRole;
+          const { roleDoc: adminRoleDoc, allowedPolicies } = deepRoles;
+          if (heirarchyChecker(adminRoleDoc, roleDoc)) {
+            resolve(convertObjectID(allowedPolicies));
+          } else {
+            reject(
+              new Error(
+                'This Admin Cannot Perform this action against this User',
+              ),
+            );
+          }
+        })
+        .catch((err: string) => {
+          reject(new Error(err));
+        });
+    } else if (user && !scope) {
+      Promise.all([
+        getHighestHeirarchy(user.roles),
         getDeeperRoles(adminRole, otherPolicies),
       ])
         .then(([userDeepRole, deepRoles]) => {
