@@ -3,12 +3,11 @@ import dotProp from 'dot-prop';
 
 import type { IRoleDoc } from '@models/role/types';
 
-const heirarchy = {
+export const heirarchy = {
   Viewer: 0,
   'Content Manager': 1,
   Moderator: 2,
-  manager: 3,
-  Manager: 4,
+  Manager: 3,
 };
 
 /**

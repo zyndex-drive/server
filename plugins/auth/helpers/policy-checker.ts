@@ -3,6 +3,7 @@ import { retrievePolicies as getPolicyDocuments } from './policy-retriever';
 import { heirarchyChecker } from './heirarchy';
 
 import type { IUserDoc } from '@models/user/types';
+import type { IPendingUserDoc } from '@models/pending-user/types';
 import type { IRoleDoc } from '@models/role/types';
 import type { IPolicy, IPolicyDoc } from '@models/policy/types';
 import type { IScopeDoc } from '@models/scope/types';
@@ -74,7 +75,7 @@ interface IDeeperRoles {
   allowedPolicies: ID<IPolicyDoc>[];
 }
 
-const getDeeperRoles = (
+export const getDeeperRoles = (
   adminRole: string,
   otherPolicies?: ID<IPolicyDoc>[],
 ): Promise<IDeeperRoles> =>
@@ -111,12 +112,14 @@ const getDeeperRoles = (
 const getUserPolicies = (
   adminRole: string,
   otherPolicies?: ID<IPolicyDoc>[],
-  user?: IUserDoc,
+  scope?: IScopeDoc['_id'],
+  user?: IUserDoc | IPendingUserDoc,
 ): Promise<string[]> =>
   new Promise<string[]>((resolve, reject) => {
-    if (user) {
+    if (user && scope) {
+      const [userRole] = user.roles.filter((role) => role.scope === scope);
       Promise.all([
-        getDeeperRoles(String(user._id)),
+        getDeeperRoles(String(userRole.role)),
         getDeeperRoles(adminRole, otherPolicies),
       ])
         .then(([userDeepRole, deepRoles]) => {
@@ -151,18 +154,18 @@ const getUserPolicies = (
  * Checks the Given Policies to the Given User for the Particular Scope
  *
  * @param {IPolicy[]} policies - Array of Policies to Check
- * @param {string} scope - Scope ID for which Policies to be checked
  * @param {IUserDoc} admin - User to which Policy is to be Checked
+ * @param {string} scope - Scope ID for which Policies to be checked
  * @param {IUserDoc} user - User to whom Action is applied
  */
 export function checkPolicy(
   policies: IPolicy[],
-  scope: IScopeDoc['_id'],
   admin: IUserDoc,
-  user?: IUserDoc,
+  scope?: IScopeDoc['_id'],
+  user?: IUserDoc | IPendingUserDoc,
 ): Promise<true> {
   return new Promise<true>((resolve, reject) => {
-    const [userRole] = admin.role.filter((role) => role.scope === scope);
+    const [userRole] = admin.roles.filter((role) => role.scope === scope);
     if (!admin.restricted) {
       getPolicyDocuments(policies)
         .then((policyDocs) =>
@@ -171,6 +174,7 @@ export function checkPolicy(
             getUserPolicies(
               String(userRole.role),
               admin.allowed_policies,
+              scope,
               user,
             ),
           ]),
