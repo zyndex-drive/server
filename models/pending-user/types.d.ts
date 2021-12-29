@@ -9,8 +9,12 @@ export interface IPendingUser {
   name: string;
   email: string;
   message: string;
-  role: ID<IRoleDoc>;
-  scopes: ID<IScopeDoc>[];
+  roles: [
+    {
+      scope: ID<IScopeDoc>;
+      role: ID<IRoleDoc>;
+    },
+  ];
   requested_at: number;
   accepted?: boolean;
   accepted_at?: number;

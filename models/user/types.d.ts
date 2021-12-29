@@ -14,7 +14,7 @@ export interface IUser {
   verified_at: number;
   token_hash: string;
   restricted: boolean;
-  role: [
+  roles: [
     {
       scope: ID<IScopeDoc>;
       role: ID<IRoleDoc>;

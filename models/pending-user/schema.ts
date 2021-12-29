@@ -20,15 +20,18 @@ const schema = new Schema<IPendingUserDoc, IPendingUserModel, IPendingUser>({
     type: String,
     required: true,
   },
-  role: {
-    type: Schema.Types.ObjectId,
-    ref: 'Role',
-    required: true,
-  },
-  scopes: [
+  roles: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'Scope',
+      scope: {
+        type: Schema.Types.ObjectId,
+        ref: 'Scope',
+        required: true,
+      },
+      role: {
+        type: Schema.Types.ObjectId,
+        ref: 'Role',
+        required: true,
+      },
     },
   ],
   requested_at: {
