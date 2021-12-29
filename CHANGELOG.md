@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-39](https://github.com/zyndex-drive/server/compare/v0.2.0-38...v0.2.0-39) (2021-12-29)
+
+
+### Features 🔥
+
+* **plugins/auth:** some misc helper functions for policy check ([b632972](https://github.com/zyndex-drive/server/commit/b632972528619ebcae0d8451d77d21b681514629))
+* **plugins/auth:** write a complete function to check policies and authorize the user ([2e4f146](https://github.com/zyndex-drive/server/commit/2e4f146b1f063e5034d471a24031299e1854b1d9))
+* **plugins/auth:** write a function to check the heirarchy of the user and admins ([c99f8ad](https://github.com/zyndex-drive/server/commit/c99f8ad75d43c9b04dfc1dd0ef7655c5650aba8f))
+
+
+### Build System 🏗
+
+* **packages:** add mathjs package ([eaa560c](https://github.com/zyndex-drive/server/commit/eaa560cd22061d0e6c33fd1788a471e1de7fda6f))
+
 ## [0.2.0-38](https://github.com/zyndex-drive/server/compare/v0.2.0-37...v0.2.0-38) (2021-12-29)
 
 
