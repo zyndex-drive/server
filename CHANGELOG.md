@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-38](https://github.com/zyndex-drive/server/compare/v0.2.0-37...v0.2.0-38) (2021-12-29)
+
+
+### Bug Fixes 🛠
+
+* **models:** fix bad schema in pending-user and user models ([e858dc5](https://github.com/zyndex-drive/server/commit/e858dc58978d5df4ce1d5c3dbad7698cc0cf4026))
+
+
+### Features 🔥
+
+* **plugins/auth:** refactor auth helpers, write function to support policy check for pending users ([3977dc2](https://github.com/zyndex-drive/server/commit/3977dc2b428d8a967ab7c5a0c56aedb83882fb33))
+* **plugins/auth:** refactor user auth policies and write auth policies for blacklist function ([36a4ca6](https://github.com/zyndex-drive/server/commit/36a4ca67fddbc52ed1893a6cd232fd7cab229d58))
+* **plugins/auth:** write auth policies for user/blacklist function ([e1eabd6](https://github.com/zyndex-drive/server/commit/e1eabd6a54874df10b5c57dd13da1a8cb8e9b733))
+* **plugins/auth:** write auth policies for user/promote functions ([e1a8f00](https://github.com/zyndex-drive/server/commit/e1a8f0014fb148f153bfb85f1bb50b0989f36ca4))
+* **views:** add backend dashboard html files ([5f4716c](https://github.com/zyndex-drive/server/commit/5f4716cbcaf3a789b4d220c432d81827219a5f40))
+
+
+### Others 🔧
+
+* add some misc index.ts files for easy imports ([4eda2b4](https://github.com/zyndex-drive/server/commit/4eda2b4f328fee7a60600f8fdcd16cbcfc82c646))
+
 ## [0.2.0-37](https://github.com/zyndex-drive/server/compare/v0.2.0-36...v0.2.0-37) (2021-12-25)
 
 
