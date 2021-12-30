@@ -4,12 +4,14 @@ import {
   manager as accMgr,
   moderator as accMods,
 } from './accept';
+
 import {
   viewer as blackViewer,
   contentMgr as blackCntMgr,
   manager as blackMgr,
   moderator as blackMods,
 } from './blacklist';
+
 import {
   contentMgr as promCntMgr,
   manager as promMgr,
