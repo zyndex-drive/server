@@ -14,12 +14,10 @@ export interface IUser {
   verified_at: number;
   token_hash: string;
   restricted: boolean;
-  roles: [
-    {
-      scope: ID<IScopeDoc>;
-      role: ID<IRoleDoc>;
-    },
-  ];
+  roles: {
+    scope: ID<IScopeDoc>;
+    role: ID<IRoleDoc>;
+  }[];
   password: string;
   allowed_policies?: ID<IPolicyDoc>[];
   disallowed_policies?: ID<IPolicyDoc>[];
