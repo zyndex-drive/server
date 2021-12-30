@@ -40,7 +40,7 @@ const schema = new Schema<IUserDoc, IUserModel, IUser>({
     type: Boolean,
     default: false,
   },
-  role: [
+  roles: [
     {
       scope: {
         type: Schema.Types.ObjectId,

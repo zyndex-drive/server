@@ -1,8 +1,12 @@
 import { Roles } from '@models';
 import { retrievePolicies as getPolicyDocuments } from './policy-retriever';
-import { heirarchyChecker } from './heirarchy';
+import {
+  heirarchyChecker,
+  getHighestHeirarchy as getHighestHeir,
+} from './heirarchy';
 
 import type { IUserDoc } from '@models/user/types';
+import type { IPendingUserDoc } from '@models/pending-user/types';
 import type { IRoleDoc } from '@models/role/types';
 import type { IPolicy, IPolicyDoc } from '@models/policy/types';
 import type { IScopeDoc } from '@models/scope/types';
@@ -74,7 +78,7 @@ interface IDeeperRoles {
   allowedPolicies: ID<IPolicyDoc>[];
 }
 
-const getDeeperRoles = (
+export const getDeeperRoles = (
   adminRole: string,
   otherPolicies?: ID<IPolicyDoc>[],
 ): Promise<IDeeperRoles> =>
@@ -108,16 +112,84 @@ const getDeeperRoles = (
     }
   });
 
-const getUserPolicies = (
-  adminRole: string,
+interface IUserRole {
+  scope: ID<IScopeDoc>;
+  role: ID<IRoleDoc>;
+}
+
+const getHighestHeirarchy = (
+  roles: IUserRole[],
   otherPolicies?: ID<IPolicyDoc>[],
-  user?: IUserDoc,
+): Promise<IDeeperRoles> =>
+  new Promise<IDeeperRoles>((resolve, reject) => {
+    const heirarchies: { role: string; deepRoles: IDeeperRoles }[] = [];
+    roles.forEach((role, index) => {
+      getDeeperRoles(String(role.role), otherPolicies)
+        .then((deepRoles) =>
+          heirarchies.push({
+            role: deepRoles.roleDoc.name,
+            deepRoles,
+          }),
+        )
+        .then(() => {
+          if (index === roles.length - 1) {
+            const roleDocs = heirarchies.map(
+              (heirarchy) => heirarchy.deepRoles.roleDoc,
+            );
+            getHighestHeir(roleDocs)
+              .then((highestRole) =>
+                heirarchies.filter(
+                  (heirarchy) => heirarchy.role === highestRole.name,
+                ),
+              )
+              .then(([highestDeepestRole]) =>
+                resolve(highestDeepestRole.deepRoles),
+              )
+              .catch((err: string) => {
+                reject(new Error(err));
+              });
+          }
+        })
+        .catch((err: string) => {
+          reject(new Error(err));
+        });
+    });
+  });
+
+const getUserPolicies = (
+  admin: IUserDoc,
+  otherPolicies?: ID<IPolicyDoc>[],
+  scope?: IScopeDoc['_id'],
+  user?: IUserDoc | IPendingUserDoc,
 ): Promise<string[]> =>
   new Promise<string[]>((resolve, reject) => {
-    if (user) {
+    if (user && scope) {
+      const [userRole] = user.roles.filter((role) => role.scope === scope);
+      const [adminRole] = user.roles.filter((role) => role.scope === scope);
       Promise.all([
-        getDeeperRoles(String(user._id)),
-        getDeeperRoles(adminRole, otherPolicies),
+        getDeeperRoles(String(userRole.role)),
+        getDeeperRoles(String(adminRole), otherPolicies),
+      ])
+        .then(([userDeepRole, deepRoles]) => {
+          const { roleDoc } = userDeepRole;
+          const { roleDoc: adminRoleDoc, allowedPolicies } = deepRoles;
+          if (heirarchyChecker(adminRoleDoc, roleDoc)) {
+            resolve(convertObjectID(allowedPolicies));
+          } else {
+            reject(
+              new Error(
+                'This Admin Cannot Perform this action against this User',
+              ),
+            );
+          }
+        })
+        .catch((err: string) => {
+          reject(new Error(err));
+        });
+    } else if (user && !scope) {
+      Promise.all([
+        getHighestHeirarchy(user.roles),
+        getHighestHeirarchy(admin.roles, otherPolicies),
       ])
         .then(([userDeepRole, deepRoles]) => {
           const { roleDoc } = userDeepRole;
@@ -136,7 +208,7 @@ const getUserPolicies = (
           reject(new Error(err));
         });
     } else {
-      getDeeperRoles(adminRole, otherPolicies)
+      getHighestHeirarchy(admin.roles, otherPolicies)
         .then((deepRoles) => {
           const { allowedPolicies } = deepRoles;
           resolve(convertObjectID(allowedPolicies));
@@ -151,38 +223,35 @@ const getUserPolicies = (
  * Checks the Given Policies to the Given User for the Particular Scope
  *
  * @param {IPolicy[]} policies - Array of Policies to Check
- * @param {string} scope - Scope ID for which Policies to be checked
  * @param {IUserDoc} admin - User to which Policy is to be Checked
+ * @param {string} scope - Scope ID for which Policies to be checked
  * @param {IUserDoc} user - User to whom Action is applied
  */
 export function checkPolicy(
   policies: IPolicy[],
-  scope: IScopeDoc['_id'],
   admin: IUserDoc,
-  user?: IUserDoc,
+  scope?: IScopeDoc['_id'],
+  user?: IUserDoc | IPendingUserDoc,
 ): Promise<true> {
   return new Promise<true>((resolve, reject) => {
-    const [userRole] = admin.role.filter((role) => role.scope === scope);
     if (!admin.restricted) {
       getPolicyDocuments(policies)
-        .then((policyDocs) => {
-          getUserPolicies(String(userRole.role), admin.allowed_policies, user)
-            .then((userPolicies) => checkPolicyArray(policyDocs, userPolicies))
-            .then((policyChecker) => {
-              const allPoliciesBoolean = policyChecker.map(
-                (policy) => policy.value,
-              );
-              if (allPoliciesBoolean.includes(false)) {
-                reject(
-                  new Error('This User Does not have Access to this Action'),
-                );
-              } else {
-                resolve(true);
-              }
-            })
-            .catch((err: string) => {
-              reject(new Error(err));
-            });
+        .then((policyDocs) =>
+          Promise.all([
+            policyDocs,
+            getUserPolicies(admin, admin.allowed_policies, scope, user),
+          ]),
+        )
+        .then(([policyDocs, userPolicies]) =>
+          checkPolicyArray(policyDocs, userPolicies),
+        )
+        .then((policyChecker) => policyChecker.map((policy) => policy.value))
+        .then((allPoliciesBoolean) => {
+          if (allPoliciesBoolean.includes(false)) {
+            reject(new Error('This User Does not have Access to this Action'));
+          } else {
+            resolve(true);
+          }
         })
         .catch((err: string) => {
           reject(new Error(err));

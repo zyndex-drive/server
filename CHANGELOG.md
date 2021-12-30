@@ -2,6 +2,73 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-40](https://github.com/zyndex-drive/server/compare/v0.2.0-39...v0.2.0-40) (2021-12-30)
+
+
+### Bug Fixes 🛠
+
+* **models/user:** fix model user types ([606cd88](https://github.com/zyndex-drive/server/commit/606cd8853b7e3e8fecd6b25cea26124ce4fedb29))
+* **plugins/google:** fix google requester function to throw errors ([6ea6889](https://github.com/zyndex-drive/server/commit/6ea688930a67145ec54746b9f6f7e211d79ef95b))
+
+
+### Features 🔥
+
+* **plugins/auth:** fix auth policy checker to check for policy when no scope is passed ([457847d](https://github.com/zyndex-drive/server/commit/457847d1e1c9c50491c37d69cb7ee263bf086a9b))
+* **plugins/auth:** write a function to check policy and modify user object ([515d9b4](https://github.com/zyndex-drive/server/commit/515d9b48530d334aa02253889c749d7e013032e7))
+* **plugins/auth:** write auth function - user/policies ([47bf3e9](https://github.com/zyndex-drive/server/commit/47bf3e9020e2402069a46818b90fd05251468b23))
+* **plugins/auth:** write auth function - user/remove ([47fd81e](https://github.com/zyndex-drive/server/commit/47fd81e43c84ee8923da1ea32fc0628742a58b28))
+* **plugins/auth:** write auth function - user/restrict ([556b933](https://github.com/zyndex-drive/server/commit/556b933dde8fe994a4ff06026326699c89ad380b))
+* **plugins/auth:** write auth function - user/scope ([d899685](https://github.com/zyndex-drive/server/commit/d899685ddc6d6573787d4dc8c225d279394cc709))
+
+## [0.2.0-39](https://github.com/zyndex-drive/server/compare/v0.2.0-38...v0.2.0-39) (2021-12-29)
+
+
+### Features 🔥
+
+* **plugins/auth:** some misc helper functions for policy check ([b632972](https://github.com/zyndex-drive/server/commit/b632972528619ebcae0d8451d77d21b681514629))
+* **plugins/auth:** write a complete function to check policies and authorize the user ([2e4f146](https://github.com/zyndex-drive/server/commit/2e4f146b1f063e5034d471a24031299e1854b1d9))
+* **plugins/auth:** write a function to check the heirarchy of the user and admins ([c99f8ad](https://github.com/zyndex-drive/server/commit/c99f8ad75d43c9b04dfc1dd0ef7655c5650aba8f))
+
+
+### Build System 🏗
+
+* **packages:** add mathjs package ([eaa560c](https://github.com/zyndex-drive/server/commit/eaa560cd22061d0e6c33fd1788a471e1de7fda6f))
+
+## [0.2.0-38](https://github.com/zyndex-drive/server/compare/v0.2.0-37...v0.2.0-38) (2021-12-29)
+
+
+### Bug Fixes 🛠
+
+* **models:** fix bad schema in pending-user and user models ([e858dc5](https://github.com/zyndex-drive/server/commit/e858dc58978d5df4ce1d5c3dbad7698cc0cf4026))
+
+
+### Features 🔥
+
+* **plugins/auth:** refactor auth helpers, write function to support policy check for pending users ([3977dc2](https://github.com/zyndex-drive/server/commit/3977dc2b428d8a967ab7c5a0c56aedb83882fb33))
+* **plugins/auth:** refactor user auth policies and write auth policies for blacklist function ([36a4ca6](https://github.com/zyndex-drive/server/commit/36a4ca67fddbc52ed1893a6cd232fd7cab229d58))
+* **plugins/auth:** write auth policies for user/blacklist function ([e1eabd6](https://github.com/zyndex-drive/server/commit/e1eabd6a54874df10b5c57dd13da1a8cb8e9b733))
+* **plugins/auth:** write auth policies for user/promote functions ([e1a8f00](https://github.com/zyndex-drive/server/commit/e1a8f0014fb148f153bfb85f1bb50b0989f36ca4))
+* **views:** add backend dashboard html files ([5f4716c](https://github.com/zyndex-drive/server/commit/5f4716cbcaf3a789b4d220c432d81827219a5f40))
+
+
+### Others 🔧
+
+* add some misc index.ts files for easy imports ([4eda2b4](https://github.com/zyndex-drive/server/commit/4eda2b4f328fee7a60600f8fdcd16cbcfc82c646))
+
+## [0.2.0-37](https://github.com/zyndex-drive/server/compare/v0.2.0-36...v0.2.0-37) (2021-12-25)
+
+
+### Code Refactoring 🖌
+
+* fix callback hell by using function chaining ([37719d8](https://github.com/zyndex-drive/server/commit/37719d87e97a9029f83742b9ee209ceaa3f3d750))
+* **plugins:** refactor auth files to use promise chaining ([929fb62](https://github.com/zyndex-drive/server/commit/929fb622cd339a0c1a1134dfbc510314ed46571a))
+
+
+### Features 🔥
+
+* **routes:** serve index file to get request ([2f2dddb](https://github.com/zyndex-drive/server/commit/2f2dddb98fa680ec45b4e7a98cb5af4b6c682193))
+* **views:** add html files ([52a2b4c](https://github.com/zyndex-drive/server/commit/52a2b4c985fab89d747a4ddcfafd9ae6d8e42c35))
+
 ## [0.2.0-36](https://github.com/zyndex-drive/server/compare/v0.2.0-35...v0.2.0-36) (2021-12-21)
 
 

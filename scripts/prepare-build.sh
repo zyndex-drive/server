@@ -10,7 +10,7 @@ cd ..
 
 echo "Building Typescript Files"
 yarn build:tsc
-cp ./out/app.js ./dist/
+cp -r ./out/* ./dist
 
 echo "Doing Some Miscellaneous things to make build ready"
 cd dist

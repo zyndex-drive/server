@@ -5,8 +5,8 @@ import express from 'express';
 import { checkSecretPass } from '@plugins/server/middlewares';
 import setupCheck from '@plugins/server/middlewares/first-setup';
 
-// Response Handlers
-import { okResponse } from '@plugins/server/responses';
+// Others
+import path from 'path';
 
 // Routes
 import firstSetup from './first-setup';
@@ -21,8 +21,8 @@ router.use('/setup', [setupCheck, checkSecretPass], firstSetup);
 router.use('/login', login);
 
 // Default Get
-router.get('/', (req, res) => {
-  okResponse<string>(res, 'Server Successfully Started');
+router.get(/(\/.*)+/, (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, '../views/index.html'));
 });
 
 // Respond with all the Endpoints in this Route

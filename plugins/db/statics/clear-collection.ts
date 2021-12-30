@@ -13,14 +13,15 @@ export default function <U extends Document, V extends Model<U>>(
   return new Promise<IInlineResponse<string>>((resolve, reject) => {
     model
       .deleteMany({})
-      .then(() => {
-        const response: IInlineResponse<string> = {
-          success: true,
-          data: 'Successfully Cleared the Collection',
-          error: null,
-        };
-        resolve(response);
-      })
+      .then(
+        () =>
+          ({
+            success: true,
+            data: 'Successfully Cleared the Collection',
+            error: null,
+          } as IInlineResponse<string>),
+      )
+      .then(resolve)
       .catch((err: MongoError) => {
         reject(new Error(`${err.name}: ${err.message}`));
       });

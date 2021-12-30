@@ -1,4 +1,5 @@
 tests
 dist
+out
 webpack.config.js
 .eslintrc.js

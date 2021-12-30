@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // Crypto
 import { Crypto } from 'node-webcrypto-ossl';
 
@@ -65,7 +66,7 @@ function arrayBufferToBase64(buffer: ArrayBufferLike): string {
  * Imports Service Account Private Key as a Cryptokey
  *
  * @param {string} pemKey - Private Key of Service Account
- * @returns {Promise<CryptoKey>} - CryptoKey Object for Private Key
+ * @returns {Promise<string>} - CryptoKey Object for Private Key
  */
 async function importPrivateKey(pemKey: string): Promise<CryptoKey> {
   const pemDER = base64ToArrayBuffer(
@@ -92,7 +93,7 @@ async function importPrivateKey(pemKey: string): Promise<CryptoKey> {
  * Create a JWT Key for the Service Account
  *
  * @param {string} text - JWT Stringified Payload
- * @param {CryptoKey} key - Cryptographic Service Account Private key
+ * @param {string} key - Cryptographic Service Account Private key
  * @returns {Promise<ArrayBuffer>} - JWT Array Buffer
  */
 async function createSignature(
@@ -111,26 +112,29 @@ async function createSignature(
  * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
  * @returns {string} - JWT Signature for the Service Account
  */
-export default async function (
+export default function (
   serviceAccount: IServiceAccDoc,
   scopes: TGoogleApiScope[],
 ): Promise<string> {
-  const iat = Date.now() / 1000;
-  const stringizedScopes = stringizeScope(scopes);
-  const payload = {
-    iss: serviceAccount.private_key.id,
-    scope: stringizedScopes,
-    aud: 'https://oauth2.googleapis.com/token',
-    exp: iat + 3600,
-    iat,
-  };
-  const encPayload = Buffer.from(JSON.stringify(payload)).toString('base64');
-  const encHeader = Buffer.from(JSON.stringify(jwtHeader)).toString('base64');
-  const key = await importPrivateKey(serviceAccount.private_key.key);
-  const signed = await createSignature(`${encHeader}.${encPayload}`, key);
-  const jwtSignature = arrayBufferToBase64(signed)
-    .replace(/\//g, '_')
-    .replace(/\+/g, '-');
-  const jwtToken = `${encHeader}.${encPayload}.${jwtSignature}`;
-  return jwtToken;
+  return new Promise<string>((resolve, reject) => {
+    const iat = Date.now() / 1000;
+    const stringizedScopes = stringizeScope(scopes);
+    const payload = {
+      iss: serviceAccount.private_key.id,
+      scope: stringizedScopes,
+      aud: 'https://oauth2.googleapis.com/token',
+      exp: iat + 3600,
+      iat,
+    };
+    const encPayload = Buffer.from(JSON.stringify(payload)).toString('base64');
+    const encHeader = Buffer.from(JSON.stringify(jwtHeader)).toString('base64');
+    importPrivateKey(serviceAccount.private_key.key)
+      .then((key) => createSignature(`${encHeader}.${encPayload}`, key))
+      .then((signed) => arrayBufferToBase64(signed))
+      .then((jwtSignature) => `${encHeader}.${encPayload}.${jwtSignature}`)
+      .then(resolve)
+      .catch((err: string) => {
+        reject(new Error(err));
+      });
+  });
 }
