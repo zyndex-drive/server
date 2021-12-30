@@ -117,11 +117,14 @@ interface IUserRole {
   role: ID<IRoleDoc>;
 }
 
-const getHighestHeirarchy = (roles: IUserRole[]): Promise<IDeeperRoles> =>
+const getHighestHeirarchy = (
+  roles: IUserRole[],
+  otherPolicies?: ID<IPolicyDoc>[],
+): Promise<IDeeperRoles> =>
   new Promise<IDeeperRoles>((resolve, reject) => {
     const heirarchies: { role: string; deepRoles: IDeeperRoles }[] = [];
     roles.forEach((role, index) => {
-      getDeeperRoles(String(role.role))
+      getDeeperRoles(String(role.role), otherPolicies)
         .then((deepRoles) =>
           heirarchies.push({
             role: deepRoles.roleDoc.name,
@@ -154,7 +157,7 @@ const getHighestHeirarchy = (roles: IUserRole[]): Promise<IDeeperRoles> =>
   });
 
 const getUserPolicies = (
-  adminRole: string,
+  admin: IUserDoc,
   otherPolicies?: ID<IPolicyDoc>[],
   scope?: IScopeDoc['_id'],
   user?: IUserDoc | IPendingUserDoc,
@@ -162,9 +165,10 @@ const getUserPolicies = (
   new Promise<string[]>((resolve, reject) => {
     if (user && scope) {
       const [userRole] = user.roles.filter((role) => role.scope === scope);
+      const [adminRole] = user.roles.filter((role) => role.scope === scope);
       Promise.all([
         getDeeperRoles(String(userRole.role)),
-        getDeeperRoles(adminRole, otherPolicies),
+        getDeeperRoles(String(adminRole), otherPolicies),
       ])
         .then(([userDeepRole, deepRoles]) => {
           const { roleDoc } = userDeepRole;
@@ -185,7 +189,7 @@ const getUserPolicies = (
     } else if (user && !scope) {
       Promise.all([
         getHighestHeirarchy(user.roles),
-        getDeeperRoles(adminRole, otherPolicies),
+        getHighestHeirarchy(admin.roles, otherPolicies),
       ])
         .then(([userDeepRole, deepRoles]) => {
           const { roleDoc } = userDeepRole;
@@ -204,7 +208,7 @@ const getUserPolicies = (
           reject(new Error(err));
         });
     } else {
-      getDeeperRoles(adminRole, otherPolicies)
+      getHighestHeirarchy(admin.roles, otherPolicies)
         .then((deepRoles) => {
           const { allowedPolicies } = deepRoles;
           resolve(convertObjectID(allowedPolicies));
@@ -230,18 +234,12 @@ export function checkPolicy(
   user?: IUserDoc | IPendingUserDoc,
 ): Promise<true> {
   return new Promise<true>((resolve, reject) => {
-    const [userRole] = admin.roles.filter((role) => role.scope === scope);
     if (!admin.restricted) {
       getPolicyDocuments(policies)
         .then((policyDocs) =>
           Promise.all([
             policyDocs,
-            getUserPolicies(
-              String(userRole.role),
-              admin.allowed_policies,
-              scope,
-              user,
-            ),
+            getUserPolicies(admin, admin.allowed_policies, scope, user),
           ]),
         )
         .then(([policyDocs, userPolicies]) =>
