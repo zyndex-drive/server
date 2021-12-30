@@ -115,7 +115,7 @@ const googleRequest: IGoogleRequest = {
         .then((response) => handleResponse<U>(response))
         .then(resolve)
         .catch((error: AxiosError) => {
-          reject(error);
+          reject(new Error(`${error.name}: ${error.message}`));
         });
     }),
 
@@ -150,7 +150,7 @@ const googleRequest: IGoogleRequest = {
         .then((response) => handleResponse<V>(response))
         .then(resolve)
         .catch((error: AxiosError) => {
-          reject(error);
+          reject(new Error(`${error.name}: ${error.message}`));
         });
     }),
 
@@ -185,7 +185,7 @@ const googleRequest: IGoogleRequest = {
         .then((response) => handleResponse<V>(response))
         .then(resolve)
         .catch((error: AxiosError) => {
-          reject(error);
+          reject(new Error(`${error.name}: ${error.message}`));
         });
     }),
 
@@ -215,7 +215,7 @@ const googleRequest: IGoogleRequest = {
         .then((response) => handleResponse<U>(response))
         .then(resolve)
         .catch((error: AxiosError) => {
-          reject(error);
+          reject(new Error(`${error.name}: ${error.message}`));
         });
     }),
 
