@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-40](https://github.com/zyndex-drive/server/compare/v0.2.0-39...v0.2.0-40) (2021-12-30)
+
+
+### Bug Fixes 🛠
+
+* **models/user:** fix model user types ([606cd88](https://github.com/zyndex-drive/server/commit/606cd8853b7e3e8fecd6b25cea26124ce4fedb29))
+* **plugins/google:** fix google requester function to throw errors ([6ea6889](https://github.com/zyndex-drive/server/commit/6ea688930a67145ec54746b9f6f7e211d79ef95b))
+
+
+### Features 🔥
+
+* **plugins/auth:** fix auth policy checker to check for policy when no scope is passed ([457847d](https://github.com/zyndex-drive/server/commit/457847d1e1c9c50491c37d69cb7ee263bf086a9b))
+* **plugins/auth:** write a function to check policy and modify user object ([515d9b4](https://github.com/zyndex-drive/server/commit/515d9b48530d334aa02253889c749d7e013032e7))
+* **plugins/auth:** write auth function - user/policies ([47bf3e9](https://github.com/zyndex-drive/server/commit/47bf3e9020e2402069a46818b90fd05251468b23))
+* **plugins/auth:** write auth function - user/remove ([47fd81e](https://github.com/zyndex-drive/server/commit/47fd81e43c84ee8923da1ea32fc0628742a58b28))
+* **plugins/auth:** write auth function - user/restrict ([556b933](https://github.com/zyndex-drive/server/commit/556b933dde8fe994a4ff06026326699c89ad380b))
+* **plugins/auth:** write auth function - user/scope ([d899685](https://github.com/zyndex-drive/server/commit/d899685ddc6d6573787d4dc8c225d279394cc709))
+
 ## [0.2.0-39](https://github.com/zyndex-drive/server/compare/v0.2.0-38...v0.2.0-39) (2021-12-29)
 
 
