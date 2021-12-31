@@ -1,7 +1,7 @@
-import user from './user';
+import { user } from './methods';
 
 export * from './helpers';
-export * from './user';
+export * from './methods/user';
 export default {
   user,
 };
