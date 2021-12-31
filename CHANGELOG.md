@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-41](https://github.com/zyndex-drive/server/compare/v0.2.0-40...v0.2.0-41) (2021-12-31)
+
+
+### Features 🔥
+
+* **plugins/auth:** add model method helper functions ([2e19168](https://github.com/zyndex-drive/server/commit/2e191681859a4767820d7a0c369ff57a4d51684d))
+* **plugins/auth:** move user functions to seperate folder ([237015b](https://github.com/zyndex-drive/server/commit/237015b67d1dc6f1c89c7ae19e45e0a70bfba9bb))
+* **plugins/auth:** write auth policy functions for credential functions ([3354865](https://github.com/zyndex-drive/server/commit/3354865b050f072aa47626b9ffcefea82bbdd662))
+
 ## [0.2.0-40](https://github.com/zyndex-drive/server/compare/v0.2.0-39...v0.2.0-40) (2021-12-30)
 
 
