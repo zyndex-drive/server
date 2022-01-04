@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-43](https://github.com/zyndex-drive/server/compare/v0.2.0-42...v0.2.0-43) (2022-01-04)
+
+
+### Code Refactoring 🖌
+
+* **plugins:** add default model import and exports ([1daceae](https://github.com/zyndex-drive/server/commit/1daceaecfc56344364bee288e0bc85f0eda21050))
+
+
+### Features 🔥
+
+* **models:** add otp model to verify users using otp ([7272e24](https://github.com/zyndex-drive/server/commit/7272e24ac6d9091c1cfce26f4e0247bb6097d3cc))
+* **plugins/mail-transporter:** write mail transporter plugin ([b946374](https://github.com/zyndex-drive/server/commit/b9463744449f8c5ca96d1cf985ba914a700d9154))
+* **plugins/otp:** write otp generator plugins ([0de1f94](https://github.com/zyndex-drive/server/commit/0de1f940f25df60c1c8c34f7b97b2f2a1728db49))
+
 ## [0.2.0-42](https://github.com/zyndex-drive/server/compare/v0.2.0-41...v0.2.0-42) (2022-01-04)
 
 
