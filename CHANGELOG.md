@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-42](https://github.com/zyndex-drive/server/compare/v0.2.0-41...v0.2.0-42) (2022-01-04)
+
+
+### Code Refactoring 🖌
+
+* **models:** add template model exports ([77d45eb](https://github.com/zyndex-drive/server/commit/77d45eba584e1a555acb138f3cd8e93058da7090))
+
+
+### Features 🔥
+
+* **plugins/auth:** write auth functions for all the policies ([7faf8b4](https://github.com/zyndex-drive/server/commit/7faf8b4d40f680b082d7d3bfada8fc27850f6b8e))
+* **plugins/templates:** add policies for templates ([a147255](https://github.com/zyndex-drive/server/commit/a147255431952a3853bf5da25f3b83d75670fcca))
+
 ## [0.2.0-41](https://github.com/zyndex-drive/server/compare/v0.2.0-40...v0.2.0-41) (2021-12-31)
 
 
