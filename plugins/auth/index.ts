@@ -12,6 +12,7 @@ import {
   templates,
 } from './methods';
 
+export * from './methods';
 export * from './helpers';
 export default {
   users,
