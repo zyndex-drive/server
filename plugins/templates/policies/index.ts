@@ -12,6 +12,7 @@ import { map as scopeMap } from './scopes';
 import { map as sacMap } from './service-accounts';
 import { map as smtpMailerMap } from './smtp-mailer';
 import { map as smtpProviderMap } from './smtp-providers';
+import { map as templatesMap } from './templates';
 
 export { default as users } from './user';
 export { default as credentials } from './credentials';
@@ -23,6 +24,7 @@ export { default as scopes } from './scopes';
 export { default as serviceAccounts } from './service-accounts';
 export { default as smtpMailers } from './smtp-mailer';
 export { default as smtpProviders } from './smtp-providers';
+export { default as templates } from './templates';
 
 export const map = [
   ...userMap,
@@ -35,4 +37,5 @@ export const map = [
   ...sacMap,
   ...smtpMailerMap,
   ...smtpProviderMap,
+  ...templatesMap,
 ];
