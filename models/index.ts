@@ -12,3 +12,4 @@ export { default as Frontends } from './frontend';
 export { default as GlobalSettings } from './global-setting';
 export { default as SMTPProviders } from './smtp-provider';
 export { default as SMTPMailers } from './smtp-mailer';
+export { default as Templates } from './templates';
