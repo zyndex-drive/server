@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 
 const ALPHANUMS =
   '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+const OTPALPHS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const SYMBOLS = '&%^()!@#$*<>?/][}{<>,.|:;';
 const CUSTOM_ALPHA = `${ALPHANUMS}${SYMBOLS}`;
 
@@ -11,6 +12,7 @@ const SHORT_LENGTH = 8;
 
 const longid = customAlphabet(CUSTOM_ALPHA, LONG_LENGTH);
 const shortid = customAlphabet(ALPHANUMS, SHORT_LENGTH);
+const otpGenerate = customAlphabet(OTPALPHS, SHORT_LENGTH);
 
 /**
  * Generates a Long Unique ID with the Given Hash Algorithm
@@ -63,3 +65,5 @@ export function shortuid(prefix?: string): string {
   const uid = `${pre}${id}`;
   return uid;
 }
+
+export const generateOTP = otpGenerate;
