@@ -51,6 +51,11 @@
     "object-curly-spacing": "off",
     "semi": "off",
     "node/no-unsupported-features/node-builtins": "off",
+    "no-redeclare": [
+      {
+        "ignoreDeclarationMerge": true
+      }
+    ],
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-empty-interface": [
       "error",
