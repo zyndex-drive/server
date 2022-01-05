@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-44](https://github.com/zyndex-drive/server/compare/v0.2.0-43...v0.2.0-44) (2022-01-05)
+
+
+### Bug Fixes 🛠
+
+* **models:** fix smtp provider schema by adding dkim details ([4f10408](https://github.com/zyndex-drive/server/commit/4f10408e2147cf79582cd2a5c37541107bf62134))
+* **plugins/google:** add more google api scopes for more control over api ([83f7e3a](https://github.com/zyndex-drive/server/commit/83f7e3a02ddbc1e2bb7d0c1ecc5fc359e400e5b7))
+
+
+### Features 🔥
+
+* **plugins/google:** refactor and introduce function overloads for solving conditional return types ([7406494](https://github.com/zyndex-drive/server/commit/7406494cb0f6eed25164bdb0a06d5f6b047714ad))
+* **plugins/mail:** add functions for mail-transporter plugin with nodemailer ([7f3da72](https://github.com/zyndex-drive/server/commit/7f3da7287d946c2e50ddd4304adac8ad2a3ac6e6))
+
+
+### Build System 🏗
+
+* **eslint:** add support for function overloading in ts ([751df21](https://github.com/zyndex-drive/server/commit/751df21b5ec72e51445c94e4f4a06bb1b367b939))
+
 ## [0.2.0-43](https://github.com/zyndex-drive/server/compare/v0.2.0-42...v0.2.0-43) (2022-01-04)
 
 
