@@ -1,0 +1,60 @@
+import {
+  normalAccountHandler,
+  serviceAccountHandler,
+  oauthHelpers,
+} from '@plugins/google';
+
+import type { TGoogleApiScope } from '@plugins/google/helpers/types';
+import type { ITokenDoc } from '@models/tokens/types';
+import type { IMailTokens } from './types';
+import type { Request, Response } from 'express';
+import { ICredentialsDoc } from '@models/credential/types';
+
+const gmailScopes: TGoogleApiScope[] = ['https://mail.google.com/'];
+
+/**
+ * Generate Refresh and Access Token for Google - GMAIL SMTP API using Normal Credentials
+ *
+ * @param {Request} req - Express Request Object
+ * @param {Response} res - Express Response Object
+ */
+export function handleNormalAccount(req: Request, res: Response): void {
+  normalAccountHandler.generateOauth(req, res, gmailScopes);
+}
+
+/**
+ * Generate Refresh and Access Token for Google - GMAIL SMTP API using Service Account
+ *
+ * @param {string} serviceAcc - Service Account ID
+ * @returns {Promise<ITokenDoc>} - Token Document
+ */
+export function handleServieAccount(serviceAcc: string): Promise<ITokenDoc> {
+  return serviceAccountHandler.generateOauth(serviceAcc, gmailScopes);
+}
+
+/**
+ * Retreives Tokens Related to the Particular Google Credentials
+ *
+ * @param {string} credentials - Credential Document from Database
+ * @returns {Promise<IMailTokens>} - Tokens
+ */
+export function retreiveTokens(
+  credentials: ICredentialsDoc['_id'],
+): Promise<IMailTokens> {
+  return new Promise<IMailTokens>((resolve, reject) => {
+    oauthHelpers
+      .resolveToken(credentials, gmailScopes, true)
+      .then((resolvedTokens) => ({
+        credentials: resolvedTokens.credentials,
+        tokens: {
+          refresh: resolvedTokens.tokens.refresh,
+          access: resolvedTokens.tokens.access,
+        },
+        service_account: resolvedTokens.service_account,
+      }))
+      .then(resolve)
+      .catch((err: string) => {
+        reject(new Error(err));
+      });
+  });
+}
