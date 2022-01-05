@@ -20,6 +20,11 @@ const schema = new Schema<ISMTPProviderDoc, ISMTPProviderModel, ISMTPProvider>({
     type: String,
     required: true,
   },
+  type: {
+    type: String,
+    enum: ['gmail', 'others'],
+    required: true,
+  },
   smtp: {
     url: {
       type: String,
@@ -42,8 +47,15 @@ const schema = new Schema<ISMTPProviderDoc, ISMTPProviderModel, ISMTPProvider>({
   },
   dkim_key: {
     type: String,
-    required: true,
     encrypt: true,
+  },
+  dkim_options: {
+    domain: {
+      type: String,
+    },
+    key_selector: {
+      type: String,
+    },
   },
 });
 
