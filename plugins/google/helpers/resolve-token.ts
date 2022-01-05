@@ -13,7 +13,8 @@ import type { ITokenDoc } from '@models/tokens/types';
 import type { IServiceAccDoc } from '@models/service-account/types';
 import type { Error as MongoError } from 'mongoose';
 import type {
-  ITokenResolver,
+  ITokenResolverDetailed,
+  ITokenResolverSimple,
   IGetAllTokens,
 } from '@plugins/google/helpers/types';
 
@@ -22,11 +23,8 @@ const handleCredential = (
   scopes: TGoogleApiScope[],
 ): Promise<IGetAllTokens> =>
   new Promise<IGetAllTokens>((resolve, reject) => {
-    const response: IGetAllTokens = {
-      success: false,
-    };
     if (credential) {
-      response.credential = credential;
+      const response: IGetAllTokens = { credential };
       ServiceAccs.find({ related_to: credential._id })
         .then((serviceAccs) => {
           response.serviceAcc = serviceAccs;
@@ -60,14 +58,11 @@ const handleCredential = (
               },
               refresh: refreshTokens,
             };
-            response.success = true;
-            return response;
+            resolve(response);
           } else {
-            response.success = false;
-            return response;
+            reject(new Error('Refresh Tokens not Found in the Database !'));
           }
         })
-        .then(resolve)
         .catch((error: MongoError) => {
           reject(new Error(`${error.name}: ${error.message}`));
         });
@@ -290,19 +285,17 @@ function checkTokenRefreshit(
   scopes: TGoogleApiScope[],
 ): Promise<IGetAllTokens> {
   return new Promise<IGetAllTokens>((resolve, reject) => {
-    const { success, credential, serviceAcc, tokens } = tokenData;
-    if (success && credential && tokens) {
+    const { credential, serviceAcc, tokens } = tokenData;
+    if (credential && tokens) {
       const { access, refresh } = tokens;
       if (refresh.length > 0) {
         const response: IGetAllTokens = {
-          success: false,
           credential,
           serviceAcc,
         };
         if (access.normal.length === 0) {
           generateNormalTokenSave(credential, scopes, refresh[0])
             .then((savedToken) => {
-              response.success = false;
               response.tokens = {
                 refresh,
                 access: {
@@ -324,7 +317,6 @@ function checkTokenRefreshit(
             .map((token) => token.token);
           deleteInvalidTokens(invalidTokens)
             .then(() => {
-              response.success = true;
               if (validTokens.length > 0) {
                 response.tokens = {
                   refresh,
@@ -354,66 +346,113 @@ function checkTokenRefreshit(
             });
         }
       } else {
-        const response: IGetAllTokens = {
-          success: false,
-        };
-        resolve(response);
+        reject(new Error('Refresh Tokens not Found in the Database !'));
       }
     } else {
-      const response: IGetAllTokens = {
-        success: false,
-      };
-      resolve(response);
+      reject(new Error('Cannot find Credentials and Tokens in the Database'));
     }
   });
 }
+
+function resolveTokens(
+  credentialID: ICredentials['_id'],
+  scopes: TGoogleApiScope[],
+): Promise<ITokenResolverSimple>;
+
+function resolveTokens(
+  credentialID: ICredentials['_id'],
+  scopes: TGoogleApiScope[],
+  detailed: false,
+): Promise<ITokenResolverSimple>;
+
+function resolveTokens(
+  credentialID: ICredentials['_id'],
+  scopes: TGoogleApiScope[],
+  detailed: true,
+): Promise<ITokenResolverDetailed>;
 
 /**
  * Resolves a Access Token for the Respective Google Credential ID (Incl. Service Accounts)
  *
  * @param {string} credentialID - Credentials ID From Database
  * @param {TGoogleApiScope[]} scopes - Google OAuth API Scopes
- * @returns {Promise<ITokenResolver>} - Resolves a Token to use in Google API
+ * @param {boolean} detailed - Whether you Require the Return Object to be Detailed
+ * @returns {Promise<ITokenResolverDetailed | ITokenResolverSimple>} - Resolves a Token to use in Google API
  */
-export default function (
+function resolveTokens(
   credentialID: ICredentials['_id'],
   scopes: TGoogleApiScope[],
-): Promise<ITokenResolver> {
-  return new Promise<ITokenResolver>((resolve, reject) => {
-    getAllTokens(credentialID, scopes)
-      .then((credentialData) =>
-        Promise.all([
-          credentialData,
-          checkTokenRefreshit(credentialData, scopes),
-        ]),
-      )
-      .then(([credentialData, validTokens]) =>
-        Promise.all([
-          validTokens,
-          serviceAccountTokenHandler(credentialData, scopes),
-        ]),
-      )
-      .then(([validTokens, serviceTokens]) => {
-        if (validTokens.tokens) {
-          if (serviceTokens) {
-            const response: ITokenResolver = {
-              success: true,
-              tokens: [...validTokens.tokens.access.normal, ...serviceTokens],
-            };
-            resolve(response);
+  detailed?: boolean,
+): Promise<ITokenResolverDetailed | ITokenResolverSimple> {
+  return new Promise<ITokenResolverDetailed | ITokenResolverSimple>(
+    (resolve, reject) => {
+      getAllTokens(credentialID, scopes)
+        .then((credentialData) =>
+          Promise.all([
+            credentialData,
+            checkTokenRefreshit(credentialData, scopes),
+          ]),
+        )
+        .then(([credentialData, validTokens]) =>
+          Promise.all([
+            validTokens,
+            serviceAccountTokenHandler(credentialData, scopes),
+          ]),
+        )
+        .then(([validTokens, serviceTokens]) => {
+          if (validTokens.tokens) {
+            if (serviceTokens) {
+              if (detailed) {
+                const response: ITokenResolverDetailed = {
+                  credentials: validTokens.credential,
+                  tokens: {
+                    refresh: validTokens.tokens.refresh,
+                    access: [
+                      ...validTokens.tokens.access.normal,
+                      ...serviceTokens,
+                    ],
+                  },
+                  service_account: validTokens.serviceAcc,
+                };
+                resolve(response);
+              } else {
+                const response: ITokenResolverSimple = {
+                  credentials: validTokens.credential,
+                  tokens: [
+                    ...validTokens.tokens.access.normal,
+                    ...serviceTokens,
+                  ],
+                };
+                resolve(response);
+              }
+            } else {
+              if (detailed) {
+                const response: ITokenResolverDetailed = {
+                  credentials: validTokens.credential,
+                  tokens: {
+                    refresh: validTokens.tokens.refresh,
+                    access: validTokens.tokens.access.normal,
+                  },
+                  service_account: validTokens.serviceAcc,
+                };
+                resolve(response);
+              } else {
+                const response: ITokenResolverSimple = {
+                  credentials: validTokens.credential,
+                  tokens: validTokens.tokens.access.normal,
+                };
+                resolve(response);
+              }
+            }
           } else {
-            const response: ITokenResolver = {
-              success: true,
-              tokens: validTokens.tokens.access.normal,
-            };
-            resolve(response);
+            reject(new Error('No Tokens Found'));
           }
-        } else {
-          reject(new Error('No Tokens Found'));
-        }
-      })
-      .catch((err: string) => {
-        reject(new Error(err));
-      });
-  });
+        })
+        .catch((err: string) => {
+          reject(new Error(err));
+        });
+    },
+  );
 }
+
+export default resolveTokens;

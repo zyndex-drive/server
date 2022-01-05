@@ -3,12 +3,12 @@ import type { ITokenDoc } from '@models/tokens/types';
 import type { IServiceAccDoc } from '@models/service-account/types';
 import type { ICredentialsDoc } from '@models/credential/types';
 
-export type TGoogleApiScope = `https://www.googleapis.com/auth/${string}`;
+export type TGoogleApiScope =
+  | `https://www.googleapis.com/auth/${string}`
+  | 'https://mail.google.com/';
 
 export interface IGetAllTokens {
-  success: boolean;
-  error?: unknown;
-  credential?: ICredentialsDoc;
+  credential: ICredentialsDoc;
   serviceAcc?: IServiceAccDoc[];
   tokens?: {
     access: {
@@ -19,9 +19,17 @@ export interface IGetAllTokens {
   };
 }
 
-export interface ITokenResolver {
-  success: boolean;
-  error?: unknown;
+export interface ITokenResolverDetailed {
+  credentials: ICredentialsDoc;
+  tokens: {
+    refresh: ITokenDoc[];
+    access: ITokenDoc[];
+  };
+  service_account?: IServiceAccDoc[];
+}
+
+export interface ITokenResolverSimple {
+  credentials: ICredentialsDoc;
   tokens: ITokenDoc[];
 }
 
