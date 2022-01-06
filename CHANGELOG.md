@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-45](https://github.com/zyndex-drive/server/compare/v0.2.0-44...v0.2.0-45) (2022-01-06)
+
+
+### Build System 🏗
+
+* **package:** remove unused packages ([b1c1b6f](https://github.com/zyndex-drive/server/commit/b1c1b6fdba140bf074245fc6f835f4092d1125c6))
+
+
+### Bug Fixes 🛠
+
+* **models:** fix session model schema ([d743cb8](https://github.com/zyndex-drive/server/commit/d743cb8d93777321ed78ac4ef1ee729155686104))
+* **plugins/google:** fix function overloading typescript ([7217df1](https://github.com/zyndex-drive/server/commit/7217df1373e9da53c6780d7ebc0a496bc564c9d3))
+* **plugins/mail:** add default exports for mail plugin ([2476dab](https://github.com/zyndex-drive/server/commit/2476dab341626277261eaad8ed51e667527313ec))
+
+
+### Features 🔥
+
+* **plugins/jwt:** write jwt plugin for signing json web tokens ([80dde12](https://github.com/zyndex-drive/server/commit/80dde12e822dd267374ac21ae63c5795155fabe4))
+* **plugins/jwt:** write verify jwt function for decrypting and verifying jwts ([c7976ff](https://github.com/zyndex-drive/server/commit/c7976ff4892e446ec6c74318545306e2335529f5))
+* **plugins/session-manager:** write methods and function for session-manager plugin ([f886692](https://github.com/zyndex-drive/server/commit/f886692bd0e1cbd9a7ad0293bdbcfbab4dccbbb6))
+
 ## [0.2.0-44](https://github.com/zyndex-drive/server/compare/v0.2.0-43...v0.2.0-44) (2022-01-05)
 
 
