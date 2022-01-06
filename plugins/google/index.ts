@@ -6,11 +6,14 @@ import {
   googleApiRequest,
 } from './helpers';
 
+import { iam, drive } from './api';
+
 export {
   api as oauthAuthenticationApis,
   mimeArray,
   mimeTypes,
 } from './helpers';
+
 export { api as oauthRouteApis } from './routes';
 export { scopes as oauthScopes } from './api';
 
@@ -23,4 +26,9 @@ export const oauthHelpers = {
   constructFields,
   createJwtToken,
   googleApiRequest,
+};
+
+export default {
+  iam,
+  drive,
 };

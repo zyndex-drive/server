@@ -358,19 +358,16 @@ function resolveTokens(
   credentialID: ICredentials['_id'],
   scopes: TGoogleApiScope[],
 ): Promise<ITokenResolverSimple>;
-
 function resolveTokens(
   credentialID: ICredentials['_id'],
   scopes: TGoogleApiScope[],
   detailed: false,
 ): Promise<ITokenResolverSimple>;
-
 function resolveTokens(
   credentialID: ICredentials['_id'],
   scopes: TGoogleApiScope[],
   detailed: true,
 ): Promise<ITokenResolverDetailed>;
-
 /**
  * Resolves a Access Token for the Respective Google Credential ID (Incl. Service Accounts)
  *
