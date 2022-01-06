@@ -1,22 +1,20 @@
 import { EncryptJWT, importSPKI } from 'jose';
 
 import type { IUserDoc } from '@models/user/types';
-import type { errors } from 'jose';
+import type { errors, JWTPayload } from 'jose';
 
 /**
  * Generates a JWT using Private Key for a Particular User
  *
  * @param {IUserDoc} user - User Document from Database
+ * @param {Object} payload - Payload to Sign and Encrypt
  * @returns {Promise<string>} - Promise Resolving to JWT
  */
-export default function (user: IUserDoc): Promise<string> {
+export default function (user: IUserDoc, payload: JWTPayload): Promise<string> {
   return new Promise<string>((resolve, reject) => {
     const { PRIVATE_KEY } = process.env;
     if (PRIVATE_KEY) {
-      const payload = new EncryptJWT({
-        user_id: user._id,
-        user_email: user.email,
-      })
+      const jwtObject = new EncryptJWT(payload)
         .setProtectedHeader({
           alg: '',
           enc: '',
@@ -29,7 +27,7 @@ export default function (user: IUserDoc): Promise<string> {
 
       const algorithm = 'RS256';
       importSPKI(PRIVATE_KEY, algorithm)
-        .then((key) => payload.encrypt(key))
+        .then((key) => jwtObject.encrypt(key))
         .then(resolve)
         .catch((err: errors.JOSEError) => {
           reject(new Error(`${err.name}: ${err.message}`));
