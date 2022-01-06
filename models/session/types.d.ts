@@ -11,6 +11,7 @@ export interface ISession {
   frontend: ID<IFrontendDoc>;
   token_secret: string;
   issued_at: number;
+  expires_at: number;
 }
 
 export interface ISessionDoc extends ISession, Document {}
