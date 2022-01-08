@@ -4,6 +4,7 @@ import express from 'express';
 // Response Handlers
 import {
   okResponse,
+  createdResponse,
   badRequest,
   internalServerError,
 } from '@plugins/server/responses';
@@ -12,19 +13,33 @@ import {
 import { Credentials } from '@models';
 
 // Others
+import { EndpointGenerator } from '@plugins/server/generators';
 import { objectID, isUndefined } from '@plugins/misc';
 
 // Types
 import type { Error as MongoError } from 'mongoose';
-import type { ICredentials, ICredentialsDoc } from '@models/credential/types';
+import type { ICredentials, ICredentialsDoc } from '@models/types';
 import { IInlineResponse } from '@/types/inline.response';
-import { EndpointGenerator } from '@plugins/server/generators';
 
 // Router
 const router = express.Router();
 
+interface IRequestCredentials {
+  alias: string;
+  client_id: string;
+  client_secret: string;
+  redirect_uri: string;
+  email: string;
+}
+
 router.post('/add', (req, res) => {
-  const { alias, client_id, client_secret, redirect_uri, email } = req.body;
+  const {
+    alias,
+    client_id,
+    client_secret,
+    redirect_uri,
+    email,
+  }: IRequestCredentials = req.body;
   if (!isUndefined([alias, client_id, client_secret, redirect_uri, email])) {
     const newID = objectID('c');
     const newCredential: ICredentials = {
@@ -37,7 +52,7 @@ router.post('/add', (req, res) => {
     };
     Credentials.create(newCredential)
       .then((savedCreds) => {
-        okResponse<ICredentialsDoc>(res, savedCreds);
+        createdResponse<ICredentialsDoc>(res, savedCreds);
       })
       .catch((err: MongoError) => {
         internalServerError(res, err.name, err.message);
@@ -45,6 +60,16 @@ router.post('/add', (req, res) => {
   } else {
     badRequest(res, 'alias, client_id, client_secret, email', 'Request Body');
   }
+});
+
+router.post('/get', (req, res) => {
+  Credentials.find({})
+    .then((credentialDocs) => {
+      okResponse<ICredentialsDoc[]>(res, credentialDocs);
+    })
+    .catch((err: MongoError) => {
+      internalServerError(res, err.name, err.message);
+    });
 });
 
 router.post('/reset', (req, res) => {

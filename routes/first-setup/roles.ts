@@ -2,14 +2,18 @@
 import express from 'express';
 
 // Response Handlers
-import { okResponse, internalServerError } from '@plugins/server/responses';
+import {
+  okResponse,
+  createdResponse,
+  internalServerError,
+} from '@plugins/server/responses';
 
 // Model
 import { Roles } from '@models';
 
 // Types
 import type { Error as MongoError } from 'mongoose';
-import type { IRoleDoc } from '@models/role/types';
+import type { IRoleDoc } from '@models/types';
 import type { IInlineResponse } from '@typs/inline.response';
 
 // Others
@@ -40,11 +44,21 @@ router.post('/add', (req, res) => {
       'Some Internal Error Occured, Not all Records have been Added to Database',
     );
   } else {
-    okResponse<string>(
+    createdResponse<string>(
       res,
       'Successfully Posted all the Roles Details to Database',
     );
   }
+});
+
+router.post('/get', (req, res) => {
+  Roles.find({})
+    .then((roleDocs) => {
+      okResponse<IRoleDoc[]>(res, roleDocs);
+    })
+    .catch((err: MongoError) => {
+      internalServerError(res, err.name, err.message);
+    });
 });
 
 router.post('/status', (req, res) => {
