@@ -2,22 +2,21 @@
 import express from 'express';
 
 // Middlewares
-import { checkSecretPass } from '@plugins/server/middlewares';
-import setupCheck from '@plugins/server/middlewares/first-setup';
+import { checkSetupStatus, checkSecretPass } from '@plugins/server/middlewares';
 
 // Others
 import path from 'path';
+import { EndpointGenerator } from '@plugins/server/generators';
 
 // Routes
 import firstSetup from './first-setup';
 import login from './login';
-import { EndpointGenerator } from '@plugins/server/generators';
 
 // Router
 const router = express.Router();
 
 // Assign Main Routes
-router.use('/setup', [setupCheck, checkSecretPass], firstSetup);
+router.use('/setup', [checkSetupStatus, checkSecretPass], firstSetup);
 router.use('/login', login);
 
 // Default Get

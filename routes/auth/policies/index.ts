@@ -8,7 +8,7 @@ import { okResponse } from '@plugins/server/responses';
 import { map as policyMap } from '@plugins/templates/policies';
 
 // Types
-import type { IPolicy } from '@models/policy/types';
+import type { IPolicy } from '@models/types';
 import { EndpointGenerator } from '@plugins/server/generators';
 
 // Router
