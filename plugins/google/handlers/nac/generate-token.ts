@@ -6,7 +6,7 @@ import api from '@plugins/google/helpers/API';
 
 // Types
 import type { AxiosError } from 'axios';
-import type { ICredentialsDoc } from '@models/credential/types';
+import type { ICredentialsDoc } from '@models/types';
 import type { IGoogTokenResponse } from '@plugins/google/helpers/types';
 
 /**

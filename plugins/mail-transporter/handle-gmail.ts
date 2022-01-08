@@ -5,10 +5,9 @@ import {
 } from '@plugins/google';
 
 import type { TGoogleApiScope } from '@plugins/google/helpers/types';
-import type { ITokenDoc } from '@models/tokens/types';
 import type { IMailTokens } from './types';
 import type { Request, Response } from 'express';
-import { ICredentialsDoc } from '@models/credential/types';
+import { ITokenDoc, ICredentialsDoc } from '@models/types';
 
 const gmailScopes: TGoogleApiScope[] = ['https://mail.google.com/'];
 

@@ -2,8 +2,7 @@ import { Policies } from '@models';
 import { editDatainDatabase } from '@plugins/auth/helpers';
 import { policy as policyPolicies } from '@plugins/templates/policies';
 
-import type { IPolicyDoc, IPolicyModel } from '@models/policy/types';
-import type { IUserDoc } from '@models/user/types';
+import type { IPolicyDoc, IPolicyModel, IUserDoc } from '@models/types';
 
 /**
  * Edit Policies in the Database

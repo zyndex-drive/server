@@ -8,9 +8,12 @@ import { objectID } from '@plugins/misc';
 
 // Types
 import type { TGoogleApiScope } from '@plugins/google/helpers/types';
-import type { ICredentials, ICredentialsDoc } from '@models/credential/types';
-import type { ITokenDoc } from '@models/tokens/types';
-import type { IServiceAccDoc } from '@models/service-account/types';
+import type {
+  ICredentials,
+  ICredentialsDoc,
+  ITokenDoc,
+  IServiceAccDoc,
+} from '@models/types';
 import type { Error as MongoError } from 'mongoose';
 import type {
   ITokenResolverDetailed,

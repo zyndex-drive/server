@@ -6,7 +6,7 @@
  * Note: This Will be used only at the time of First Setup
  */
 
-import { IRole } from '@models/role/types';
+import { IRole } from '@models/types';
 import { objectID } from '@plugins/misc/uid';
 
 // policies

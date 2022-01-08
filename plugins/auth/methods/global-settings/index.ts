@@ -5,8 +5,8 @@ import { globalSettings as globalSettingsPolicies } from '@plugins/templates/pol
 import type {
   IGlobalSettingsDoc,
   IGlobalSettingsModel,
-} from '@models/global-setting/types';
-import type { IUserDoc } from '@models/user/types';
+  IUserDoc,
+} from '@models/types';
 
 /**
  * Edit GlobalSettings in the Database

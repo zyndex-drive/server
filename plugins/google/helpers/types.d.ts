@@ -1,7 +1,5 @@
 import type { GotReturn } from 'got';
-import type { ITokenDoc } from '@models/tokens/types';
-import type { IServiceAccDoc } from '@models/service-account/types';
-import type { ICredentialsDoc } from '@models/credential/types';
+import type { ICredentialsDoc, IServiceAccDoc, ITokenDoc } from '@models/types';
 
 export type TGoogleApiScope =
   | `https://www.googleapis.com/auth/${string}`

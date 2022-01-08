@@ -10,8 +10,8 @@ import type {
   ISMTPProvider,
   ISMTPProviderDoc,
   ISMTPProviderModel,
-} from '@models/smtp-provider/types';
-import type { IUserDoc } from '@models/user/types';
+  IUserDoc,
+} from '@models/types';
 
 /**
  * Add SMTPProviders in the Database

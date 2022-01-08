@@ -10,8 +10,8 @@ import type {
   IFrontend,
   IFrontendDoc,
   IFrontendModel,
-} from '@models/frontend/types';
-import type { IUserDoc } from '@models/user/types';
+  IUserDoc,
+} from '@models/types';
 
 /**
  * Add Frontends in the Database

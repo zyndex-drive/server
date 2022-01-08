@@ -2,9 +2,7 @@ import { objectID, generateOTP } from '@plugins/misc';
 import { Otps } from '@models';
 
 import type { Error as MongoError } from 'mongoose';
-import type { IUserDoc } from '@models/user/types';
-import type { IPendingUserDoc } from '@models/pending-user/types';
-import type { IOtpDoc } from '@models/otp/types';
+import type { IOtpDoc, IPendingUserDoc, IUserDoc } from '@models/types';
 
 /**
  * Generates a OTP and Saves it to Database for Future Verification

@@ -10,8 +10,8 @@ import type {
   ISMTPMailer,
   ISMTPMailerDoc,
   ISMTPMailerModel,
-} from '@models/smtp-mailer/types';
-import type { IUserDoc } from '@models/user/types';
+  IUserDoc,
+} from '@models/types';
 
 /**
  * Add SMTPMailers in the Database

@@ -5,7 +5,7 @@
  * @author Sudharshan TK
  */
 
-import type { IPolicy } from '@models/policy/types';
+import type { IPolicy } from '@models/types';
 import { objectID } from '@plugins/misc/uid';
 
 const CODE = 'usr';

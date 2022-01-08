@@ -5,7 +5,7 @@
  * @author Sudharshan TK
  */
 
-import { IPolicy } from '@models/policy/types';
+import { IPolicy } from '@models/types';
 import { objectID } from '@plugins/misc/uid';
 
 const CODE = 'smtppro';

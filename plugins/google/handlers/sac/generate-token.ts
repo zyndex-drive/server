@@ -6,7 +6,7 @@ import { api, createJwtToken } from '@plugins/google/helpers';
 
 // Types
 import type { AxiosError } from 'axios';
-import type { IServiceAccDoc } from '@models/service-account/types';
+import type { IServiceAccDoc } from '@models/types';
 import type {
   IGoogTokenResponse,
   TGoogleApiScope,

@@ -1,13 +1,15 @@
 import { createTransport } from 'nodemailer';
 
 import type { Transporter } from 'nodemailer';
-import type { ISMTPProviderDoc } from '@models/smtp-provider/types';
-import type { ISMTPMailerDoc } from '@models/smtp-mailer/types';
+import type {
+  IServiceAccDoc,
+  ICredentialsDoc,
+  ITokenDoc,
+  ISMTPMailerDoc,
+  ISMTPProviderDoc,
+} from '@models/types';
 import type SMTPPool from 'nodemailer/lib/smtp-pool';
 import type SMTPTransport from 'nodemailer/lib/smtp-transport';
-import type { ITokenDoc } from '@models/tokens/types';
-import type { ICredentialsDoc } from '@models/credential/types';
-import type { IServiceAccDoc } from '@models/service-account/types';
 
 interface IGMAILOptions {
   type: 'service' | 'normal';

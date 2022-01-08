@@ -3,13 +3,13 @@ import { BlacklistUsers, Users } from '@models';
 import { users as UserPolicies } from '@plugins/templates/policies';
 import { checkPolicy } from '@plugins/auth/helpers';
 
-import type { IScopeDoc } from '@models/scope/types';
-import type { IPolicy } from '@models/policy/types';
-import type { IUserDoc } from '@models/user/types';
 import type {
+  IScopeDoc,
+  IPolicy,
+  IUserDoc,
   IBlacklistedUser,
   IBlacklistedUserDoc,
-} from '@models/blacklisted-user/types';
+} from '@models/types';
 
 /**
  * Blacklists a User for a Particular Scope

@@ -37,4 +37,13 @@ export default {
           reject(new Error(`${err.name}: ${err.message}`));
         });
     }),
+  reset: (): Promise<void> =>
+    new Promise<void>((resolve, reject) => {
+      mongoose.connection
+        .dropDatabase()
+        .then(resolve)
+        .catch((err: MongoError) => {
+          reject(new Error(`${err.name}: ${err.message}`));
+        });
+    }),
 };

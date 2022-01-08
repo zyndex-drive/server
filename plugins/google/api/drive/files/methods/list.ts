@@ -9,7 +9,7 @@ import fields from '@plugins/google/api/drive/files/fields';
 import { constructFields } from '@plugins/google/helpers';
 
 // Types
-import type { ITokenDoc } from '@models/tokens/types';
+import type { ITokenDoc } from '@models/types';
 import type { IGoogleResponse } from '@plugins/google/helpers/types';
 import type { TDriveUrlType } from '@plugins/google/api/drive/types';
 import type {

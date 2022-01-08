@@ -3,9 +3,7 @@ import { Sessions } from '@models';
 import { generateJWT } from '@plugins/json-web-token';
 
 import type { Request } from 'express';
-import type { IUserDoc } from '@models/user/types';
-import type { IFrontendDoc } from '@models/frontend/types';
-import type { ISessionDoc } from '@/models/session/types';
+import type { ISessionDoc, IFrontendDoc, IUserDoc } from '@models/types';
 import type { JWTPayload } from 'jose';
 
 /**

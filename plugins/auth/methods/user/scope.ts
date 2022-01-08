@@ -2,9 +2,7 @@ import { users as UserPolicies } from '@plugins/templates/policies';
 import modifyUser from './modify';
 
 import type { ID } from '@typs/model.objectid';
-import type { IUserDoc } from '@models/user/types';
-import type { IScopeDoc } from '@models/scope/types';
-import type { IRoleDoc } from '@models/role/types';
+import type { IRoleDoc, IScopeDoc, IUserDoc } from '@models/types';
 
 interface IModifiedScopes {
   roles: {

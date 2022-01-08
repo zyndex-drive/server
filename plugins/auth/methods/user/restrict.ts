@@ -1,7 +1,7 @@
 import { users as UserPolicies } from '@plugins/templates/policies';
 import modifyUser from './modify';
 
-import type { IUserDoc } from '@models/user/types';
+import type { IUserDoc } from '@models/types';
 
 interface IUserRestrict {
   restricted: boolean;

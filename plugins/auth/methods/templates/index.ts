@@ -10,8 +10,8 @@ import type {
   ITemplate,
   ITemplateDoc,
   ITemplateModel,
-} from '@models/templates/types';
-import type { IUserDoc } from '@models/user/types';
+  IUserDoc,
+} from '@models/types';
 
 /**
  * Add Templates in the Database

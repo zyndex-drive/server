@@ -1,6 +1,6 @@
 import { EncryptJWT, importSPKI } from 'jose';
 
-import type { IUserDoc } from '@models/user/types';
+import type { IUserDoc } from '@models/types';
 import type { errors, JWTPayload } from 'jose';
 
 /**

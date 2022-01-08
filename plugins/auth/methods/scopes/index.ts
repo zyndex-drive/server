@@ -6,8 +6,7 @@ import {
 } from '@plugins/auth/helpers';
 import { scopes as scopePolicies } from '@plugins/templates/policies';
 
-import type { IScope, IScopeDoc, IScopeModel } from '@models/scope/types';
-import type { IUserDoc } from '@models/user/types';
+import type { IScope, IScopeDoc, IScopeModel, IUserDoc } from '@models/types';
 
 /**
  * Add Scopes in the Database

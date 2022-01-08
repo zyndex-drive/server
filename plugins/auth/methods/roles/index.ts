@@ -6,8 +6,7 @@ import {
 } from '@plugins/auth/helpers';
 import { credentials as credentialPolicies } from '@plugins/templates/policies';
 
-import type { IRole, IRoleDoc, IRoleModel } from '@models/role/types';
-import type { IUserDoc } from '@models/user/types';
+import type { IRole, IRoleDoc, IRoleModel, IUserDoc } from '@models/types';
 
 /**
  * Add Roles in the Database

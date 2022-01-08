@@ -6,7 +6,7 @@
  * Note: This Will be used only at the time of First Setup
  */
 
-import { IGlobalSettings } from '@models/global-setting/types';
+import { IGlobalSettings } from '@models/types';
 import { objectID } from '@plugins/misc/uid';
 
 export const userRequests = (flag: boolean): Readonly<IGlobalSettings> => ({

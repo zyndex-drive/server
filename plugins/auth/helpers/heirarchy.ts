@@ -2,7 +2,7 @@
 import dotProp from 'dot-prop';
 import mathjs from 'mathjs';
 
-import type { IRoleDoc } from '@models/role/types';
+import type { IRoleDoc } from '@models/types';
 
 export const heirarchy = {
   Viewer: 0,

@@ -10,8 +10,8 @@ import type {
   IServiceAcc,
   IServiceAccDoc,
   IServiceAccModel,
-} from '@models/service-account/types';
-import type { IUserDoc } from '@models/user/types';
+  IUserDoc,
+} from '@models/types';
 
 /**
  * Add ServiceAccs in the Database
