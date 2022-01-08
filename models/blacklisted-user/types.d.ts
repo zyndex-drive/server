@@ -1,8 +1,6 @@
 import type { Document } from 'mongoose';
 import type { IBaseModel } from '../types';
-import type { IRoleDoc } from '@models/role/types';
-import type { IUserDoc } from '@models/user/types';
-import type { IScopeDoc } from '@models/scope/types';
+import type { IScopeDoc, IUserDoc, IRoleDoc } from '@models/types';
 import type { ID } from '@typs/model.objectid';
 
 export interface IBlacklistedUser {

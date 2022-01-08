@@ -1,7 +1,6 @@
 import type { Document, Types } from 'mongoose';
 import type { IBaseModel } from '../types';
-import type { IUserDoc } from '@models/user/types';
-import type { IFrontendDoc } from '@models/frontend/types';
+import type { IFrontendDoc, IUserDoc } from '@models/types';
 import type { ID } from '@typs/model.objectid';
 
 export interface ISession {

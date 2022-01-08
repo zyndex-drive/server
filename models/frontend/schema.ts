@@ -24,14 +24,12 @@ const schema = new Schema<IFrontendDoc, IFrontendModel, IFrontend>({
         },
         flag: {
           type: String || Boolean || Number,
-          required: true,
         },
       },
     ],
     default_mailer: {
       type: Schema.Types.ObjectId,
       ref: 'SMTPMailer',
-      required: false,
     },
     disallowed_roles: {
       type: Schema.Types.ObjectId,

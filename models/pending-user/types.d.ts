@@ -1,7 +1,6 @@
 import type { Document, Types } from 'mongoose';
 import type { IBaseModel } from '../types';
-import type { IRoleDoc } from '@models/role/types';
-import type { IScopeDoc } from '@models/scope/types';
+import type { IScopeDoc, IRoleDoc } from '@models/types';
 import type { ID } from '@typs/model.objectid';
 
 export interface IPendingUser {
