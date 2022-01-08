@@ -1,6 +1,6 @@
 import type { Document, Types } from 'mongoose';
 import type { IBaseModel } from '../types';
-import type { ICredentialsDoc } from '@models/credential/types';
+import type { ICredentialsDoc } from '@models/types';
 import type { ID } from '@typs/model.objectid';
 
 export interface IServiceAcc {

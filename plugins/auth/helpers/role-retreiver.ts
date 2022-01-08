@@ -2,7 +2,7 @@ import { Roles } from '@models';
 
 import type { Error as MongoError } from 'mongoose';
 import type { ID } from '@typs/model.objectid';
-import type { IRoleDoc } from '@models/role/types';
+import type { IRoleDoc } from '@models/types';
 
 /**
  * Retreive Role Documents from Database

@@ -6,7 +6,7 @@ import { googleApiRequest } from '@plugins/google/helpers';
 
 // Types
 import type { GotReturn } from 'got';
-import type { ITokenDoc } from '@models/tokens/types';
+import type { ITokenDoc } from '@models/types';
 import type { TDriveUrlType } from '@plugins/google/api/drive/types';
 
 /**

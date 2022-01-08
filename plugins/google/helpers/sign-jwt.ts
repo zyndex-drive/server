@@ -7,7 +7,7 @@ import { stringizeScope } from '@plugins/google/helpers';
 
 // Types
 import type { TGoogleApiScope } from '@plugins/google/helpers/types';
-import type { IServiceAccDoc } from '@models/service-account/types';
+import type { IServiceAccDoc } from '@models/types';
 
 const crypto = new Crypto();
 const subtleCrypto = crypto.subtle;

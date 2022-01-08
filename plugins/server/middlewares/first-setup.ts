@@ -27,21 +27,25 @@ import {
   ICredentials,
   ICredentialsDoc,
   ICredentialsModel,
-} from '@models/credential/types';
-import {
   IFrontend,
   IFrontendDoc,
   IFrontendModel,
-} from '@models/frontend/types';
-import { IUser, IUserDoc, IUserModel } from '@models/user/types';
-import { IScope, IScopeDoc, IScopeModel } from '@models/scope/types';
-import {
+  IUser,
+  IUserDoc,
+  IUserModel,
+  IScope,
+  IScopeDoc,
+  IScopeModel,
   IGlobalSettings,
   IGlobalSettingsDoc,
   IGlobalSettingsModel,
-} from '@models/global-setting/types';
-import { IRole, IRoleDoc, IRoleModel } from '@models/role/types';
-import { IPolicy, IPolicyDoc, IPolicyModel } from '@models/policy/types';
+  IRole,
+  IRoleDoc,
+  IRoleModel,
+  IPolicy,
+  IPolicyDoc,
+  IPolicyModel,
+} from '@models/types';
 
 /**
  * Checks the Given DB whether it has any Doc Present and if map is Present, Checks with the map length

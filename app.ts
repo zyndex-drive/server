@@ -1,13 +1,8 @@
 // Initialization
 import dotenv from 'dotenv';
 
-// Server
-import server from '@plugins/server';
-
-// Database
-import mongoose from 'mongoose';
-import type { Error as mongoError } from 'mongoose';
-import db from '@plugins/db';
+// Import Server and Database
+import { server, db } from '@plugins';
 
 // Health Check Service
 import { healthCheckService } from '@plugins/server/helpers';
@@ -27,16 +22,11 @@ try {
 
     // Connect to Datbase
     db.connect()
-      .then((mongo: typeof mongoose | boolean) => {
-        if (mongo) {
-          console.log('Database Connected');
-        } else {
-          console.log('No Database Url is Found in Environment Variables');
-          server.close();
-        }
+      .then(() => {
+        console.log('Database Connected');
       })
-      .catch((err: mongoError) => {
-        console.log(`${err.name}: ${err.message}`);
+      .catch((err: string) => {
+        console.log(err);
         server.close();
       });
   });

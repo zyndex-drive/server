@@ -1,7 +1,6 @@
 import type { Document, Types } from 'mongoose';
 import type { IBaseModel } from '../types';
-import type { IGlobalSettingsDoc } from '@models/global-setting/types';
-import type { IPolicyDoc } from '@models/policy/types';
+import type { IPolicyDoc, IGlobalSettingsDoc } from '@models/types';
 import type { ID } from '@typs/model.objectid';
 import type { IInlineResponse } from '@typs/inline.response';
 

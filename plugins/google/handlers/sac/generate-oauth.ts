@@ -8,8 +8,7 @@ import { generateAccessToken } from '@plugins/google/handlers/sac/generate-token
 
 // Types
 import type { Error as MongoError } from 'mongoose';
-import type { IServiceAccDoc } from '@models/service-account/types';
-import type { IToken, ITokenDoc } from '@models/tokens/types';
+import type { IToken, ITokenDoc, IServiceAccDoc } from '@models/types';
 import type {
   IGoogTokenResponse,
   TGoogleApiScope,

@@ -1,7 +1,7 @@
 import { Policies } from '@models';
 
 import type { Error as MongoError } from 'mongoose';
-import type { IPolicy, IPolicyDoc } from '@models/policy/types';
+import type { IPolicy, IPolicyDoc } from '@models/types';
 
 /**
  * Retreive Policy Documents from Database

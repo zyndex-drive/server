@@ -1,8 +1,7 @@
 import { Users } from '@models';
 import { checkPolicy } from '@plugins/auth/helpers';
 
-import type { IUserDoc } from '@models/user/types';
-import type { IPolicy } from '@models/policy/types';
+import type { IPolicy, IUserDoc } from '@models/types';
 
 /**
  * Place / Remove Restriction from a User

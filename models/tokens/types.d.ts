@@ -1,8 +1,7 @@
 import type { Document, Types } from 'mongoose';
 import type { IBaseModel } from '../types';
 import type { ID } from '@typs/model.objectid';
-import type { ICredentialsDoc } from '@models/credential/types';
-import type { IServiceAccDoc } from '@models/service-account/types';
+import type { IServiceAccDoc, ICredentialsDoc } from '@models/types';
 
 export interface IToken {
   _id: Types.ObjectId;

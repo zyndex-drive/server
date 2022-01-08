@@ -5,7 +5,7 @@ import api from '@plugins/google/api/drive/files/API';
 import { googleApiRequest } from '@plugins/google/helpers';
 
 // Types
-import type { ITokenDoc } from '@models/tokens/types';
+import type { ITokenDoc } from '@models/types';
 import type { IGoogleResponse } from '@plugins/google/helpers/types';
 import type { TDriveUrlType } from '@plugins/google/api/drive/types';
 

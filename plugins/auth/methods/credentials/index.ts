@@ -10,8 +10,8 @@ import type {
   ICredentials,
   ICredentialsDoc,
   ICredentialsModel,
-} from '@models/credential/types';
-import type { IUserDoc } from '@models/user/types';
+  IUserDoc,
+} from '@models/types';
 
 /**
  * Add Credentials in the Database

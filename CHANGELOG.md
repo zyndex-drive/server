@@ -2,6 +2,89 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-46](https://github.com/zyndex-drive/server/compare/v0.2.0-45...v0.2.0-46) (2022-01-08)
+
+
+### Features 🔥
+
+* **routes/setup:** completely scaffold setup api routes ([9d17424](https://github.com/zyndex-drive/server/commit/9d174246fec9115d29dc6197580b2e19a8fd4774))
+
+
+### Code Refactoring 🖌
+
+* **app:** refactor imports ([988d62e](https://github.com/zyndex-drive/server/commit/988d62ea61cb145619455ecd09376b090a45f39f))
+* **models:** fix every models's type imports ([37f4e8a](https://github.com/zyndex-drive/server/commit/37f4e8a7a8e5e7778b6a8e19615480c2ad48aced))
+* **plugins:** add default imports and exports for many plugins ([e316646](https://github.com/zyndex-drive/server/commit/e316646244e6c920bd730ae214aac1931207cfba))
+* **plugins:** fix every plugin's model type imports ([4094721](https://github.com/zyndex-drive/server/commit/4094721d903e094ba8be47c6df99c1b2ffa690a1))
+* **routes:** fix model type imports ([3dbe285](https://github.com/zyndex-drive/server/commit/3dbe285e0a7939c0196508cef371e9cac358db03))
+
+## [0.2.0-45](https://github.com/zyndex-drive/server/compare/v0.2.0-44...v0.2.0-45) (2022-01-06)
+
+
+### Build System 🏗
+
+* **package:** remove unused packages ([b1c1b6f](https://github.com/zyndex-drive/server/commit/b1c1b6fdba140bf074245fc6f835f4092d1125c6))
+
+
+### Bug Fixes 🛠
+
+* **models:** fix session model schema ([d743cb8](https://github.com/zyndex-drive/server/commit/d743cb8d93777321ed78ac4ef1ee729155686104))
+* **plugins/google:** fix function overloading typescript ([7217df1](https://github.com/zyndex-drive/server/commit/7217df1373e9da53c6780d7ebc0a496bc564c9d3))
+* **plugins/mail:** add default exports for mail plugin ([2476dab](https://github.com/zyndex-drive/server/commit/2476dab341626277261eaad8ed51e667527313ec))
+
+
+### Features 🔥
+
+* **plugins/jwt:** write jwt plugin for signing json web tokens ([80dde12](https://github.com/zyndex-drive/server/commit/80dde12e822dd267374ac21ae63c5795155fabe4))
+* **plugins/jwt:** write verify jwt function for decrypting and verifying jwts ([c7976ff](https://github.com/zyndex-drive/server/commit/c7976ff4892e446ec6c74318545306e2335529f5))
+* **plugins/session-manager:** write methods and function for session-manager plugin ([f886692](https://github.com/zyndex-drive/server/commit/f886692bd0e1cbd9a7ad0293bdbcfbab4dccbbb6))
+
+## [0.2.0-44](https://github.com/zyndex-drive/server/compare/v0.2.0-43...v0.2.0-44) (2022-01-05)
+
+
+### Bug Fixes 🛠
+
+* **models:** fix smtp provider schema by adding dkim details ([4f10408](https://github.com/zyndex-drive/server/commit/4f10408e2147cf79582cd2a5c37541107bf62134))
+* **plugins/google:** add more google api scopes for more control over api ([83f7e3a](https://github.com/zyndex-drive/server/commit/83f7e3a02ddbc1e2bb7d0c1ecc5fc359e400e5b7))
+
+
+### Features 🔥
+
+* **plugins/google:** refactor and introduce function overloads for solving conditional return types ([7406494](https://github.com/zyndex-drive/server/commit/7406494cb0f6eed25164bdb0a06d5f6b047714ad))
+* **plugins/mail:** add functions for mail-transporter plugin with nodemailer ([7f3da72](https://github.com/zyndex-drive/server/commit/7f3da7287d946c2e50ddd4304adac8ad2a3ac6e6))
+
+
+### Build System 🏗
+
+* **eslint:** add support for function overloading in ts ([751df21](https://github.com/zyndex-drive/server/commit/751df21b5ec72e51445c94e4f4a06bb1b367b939))
+
+## [0.2.0-43](https://github.com/zyndex-drive/server/compare/v0.2.0-42...v0.2.0-43) (2022-01-04)
+
+
+### Code Refactoring 🖌
+
+* **plugins:** add default model import and exports ([1daceae](https://github.com/zyndex-drive/server/commit/1daceaecfc56344364bee288e0bc85f0eda21050))
+
+
+### Features 🔥
+
+* **models:** add otp model to verify users using otp ([7272e24](https://github.com/zyndex-drive/server/commit/7272e24ac6d9091c1cfce26f4e0247bb6097d3cc))
+* **plugins/mail-transporter:** write mail transporter plugin ([b946374](https://github.com/zyndex-drive/server/commit/b9463744449f8c5ca96d1cf985ba914a700d9154))
+* **plugins/otp:** write otp generator plugins ([0de1f94](https://github.com/zyndex-drive/server/commit/0de1f940f25df60c1c8c34f7b97b2f2a1728db49))
+
+## [0.2.0-42](https://github.com/zyndex-drive/server/compare/v0.2.0-41...v0.2.0-42) (2022-01-04)
+
+
+### Code Refactoring 🖌
+
+* **models:** add template model exports ([77d45eb](https://github.com/zyndex-drive/server/commit/77d45eba584e1a555acb138f3cd8e93058da7090))
+
+
+### Features 🔥
+
+* **plugins/auth:** write auth functions for all the policies ([7faf8b4](https://github.com/zyndex-drive/server/commit/7faf8b4d40f680b082d7d3bfada8fc27850f6b8e))
+* **plugins/templates:** add policies for templates ([a147255](https://github.com/zyndex-drive/server/commit/a147255431952a3853bf5da25f3b83d75670fcca))
+
 ## [0.2.0-41](https://github.com/zyndex-drive/server/compare/v0.2.0-40...v0.2.0-41) (2021-12-31)
 
 

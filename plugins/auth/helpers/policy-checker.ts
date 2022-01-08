@@ -5,11 +5,14 @@ import {
   getHighestHeirarchy as getHighestHeir,
 } from './heirarchy';
 
-import type { IUserDoc } from '@models/user/types';
-import type { IPendingUserDoc } from '@models/pending-user/types';
-import type { IRoleDoc } from '@models/role/types';
-import type { IPolicy, IPolicyDoc } from '@models/policy/types';
-import type { IScopeDoc } from '@models/scope/types';
+import type {
+  IScopeDoc,
+  IPolicy,
+  IPolicyDoc,
+  IRoleDoc,
+  IPendingUserDoc,
+  IUserDoc,
+} from '@models/types';
 import type { ID } from '@typs/model.objectid';
 import type { Error as MongoError } from 'mongoose';
 

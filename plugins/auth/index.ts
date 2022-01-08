@@ -1,7 +1,29 @@
-import { user } from './methods';
+import {
+  users,
+  credentials,
+  frontends,
+  globalSettings,
+  policies,
+  roles,
+  scopes,
+  serviceAccs,
+  smtpMailer,
+  smtpProvider,
+  templates,
+} from './methods';
 
+export * from './methods';
 export * from './helpers';
-export * from './methods/user';
 export default {
-  user,
+  users,
+  credentials,
+  frontends,
+  globalSettings,
+  policies,
+  roles,
+  scopes,
+  serviceAccs,
+  smtpMailer,
+  smtpProvider,
+  templates,
 };

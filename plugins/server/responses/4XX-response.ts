@@ -28,15 +28,30 @@ export function badRequest(
  * Send a Unauthorized Response to Client
  *
  * @param {Response} res - Express Response Object
- * @param {string} message - Message to be Sent along with Unauthorized Response
+ * @param {string} message - Error message to be Sent
  */
 export function unAuthorized(res: Response, message: string): void {
   const result: IErrorResponse = {
-    status: 403,
-    errorname: 'UnAuthorized',
+    status: 401,
+    errorname: 'Unauthorized',
     message,
   };
-  sendResponse<IErrorResponse>(res, 400, result);
+  sendResponse<IErrorResponse>(res, 401, result);
+}
+
+/**
+ * Send a Forbidden Response to Client
+ *
+ * @param {Response} res - Express Response Object
+ * @param {string} message - Message to be Sent along with Forbidden Response
+ */
+export function Forbidden(res: Response, message: string): void {
+  const result: IErrorResponse = {
+    status: 403,
+    errorname: 'Forbidden',
+    message,
+  };
+  sendResponse<IErrorResponse>(res, 403, result);
 }
 
 /**
@@ -51,5 +66,5 @@ export function notFound(res: Response, message: string): void {
     errorname: 'Not Found',
     message,
   };
-  sendResponse<IErrorResponse>(res, 400, result);
+  sendResponse<IErrorResponse>(res, 404, result);
 }

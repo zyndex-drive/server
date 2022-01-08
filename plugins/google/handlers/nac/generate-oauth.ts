@@ -22,8 +22,7 @@ import {
 // Types
 import type { Request, Response } from 'express';
 import type { Error as MongoError } from 'mongoose';
-import type { ICredentialsDoc } from '@models/credential/types';
-import type { IToken, ITokenDoc } from '@models/tokens/types';
+import type { IToken, ITokenDoc, ICredentialsDoc } from '@models/types';
 import type {
   IGoogTokenResponse,
   TGoogleApiScope,

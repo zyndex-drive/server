@@ -8,7 +8,7 @@ import { okResponse } from '@plugins/server/responses';
 import { map as rolesMap } from '@plugins/templates/roles';
 
 // Types
-import type { IRole } from '@models/role/types';
+import type { IRole } from '@models/types';
 import { EndpointGenerator } from '@plugins/server/generators';
 
 // Router

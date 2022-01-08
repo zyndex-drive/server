@@ -5,6 +5,7 @@ export interface ISMTPProvider {
   _id: Types.ObjectId;
   name: string;
   alias: string;
+  type: string & ('gmail' | 'others');
   smtp: {
     url: string;
     port: number;
@@ -14,6 +15,10 @@ export interface ISMTPProvider {
     port: number;
   };
   dkim_key?: string | undefined;
+  dkim_options?: {
+    domain: string;
+    key_selector: string;
+  };
 }
 
 export interface ISMTPProviderDoc extends ISMTPProvider, Document {}

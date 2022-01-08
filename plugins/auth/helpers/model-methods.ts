@@ -1,7 +1,6 @@
 import { checkPolicy } from '@plugins/auth/helpers';
 
-import type { IPolicy } from '@models/policy/types';
-import type { IUserDoc } from '@models/user/types';
+import type { IPolicy, IUserDoc } from '@models/types';
 import type { Model, Document, UpdateQuery } from 'mongoose';
 
 /**

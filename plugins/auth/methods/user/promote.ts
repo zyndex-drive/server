@@ -2,11 +2,13 @@ import { PendingUsers, Users } from '@models';
 import { users as UserPolicies } from '@plugins/templates/policies';
 import { checkPolicy } from '@plugins/auth/helpers';
 
-import type { IPendingUserDoc } from '@models/pending-user/types';
-import type { IRoleDoc } from '@models/role/types';
-import type { IPolicy } from '@models/policy/types';
-import type { IUserDoc } from '@models/user/types';
-import type { IScopeDoc } from '@models/scope/types';
+import type {
+  IScopeDoc,
+  IUserDoc,
+  IPolicy,
+  IRoleDoc,
+  IPendingUserDoc,
+} from '@models/types';
 
 /**
  * Accept a User as a Particular Role for the Particular Scope

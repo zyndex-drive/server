@@ -1,16 +1,18 @@
 import type { Document, Types } from 'mongoose';
 import type { IBaseModel } from '../types';
-import type { IGlobalSettingsDoc } from '@models/global-setting/types';
-import type { ISMTPMailerDoc } from '@models/smtp-mailer/types';
-import type { IRoleDoc } from '@models/role/types';
-import type { IPolicyDoc } from '@models/policy/types';
+import type {
+  IPolicyDoc,
+  IRoleDoc,
+  ISMTPMailerDoc,
+  IGlobalSettingsDoc,
+} from '@models/types';
 import type { ID } from '@typs/model.objectid';
 
 export interface IFrontend {
   _id: Types.ObjectId;
   domain: string;
   name: string;
-  settings: {
+  settings?: {
     specifics: {
       setting: ID<IGlobalSettingsDoc>;
       flag: boolean | string | number;

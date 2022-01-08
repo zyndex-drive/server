@@ -2,8 +2,7 @@ import { users as UserPolicies } from '@plugins/templates/policies';
 import modifyUser from './modify';
 
 import type { ID } from '@typs/model.objectid';
-import type { IUserDoc } from '@models/user/types';
-import type { IPolicyDoc } from '@models/policy/types';
+import type { IPolicyDoc, IUserDoc } from '@models/types';
 
 interface IModifiedPolicies {
   allowed_policies?: ID<IPolicyDoc>[];

@@ -1,7 +1,7 @@
 /* eslint-disable quote-props */
 
 // Import Axios
-import axios from '@plugins/axios';
+import { axios } from '@plugins';
 import got from 'got';
 
 // Others
@@ -11,7 +11,7 @@ import serialize from 'query-string';
 import type { IGoogleRequest, IGoogleResponse } from './types';
 import type { AxiosError, AxiosResponse } from 'axios';
 import type { GotReturn } from 'got';
-import type { ITokenDoc } from '@models/tokens/types';
+import type { ITokenDoc } from '@models/types';
 
 /**
  * Constructs a Google API Request URL with Params
