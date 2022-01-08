@@ -1,11 +1,8 @@
 // Initialization
 import dotenv from 'dotenv';
 
-// Server
-import server from '@plugins/server';
-
-// Database
-import db from '@plugins/db';
+// Import Server and Database
+import { server, db } from '@plugins';
 
 // Health Check Service
 import { healthCheckService } from '@plugins/server/helpers';
