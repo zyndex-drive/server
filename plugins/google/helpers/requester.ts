@@ -1,7 +1,7 @@
 /* eslint-disable quote-props */
 
 // Import Axios
-import axios from '@plugins/axios';
+import { axios } from '@plugins';
 import got from 'got';
 
 // Others

@@ -6,8 +6,7 @@ import mongoSanitize from 'express-mongo-sanitize';
 import xssProtect from 'x-xss-protection';
 
 // Middlewares
-import dbChecker from '@plugins/server/middlewares/dbchecker';
-import cors from '@plugins/server/middlewares/cors';
+import { dbChecker, cors } from '@plugins/server/middlewares';
 
 // Router
 import router from '@routes';

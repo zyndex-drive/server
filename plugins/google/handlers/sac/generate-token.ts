@@ -1,5 +1,5 @@
 // Axios
-import axios from '@plugins/axios';
+import { axios } from '@plugins';
 
 // Others
 import { api, createJwtToken } from '@plugins/google/helpers';

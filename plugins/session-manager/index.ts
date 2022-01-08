@@ -1,2 +1,10 @@
-export { default as createSession } from './create-session';
-export { default as verifySession } from './verify-session';
+import CreateSession from './create-session';
+import VerifySession from './verify-session';
+
+export const createSession = CreateSession;
+export const verifySession = VerifySession;
+
+export default {
+  createSession: CreateSession,
+  verifySession: VerifySession,
+};
