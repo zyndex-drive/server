@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-46](https://github.com/zyndex-drive/server/compare/v0.2.0-45...v0.2.0-46) (2022-01-08)
+
+
+### Features 🔥
+
+* **routes/setup:** completely scaffold setup api routes ([9d17424](https://github.com/zyndex-drive/server/commit/9d174246fec9115d29dc6197580b2e19a8fd4774))
+
+
+### Code Refactoring 🖌
+
+* **app:** refactor imports ([988d62e](https://github.com/zyndex-drive/server/commit/988d62ea61cb145619455ecd09376b090a45f39f))
+* **models:** fix every models's type imports ([37f4e8a](https://github.com/zyndex-drive/server/commit/37f4e8a7a8e5e7778b6a8e19615480c2ad48aced))
+* **plugins:** add default imports and exports for many plugins ([e316646](https://github.com/zyndex-drive/server/commit/e316646244e6c920bd730ae214aac1931207cfba))
+* **plugins:** fix every plugin's model type imports ([4094721](https://github.com/zyndex-drive/server/commit/4094721d903e094ba8be47c6df99c1b2ffa690a1))
+* **routes:** fix model type imports ([3dbe285](https://github.com/zyndex-drive/server/commit/3dbe285e0a7939c0196508cef371e9cac358db03))
+
 ## [0.2.0-45](https://github.com/zyndex-drive/server/compare/v0.2.0-44...v0.2.0-45) (2022-01-06)
 
 
