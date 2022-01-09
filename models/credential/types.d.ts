@@ -1,4 +1,4 @@
-import type { Document, Types } from 'mongoose';
+import type { Document, Types, LeanDocument } from 'mongoose';
 import type { IBaseModel } from '../types';
 
 export interface ICredentials {
@@ -21,3 +21,5 @@ export interface ICredentialsModel extends IBaseModel<ICredentialsDoc> {
    */
   checkID: (this: ICredentialsModel, id: Types.ObjectId) => Promise<boolean>;
 }
+
+export type ICredentialsLeanDoc = LeanDocument<ICredentialsDoc>;

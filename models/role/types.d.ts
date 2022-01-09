@@ -1,4 +1,4 @@
-import type { Document, Types } from 'mongoose';
+import type { Document, Types, LeanDocument } from 'mongoose';
 import type { IBaseModel } from '../types';
 import type { IPolicyDoc, IGlobalSettingsDoc } from '@models/types';
 import type { ID } from '@typs/model.objectid';
@@ -31,3 +31,5 @@ export interface IRoleModel extends IBaseModel<IRoleDoc> {
    */
   mapCheck: (this: IRoleModel) => Promise<IInlineResponse<boolean>>;
 }
+
+export type IRoleLeanDoc = LeanDocument<IRoleDoc>;

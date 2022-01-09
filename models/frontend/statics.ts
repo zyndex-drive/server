@@ -2,7 +2,7 @@ import { clearCollection } from '@plugins/db/statics';
 
 // Types
 import type { IFrontendDoc, IFrontendModel } from './types';
-import type { Schema } from 'mongoose';
+import type { Schema, LeanDocument } from 'mongoose';
 import type { IInlineResponse } from '@typs/inline.response';
 
 /**
@@ -25,8 +25,8 @@ export function clearAll(
  */
 export async function getFrontendUrls(
   this: IFrontendModel,
-): Promise<IFrontendDoc[]> {
-  return this.find({}, '_id domain name');
+): Promise<LeanDocument<IFrontendDoc>[]> {
+  return this.find({}, '_id domain name').lean().exec();
 }
 
 /**

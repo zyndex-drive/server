@@ -1,4 +1,4 @@
-import type { Document, Types } from 'mongoose';
+import type { Document, Types, LeanDocument } from 'mongoose';
 import type { IBaseModel } from '../types';
 import type { ID } from '@typs/model.objectid';
 import type { IServiceAccDoc, ICredentialsDoc } from '@models/types';
@@ -21,3 +21,5 @@ export interface IToken {
 export interface ITokenDoc extends IToken, Document {}
 
 export interface ITokenModel extends IBaseModel<ITokenDoc> {}
+
+export type ITokenLeanDoc = LeanDocument<ITokenDoc>;

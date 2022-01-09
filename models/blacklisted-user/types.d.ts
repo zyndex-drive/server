@@ -1,4 +1,4 @@
-import type { Document } from 'mongoose';
+import type { Document, LeanDocument } from 'mongoose';
 import type { IBaseModel } from '../types';
 import type { IScopeDoc, IUserDoc, IRoleDoc } from '@models/types';
 import type { ID } from '@typs/model.objectid';
@@ -19,3 +19,5 @@ export interface IBlacklistedUserDoc extends IBlacklistedUser, Document {}
 
 export interface IBlacklistedUserModel
   extends IBaseModel<IBlacklistedUserDoc> {}
+
+export type IBlacklistedUserLeanDoc = LeanDocument<IBlacklistedUserDoc>;

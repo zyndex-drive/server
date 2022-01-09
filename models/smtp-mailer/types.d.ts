@@ -1,4 +1,4 @@
-import type { Document, Types } from 'mongoose';
+import type { Document, Types, LeanDocument } from 'mongoose';
 import type { IBaseModel } from '../types';
 import type { ISMTPProviderDoc } from '@models/types';
 import type { ID } from '@typs/model.objectid';
@@ -16,3 +16,5 @@ export interface ISMTPMailer {
 export interface ISMTPMailerDoc extends ISMTPMailer, Document {}
 
 export interface ISMTPMailerModel extends IBaseModel<ISMTPMailerDoc> {}
+
+export type ISMTPMailerLeanDoc = LeanDocument<ISMTPMailerDoc>;

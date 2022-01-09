@@ -1,4 +1,4 @@
-import type { Document, Types } from 'mongoose';
+import type { Document, Types, LeanDocument } from 'mongoose';
 import type { IBaseModel } from '../types';
 import type { IInlineResponse } from '@types/inline.response';
 
@@ -20,3 +20,5 @@ export interface IPolicyModel extends IBaseModel<IPolicyDoc> {
    */
   mapCheck: (this: IPolicyModel) => Promise<IInlineResponse<boolean>>;
 }
+
+export type IPolicyLeanDoc = LeanDocument<IPolicyDoc>;

@@ -1,4 +1,4 @@
-import type { Document, Types } from 'mongoose';
+import type { Document, Types, LeanDocument } from 'mongoose';
 import type { IBaseModel } from '../types';
 import type { IScopeDoc, IRoleDoc } from '@models/types';
 import type { ID } from '@typs/model.objectid';
@@ -22,3 +22,5 @@ export interface IPendingUser {
 export interface IPendingUserDoc extends IPendingUser, Document {}
 
 export interface IPendingUserModel extends IBaseModel<IPendingUserDoc> {}
+
+export type IPendingUserLeanDoc = LeanDocument<IPendingUserDoc>;

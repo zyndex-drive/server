@@ -1,4 +1,4 @@
-import type { Document, Types } from 'mongoose';
+import type { Document, Types, LeanDocument } from 'mongoose';
 import type { IBaseModel } from '../types';
 import type { IUserDoc } from '@models/types';
 import type { ID } from '@typs/model.objectid';
@@ -17,3 +17,5 @@ export interface IOtp {
 export interface IOtpDoc extends IOtp, Document {}
 
 export interface IOtpModel extends IBaseModel<IOtpDoc> {}
+
+export type IOtpLeanDoc = LeanDocument<IOtpDoc>;

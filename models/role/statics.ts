@@ -31,6 +31,8 @@ export function mapCheck(this: IRoleModel): Promise<IInlineResponse<boolean>> {
       error: null,
     };
     this.find({})
+      .lean()
+      .exec()
       .then((docs) => {
         const roleMatches: boolean[] = [];
         result.success = true;

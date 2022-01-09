@@ -1,4 +1,4 @@
-import type { Document, Types } from 'mongoose';
+import type { Document, Types, LeanDocument } from 'mongoose';
 import type { IBaseModel } from '../types';
 import type { IFrontendDoc, IUserDoc } from '@models/types';
 import type { ID } from '@typs/model.objectid';
@@ -16,3 +16,5 @@ export interface ISession {
 export interface ISessionDoc extends ISession, Document {}
 
 export interface ISessionModel extends IBaseModel<ISessionDoc> {}
+
+export type ISessionLeanDoc = LeanDocument<ISessionDoc>;

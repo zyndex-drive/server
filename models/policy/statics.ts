@@ -33,6 +33,8 @@ export function mapCheck(
       error: null,
     };
     this.find({})
+      .lean()
+      .exec()
       .then((docs) => {
         const policyMatches: boolean[] = [];
         result.success = true;

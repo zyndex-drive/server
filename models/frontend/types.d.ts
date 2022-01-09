@@ -1,4 +1,4 @@
-import type { Document, Types } from 'mongoose';
+import type { Document, Types, LeanDocument } from 'mongoose';
 import type { IBaseModel } from '../types';
 import type {
   IPolicyDoc,
@@ -32,5 +32,9 @@ export interface IFrontendModel extends IBaseModel<IFrontendDoc> {
    *
    * @returns {IFrontendDoc[]} list of frontend Data
    */
-  getFrontendUrls: (this: IFrontendModel) => Promise<IFrontendDoc[]>;
+  getFrontendUrls: (
+    this: IFrontendModel,
+  ) => Promise<LeanDocument<IFrontendDoc>[]>;
 }
+
+export type IFrontendLeanDoc = LeanDocument<IFrontendDoc>;

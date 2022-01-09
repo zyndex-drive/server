@@ -14,6 +14,11 @@ const schema = new Schema<
   _id: {
     type: Schema.Types.ObjectId,
   },
+  code: {
+    type: String,
+    unique: true,
+    required: true,
+  },
   name: {
     type: String,
     required: true,

@@ -1,4 +1,4 @@
-import type { Document, Types } from 'mongoose';
+import type { Document, Types, LeanDocument } from 'mongoose';
 import type { IBaseModel } from '../types';
 import type { ICredentialsDoc } from '@models/types';
 import type { ID } from '@typs/model.objectid';
@@ -21,3 +21,5 @@ export interface IServiceAcc {
 export interface IServiceAccDoc extends IServiceAcc, Document {}
 
 export interface IServiceAccModel extends IBaseModel<IServiceAccDoc> {}
+
+export type IServiceAccLeanDoc = LeanDocument<IServiceAccDoc>;
