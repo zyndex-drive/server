@@ -19,7 +19,7 @@ import { generateUID, objectID, isUndefined } from '@plugins/misc';
 
 // Types
 import { Error as MongoError } from 'mongoose';
-import { IUser, IUserDoc } from '@models/types';
+import { IUser, IUserLeanDoc } from '@models/types';
 import { IInlineResponse } from '@typs/inline.response';
 
 const router = express.Router();
@@ -36,6 +36,8 @@ interface IRequestUserData {
 
 router.post('/add', (req, res) => {
   Users.find({})
+    .lean()
+    .exec()
     .then((userDocs) => {
       if (userDocs.length > 0) {
         okResponse<string>(res, 'Only one Owner can be Added in the Database');
@@ -43,10 +45,12 @@ router.post('/add', (req, res) => {
         const { name, email, avatar, password }: IRequestUserData = req.body;
         if (!isUndefined([name, email, password])) {
           Scopes.find({})
+            .lean()
+            .exec()
             .then((scopeDocs) =>
               Promise.all([
                 scopeDocs,
-                Roles.findOne({ type: 'main', name: 'Owner' }),
+                Roles.findOne({ type: 'main', name: 'Owner' }).lean().exec(),
               ]),
             )
             .then(([scopeDocs, roleDoc]) => {
@@ -74,7 +78,7 @@ router.post('/add', (req, res) => {
                 newUserDoc
                   .save()
                   .then((userDoc) => {
-                    createdResponse<IUserDoc>(res, userDoc);
+                    createdResponse<IUserLeanDoc>(res, userDoc.toObject());
                   })
                   .catch((err: MongoError) => {
                     internalServerError(res, err.name, err.message);
@@ -98,8 +102,10 @@ router.post('/add', (req, res) => {
 
 router.post('/get', (req, res) => {
   Users.find({})
+    .lean()
+    .exec()
     .then((userDocs) => {
-      okResponse<IUserDoc[]>(res, userDocs);
+      okResponse<IUserLeanDoc[]>(res, userDocs);
     })
     .catch((err: MongoError) => {
       internalServerError(res, err.name, err.message);

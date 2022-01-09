@@ -18,7 +18,7 @@ import { objectID, isUndefined } from '@plugins/misc';
 
 // Types
 import type { Error as MongoError } from 'mongoose';
-import type { IToken, ITokenDoc } from '@models/types';
+import type { IToken, ITokenLeanDoc } from '@models/types';
 import { IInlineResponse } from '@/types/inline.response';
 
 // Router
@@ -56,7 +56,7 @@ router.post('/add', (req, res) => {
           };
           Tokens.create(newToken)
             .then((newTokenDoc) => {
-              createdResponse<ITokenDoc>(res, newTokenDoc);
+              createdResponse<ITokenLeanDoc>(res, newTokenDoc.toObject());
             })
             .catch((err: MongoError) => {
               internalServerError(res, err.name, err.message);
@@ -77,8 +77,10 @@ router.post('/add', (req, res) => {
 
 router.post('/get', (req, res) => {
   Tokens.find({})
+    .lean()
+    .exec()
     .then((frontendDocs) => {
-      okResponse<ITokenDoc[]>(res, frontendDocs);
+      okResponse<ITokenLeanDoc[]>(res, frontendDocs);
     })
     .catch((err: MongoError) => {
       internalServerError(res, err.name, err.message);

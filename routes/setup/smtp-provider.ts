@@ -18,7 +18,7 @@ import { objectID, isUndefined } from '@plugins/misc';
 
 // Types
 import type { Error as MongoError } from 'mongoose';
-import type { ISMTPProvider, ISMTPProviderDoc } from '@models/types';
+import type { ISMTPProvider, ISMTPProviderLeanDoc } from '@models/types';
 import { IInlineResponse } from '@/types/inline.response';
 
 // Router
@@ -52,7 +52,10 @@ router.post('/add', (req, res) => {
     };
     SMTPProviders.create(newSmtpProvider)
       .then((newSmtpProviderDoc) => {
-        createdResponse<ISMTPProviderDoc>(res, newSmtpProviderDoc);
+        createdResponse<ISMTPProviderLeanDoc>(
+          res,
+          newSmtpProviderDoc.toObject(),
+        );
       })
       .catch((err: MongoError) => {
         internalServerError(res, err.name, err.message);
@@ -64,8 +67,10 @@ router.post('/add', (req, res) => {
 
 router.post('/get', (req, res) => {
   SMTPProviders.find({})
+    .lean()
+    .exec()
     .then((smtpProviderDocs) => {
-      okResponse<ISMTPProviderDoc[]>(res, smtpProviderDocs);
+      okResponse<ISMTPProviderLeanDoc[]>(res, smtpProviderDocs);
     })
     .catch((err: MongoError) => {
       internalServerError(res, err.name, err.message);

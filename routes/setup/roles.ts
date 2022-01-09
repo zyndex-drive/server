@@ -13,7 +13,7 @@ import { Roles } from '@models';
 
 // Types
 import type { Error as MongoError } from 'mongoose';
-import type { IRoleDoc } from '@models/types';
+import type { IRoleLeanDoc } from '@models/types';
 import type { IInlineResponse } from '@typs/inline.response';
 
 // Others
@@ -24,37 +24,24 @@ import { EndpointGenerator } from '@plugins/server/generators';
 const router = express.Router();
 
 router.post('/add', (req, res) => {
-  const docs: IRoleDoc[] = [];
-  const pushedStatus: boolean[] = [];
-  rolesMap.forEach((role) => {
-    Roles.create(role)
-      .then((doc) => {
-        docs.push(doc);
-        pushedStatus.push(true);
-      })
-      .catch((err) => {
-        console.log(err);
-        pushedStatus.push(false);
-      });
-  });
-  if (pushedStatus.includes(false)) {
-    internalServerError(
-      res,
-      'Database',
-      'Some Internal Error Occured, Not all Records have been Added to Database',
-    );
-  } else {
-    createdResponse<string>(
-      res,
-      'Successfully Posted all the Roles Details to Database',
-    );
-  }
+  Roles.create(rolesMap)
+    .then(() =>
+      createdResponse<string>(
+        res,
+        'Successfully Posted all the Roles Details to Database',
+      ),
+    )
+    .catch((err: MongoError) => {
+      internalServerError(res, err.name, err.message);
+    });
 });
 
 router.post('/get', (req, res) => {
   Roles.find({})
+    .lean()
+    .exec()
     .then((roleDocs) => {
-      okResponse<IRoleDoc[]>(res, roleDocs);
+      okResponse<IRoleLeanDoc[]>(res, roleDocs);
     })
     .catch((err: MongoError) => {
       internalServerError(res, err.name, err.message);

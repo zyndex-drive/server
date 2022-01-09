@@ -30,7 +30,7 @@ import { EndpointGenerator } from '@plugins/server/generators';
 // Types
 import { Response } from 'express';
 import { Error as MongoError } from 'mongoose';
-import { IGlobalSettings, IGlobalSettingsDoc } from '@models/types';
+import { IGlobalSettings, IGlobalSettingsLeanDoc } from '@models/types';
 
 const router = express.Router();
 
@@ -39,7 +39,7 @@ const savenSendit = (res: Response, globalSetting: IGlobalSettings) => {
   newGlobalSetting
     .save()
     .then((globalSettingDoc) => {
-      createdResponse(res, globalSettingDoc);
+      createdResponse<IGlobalSettingsLeanDoc>(res, globalSettingDoc.toObject());
     })
     .catch((err: MongoError) => {
       internalServerError(res, err.name, err.message);
@@ -133,8 +133,10 @@ router.post('/smtp-provider', (req, res) => {
 
 router.post('/get', (req, res) => {
   GlobalSettings.find({})
+    .lean()
+    .exec()
     .then((globalSettingDocs) => {
-      okResponse<IGlobalSettingsDoc[]>(res, globalSettingDocs);
+      okResponse<IGlobalSettingsLeanDoc[]>(res, globalSettingDocs);
     })
     .catch((err: MongoError) => {
       internalServerError(res, err.name, err.message);

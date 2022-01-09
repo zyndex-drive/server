@@ -18,7 +18,7 @@ import { objectID, isUndefined } from '@plugins/misc';
 
 // Types
 import type { Error as MongoError } from 'mongoose';
-import type { ICredentials, ICredentialsDoc } from '@models/types';
+import type { ICredentials, ICredentialsLeanDoc } from '@models/types';
 import { IInlineResponse } from '@/types/inline.response';
 
 // Router
@@ -52,7 +52,7 @@ router.post('/add', (req, res) => {
     };
     Credentials.create(newCredential)
       .then((savedCreds) => {
-        createdResponse<ICredentialsDoc>(res, savedCreds);
+        createdResponse<ICredentialsLeanDoc>(res, savedCreds.toObject());
       })
       .catch((err: MongoError) => {
         internalServerError(res, err.name, err.message);
@@ -64,9 +64,11 @@ router.post('/add', (req, res) => {
 
 router.post('/get', (req, res) => {
   Credentials.find({})
-    .then((credentialDocs) => {
-      okResponse<ICredentialsDoc[]>(res, credentialDocs);
-    })
+    .lean()
+    .exec()
+    .then((credentialDocs) =>
+      okResponse<ICredentialsLeanDoc[]>(res, credentialDocs),
+    )
     .catch((err: MongoError) => {
       internalServerError(res, err.name, err.message);
     });
