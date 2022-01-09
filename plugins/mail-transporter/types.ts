@@ -1,10 +1,14 @@
-import type { ITokenDoc, IServiceAccDoc, ICredentialsDoc } from '@models/types';
+import type {
+  ITokenLeanDoc,
+  IServiceAccLeanDoc,
+  ICredentialsDoc,
+} from '@models/types';
 
 export interface IMailTokens {
   credentials: ICredentialsDoc;
   tokens: {
-    refresh: ITokenDoc[];
-    access: ITokenDoc[];
+    refresh: ITokenLeanDoc[];
+    access: ITokenLeanDoc[];
   };
-  service_account?: IServiceAccDoc[];
+  service_account?: IServiceAccLeanDoc[];
 }

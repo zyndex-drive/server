@@ -9,7 +9,9 @@ import type {
   IScopeDoc,
   IPolicy,
   IPolicyDoc,
+  IPolicyLeanDoc,
   IRoleDoc,
+  IRoleLeanDoc,
   IPendingUserDoc,
   IUserDoc,
 } from '@models/types';
@@ -26,7 +28,7 @@ const convertObjectID = (idArray: ID<IPolicyDoc>[]): string[] => {
   return convertedArr;
 };
 
-const checkGlobalFlags = (policyDocs: IPolicyDoc[]): Promise<boolean> =>
+const checkGlobalFlags = (policyDocs: IPolicyLeanDoc[]): Promise<boolean> =>
   new Promise<boolean>((resolve, reject) => {
     const flags: boolean[] = [];
     policyDocs.forEach((policy, index) => {
@@ -46,7 +48,7 @@ const checkGlobalFlags = (policyDocs: IPolicyDoc[]): Promise<boolean> =>
   });
 
 const checkPolicyArray = (
-  policyDocs: IPolicyDoc[],
+  policyDocs: IPolicyLeanDoc[],
   userPolicies: string[],
 ): Promise<IPolicyChecker[]> =>
   new Promise<IPolicyChecker[]>((resolve, reject) => {
@@ -77,7 +79,7 @@ const checkPolicyArray = (
   });
 
 interface IDeeperRoles {
-  roleDoc: IRoleDoc;
+  roleDoc: IRoleLeanDoc;
   allowedPolicies: ID<IPolicyDoc>[];
 }
 
@@ -91,7 +93,9 @@ export const getDeeperRoles = (
     let userPolicies: ID<IPolicyDoc>[] = otherPolicies ? otherPolicies : [];
     while (userType !== 'main') {
       Roles.findById(roleId)
-        .then((roleDoc: IRoleDoc | null) => {
+        .lean()
+        .exec()
+        .then((roleDoc) => {
           if (roleDoc) {
             userType = roleDoc.type;
             userPolicies = [...roleDoc.allowed_policies, ...userPolicies];

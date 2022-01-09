@@ -12,7 +12,8 @@ import type {
   ICredentials,
   ICredentialsDoc,
   ITokenDoc,
-  IServiceAccDoc,
+  ITokenLeanDoc,
+  IServiceAccLeanDoc,
 } from '@models/types';
 import type { Error as MongoError } from 'mongoose';
 import type {
@@ -29,6 +30,8 @@ const handleCredential = (
     if (credential) {
       const response: IGetAllTokens = { credential };
       ServiceAccs.find({ related_to: credential._id })
+        .lean()
+        .exec()
         .then((serviceAccs) => {
           response.serviceAcc = serviceAccs;
           const serviceAccountIds = serviceAccs.map((account) => account._id);
@@ -40,7 +43,7 @@ const handleCredential = (
           };
           return tokenFindParam;
         })
-        .then((searchParam) => Tokens.find(searchParam))
+        .then((searchParam) => Tokens.find(searchParam).lean().exec())
         .then((tokens) => {
           if (tokens.length > 0) {
             const normalAccessTokens = tokens.filter(
@@ -96,17 +99,17 @@ function getAllTokens(
 }
 
 interface IValidityCheck {
-  token: ITokenDoc;
+  token: ITokenLeanDoc;
   validity: boolean;
 }
 
 /**
  * Checks Validity of Tokens
  *
- * @param {ITokenDoc[]} tokens - Array of Token Documents from Database
+ * @param {ITokenLeanDoc[]} tokens - Array of Token Documents from Database
  * @returns {IValidityCheck} - tokens Array with Validity
  */
-function checkValidity(tokens: ITokenDoc[]): IValidityCheck[] {
+function checkValidity(tokens: ITokenLeanDoc[]): IValidityCheck[] {
   const validityArray = tokens.map((token) => {
     /** To be future proof, Checking all Tokens which are Expiring within 15 minutes */
     const currentTime = Date.now() + 15 * 60 * 1000;
@@ -126,9 +129,9 @@ function checkValidity(tokens: ITokenDoc[]): IValidityCheck[] {
 /**
  * Deletes Tokens from Database
  *
- * @param {ITokenDoc[]} tokens - Array of Token Documents from Database
+ * @param {ITokenLeanDoc[]} tokens - Array of Token Documents from Database
  */
-function deleteInvalidTokens(tokens: ITokenDoc[]): Promise<void> {
+function deleteInvalidTokens(tokens: ITokenLeanDoc[]): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     const tokenDeleteParam = tokens.map((token) => token._id);
     Tokens.deleteMany({ _id: { $in: tokenDeleteParam } })
@@ -150,7 +153,7 @@ function deleteInvalidTokens(tokens: ITokenDoc[]): Promise<void> {
 function generateNormalTokenSave(
   credentials: ICredentialsDoc,
   scopes: TGoogleApiScope[],
-  refreshToken: ITokenDoc,
+  refreshToken: ITokenLeanDoc,
 ): Promise<ITokenDoc> {
   return new Promise<ITokenDoc>((resolve, reject) => {
     generateNormalAccessToken(credentials, refreshToken.token)
@@ -176,12 +179,12 @@ function generateNormalTokenSave(
 /**
  * Generates a Access Token for Service Account and Saves it to Database
  *
- * @param {IServiceAccDoc} account - Service Account Document from Database
+ * @param {IServiceAccLeanDoc} account - Service Account Document from Database
  * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
  * @returns {Promise<ITokenDoc>} - Generated Access Token
  */
 function generateServiceTokenSave(
-  account: IServiceAccDoc,
+  account: IServiceAccLeanDoc,
   scopes: TGoogleApiScope[],
 ): Promise<ITokenDoc> {
   return new Promise<ITokenDoc>((resolve, reject) => {
@@ -215,8 +218,8 @@ function generateServiceTokenSave(
 function serviceAccountTokenHandler(
   tokenData: IGetAllTokens,
   scopes: TGoogleApiScope[],
-): Promise<ITokenDoc[] | false> {
-  return new Promise<ITokenDoc[] | false>((resolve, reject) => {
+): Promise<ITokenLeanDoc[] | false> {
+  return new Promise<ITokenLeanDoc[] | false>((resolve, reject) => {
     const { serviceAcc } = tokenData;
     if (serviceAcc) {
       const { tokens } = tokenData;

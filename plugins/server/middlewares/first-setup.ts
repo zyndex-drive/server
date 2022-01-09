@@ -59,9 +59,9 @@ async function checkDBPresent<INTERFACE, DOC, MODEL extends Model<DOC>>(
   map?: Readonly<INTERFACE>[],
 ): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
-    const collections = db.find({}).exec();
+    const collections = db.find({}).lean().exec();
     collections
-      .then((result: DOC[]) => {
+      .then((result) => {
         if (result) {
           if (result.length > 0) {
             if (map) {

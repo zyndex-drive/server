@@ -7,7 +7,7 @@ import { stringizeScope } from '@plugins/google/helpers';
 
 // Types
 import type { TGoogleApiScope } from '@plugins/google/helpers/types';
-import type { IServiceAccDoc } from '@models/types';
+import type { IServiceAccLeanDoc } from '@models/types';
 
 const crypto = new Crypto();
 const subtleCrypto = crypto.subtle;
@@ -108,12 +108,12 @@ async function createSignature(
 /**
  * Creates a JWT Token for a Service Account to Generate Access Token
  *
- * @param {IServiceAccDoc} serviceAccount - ServiceAccount Document from Database
+ * @param {IServiceAccLeanDoc} serviceAccount - ServiceAccount Document from Database
  * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
  * @returns {string} - JWT Signature for the Service Account
  */
 export default function (
-  serviceAccount: IServiceAccDoc,
+  serviceAccount: IServiceAccLeanDoc,
   scopes: TGoogleApiScope[],
 ): Promise<string> {
   return new Promise<string>((resolve, reject) => {

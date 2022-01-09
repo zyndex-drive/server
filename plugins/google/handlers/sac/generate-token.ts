@@ -6,7 +6,7 @@ import { api, createJwtToken } from '@plugins/google/helpers';
 
 // Types
 import type { AxiosError } from 'axios';
-import type { IServiceAccDoc } from '@models/types';
+import type { IServiceAccLeanDoc } from '@models/types';
 import type {
   IGoogTokenResponse,
   TGoogleApiScope,
@@ -33,12 +33,12 @@ function constructTokenRequestURL(jwtSignature: string): {
 /**
  * Requests a Token Response from Google Servers for Generating Access Token for Service Account
  *
- * @param {IServiceAccDoc} account - Service Account Document from Database
+ * @param {IServiceAccLeanDoc} account - Service Account Document from Database
  * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
  * @returns {Promise<IGoogTokenResponse>} - Returns Token Response
  */
 function tokenRequest<TokenType>(
-  account: IServiceAccDoc,
+  account: IServiceAccLeanDoc,
   scopes: TGoogleApiScope[],
 ): Promise<TokenType> {
   return new Promise<TokenType>((resolve, reject) => {
@@ -71,12 +71,12 @@ function tokenRequest<TokenType>(
 /**
  * Generates a Access Token for Service Account
  *
- * @param {IServiceAccDoc} account - Service Account Document from Database
+ * @param {IServiceAccLeanDoc} account - Service Account Document from Database
  * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
  * @returns {Promise<IGoogTokenResponse>} - Access Token Response
  */
 export function generateAccessToken(
-  account: IServiceAccDoc,
+  account: IServiceAccLeanDoc,
   scopes: TGoogleApiScope[],
 ): Promise<IGoogTokenResponse> {
   return tokenRequest<IGoogTokenResponse>(account, scopes);

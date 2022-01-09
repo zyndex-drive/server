@@ -1,16 +1,19 @@
 import { EncryptJWT, importSPKI } from 'jose';
 
-import type { IUserDoc } from '@models/types';
+import type { IUserLeanDoc } from '@models/types';
 import type { errors, JWTPayload } from 'jose';
 
 /**
  * Generates a JWT using Private Key for a Particular User
  *
- * @param {IUserDoc} user - User Document from Database
+ * @param {IUserLeanDoc} user - User Document from Database
  * @param {Object} payload - Payload to Sign and Encrypt
  * @returns {Promise<string>} - Promise Resolving to JWT
  */
-export default function (user: IUserDoc, payload: JWTPayload): Promise<string> {
+export default function (
+  user: IUserLeanDoc,
+  payload: JWTPayload,
+): Promise<string> {
   return new Promise<string>((resolve, reject) => {
     const { PRIVATE_KEY } = process.env;
     if (PRIVATE_KEY) {

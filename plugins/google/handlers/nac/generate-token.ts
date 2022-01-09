@@ -6,20 +6,20 @@ import api from '@plugins/google/helpers/API';
 
 // Types
 import type { AxiosError } from 'axios';
-import type { ICredentialsDoc } from '@models/types';
+import type { ICredentialsLeanDoc } from '@models/types';
 import type { IGoogTokenResponse } from '@plugins/google/helpers/types';
 
 /**
  * Constructs Google Oauth Token Exchange URL
  *
- * @param {ICredentialsDoc} credentials - Credentials Document from Database
+ * @param {ICredentialsLeanDoc} credentials - Credentials Document from Database
  * @param {string} type - Type of Token to Generate (refresh_token or access_token)
  * @param {string} code - Authorization Code or Refresh Token
  * @param {string} scopes - Space Delimited Google Oauth Scopes
  * @returns {object} - Returns URL and Param in a Object
  */
 function constructTokenRequestURL(
-  credentials: ICredentialsDoc,
+  credentials: ICredentialsLeanDoc,
   type: string,
   code: string,
   scopes?: string,
@@ -42,14 +42,14 @@ function constructTokenRequestURL(
  * Requests a Token Response from Google Servers for Generating Access / Refresh Tokens
  *
  * @param {string} type - Type of Token to Generate (refresh_token or access_token)
- * @param {ICredentialsDoc} credentials - Credentials Doc from Database
+ * @param {ICredentialsLeanDoc} credentials - Credentials Doc from Database
  * @param {string} code - Authorization Code or Refresh Token
  * @param {string} scopes - Space Delimited Google API Scopes
  * @returns {Promise<IGoogTokenResponse>} - Returns Token Response
  */
 function tokenRequest<TokenType>(
   type: string,
-  credentials: ICredentialsDoc,
+  credentials: ICredentialsLeanDoc,
   code: string,
   scopes?: string,
 ): Promise<TokenType> {
@@ -82,13 +82,13 @@ function tokenRequest<TokenType>(
 /**
  * Generates a Refresh token with Authorization code
  *
- * @param {ICredentialsDoc} credentials - Credentials Document from Database
+ * @param {ICredentialsLeanDoc} credentials - Credentials Document from Database
  * @param {string} scopes - Space Delimited Google API Scopes
  * @param {string} code - Authorization Code Received after User Authorization
  * @returns {Promise<Required<IGoogTokenResponse>>} - Refresh Token Response
  */
 export function generateRefreshToken(
-  credentials: ICredentialsDoc,
+  credentials: ICredentialsLeanDoc,
   scopes: string,
   code: string,
 ): Promise<Required<IGoogTokenResponse>> {
@@ -103,12 +103,12 @@ export function generateRefreshToken(
 /**
  * Generates a Access Token with Refresh Token
  *
- * @param {ICredentialsDoc} credentials - Credentials Document from Database
+ * @param {ICredentialsLeanDoc} credentials - Credentials Document from Database
  * @param {string} code - Refresh Token
  * @returns {Promise<IGoogTokenResponse>} - Access Token Response
  */
 export function generateAccessToken(
-  credentials: ICredentialsDoc,
+  credentials: ICredentialsLeanDoc,
   code: string,
 ): Promise<IGoogTokenResponse> {
   return tokenRequest<IGoogTokenResponse>('access_token', credentials, code);

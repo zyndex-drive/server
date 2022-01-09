@@ -1,5 +1,10 @@
 import type { GotReturn } from 'got';
-import type { ICredentialsDoc, IServiceAccDoc, ITokenDoc } from '@models/types';
+import type {
+  ICredentialsDoc,
+  IServiceAccLeanDoc,
+  ITokenDoc,
+  ITokenLeanDoc,
+} from '@models/types';
 
 export type TGoogleApiScope =
   | `https://www.googleapis.com/auth/${string}`
@@ -7,28 +12,28 @@ export type TGoogleApiScope =
 
 export interface IGetAllTokens {
   credential: ICredentialsDoc;
-  serviceAcc?: IServiceAccDoc[];
+  serviceAcc?: IServiceAccLeanDoc[];
   tokens?: {
     access: {
-      normal: ITokenDoc[];
-      service?: ITokenDoc[];
+      normal: ITokenLeanDoc[];
+      service?: ITokenLeanDoc[];
     };
-    refresh: ITokenDoc[];
+    refresh: ITokenLeanDoc[];
   };
 }
 
 export interface ITokenResolverDetailed {
   credentials: ICredentialsDoc;
   tokens: {
-    refresh: ITokenDoc[];
-    access: ITokenDoc[];
+    refresh: ITokenLeanDoc[];
+    access: ITokenLeanDoc[];
   };
-  service_account?: IServiceAccDoc[];
+  service_account?: IServiceAccLeanDoc[];
 }
 
 export interface ITokenResolverSimple {
   credentials: ICredentialsDoc;
-  tokens: ITokenDoc[];
+  tokens: ITokenLeanDoc[];
 }
 
 export interface IGoogTokenResponse {

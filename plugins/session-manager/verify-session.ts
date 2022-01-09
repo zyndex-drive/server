@@ -16,6 +16,8 @@ export default function (
 ): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
     Sessions.findById(sessionId)
+      .lean()
+      .exec()
       .then((sessionDoc) => {
         if (sessionDoc) {
           const { token_secret: savedToken } = sessionDoc;

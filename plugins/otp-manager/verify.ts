@@ -15,6 +15,8 @@ export default function (
 ): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
     Otps.findOne({ user_email: userEmail })
+      .lean()
+      .exec()
       .then((otpDoc) => {
         if (otpDoc) {
           const otp = otpDoc.otp;

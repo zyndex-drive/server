@@ -2,7 +2,7 @@
 import dotProp from 'dot-prop';
 import mathjs from 'mathjs';
 
-import type { IRoleDoc } from '@models/types';
+import type { IRoleDoc, IRoleLeanDoc } from '@models/types';
 
 export const heirarchy = {
   Viewer: 0,
@@ -14,10 +14,12 @@ export const heirarchy = {
 export const getHeirarchy = (roleDoc: IRoleDoc): number | undefined =>
   dotProp.get(heirarchy, `${roleDoc.name}`);
 
-export const getHighestHeirarchy = (roleDocs: IRoleDoc[]): Promise<IRoleDoc> =>
-  new Promise<IRoleDoc>((resolve, reject) => {
+export const getHighestHeirarchy = (
+  roleDocs: IRoleLeanDoc[],
+): Promise<IRoleLeanDoc> =>
+  new Promise<IRoleLeanDoc>((resolve, reject) => {
     try {
-      const heirarchies: { heirarchy: number; doc: IRoleDoc }[] = [];
+      const heirarchies: { heirarchy: number; doc: IRoleLeanDoc }[] = [];
       roleDocs.forEach((role, index) => {
         const heir: number | undefined = dotProp.get(heirarchy, `${role.name}`);
         if (heir && heir !== undefined) {
@@ -51,8 +53,8 @@ export const getHighestHeirarchy = (roleDocs: IRoleDoc[]): Promise<IRoleDoc> =>
  * @returns {boolean} - true/false
  */
 export function heirarchyChecker(
-  adminRole: IRoleDoc,
-  userRole: IRoleDoc,
+  adminRole: IRoleLeanDoc,
+  userRole: IRoleLeanDoc,
 ): boolean {
   const adminHeirarchy: number | undefined = dotProp.get(
     heirarchy,

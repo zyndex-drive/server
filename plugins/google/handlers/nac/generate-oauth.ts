@@ -22,7 +22,7 @@ import {
 // Types
 import type { Request, Response } from 'express';
 import type { Error as MongoError } from 'mongoose';
-import type { IToken, ITokenDoc, ICredentialsDoc } from '@models/types';
+import type { IToken, ITokenDoc, ICredentialsLeanDoc } from '@models/types';
 import type {
   IGoogTokenResponse,
   TGoogleApiScope,
@@ -31,13 +31,13 @@ import type {
 /**
  * Constructs Google Oauth Authorization URL
  *
- * @param {ICredentialsDoc} credentials - Credentials Document from Database
+ * @param {ICredentialsLeanDoc} credentials - Credentials Document from Database
  * @param {TGoogleApiScope[]} scopes - Array of Google Oauth Scopes
  * @param {string} state - State of the app to be passed
  * @returns {string} - Google Oauth User Consent URL
  */
 function constructOauthURL(
-  credentials: ICredentialsDoc,
+  credentials: ICredentialsLeanDoc,
   scopes: TGoogleApiScope[],
   state: string,
 ): string {
@@ -63,7 +63,9 @@ function redirectUser(
   scopes: TGoogleApiScope[],
 ): void {
   Credentials.findById(id)
-    .then((credentials: ICredentialsDoc | null) => {
+    .lean()
+    .exec()
+    .then((credentials) => {
       if (credentials) {
         const state = encrypt.str(String(credentials._id));
         const url = constructOauthURL(credentials, scopes, state);
@@ -80,14 +82,14 @@ function redirectUser(
 /**
  * Saves the Refresh Token and Access Token in the Database for Long Term Use
  *
- * @param {ICredentialsDoc} credentials - Credentials Document from Database
+ * @param {ICredentialsLeanDoc} credentials - Credentials Document from Database
  * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
  * @param {IGoogTokenResponse} refreshToken - Refresh Token Response
  * @param {IGoogTokenResponse} accessToken - Access Token Response
  * @returns {Promise<ITokenDoc[]>} - Saved Token Documents
  */
 function handleTokenSaving(
-  credentials: ICredentialsDoc,
+  credentials: ICredentialsLeanDoc,
   scopes: TGoogleApiScope[],
   refreshToken: Required<IGoogTokenResponse>,
   accessToken: IGoogTokenResponse,
@@ -140,7 +142,9 @@ function handleUserAuthorization(
   scopes: TGoogleApiScope[],
 ) {
   Credentials.findById(id)
-    .then(async (credentials: ICredentialsDoc | null) => {
+    .lean()
+    .exec()
+    .then(async (credentials) => {
       if (credentials) {
         const scopeParam = stringizeScopes(scopes);
         try {

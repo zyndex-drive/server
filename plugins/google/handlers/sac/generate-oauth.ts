@@ -8,7 +8,7 @@ import { generateAccessToken } from '@plugins/google/handlers/sac/generate-token
 
 // Types
 import type { Error as MongoError } from 'mongoose';
-import type { IToken, ITokenDoc, IServiceAccDoc } from '@models/types';
+import type { IToken, ITokenDoc, IServiceAccLeanDoc } from '@models/types';
 import type {
   IGoogTokenResponse,
   TGoogleApiScope,
@@ -17,13 +17,13 @@ import type {
 /**
  * Saves the Access Token in the Database for Long Term Use
  *
- * @param {IServiceAccDoc} account - Credentials Document from Database
+ * @param {IServiceAccLeanDoc} account - Credentials Document from Database
  * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
  * @param {IGoogTokenResponse} accessToken - Access Token Response
  * @returns {Promise<ITokenDoc[]>} - Saved Token Documents
  */
 function handleTokenSaving(
-  account: IServiceAccDoc,
+  account: IServiceAccLeanDoc,
   scopes: TGoogleApiScope[],
   accessToken: IGoogTokenResponse,
 ): Promise<ITokenDoc> {
@@ -63,6 +63,8 @@ export default function (
 ): Promise<ITokenDoc> {
   return new Promise<ITokenDoc>((resolve, reject) => {
     ServiceAccs.findById(account)
+      .lean()
+      .exec()
       .then((serviceAccDoc) => {
         if (serviceAccDoc) {
           generateAccessToken(serviceAccDoc, scopes)
