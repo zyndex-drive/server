@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-47](https://github.com/zyndex-drive/server/compare/v0.2.0-46...v0.2.0-47) (2022-01-09)
+
+
+### Features 🔥
+
+* **models:** introduce lean document types for all models ([4f34628](https://github.com/zyndex-drive/server/commit/4f346289547c82929db3f3b4a5ee8cbb9a340c25))
+* **plugins:** use lean based mongo queries for faster performance ([e7c563e](https://github.com/zyndex-drive/server/commit/e7c563ed05b74f079c57e19ef44e6c432d22f249))
+* **routes/login:** write user login route ([be12108](https://github.com/zyndex-drive/server/commit/be12108406786adc9d9edb2ce9c0501d1b59ceb6))
+* **routes:** use lean queries for faster performance ([85f1b58](https://github.com/zyndex-drive/server/commit/85f1b584ccd4b1e3f1675dcaa391f91b7c286d03))
+
+
+### Code Refactoring 🖌
+
+* **app:** change misc console.logs ([fbda11d](https://github.com/zyndex-drive/server/commit/fbda11da5a194064d81b812a539f1d842b280c75))
+* **routes:** rename first-setup folder to setup ([c0c0e48](https://github.com/zyndex-drive/server/commit/c0c0e4895613d67486d4ec6469487e2795e44b8e))
+
 ## [0.2.0-46](https://github.com/zyndex-drive/server/compare/v0.2.0-45...v0.2.0-46) (2022-01-08)
 
 
