@@ -14,16 +14,16 @@ dotenv.config();
 healthCheckService(server);
 
 // Create Server and Listen on PORT
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 try {
-  server.listen(PORT || 3000, () => {
-    console.log('Server Started');
-    console.log('Connecting to Database');
+  server.listen(PORT, () => {
+    console.log(`Server Started on Port: ${PORT}`);
+    console.log('Connecting to Database.....');
 
     // Connect to Datbase
     db.connect()
       .then(() => {
-        console.log('Database Connected');
+        console.log('Database Connected...OK..');
       })
       .catch((err: string) => {
         console.log(err);
