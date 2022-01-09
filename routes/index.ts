@@ -9,14 +9,14 @@ import path from 'path';
 import { EndpointGenerator } from '@plugins/server/generators';
 
 // Routes
-import firstSetup from './first-setup';
+import setup from './setup';
 import login from './login';
 
 // Router
 const router = express.Router();
 
 // Assign Main Routes
-router.use('/setup', [checkSetupStatus, checkSecretPass], firstSetup);
+router.use('/setup', [checkSetupStatus, checkSecretPass], setup);
 router.use('/login', login);
 
 // Default Get
