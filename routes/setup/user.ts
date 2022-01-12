@@ -19,8 +19,7 @@ import { generateUID, objectID, isUndefined } from '@plugins/misc';
 
 // Types
 import { Error as MongoError } from 'mongoose';
-import { IUser, IUserLeanDoc } from '@models/types';
-import { IInlineResponse } from '@typs/inline.response';
+import { IUser } from '@models/types';
 
 const router = express.Router();
 const AVATAR_DEFAULT =
@@ -36,21 +35,19 @@ interface IRequestUserData {
 
 router.post('/add', (req, res) => {
   Users.find({})
-    .lean()
     .exec()
     .then((userDocs) => {
       if (userDocs.length > 0) {
-        okResponse<string>(res, 'Only one Owner can be Added in the Database');
+        okResponse(res, 'Only one Owner can be Added in the Database');
       } else {
         const { name, email, avatar, password }: IRequestUserData = req.body;
         if (!isUndefined([name, email, password])) {
           Scopes.find({})
-            .lean()
             .exec()
             .then((scopeDocs) =>
               Promise.all([
                 scopeDocs,
-                Roles.findOne({ type: 'main', name: 'Owner' }).lean().exec(),
+                Roles.findOne({ type: 'main', name: 'Owner' }).exec(),
               ]),
             )
             .then(([scopeDocs, roleDoc]) => {
@@ -78,7 +75,7 @@ router.post('/add', (req, res) => {
                 newUserDoc
                   .save()
                   .then((userDoc) => {
-                    createdResponse<IUserLeanDoc>(res, userDoc.toObject());
+                    createdResponse(res, userDoc.toObject());
                   })
                   .catch((err: MongoError) => {
                     internalServerError(res, err.name, err.message);
@@ -102,10 +99,9 @@ router.post('/add', (req, res) => {
 
 router.post('/get', (req, res) => {
   Users.find({})
-    .lean()
     .exec()
     .then((userDocs) => {
-      okResponse<IUserLeanDoc[]>(res, userDocs);
+      okResponse(res, userDocs);
     })
     .catch((err: MongoError) => {
       internalServerError(res, err.name, err.message);
@@ -115,7 +111,7 @@ router.post('/get', (req, res) => {
 router.post('/reset', (req, res) => {
   Users.clearAll()
     .then((result) => {
-      okResponse<IInlineResponse<string>>(res, result);
+      okResponse(res, result);
       res.status(200).json(result);
     })
     .catch((error: MongoError) => {

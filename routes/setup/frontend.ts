@@ -18,8 +18,7 @@ import { objectID, isUndefined } from '@plugins/misc';
 
 // Types
 import type { Error as MongoError } from 'mongoose';
-import type { IFrontend, IFrontendLeanDoc } from '@models/types';
-import { IInlineResponse } from '@/types/inline.response';
+import type { IFrontend } from '@models/types';
 
 // Router
 const router = express.Router();
@@ -40,7 +39,7 @@ router.post('/add', (req, res) => {
     };
     Frontends.create(newFrontend)
       .then((frontendDoc) => {
-        createdResponse<IFrontendLeanDoc>(res, frontendDoc.toObject());
+        createdResponse(res, frontendDoc.toObject());
       })
       .catch((err: MongoError) => {
         internalServerError(res, err.name, err.message);
@@ -55,7 +54,7 @@ router.post('/get', (req, res) => {
     .lean()
     .exec()
     .then((frontendDocs) => {
-      okResponse<IFrontendLeanDoc[]>(res, frontendDocs);
+      okResponse(res, frontendDocs);
     })
     .catch((err: MongoError) => {
       internalServerError(res, err.name, err.message);
@@ -65,7 +64,7 @@ router.post('/get', (req, res) => {
 router.post('/reset', (req, res) => {
   Frontends.clearAll()
     .then((result) => {
-      okResponse<IInlineResponse<string>>(res, result);
+      okResponse(res, result);
     })
     .catch((error: MongoError) => {
       internalServerError(res, error.name, error.message);

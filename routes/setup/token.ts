@@ -18,8 +18,7 @@ import { objectID, isUndefined } from '@plugins/misc';
 
 // Types
 import type { Error as MongoError } from 'mongoose';
-import type { IToken, ITokenLeanDoc } from '@models/types';
-import { IInlineResponse } from '@/types/inline.response';
+import type { IToken } from '@models/types';
 
 // Router
 const router = express.Router();
@@ -39,7 +38,7 @@ router.post('/add', (req, res) => {
   })
     .then((tokenDocs) => {
       if (tokenDocs.length > 0) {
-        okResponse<string>(res, 'TMDB API token can be Added only one Time');
+        okResponse(res, 'TMDB API token can be Added only one Time');
       } else {
         const { token, expires_at }: IRequestToken = req.body;
         if (!isUndefined([token, expires_at])) {
@@ -56,7 +55,7 @@ router.post('/add', (req, res) => {
           };
           Tokens.create(newToken)
             .then((newTokenDoc) => {
-              createdResponse<ITokenLeanDoc>(res, newTokenDoc.toObject());
+              createdResponse(res, newTokenDoc.toObject());
             })
             .catch((err: MongoError) => {
               internalServerError(res, err.name, err.message);
@@ -77,10 +76,10 @@ router.post('/add', (req, res) => {
 
 router.post('/get', (req, res) => {
   Tokens.find({})
-    .lean()
+
     .exec()
     .then((frontendDocs) => {
-      okResponse<ITokenLeanDoc[]>(res, frontendDocs);
+      okResponse(res, frontendDocs);
     })
     .catch((err: MongoError) => {
       internalServerError(res, err.name, err.message);
@@ -90,7 +89,7 @@ router.post('/get', (req, res) => {
 router.post('/reset', (req, res) => {
   Tokens.clearAll()
     .then((result) => {
-      okResponse<IInlineResponse<string>>(res, result);
+      okResponse(res, result);
     })
     .catch((error: MongoError) => {
       internalServerError(res, error.name, error.message);

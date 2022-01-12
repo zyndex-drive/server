@@ -13,8 +13,6 @@ import { Policies } from '@models';
 
 // Types
 import type { Error as MongoError } from 'mongoose';
-import type { IPolicyLeanDoc } from '@models/types';
-import type { IInlineResponse } from '@typs/inline.response';
 
 // Others
 import { map as policyMap } from '@plugins/templates/policies';
@@ -26,7 +24,7 @@ const router = express.Router();
 router.post('/add', (req, res) => {
   Policies.create(policyMap)
     .then(() => {
-      createdResponse<string>(
+      createdResponse(
         res,
         'Successfully Posted all the Policy Details to Database',
       );
@@ -41,7 +39,7 @@ router.post('/get', (req, res) => {
     .lean()
     .exec()
     .then((policyDocs) => {
-      okResponse<IPolicyLeanDoc[]>(res, policyDocs);
+      okResponse(res, policyDocs);
     })
     .catch((err: MongoError) => {
       internalServerError(res, err.name, err.message);
@@ -51,7 +49,7 @@ router.post('/get', (req, res) => {
 router.post('/status', (req, res) => {
   Policies.mapCheck()
     .then((result) => {
-      okResponse<IInlineResponse<boolean>>(res, result);
+      okResponse(res, result);
     })
     .catch((error: MongoError) => {
       internalServerError(res, error.name, error.message);
@@ -61,7 +59,7 @@ router.post('/status', (req, res) => {
 router.post('/reset', (req, res) => {
   Policies.clearAll()
     .then((result) => {
-      okResponse<IInlineResponse<string>>(res, result);
+      okResponse(res, result);
     })
     .catch((error: MongoError) => {
       internalServerError(res, error.name, error.message);

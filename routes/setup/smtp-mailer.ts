@@ -19,8 +19,7 @@ import { objectID, isUndefined } from '@plugins/misc';
 
 // Types
 import type { Error as MongoError } from 'mongoose';
-import type { ISMTPMailer, ISMTPMailerLeanDoc } from '@models/types';
-import { IInlineResponse } from '@/types/inline.response';
+import type { ISMTPMailer } from '@models/types';
 
 // Router
 const router = express.Router();
@@ -38,7 +37,6 @@ router.post('/add', (req, res) => {
     req.body;
   if (!isUndefined([name, email, password, type, provider_id])) {
     SMTPProviders.findById(provider_id)
-      .lean()
       .exec()
       .then((smtpProviderDoc) => {
         if (smtpProviderDoc) {
@@ -53,7 +51,7 @@ router.post('/add', (req, res) => {
           };
           SMTPMailers.create(newSmtpMailer)
             .then((newSmtpMailerDoc) => {
-              createdResponse<ISMTPMailerLeanDoc>(res, newSmtpMailerDoc);
+              createdResponse(res, newSmtpMailerDoc);
             })
             .catch((err: MongoError) => {
               internalServerError(res, err.name, err.message);
@@ -72,10 +70,10 @@ router.post('/add', (req, res) => {
 
 router.post('/get', (req, res) => {
   SMTPMailers.find({})
-    .lean()
+
     .exec()
     .then((smtpMailerDocs) => {
-      okResponse<ISMTPMailerLeanDoc[]>(res, smtpMailerDocs);
+      okResponse(res, smtpMailerDocs);
     })
     .catch((err: MongoError) => {
       internalServerError(res, err.name, err.message);
@@ -85,7 +83,7 @@ router.post('/get', (req, res) => {
 router.post('/reset', (req, res) => {
   SMTPMailers.clearAll()
     .then((result) => {
-      okResponse<IInlineResponse<string>>(res, result);
+      okResponse(res, result);
     })
     .catch((error: MongoError) => {
       internalServerError(res, error.name, error.message);

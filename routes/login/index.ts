@@ -53,7 +53,7 @@ router.post('/user', (req, res) => {
   const { username, password, end_id }: ILoginRequest = req.body;
   if (username && password && end_id) {
     Users.findOne({ email: username })
-      .lean()
+
       .exec()
       .then((userDoc) => {
         if (userDoc) {
@@ -62,7 +62,7 @@ router.post('/user', (req, res) => {
             .then((passwordMatch) => {
               if (passwordMatch) {
                 Frontends.findOne({ _id: end_id })
-                  .lean()
+
                   .exec()
                   .then((frontendDoc) => {
                     if (frontendDoc) {
@@ -83,7 +83,7 @@ router.post('/user', (req, res) => {
                               })),
                             ],
                           };
-                          okResponse<ISessionResponse>(res, sessionResponse);
+                          okResponse(res, sessionResponse);
                         })
                         .catch((err: string) => {
                           internalServerError(

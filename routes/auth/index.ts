@@ -25,7 +25,7 @@ router.post('/endpoints', (req, res) =>
 
 // Default Get
 router.get('/', (req, res) => {
-  okResponse<string>(res, 'Server Successfully Started');
+  okResponse(res, 'Server Successfully Started');
 });
 
 export default router;

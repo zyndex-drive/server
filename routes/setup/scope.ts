@@ -19,8 +19,7 @@ import { objectID, isUndefined } from '@plugins/misc';
 
 // Types
 import type { Error as MongoError } from 'mongoose';
-import type { IScope, IScopeLeanDoc } from '@models/types';
-import type { IInlineResponse } from '@typs/inline.response';
+import type { IScope } from '@models/types';
 
 // Router
 const router = express.Router();
@@ -41,7 +40,7 @@ router.post('/add', (req, res) => {
           };
           Scopes.create(newScope)
             .then((savedDoc) => {
-              createdResponse<IScopeLeanDoc>(res, savedDoc.toObject());
+              createdResponse(res, savedDoc.toObject());
             })
             .catch((err: MongoError) => {
               internalServerError(res, err.name, err.message);
@@ -66,7 +65,7 @@ router.post('/get', (req, res) => {
     .lean()
     .exec()
     .then((scopeDocs) => {
-      okResponse<IScopeLeanDoc[]>(res, scopeDocs);
+      okResponse(res, scopeDocs);
     })
     .catch((err: MongoError) => {
       internalServerError(res, err.name, err.message);
@@ -76,7 +75,7 @@ router.post('/get', (req, res) => {
 router.post('/reset', (req, res) => {
   Scopes.clearAll()
     .then((result) => {
-      okResponse<IInlineResponse<string>>(res, result);
+      okResponse(res, result);
       res.status(200).json(result);
     })
     .catch((error: MongoError) => {

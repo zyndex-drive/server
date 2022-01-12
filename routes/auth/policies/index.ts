@@ -8,14 +8,13 @@ import { okResponse } from '@plugins/server/responses';
 import { map as policyMap } from '@plugins/templates/policies';
 
 // Types
-import type { IPolicy } from '@models/types';
 import { EndpointGenerator } from '@plugins/server/generators';
 
 // Router
 const router = express.Router();
 
 router.post('/list', (req, res) => {
-  okResponse<Readonly<IPolicy>[]>(res, policyMap);
+  okResponse(res, policyMap);
 });
 
 // Respond with all the Endpoints in this Route

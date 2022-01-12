@@ -18,8 +18,7 @@ import { objectID, isUndefined } from '@plugins/misc';
 
 // Types
 import type { Error as MongoError } from 'mongoose';
-import type { ISMTPProvider, ISMTPProviderLeanDoc } from '@models/types';
-import { IInlineResponse } from '@/types/inline.response';
+import type { ISMTPProvider } from '@models/types';
 
 // Router
 const router = express.Router();
@@ -52,10 +51,7 @@ router.post('/add', (req, res) => {
     };
     SMTPProviders.create(newSmtpProvider)
       .then((newSmtpProviderDoc) => {
-        createdResponse<ISMTPProviderLeanDoc>(
-          res,
-          newSmtpProviderDoc.toObject(),
-        );
+        createdResponse(res, newSmtpProviderDoc.toObject());
       })
       .catch((err: MongoError) => {
         internalServerError(res, err.name, err.message);
@@ -67,10 +63,9 @@ router.post('/add', (req, res) => {
 
 router.post('/get', (req, res) => {
   SMTPProviders.find({})
-    .lean()
     .exec()
     .then((smtpProviderDocs) => {
-      okResponse<ISMTPProviderLeanDoc[]>(res, smtpProviderDocs);
+      okResponse(res, smtpProviderDocs);
     })
     .catch((err: MongoError) => {
       internalServerError(res, err.name, err.message);
@@ -80,7 +75,7 @@ router.post('/get', (req, res) => {
 router.post('/reset', (req, res) => {
   SMTPProviders.clearAll()
     .then((result) => {
-      okResponse<IInlineResponse<string>>(res, result);
+      okResponse(res, result);
     })
     .catch((error: MongoError) => {
       internalServerError(res, error.name, error.message);
