@@ -63,13 +63,13 @@ export default function (
 ): Promise<ITokenDoc> {
   return new Promise<ITokenDoc>((resolve, reject) => {
     ServiceAccs.findById(account)
-      .lean()
       .exec()
       .then((serviceAccDoc) => {
         if (serviceAccDoc) {
-          generateAccessToken(serviceAccDoc, scopes)
+          const leanServiceAccDoc = serviceAccDoc.toObject();
+          generateAccessToken(leanServiceAccDoc, scopes)
             .then((accessToken) =>
-              handleTokenSaving(serviceAccDoc, scopes, accessToken),
+              handleTokenSaving(leanServiceAccDoc, scopes, accessToken),
             )
             .then(resolve)
             .catch((err: unknown) => {

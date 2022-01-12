@@ -63,12 +63,12 @@ function redirectUser(
   scopes: TGoogleApiScope[],
 ): void {
   Credentials.findById(id)
-    .lean()
     .exec()
     .then((credentials) => {
       if (credentials) {
-        const state = encrypt.str(String(credentials._id));
-        const url = constructOauthURL(credentials, scopes, state);
+        const leanCredentials = credentials.toObject();
+        const state = encrypt.str(String(leanCredentials._id));
+        const url = constructOauthURL(leanCredentials, scopes, state);
         res.redirect(url);
       } else {
         notFound(res, 'Credential ID Not found in DB, Kindly Recheck');
@@ -142,29 +142,29 @@ function handleUserAuthorization(
   scopes: TGoogleApiScope[],
 ) {
   Credentials.findById(id)
-    .lean()
     .exec()
     .then(async (credentials) => {
       if (credentials) {
+        const leanCredentials = credentials.toObject();
         const scopeParam = stringizeScopes(scopes);
         try {
           const refreshToken = await generateRefreshToken(
-            credentials,
+            leanCredentials,
             scopeParam,
             code,
           );
           if (refreshToken.refresh_token) {
             const accessToken = await generateAccessToken(
-              credentials,
+              leanCredentials,
               refreshToken.refresh_token,
             );
             const savedDocs = await handleTokenSaving(
-              credentials,
+              leanCredentials,
               scopes,
               refreshToken,
               accessToken,
             );
-            okResponse<ITokenDoc[]>(res, savedDocs);
+            okResponse(res, savedDocs);
           } else {
             throw new Error('No Refresh Token Found in Response, Kindly Retry');
           }
