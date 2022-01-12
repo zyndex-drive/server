@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-48](https://github.com/zyndex-drive/server/compare/v0.2.0-47...v0.2.0-48) (2022-01-12)
+
+
+### Docs 📃
+
+* **models:** add a readme for models for future reference ([99c6db7](https://github.com/zyndex-drive/server/commit/99c6db73c806be77ed0008f261e4a5a049b20c0f))
+
+
+### Bug Fixes 🛠
+
+* **plugins/server:** remove type parameters for response handlers ([5b56232](https://github.com/zyndex-drive/server/commit/5b56232c5ea19d7b1924e75e30ecfb6fc0374f4f))
+* **plugins:** remove lean methods for some models as it creates problems ([5bb234e](https://github.com/zyndex-drive/server/commit/5bb234ed917e5b591c859abf31f2877540000df2))
+* **routes:** remove lean methods for some models ([b1c1104](https://github.com/zyndex-drive/server/commit/b1c11044dd3705dfccb4d0c7234f0069a87d444a))
+
+
+### Build System 🏗
+
+* **package:** add morgan package for rest logger ([3de1f45](https://github.com/zyndex-drive/server/commit/3de1f452d0c0d4d937152da88c57d77a02bf3eec))
+
+
+### Tests 🧪
+
+* **routes/setup:** add rest based tests for route - setup/credentials ([1774df7](https://github.com/zyndex-drive/server/commit/1774df75809ac89205999ac84252552351ea5ca4))
+
 ## [0.2.0-47](https://github.com/zyndex-drive/server/compare/v0.2.0-46...v0.2.0-47) (2022-01-09)
 
 
