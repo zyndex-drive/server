@@ -6,9 +6,9 @@ export interface Routes {
   delete: string[];
 }
 
-export interface ISuccessResponse<T> {
+export interface ISuccessResponse {
   status: number;
-  data: T;
+  data: unknown;
 }
 
 export interface IErrorResponse {

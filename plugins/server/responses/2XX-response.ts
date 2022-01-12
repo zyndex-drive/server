@@ -10,8 +10,8 @@ import type { ISuccessResponse } from '@plugins/server/types';
  * @param {Response} res - Express Response Object
  * @param {object} data - Data to be Sent to Client
  */
-export function okResponse<T>(res: Response, data: T): void {
-  const result: ISuccessResponse<T> = {
+export function okResponse(res: Response, data: unknown): void {
+  const result: ISuccessResponse = {
     status: 200,
     data,
   };
@@ -24,8 +24,8 @@ export function okResponse<T>(res: Response, data: T): void {
  * @param {Response} res - Express Response Object
  * @param {object} data - Data to be Sent to Client
  */
-export function createdResponse<T>(res: Response, data: T): void {
-  const result: ISuccessResponse<T> = {
+export function createdResponse(res: Response, data: unknown): void {
+  const result: ISuccessResponse = {
     status: 201,
     data,
   };

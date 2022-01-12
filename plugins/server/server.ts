@@ -4,6 +4,7 @@ import express from 'express';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import xssProtect from 'x-xss-protection';
+import morgan from 'morgan';
 
 // Middlewares
 import { dbChecker, cors } from '@plugins/server/middlewares';
@@ -18,6 +19,7 @@ app.use(helmet());
 app.use(xssProtect());
 app.use(mongoSanitize());
 app.use([dbChecker, cors]);
+app.use(process.env.NODE_ENV === 'production' ? morgan('tiny') : morgan('dev'));
 
 // Serve Public Assets
 app.use(express.static('views'));
