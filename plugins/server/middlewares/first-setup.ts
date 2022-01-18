@@ -10,11 +10,10 @@ import {
 } from '@models';
 
 // Response Handlers
-import {
-  internalServerError,
-  badRequest,
-  unAuthorized,
-} from '@plugins/server/responses';
+import { errorResponseHandler } from '@plugins/server/responses';
+
+// Http Error Classes
+import { BadRequest, UnAuthorized, InternalServerError } from '@plugins/errors';
 
 // Type Imports
 import { Request, Response, NextFunction } from 'express';
@@ -77,11 +76,13 @@ async function checkDBPresent<INTERFACE, DOC, MODEL extends Model<DOC>>(
             resolve(false);
           }
         } else {
-          reject(new Error('Unknown Error while Querying Collection'));
+          reject(
+            new InternalServerError('Unknown Error while Querying Collection'),
+          );
         }
       })
       .catch((e: MongoError) => {
-        reject(new Error(`${e.name}: ${e.message}`));
+        reject(new InternalServerError(e.message, e.name));
       });
   });
 }
@@ -93,40 +94,39 @@ async function checkDBPresent<INTERFACE, DOC, MODEL extends Model<DOC>>(
  * @param {Response} res - Express Response Object
  * @param {NextFunction} next - Express Next Function
  */
-function checkSetupStatus(
+async function checkSetupStatus(
   req: Request,
   res: Response,
   next: NextFunction,
-): void {
-  const promises = [
-    checkDBPresent<ICredentials, ICredentialsDoc, ICredentialsModel>(
-      Credentials,
-    ),
-    checkDBPresent<IFrontend, IFrontendDoc, IFrontendModel>(Frontends),
-    checkDBPresent<IPolicy, IPolicyDoc, IPolicyModel>(Policies, policyMap),
-    checkDBPresent<IRole, IRoleDoc, IRoleModel>(Roles, roleMap),
-    checkDBPresent<IGlobalSettings, IGlobalSettingsDoc, IGlobalSettingsModel>(
-      GlobalSettings,
-    ),
-    checkDBPresent<IScope, IScopeDoc, IScopeModel>(Scopes),
-    checkDBPresent<IUser, IUserDoc, IUserModel>(Users),
-  ];
-  Promise.all(promises)
-    .then((setups) => {
-      if (setups.includes(false)) {
-        res.locals.setups = true;
-        next();
-      } else {
-        res.status(200).json({
-          success: true,
-          setup: true,
-          message: 'All the Collections have been Setup Correctly',
-        });
-      }
-    })
-    .catch((err: MongoError) => {
-      internalServerError(res, err.name, err.message);
-    });
+): Promise<void> {
+  try {
+    const promises = [
+      checkDBPresent<ICredentials, ICredentialsDoc, ICredentialsModel>(
+        Credentials,
+      ),
+      checkDBPresent<IFrontend, IFrontendDoc, IFrontendModel>(Frontends),
+      checkDBPresent<IPolicy, IPolicyDoc, IPolicyModel>(Policies, policyMap),
+      checkDBPresent<IRole, IRoleDoc, IRoleModel>(Roles, roleMap),
+      checkDBPresent<IGlobalSettings, IGlobalSettingsDoc, IGlobalSettingsModel>(
+        GlobalSettings,
+      ),
+      checkDBPresent<IScope, IScopeDoc, IScopeModel>(Scopes),
+      checkDBPresent<IUser, IUserDoc, IUserModel>(Users),
+    ];
+    const setups = await Promise.all(promises);
+    if (setups.includes(false)) {
+      res.locals.setups = true;
+      next();
+    } else {
+      res.status(200).json({
+        success: true,
+        setup: true,
+        message: 'All the Collections have been Setup Correctly',
+      });
+    }
+  } catch (e) {
+    errorResponseHandler(res, e);
+  }
 }
 
 export default checkSetupStatus;
@@ -143,29 +143,31 @@ export function checkSecretPass(
   res: Response,
   next: NextFunction,
 ): void {
-  const secret = process.env.SECRET;
-  if (secret) {
-    const headerPass = req.headers['x-secret-pass'];
-    if (headerPass && typeof headerPass === 'string') {
-      const correctedSecret = secret.toLowerCase();
-      const correctedHeaderPass = headerPass.toLowerCase();
-      if (correctedHeaderPass === correctedSecret) {
-        res.locals.secretcheck = true;
-        next();
+  try {
+    const secret = process.env.SECRET;
+    if (secret) {
+      const headerPass = req.headers['x-secret-pass'];
+      if (headerPass && typeof headerPass === 'string') {
+        const correctedSecret = secret.toLowerCase();
+        const correctedHeaderPass = headerPass.toLowerCase();
+        if (correctedHeaderPass === correctedSecret) {
+          res.locals.secretcheck = true;
+          next();
+        } else {
+          throw new UnAuthorized(
+            'Header Secret is Not Matching with the Environment Secret, Kindly Send the Correct Pass',
+          );
+        }
       } else {
-        unAuthorized(
-          res,
-          'Header Secret is Not Matching with the Environment Secret, Kindly Send the Correct Pass',
-        );
+        throw new BadRequest('x-secret-pass', 'Request Headers');
       }
     } else {
-      badRequest(res, 'x-secret-pass', 'Request Headers');
+      throw new InternalServerError(
+        'No Secret Set in the Environment, Kindly Set in Vars',
+        'Secret Error',
+      );
     }
-  } else {
-    internalServerError(
-      res,
-      'Secret Error',
-      'No Secret Set in the Environment, Kindly Set in Vars',
-    );
+  } catch (e) {
+    errorResponseHandler(res, e);
   }
 }

@@ -1,6 +1,7 @@
 import { isUndefined } from '@plugins/misc';
 import { sessionManager } from '@plugins';
-import { unAuthorized } from '@plugins/server/responses/4XX-response';
+import { errorResponseHandler } from '@plugins/server/responses';
+import { UnAuthorized } from '@plugins/errors';
 
 // Types
 import type { Request, Response, NextFunction } from 'express';
@@ -17,24 +18,25 @@ interface ISessionRequestBody {
  * @param {Response} res - Express Response Object
  * @param {NextFunction} next - Express Next Function
  */
-export default function (
+export default async function (
   req: Request,
   res: Response,
   next: NextFunction,
-): void {
-  const { session_id, session_token }: ISessionRequestBody = req.body;
-  if (!isUndefined([session_id, session_token])) {
-    sessionManager
-      .verifySession(session_id, session_token)
-      .then((sessionBool) => {
-        if (sessionBool) {
-          next();
-        } else {
-          unAuthorized(res, 'Session Token is Not Authorized');
-        }
-      })
-      .catch((err: string) => {
-        unAuthorized(res, err);
-      });
+): Promise<void> {
+  try {
+    const { session_id, session_token }: ISessionRequestBody = req.body;
+    if (!isUndefined([session_id, session_token])) {
+      const sessionBool = await sessionManager.verifySession(
+        session_id,
+        session_token,
+      );
+      if (sessionBool) {
+        next();
+      } else {
+        throw new UnAuthorized('Session Token is Not Authorized');
+      }
+    }
+  } catch (e) {
+    errorResponseHandler(res, e);
   }
 }
