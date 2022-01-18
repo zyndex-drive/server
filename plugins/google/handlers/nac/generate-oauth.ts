@@ -12,12 +12,13 @@ import {
 import stringizeScopes from '@plugins/google/helpers/stringize-scope';
 
 // Response Handlers
+import { okResponse, errorResponseHandler } from '@plugins/server/responses';
+
 import {
-  okResponse,
-  badRequest,
-  notFound,
-  internalServerError,
-} from '@/plugins/server/responses';
+  BadRequest,
+  NotFound,
+  InternalServerError,
+} from '@plugins/errors';
 
 // Types
 import type { Request, Response } from 'express';
@@ -71,11 +72,11 @@ function redirectUser(
         const url = constructOauthURL(leanCredentials, scopes, state);
         res.redirect(url);
       } else {
-        notFound(res, 'Credential ID Not found in DB, Kindly Recheck');
+        throw new NotFound('Credential ID Not found in DB, Kindly Recheck');
       }
     })
     .catch((err: MongoError) => {
-      internalServerError(res, err.name, err.message);
+      throw new InternalServerError(err.message, err.name);
     });
 }
 
@@ -122,7 +123,7 @@ function handleTokenSaving(
     Tokens.insertMany(tokensArr)
       .then(resolve)
       .catch((error: MongoError) => {
-        reject(new Error(`${error.name}: ${error.message}`));
+        reject(new InternalServerError(error.message, error.name));
       });
   });
 }
@@ -166,18 +167,20 @@ function handleUserAuthorization(
             );
             okResponse(res, savedDocs);
           } else {
-            throw new Error('No Refresh Token Found in Response, Kindly Retry');
+            throw new NotFound(
+              'No Refresh Token Found in Response, Kindly Retry',
+            );
           }
         } catch (e: unknown) {
           console.log(e);
-          internalServerError(res, 'Token Generation', String(e));
+          throw new InternalServerError(String(e), 'Token Generation');
         }
       } else {
-        notFound(res, 'Credential ID Not found in DB, Kindly Recheck');
+        throw new NotFound('Credential ID Not found in DB, Kindly Recheck');
       }
     })
     .catch((err: MongoError) => {
-      internalServerError(res, err.name, err.message);
+      throw new InternalServerError(err.message, err.name);
     });
 }
 
@@ -193,14 +196,18 @@ export default function (
   res: Response,
   scopes: TGoogleApiScope[],
 ): void {
-  const { creds, code, state } = req.query;
-  if (!code && creds) {
-    redirectUser(res, String(creds), scopes);
-  } else if (code && state) {
-    const stringizedCode = String(code);
-    const credID = decrypt.str(decodeURIComponent(String(state)));
-    handleUserAuthorization(res, credID, stringizedCode, scopes);
-  } else {
-    badRequest(res, 'creds', 'Query Parameters');
+  try {
+    const { creds, code, state } = req.query;
+    if (!code && creds) {
+      redirectUser(res, String(creds), scopes);
+    } else if (code && state) {
+      const stringizedCode = String(code);
+      const credID = decrypt.str(decodeURIComponent(String(state)));
+      handleUserAuthorization(res, credID, stringizedCode, scopes);
+    } else {
+      throw new BadRequest('creds', 'Query Parameters');
+    }
+  } catch (e) {
+    errorResponseHandler(res, e)
   }
 }
