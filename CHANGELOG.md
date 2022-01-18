@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-49](https://github.com/zyndex-drive/server/compare/v0.2.0-48...v0.2.0-49) (2022-01-18)
+
+
+### Bug Fixes 🛠
+
+* **auth/helpers:** fix model helper for retreiving role docs ([d111d44](https://github.com/zyndex-drive/server/commit/d111d44ceb4da59478e642f5ef7c0c6ecf6ebd6a))
+
+
+### Features 🔥
+
+* **db:** add support for test database ([cb84d8d](https://github.com/zyndex-drive/server/commit/cb84d8d9670bef8791b347a0c7316426a038b322))
+* **errors:** introduce http error classes ([cf06b81](https://github.com/zyndex-drive/server/commit/cf06b8121345095a27f9b56e8a5dcb79ca2b1df5))
+* **plugins/server:** add a setup route generator for redundant routes ([f5130ba](https://github.com/zyndex-drive/server/commit/f5130ba3c13f727a42ea5faa39f7bd873a4080fc))
+
+
+### Code Refactoring 🖌
+
+* **google:** refactor google helper methods to use new http Error classes ([aab63c5](https://github.com/zyndex-drive/server/commit/aab63c51afc8dc3e137fb61ab7a134e67581499e))
+* **middlewares:** refactor promises to async/await and use new Error Classes ([f643aef](https://github.com/zyndex-drive/server/commit/f643aef7853d85c0204647fb8997eca556b7ed21))
+* **responses:** refactor responses and remove all error methods ([1cc29e7](https://github.com/zyndex-drive/server/commit/1cc29e73caa3e1e6d09d42a52dbcf1950e37d276))
+* **routes:** remove massive redundant code and use new Error Classes ([1539e8e](https://github.com/zyndex-drive/server/commit/1539e8e6716a41225aacab8095dbf6e781d2a79b))
+
+
+### Tests 🧪
+
+* **rest-test:** move rest tests to a seperate folder ([2887a9f](https://github.com/zyndex-drive/server/commit/2887a9f0eb9d597364f424ee08a20ee4275246ee))
+
 ## [0.2.0-48](https://github.com/zyndex-drive/server/compare/v0.2.0-47...v0.2.0-48) (2022-01-12)
 
 
