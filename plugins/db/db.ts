@@ -5,10 +5,12 @@ import type { Error as MongoError } from 'mongoose';
 export default {
   connect: (): Promise<typeof mongoose> =>
     new Promise<typeof mongoose>((resolve, reject) => {
-      const url = process.env['DBURL'];
-      if (url) {
+      const prodURL = process.env['DBURL'];
+      const testURL = process.env['DBURL_TESTING'];
+      const dbUrl = process.env.NODE_ENV === 'production' ? prodURL : testURL;
+      if (dbUrl) {
         mongoose
-          .connect(url, {
+          .connect(dbUrl, {
             useUnifiedTopology: true,
             bufferCommands: false,
             bufferMaxEntries: 0,
