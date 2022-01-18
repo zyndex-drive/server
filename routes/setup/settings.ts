@@ -3,11 +3,12 @@ import express from 'express';
 
 // Response Handlers
 import {
-  okResponse,
   createdResponse,
-  badRequest,
-  internalServerError,
+  errorResponseHandler,
 } from '@plugins/server/responses';
+
+// HTTP Error Classes
+import { BadRequest } from '@plugins/errors';
 
 // Model
 import { GlobalSettings } from '@models';
@@ -24,128 +25,129 @@ import {
   maxSessions,
 } from '@plugins/templates/global-settings';
 
-// Others
-import { EndpointGenerator } from '@plugins/server/generators';
-
 // Types
 import { Response } from 'express';
-import { Error as MongoError } from 'mongoose';
 import { IGlobalSettings } from '@models/types';
 
 const router = express.Router();
 
-const savenSendit = (res: Response, globalSetting: IGlobalSettings) => {
-  const newGlobalSetting = new GlobalSettings(globalSetting);
-  newGlobalSetting
-    .save()
-    .then((globalSettingDoc) => {
-      createdResponse(res, globalSettingDoc.toObject());
-    })
-    .catch((err: MongoError) => {
-      internalServerError(res, err.name, err.message);
-    });
+const savenSendit = async (res: Response, globalSetting: IGlobalSettings) => {
+  try {
+    const newGlobalSetting = new GlobalSettings(globalSetting);
+    const globalSettingDoc = await newGlobalSetting.save();
+    createdResponse(res, globalSettingDoc.toObject());
+  } catch (e) {
+    errorResponseHandler(res, e);
+  }
 };
 
-router.post('/user-requests', (req, res) => {
-  const { requests }: { requests: boolean } = req.body;
-  let userRequestsFlag: Readonly<IGlobalSettings>;
-  if (requests) {
-    userRequestsFlag = userRequests(true);
-  } else {
-    userRequestsFlag = userRequests(false);
+const callorThrow = (res: Response, callback: () => void) => {
+  try {
+    callback();
+  } catch (e) {
+    errorResponseHandler(res, e);
   }
-  savenSendit(res, userRequestsFlag);
-});
+};
 
-router.post('/upgrade-requests', (req, res) => {
-  const { requests }: { requests: boolean } = req.body;
-  let upgradeRequestFlag: Readonly<IGlobalSettings>;
-  if (requests) {
-    upgradeRequestFlag = upgradeRequests(true);
-  } else {
-    upgradeRequestFlag = upgradeRequests(false);
-  }
-  savenSendit(res, upgradeRequestFlag);
-});
+router.post('/user-requests', (req, res) =>
+  callorThrow(res, () => {
+    const { requests }: { requests: boolean } = req.body;
+    let userRequestsFlag: Readonly<IGlobalSettings>;
+    if (requests) {
+      userRequestsFlag = userRequests(true);
+    } else {
+      userRequestsFlag = userRequests(false);
+    }
+    void savenSendit(res, userRequestsFlag);
+  }),
+);
 
-router.post('/otp-verification', (req, res) => {
-  const { otp }: { otp: boolean } = req.body;
-  let otpFlag: Readonly<IGlobalSettings>;
-  if (otp) {
-    otpFlag = otpVerification(true);
-  } else {
-    otpFlag = otpVerification(false);
-  }
-  savenSendit(res, otpFlag);
-});
+router.post('/upgrade-requests', (req, res) =>
+  callorThrow(res, () => {
+    const { requests }: { requests: boolean } = req.body;
+    let upgradeRequestFlag: Readonly<IGlobalSettings>;
+    if (requests) {
+      upgradeRequestFlag = upgradeRequests(true);
+    } else {
+      upgradeRequestFlag = upgradeRequests(false);
+    }
+    void savenSendit(res, upgradeRequestFlag);
+  }),
+);
 
-router.post('/tmdb-api', (req, res) => {
-  const { tmdb }: { tmdb: boolean } = req.body;
-  let tmdbApi: Readonly<IGlobalSettings>;
-  if (tmdb) {
-    tmdbApi = tmdbFlag(true);
-  } else {
-    tmdbApi = tmdbFlag(false);
-  }
-  savenSendit(res, tmdbApi);
-});
+router.post('/otp-verification', (req, res) =>
+  callorThrow(res, () => {
+    const { otp }: { otp: boolean } = req.body;
+    let otpFlag: Readonly<IGlobalSettings>;
+    if (otp) {
+      otpFlag = otpVerification(true);
+    } else {
+      otpFlag = otpVerification(false);
+    }
+    void savenSendit(res, otpFlag);
+  }),
+);
 
-router.post('/max-sessions', (req, res) => {
-  const { sessions }: { sessions: number } = req.body;
-  if (sessions && typeof sessions === 'number') {
-    const sessionSetting = maxSessions(sessions);
-    savenSendit(res, sessionSetting);
-  } else {
-    badRequest(res, 'sessions', 'request');
-  }
-});
+router.post('/tmdb-api', (req, res) =>
+  callorThrow(res, () => {
+    const { tmdb }: { tmdb: boolean } = req.body;
+    let tmdbApi: Readonly<IGlobalSettings>;
+    if (tmdb) {
+      tmdbApi = tmdbFlag(true);
+    } else {
+      tmdbApi = tmdbFlag(false);
+    }
+    void savenSendit(res, tmdbApi);
+  }),
+);
 
-router.post('/mailing', (req, res) => {
-  const { mail }: { mail: boolean } = req.body;
-  let mailFlag: Readonly<IGlobalSettings>;
-  if (mail) {
-    mailFlag = mailing(true);
-  } else {
-    mailFlag = mailing(false);
-  }
-  savenSendit(res, mailFlag);
-});
+router.post('/max-sessions', (req, res) =>
+  callorThrow(res, () => {
+    const { sessions }: { sessions: number } = req.body;
+    if (sessions && typeof sessions === 'number') {
+      const sessionSetting = maxSessions(sessions);
+      void savenSendit(res, sessionSetting);
+    } else {
+      throw new BadRequest('sessions', 'request');
+    }
+  }),
+);
 
-router.post('/smtp-mailer', (req, res) => {
-  const { mailerId }: { mailerId: string } = req.body;
-  if (mailerId && typeof mailerId === 'string') {
-    const smtpMailer = defaultSmtpMailer(mailerId);
-    savenSendit(res, smtpMailer);
-  } else {
-    badRequest(res, 'mailerId', 'Request');
-  }
-});
+router.post('/mailing', (req, res) =>
+  callorThrow(res, () => {
+    const { mail }: { mail: boolean } = req.body;
+    let mailFlag: Readonly<IGlobalSettings>;
+    if (mail) {
+      mailFlag = mailing(true);
+    } else {
+      mailFlag = mailing(false);
+    }
+    void savenSendit(res, mailFlag);
+  }),
+);
 
-router.post('/smtp-provider', (req, res) => {
-  const { providerId }: { providerId: string } = req.body;
-  if (providerId && typeof providerId === 'string') {
-    const smtpProvider = defaultSmtpProvider(providerId);
-    savenSendit(res, smtpProvider);
-  } else {
-    badRequest(res, 'providerId', 'Request');
-  }
-});
+router.post('/smtp-mailer', (req, res) =>
+  callorThrow(res, () => {
+    const { mailerId }: { mailerId: string } = req.body;
+    if (mailerId && typeof mailerId === 'string') {
+      const smtpMailer = defaultSmtpMailer(mailerId);
+      void savenSendit(res, smtpMailer);
+    } else {
+      throw new BadRequest('mailerId', 'Request');
+    }
+  }),
+);
 
-router.post('/get', (req, res) => {
-  GlobalSettings.find({})
-    .lean()
-    .exec()
-    .then((globalSettingDocs) => {
-      okResponse(res, globalSettingDocs);
-    })
-    .catch((err: MongoError) => {
-      internalServerError(res, err.name, err.message);
-    });
-});
-
-// Respond with all the Endpoints in this Route
-router.post('/endpoints', (req, res) =>
-  new EndpointGenerator(res, router).serve(),
+router.post('/smtp-provider', (req, res) =>
+  callorThrow(res, () => {
+    const { providerId }: { providerId: string } = req.body;
+    if (providerId && typeof providerId === 'string') {
+      const smtpProvider = defaultSmtpProvider(providerId);
+      void savenSendit(res, smtpProvider);
+    } else {
+      throw new BadRequest('providerId', 'Request');
+    }
+  }),
 );
 
 export default router;

@@ -3,89 +3,55 @@ import express from 'express';
 
 // Response Handlers
 import {
-  okResponse,
   createdResponse,
-  internalServerError,
-  badRequest,
-  notFound,
+  errorResponseHandler,
 } from '@plugins/server/responses';
+
+// HTTP Error Classes
+import { NotFound, BadRequest } from '@plugins/errors';
 
 // Model
 import { Scopes, Credentials } from '@models';
 
 // Others
-import { EndpointGenerator } from '@plugins/server/generators';
 import { objectID, isUndefined } from '@plugins/misc';
 
 // Types
-import type { Error as MongoError } from 'mongoose';
-import type { IScope } from '@models/types';
+import type { RequestHandler } from 'express';
 
 // Router
 const router = express.Router();
 
-router.post('/add', (req, res) => {
-  const { name, drive_id, credential_id } = req.body;
-  if (!isUndefined([name, drive_id, credential_id])) {
-    Credentials.checkID(credential_id)
-      .then((idCheck) => {
-        if (idCheck) {
-          const newID = objectID('scope');
-          const newScope: IScope = {
-            _id: newID,
-            name,
-            added_at: Date.now(),
-            drive_id,
-            related_to: [credential_id],
-          };
-          Scopes.create(newScope)
-            .then((savedDoc) => {
-              createdResponse(res, savedDoc.toObject());
-            })
-            .catch((err: MongoError) => {
-              internalServerError(res, err.name, err.message);
-            });
-        } else {
-          notFound(
-            res,
-            'Credential ID Not found in the Database, Kindly Send the Correct ID',
-          );
-        }
-      })
-      .catch((err: MongoError) => {
-        internalServerError(res, err.name, err.message);
-      });
-  } else {
-    badRequest(res, 'name, drive_id, credential_id', 'Request Body as JSON');
+router.post('/add', (async (req, res) => {
+  try {
+    const { name, drive_id, credential_id } = req.body;
+    if (!isUndefined([name, drive_id, credential_id])) {
+      const idCheck = await Credentials.checkID(credential_id);
+      if (idCheck) {
+        const newID = objectID('scope');
+        const newScope = new Scopes({
+          _id: newID,
+          name,
+          added_at: Date.now(),
+          drive_id,
+          related_to: [credential_id],
+        });
+        const savedDoc = await Scopes.create(newScope);
+        createdResponse(res, savedDoc.toObject());
+      } else {
+        throw new NotFound(
+          'Credential ID Not found in the Database, Kindly Send the Correct ID',
+        );
+      }
+    } else {
+      throw new BadRequest(
+        'name, drive_id, credential_id',
+        'Request Body as JSON',
+      );
+    }
+  } catch (e) {
+    errorResponseHandler(res, e);
   }
-});
-
-router.post('/get', (req, res) => {
-  Scopes.find({})
-    .lean()
-    .exec()
-    .then((scopeDocs) => {
-      okResponse(res, scopeDocs);
-    })
-    .catch((err: MongoError) => {
-      internalServerError(res, err.name, err.message);
-    });
-});
-
-router.post('/reset', (req, res) => {
-  Scopes.clearAll()
-    .then((result) => {
-      okResponse(res, result);
-      res.status(200).json(result);
-    })
-    .catch((error: MongoError) => {
-      internalServerError(res, error.name, error.message);
-    });
-});
-
-// Respond with all the Endpoints in this Route
-router.post('/endpoints', (req, res) =>
-  new EndpointGenerator(res, router).serve(),
-);
+}) as RequestHandler);
 
 export default router;

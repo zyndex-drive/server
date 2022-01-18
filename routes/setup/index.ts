@@ -1,17 +1,8 @@
 // Initialization
 import express from 'express';
 
-// Sub Routes
-import credentials from './credentials';
-import policies from './policies';
-import roles from './roles';
-import scopes from './scope';
-import frontends from './frontend';
-import settings from './settings';
-import tokens from './token';
-import smtpProviders from './smtp-provider';
-import smtpMailers from './smtp-mailer';
-import users from './user';
+// Route Map
+import routes from './routes';
 
 // Others
 import { EndpointGenerator } from '@plugins/server/generators';
@@ -20,16 +11,10 @@ import { EndpointGenerator } from '@plugins/server/generators';
 const router = express.Router();
 
 // Assign Sub Routes to Setup Route
-router.use('/credentials', credentials);
-router.use('/policies', policies);
-router.use('/roles', roles);
-router.use('/scopes', scopes);
-router.use('/frontends', frontends);
-router.use('/settings', settings);
-router.use('/tokens', tokens);
-router.use('/smtp-provider', smtpProviders);
-router.use('/smtp-mailers', smtpMailers);
-router.use('/users', users);
+routes.forEach((route) => {
+  router.use(route.name, route.map);
+  router.use(route.name, route.setup);
+});
 
 // Respond with all the Endpoints in the Route
 router.post('/endpoints', (req, res) =>

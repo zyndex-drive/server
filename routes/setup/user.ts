@@ -5,20 +5,20 @@ import express from 'express';
 import {
   okResponse,
   createdResponse,
-  badRequest,
-  notFound,
-  internalServerError,
+  errorResponseHandler,
 } from '@plugins/server/responses';
+
+// Http Error Classes
+import { NotFound, BadRequest } from '@plugins/errors';
 
 // Model
 import { Users, Scopes, Roles } from '@models';
 
 // Others
-import { EndpointGenerator } from '@plugins/server/generators';
 import { generateUID, objectID, isUndefined } from '@plugins/misc';
 
 // Types
-import { Error as MongoError } from 'mongoose';
+import { RequestHandler } from 'express';
 import { IUser } from '@models/types';
 
 const router = express.Router();
@@ -33,95 +33,52 @@ interface IRequestUserData {
   scope_id: string;
 }
 
-router.post('/add', (req, res) => {
-  Users.find({})
-    .exec()
-    .then((userDocs) => {
-      if (userDocs.length > 0) {
-        okResponse(res, 'Only one Owner can be Added in the Database');
-      } else {
-        const { name, email, avatar, password }: IRequestUserData = req.body;
-        if (!isUndefined([name, email, password])) {
-          Scopes.find({})
-            .exec()
-            .then((scopeDocs) =>
-              Promise.all([
-                scopeDocs,
-                Roles.findOne({ type: 'main', name: 'Owner' }).exec(),
-              ]),
-            )
-            .then(([scopeDocs, roleDoc]) => {
-              if (scopeDocs.length > 0 && roleDoc) {
-                const newId = objectID('u');
-                const token_hash = generateUID();
-                const newUser: IUser = {
-                  _id: newId,
-                  name,
-                  email,
-                  password,
-                  avatar: avatar ? avatar : AVATAR_DEFAULT,
-                  registered_at: Date.now(),
-                  restricted: false,
-                  roles: [
-                    ...scopeDocs.map((scope) => ({
-                      scope: scope._id,
-                      role: roleDoc._id,
-                    })),
-                  ],
-                  verified_at: Date.now(),
-                  token_hash,
-                };
-                const newUserDoc = new Users(newUser);
-                newUserDoc
-                  .save()
-                  .then((userDoc) => {
-                    createdResponse(res, userDoc.toObject());
-                  })
-                  .catch((err: MongoError) => {
-                    internalServerError(res, err.name, err.message);
-                  });
-              } else {
-                notFound(res, 'Scope Id and Roles Not Found in the Database');
-              }
-            })
-            .catch((err: MongoError) => {
-              internalServerError(res, err.name, err.message);
-            });
+router.post('/add', (async (req, res) => {
+  try {
+    const userDocs = await Users.find({}).exec();
+    if (userDocs.length > 0) {
+      okResponse(res, 'Only one Owner can be Added in the Database');
+    } else {
+      const { name, email, avatar, password }: IRequestUserData = req.body;
+      if (!isUndefined([name, email, password])) {
+        const scopeDocs = await Scopes.find({});
+        const roleDoc = await Roles.findOne({
+          type: 'main',
+          name: 'Owner',
+        }).exec();
+        if (scopeDocs.length > 0 && roleDoc) {
+          const newId = objectID('u');
+          const token_hash = generateUID();
+          const newUser: IUser = {
+            _id: newId,
+            name,
+            email,
+            password,
+            avatar: avatar ? avatar : AVATAR_DEFAULT,
+            registered_at: Date.now(),
+            restricted: false,
+            roles: [
+              ...scopeDocs.map((scope) => ({
+                scope: scope._id,
+                role: roleDoc._id,
+              })),
+            ],
+            verified_at: Date.now(),
+            token_hash,
+          };
+          const newUserDoc = new Users(newUser);
+          const savedUserDoc = await newUserDoc.save();
+          createdResponse(res, savedUserDoc.toObject());
         } else {
-          badRequest(res, 'name, email, password', 'Request');
+          throw new NotFound('Scope Id and Roles Not Found in the Database');
         }
+      } else {
+        throw new BadRequest('name, email, password', 'Request');
       }
-    })
-    .catch((err: MongoError) => {
-      internalServerError(res, err.name, err.message);
-    });
-});
-
-router.post('/get', (req, res) => {
-  Users.find({})
-    .exec()
-    .then((userDocs) => {
-      okResponse(res, userDocs);
-    })
-    .catch((err: MongoError) => {
-      internalServerError(res, err.name, err.message);
-    });
-});
-
-router.post('/reset', (req, res) => {
-  Users.clearAll()
-    .then((result) => {
-      okResponse(res, result);
-      res.status(200).json(result);
-    })
-    .catch((error: MongoError) => {
-      internalServerError(res, error.name, error.message);
-    });
-});
-
-// Respond with all the Endpoints in this Route
-router.post('/endpoints', (req, res) =>
-  new EndpointGenerator(res, router).serve(),
-);
+    }
+  } catch (e) {
+    errorResponseHandler(res, e);
+  }
+}) as RequestHandler);
 
 export default router;

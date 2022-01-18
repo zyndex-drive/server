@@ -3,23 +3,21 @@ import express from 'express';
 
 // Response Handlers
 import {
-  okResponse,
   createdResponse,
-  badRequest,
-  notFound,
-  internalServerError,
+  errorResponseHandler,
 } from '@plugins/server/responses';
+
+// Http Error Classes
+import { NotFound, BadRequest } from '@plugins/errors';
 
 // Model
 import { SMTPMailers, SMTPProviders } from '@models';
 
 // Others
-import { EndpointGenerator } from '@plugins/server/generators';
 import { objectID, isUndefined } from '@plugins/misc';
 
 // Types
-import type { Error as MongoError } from 'mongoose';
-import type { ISMTPMailer } from '@models/types';
+import type { RequestHandler } from 'express';
 
 // Router
 const router = express.Router();
@@ -32,67 +30,36 @@ interface IRequestSMTPMail {
   provider_id: string;
 }
 
-router.post('/add', (req, res) => {
-  const { name, email, password, type, provider_id }: IRequestSMTPMail =
-    req.body;
-  if (!isUndefined([name, email, password, type, provider_id])) {
-    SMTPProviders.findById(provider_id)
-      .exec()
-      .then((smtpProviderDoc) => {
-        if (smtpProviderDoc) {
-          const newID = objectID('f');
-          const newSmtpMailer: ISMTPMailer = {
-            _id: newID,
-            name,
-            email,
-            password,
-            type,
-            provider: smtpProviderDoc._id,
-          };
-          SMTPMailers.create(newSmtpMailer)
-            .then((newSmtpMailerDoc) => {
-              createdResponse(res, newSmtpMailerDoc);
-            })
-            .catch((err: MongoError) => {
-              internalServerError(res, err.name, err.message);
-            });
-        } else {
-          notFound(res, 'SMTP Provider ID Not Found in the Database');
-        }
-      })
-      .catch((err: MongoError) => {
-        internalServerError(res, err.name, err.message);
-      });
-  } else {
-    badRequest(res, 'alias, client_id, client_secret, email', 'Request Body');
+router.post('/add', (async (req, res) => {
+  try {
+    const { name, email, password, type, provider_id }: IRequestSMTPMail =
+      req.body;
+    if (!isUndefined([name, email, password, type, provider_id])) {
+      const smtpProviderDoc = await SMTPProviders.findById(provider_id).exec();
+      if (smtpProviderDoc) {
+        const newID = objectID('f');
+        const newSmtpMailer = new SMTPMailers({
+          _id: newID,
+          name,
+          email,
+          password,
+          type,
+          provider: smtpProviderDoc._id,
+        });
+        const newSmtpMailerDoc = await SMTPMailers.create(newSmtpMailer);
+        createdResponse(res, newSmtpMailerDoc);
+      } else {
+        throw new NotFound('SMTP Provider ID Not Found in the Database');
+      }
+    } else {
+      throw new BadRequest(
+        'alias, client_id, client_secret, email',
+        'Request Body',
+      );
+    }
+  } catch (e) {
+    errorResponseHandler(res, e);
   }
-});
-
-router.post('/get', (req, res) => {
-  SMTPMailers.find({})
-
-    .exec()
-    .then((smtpMailerDocs) => {
-      okResponse(res, smtpMailerDocs);
-    })
-    .catch((err: MongoError) => {
-      internalServerError(res, err.name, err.message);
-    });
-});
-
-router.post('/reset', (req, res) => {
-  SMTPMailers.clearAll()
-    .then((result) => {
-      okResponse(res, result);
-    })
-    .catch((error: MongoError) => {
-      internalServerError(res, error.name, error.message);
-    });
-});
-
-// Respond with all the Endpoints in this Route
-router.post('/endpoints', (req, res) =>
-  new EndpointGenerator(res, router).serve(),
-);
+}) as RequestHandler);
 
 export default router;

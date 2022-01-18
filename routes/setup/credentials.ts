@@ -3,21 +3,20 @@ import express from 'express';
 
 // Response Handlers
 import {
-  okResponse,
   createdResponse,
-  badRequest,
-  internalServerError,
+  errorResponseHandler,
 } from '@plugins/server/responses';
+
+import { BadRequest } from '@plugins/errors';
 
 // Model
 import { Credentials } from '@models';
 
 // Others
-import { EndpointGenerator } from '@plugins/server/generators';
 import { objectID, isUndefined } from '@plugins/misc';
 
 // Types
-import type { Error as MongoError } from 'mongoose';
+import type { RequestHandler } from 'express';
 import type { ICredentials } from '@models/types';
 
 // Router
@@ -31,63 +30,36 @@ interface IRequestCredentials {
   email: string;
 }
 
-router.post('/add', (req, res) => {
-  const {
-    alias,
-    client_id,
-    client_secret,
-    redirect_uri,
-    email,
-  }: IRequestCredentials = req.body;
-  if (!isUndefined([alias, client_id, client_secret, redirect_uri, email])) {
-    const newID = objectID('c');
-    const newCredential: ICredentials = {
-      _id: newID,
+router.post('/add', (async (req, res) => {
+  try {
+    const {
       alias,
       client_id,
       client_secret,
       redirect_uri,
       email,
-    };
-    Credentials.create(newCredential)
-      .then((savedCreds) => {
-        createdResponse(res, savedCreds.toObject());
-      })
-      .catch((err: MongoError) => {
-        internalServerError(res, err.name, err.message);
-      });
-  } else {
-    badRequest(
-      res,
-      'alias, client_id, redirect_uri, client_secret, email',
-      'Request Body',
-    );
+    }: IRequestCredentials = req.body;
+    if (!isUndefined([alias, client_id, client_secret, redirect_uri, email])) {
+      const newID = objectID('c');
+      const newCredential: ICredentials = {
+        _id: newID,
+        alias,
+        client_id,
+        client_secret,
+        redirect_uri,
+        email,
+      };
+      const savedCreds = await Credentials.create(newCredential);
+      createdResponse(res, savedCreds.toObject());
+    } else {
+      throw new BadRequest(
+        'alias, client_id, redirect_uri, client_secret, email',
+        'Request Body',
+      );
+    }
+  } catch (e) {
+    errorResponseHandler(res, e);
   }
-});
-
-router.post('/get', (req, res) => {
-  Credentials.find({})
-
-    .exec()
-    .then((credentialDocs) => okResponse(res, credentialDocs))
-    .catch((err: MongoError) => {
-      internalServerError(res, err.name, err.message);
-    });
-});
-
-router.delete('/reset', (req, res) => {
-  Credentials.clearAll()
-    .then((result) => {
-      okResponse(res, result);
-    })
-    .catch((error: MongoError) => {
-      internalServerError(res, error.name, error.message);
-    });
-});
-
-// Respond with all the Endpoints in this Route
-router.post('/endpoints', (req, res) =>
-  new EndpointGenerator(res, router).serve(),
-);
+}) as RequestHandler);
 
 export default router;

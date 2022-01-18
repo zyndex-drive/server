@@ -3,22 +3,21 @@ import express from 'express';
 
 // Response Handlers
 import {
-  okResponse,
   createdResponse,
-  badRequest,
-  internalServerError,
+  errorResponseHandler,
 } from '@plugins/server/responses';
+
+// HTTP Error Classes
+import { BadRequest } from '@plugins/errors';
 
 // Model
 import { SMTPProviders } from '@models';
 
 // Others
-import { EndpointGenerator } from '@plugins/server/generators';
 import { objectID, isUndefined } from '@plugins/misc';
 
 // Types
-import type { Error as MongoError } from 'mongoose';
-import type { ISMTPProvider } from '@models/types';
+import type { RequestHandler } from 'express';
 
 // Router
 const router = express.Router();
@@ -37,54 +36,30 @@ interface IRequestSMTPProvider {
   };
 }
 
-router.post('/add', (req, res) => {
-  const { name, alias, type, smtp, imap }: IRequestSMTPProvider = req.body;
-  if (!isUndefined([name, alias, type, smtp, imap])) {
-    const newID = objectID('s');
-    const newSmtpProvider: ISMTPProvider = {
-      _id: newID,
-      name,
-      alias,
-      type,
-      smtp,
-      imap,
-    };
-    SMTPProviders.create(newSmtpProvider)
-      .then((newSmtpProviderDoc) => {
-        createdResponse(res, newSmtpProviderDoc.toObject());
-      })
-      .catch((err: MongoError) => {
-        internalServerError(res, err.name, err.message);
+router.post('/add', (async (req, res) => {
+  try {
+    const { name, alias, type, smtp, imap }: IRequestSMTPProvider = req.body;
+    if (!isUndefined([name, alias, type, smtp, imap])) {
+      const newID = objectID('s');
+      const newSmtpProvider = new SMTPProviders({
+        _id: newID,
+        name,
+        alias,
+        type,
+        smtp,
+        imap,
       });
-  } else {
-    badRequest(res, 'alias, client_id, client_secret, email', 'Request Body');
+      const newSmtpProviderDoc = await newSmtpProvider.save();
+      createdResponse(res, newSmtpProviderDoc.toObject());
+    } else {
+      throw new BadRequest(
+        'alias, client_id, client_secret, email',
+        'Request Body',
+      );
+    }
+  } catch (e) {
+    errorResponseHandler(res, e);
   }
-});
-
-router.post('/get', (req, res) => {
-  SMTPProviders.find({})
-    .exec()
-    .then((smtpProviderDocs) => {
-      okResponse(res, smtpProviderDocs);
-    })
-    .catch((err: MongoError) => {
-      internalServerError(res, err.name, err.message);
-    });
-});
-
-router.post('/reset', (req, res) => {
-  SMTPProviders.clearAll()
-    .then((result) => {
-      okResponse(res, result);
-    })
-    .catch((error: MongoError) => {
-      internalServerError(res, error.name, error.message);
-    });
-});
-
-// Respond with all the Endpoints in this Route
-router.post('/endpoints', (req, res) =>
-  new EndpointGenerator(res, router).serve(),
-);
+}) as RequestHandler);
 
 export default router;
