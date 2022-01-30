@@ -96,10 +96,7 @@ async function importPrivateKey(pemKey: string): Promise<CryptoKey> {
  * @param {string} key - Cryptographic Service Account Private key
  * @returns {Promise<ArrayBuffer>} - JWT Array Buffer
  */
-async function createSignature(
-  text: string,
-  key: CryptoKey,
-): Promise<ArrayBuffer> {
+function createSignature(text: string, key: CryptoKey): Promise<ArrayBuffer> {
   const textBuffer = stringToArrayBuffer(text);
   const jwtKey = subtleCrypto.sign('RSASSA-PKCS1-v1_5', key, textBuffer);
   return jwtKey;
@@ -112,29 +109,23 @@ async function createSignature(
  * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
  * @returns {string} - JWT Signature for the Service Account
  */
-export default function (
+export default async function (
   serviceAccount: IServiceAccLeanDoc,
   scopes: TGoogleApiScope[],
 ): Promise<string> {
-  return new Promise<string>((resolve, reject) => {
-    const iat = Date.now() / 1000;
-    const stringizedScopes = stringizeScope(scopes);
-    const payload = {
-      iss: serviceAccount.private_key.id,
-      scope: stringizedScopes,
-      aud: 'https://oauth2.googleapis.com/token',
-      exp: iat + 3600,
-      iat,
-    };
-    const encPayload = Buffer.from(JSON.stringify(payload)).toString('base64');
-    const encHeader = Buffer.from(JSON.stringify(jwtHeader)).toString('base64');
-    importPrivateKey(serviceAccount.private_key.key)
-      .then((key) => createSignature(`${encHeader}.${encPayload}`, key))
-      .then((signed) => arrayBufferToBase64(signed))
-      .then((jwtSignature) => `${encHeader}.${encPayload}.${jwtSignature}`)
-      .then(resolve)
-      .catch((err: string) => {
-        reject(new Error(err));
-      });
-  });
+  const iat = Date.now() / 1000;
+  const stringizedScopes = stringizeScope(scopes);
+  const payload = {
+    iss: serviceAccount.private_key.id,
+    scope: stringizedScopes,
+    aud: 'https://oauth2.googleapis.com/token',
+    exp: iat + 3600,
+    iat,
+  };
+  const encPayload = Buffer.from(JSON.stringify(payload)).toString('base64');
+  const encHeader = Buffer.from(JSON.stringify(jwtHeader)).toString('base64');
+  const key = await importPrivateKey(serviceAccount.private_key.key);
+  const signed = await createSignature(`${encHeader}.${encPayload}`, key);
+  const jwtSignature = arrayBufferToBase64(signed);
+  return `${encHeader}.${encPayload}.${jwtSignature}`;
 }

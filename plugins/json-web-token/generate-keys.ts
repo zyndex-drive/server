@@ -13,11 +13,10 @@ interface IKeyPairs {
  *
  * @returns {Promise<IKeyPairs>} - Promise Resolving to Key pairs
  */
-export default function (): Promise<IKeyPairs> {
-  return new Promise<IKeyPairs>((resolve, reject) => {
-    const { GLOBAL_PASSPHRASE } = process.env;
+export default async function (): Promise<IKeyPairs> {
+  const { GLOBAL_PASSPHRASE } = process.env;
     if (GLOBAL_PASSPHRASE) {
-      promisedgenerateKeyPair('rsa', {
+      const keyPairs = await promisedgenerateKeyPair('rsa', {
         modulusLength: 2048,
         publicKeyEncoding: {
           type: 'spki',
@@ -30,14 +29,8 @@ export default function (): Promise<IKeyPairs> {
           passphrase: GLOBAL_PASSPHRASE,
         },
       })
-        .then(resolve)
-        .catch((err) => {
-          reject(new Error(String(err)));
-        });
+      return keyPairs;
     } else {
-      reject(
-        new Error('No Global Passphrase is Found in the Environment Variables'),
-      );
+      throw new Error('No Global Passphrase is Found in the Environment Variables')
     }
-  });
 }

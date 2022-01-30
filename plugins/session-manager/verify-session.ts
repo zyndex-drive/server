@@ -1,8 +1,6 @@
 import { Sessions } from '@models';
 import { verifyJWT } from '@plugins/json-web-token';
 
-import type { Error as MongoError } from 'mongoose';
-
 /**
  * Verifies the Session Document and also Verifies the JWT
  *
@@ -10,46 +8,30 @@ import type { Error as MongoError } from 'mongoose';
  * @param {string} sessionToken - Session Token Received from Frontend
  * @returns {Promise<boolean>} - Promise Resolving to True/False
  */
-export default function (
+export default async function (
   sessionId: string,
   sessionToken: string,
 ): Promise<boolean> {
-  return new Promise<boolean>((resolve, reject) => {
-    Sessions.findById(sessionId)
-      .lean()
-      .exec()
-      .then((sessionDoc) => {
-        if (sessionDoc) {
-          const { token_secret: savedToken } = sessionDoc;
-          if (savedToken === sessionToken) {
-            verifyJWT(sessionToken)
-              .then((decryptedResult) => {
-                const payload = decryptedResult.payload;
-                if (
-                  payload.user_id === String(sessionDoc.user_id) &&
-                  payload.frontend === String(sessionDoc.frontend)
-                ) {
-                  resolve(true);
-                } else {
-                  reject(new Error('Payload is Wrong in the JWT'));
-                }
-              })
-              .catch((err: string) => {
-                reject(new Error(err));
-              });
-          } else {
-            reject(
-              new Error(
-                'Session Token not Matching with the Saved Token in Database',
-              ),
-            );
-          }
-        } else {
-          reject(new Error('Session Document not Found in the Database'));
-        }
-      })
-      .catch((err: MongoError) => {
-        reject(new Error(`${err.name}: ${err.message}`));
-      });
-  });
+  const sessionDoc = await Sessions.findById(sessionId).lean().exec();
+  if (sessionDoc) {
+    const { token_secret: savedToken } = sessionDoc;
+    if (savedToken === sessionToken) {
+      const decryptedResult = await verifyJWT(sessionToken);
+      const payload = decryptedResult.payload;
+      if (
+        payload.user_id === String(sessionDoc.user_id) &&
+        payload.frontend === String(sessionDoc.frontend)
+      ) {
+        return true;
+      } else {
+        throw new Error('Payload is Wrong in the JWT');
+      }
+    } else {
+      throw new Error(
+        'Session Token not Matching with the Saved Token in Database',
+      );
+    }
+  } else {
+    throw new Error('Session Document not Found in the Database');
+  }
 }

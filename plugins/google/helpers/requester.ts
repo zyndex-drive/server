@@ -9,7 +9,7 @@ import serialize from 'query-string';
 
 // Types
 import type { IGoogleRequest, IGoogleResponse } from './types';
-import type { AxiosError, AxiosResponse } from 'axios';
+import type { AxiosResponse } from 'axios';
 import type { GotReturn } from 'got';
 import type { ITokenDoc } from '@models/types';
 
@@ -99,25 +99,19 @@ const googleRequest: IGoogleRequest = {
    * @param {Record<string, string>} headers - Additional Headers to be Sent
    * @returns {Promise<IGoogleResponse>} - Response from the API
    */
-  get: <T extends string, U = Record<string, unknown>>(
+  get: async <T extends string, U = Record<string, unknown>>(
     api: T,
     token: ITokenDoc,
     params?: Record<string, string | number | boolean>,
     headers?: Record<string, string>,
-  ): Promise<IGoogleResponse<U>> =>
-    new Promise<IGoogleResponse<U>>((resolve, reject) => {
-      const url = constructURL<T>(api, params);
-      const getHeaders = constructHeaders('get', token, headers);
-      axios
-        .get<U>(url, {
-          headers: getHeaders,
-        })
-        .then((response) => handleResponse<U>(response))
-        .then(resolve)
-        .catch((error: AxiosError) => {
-          reject(new Error(`${error.name}: ${error.message}`));
-        });
-    }),
+  ): Promise<IGoogleResponse<U>> => {
+    const url = constructURL<T>(api, params);
+    const getHeaders = constructHeaders('get', token, headers);
+    const response = await axios.get<U>(url, {
+      headers: getHeaders,
+    });
+    return handleResponse<U>(response);
+  },
 
   /**
    * Makes a POST Google API Request
@@ -129,7 +123,7 @@ const googleRequest: IGoogleRequest = {
    * @param {Record<string, string>} headers - Additional Headers to be Sent
    * @returns {Promise<IGoogleResponse>} - Response from the API
    */
-  post: <
+  post: async <
     T extends string,
     U = Record<string, unknown>,
     V = Record<string, unknown>,
@@ -139,20 +133,14 @@ const googleRequest: IGoogleRequest = {
     data?: U,
     params?: Record<string, string>,
     headers?: Record<string, string>,
-  ): Promise<IGoogleResponse<V>> =>
-    new Promise<IGoogleResponse<V>>((resolve, reject) => {
-      const url = constructURL<T>(api, params);
-      const getHeaders = constructHeaders('post', token, headers);
-      axios
-        .post<V>(url, data, {
-          headers: getHeaders,
-        })
-        .then((response) => handleResponse<V>(response))
-        .then(resolve)
-        .catch((error: AxiosError) => {
-          reject(new Error(`${error.name}: ${error.message}`));
-        });
-    }),
+  ): Promise<IGoogleResponse<V>> => {
+    const url = constructURL<T>(api, params);
+    const getHeaders = constructHeaders('post', token, headers);
+    const response = await axios.post<V>(url, data, {
+      headers: getHeaders,
+    });
+    return handleResponse<V>(response);
+  },
 
   /**
    * Makes a POST Google API Request
@@ -164,7 +152,7 @@ const googleRequest: IGoogleRequest = {
    * @param {Record<string, string>} headers - Additional Headers to be Sent
    * @returns {Promise<IGoogleResponse>} - Response from the API
    */
-  patch: <
+  patch: async <
     T extends string,
     U = Record<string, unknown>,
     V = Record<string, unknown>,
@@ -174,20 +162,14 @@ const googleRequest: IGoogleRequest = {
     data?: U,
     params?: Record<string, string>,
     headers?: Record<string, string>,
-  ): Promise<IGoogleResponse<V>> =>
-    new Promise<IGoogleResponse<V>>((resolve, reject) => {
-      const url = constructURL<T>(api, params);
-      const getHeaders = constructHeaders('post', token, headers);
-      axios
-        .patch<V>(url, data, {
-          headers: getHeaders,
-        })
-        .then((response) => handleResponse<V>(response))
-        .then(resolve)
-        .catch((error: AxiosError) => {
-          reject(new Error(`${error.name}: ${error.message}`));
-        });
-    }),
+  ): Promise<IGoogleResponse<V>> => {
+    const url = constructURL<T>(api, params);
+    const getHeaders = constructHeaders('post', token, headers);
+    const response = await axios.patch<V>(url, data, {
+      headers: getHeaders,
+    });
+    return handleResponse<V>(response);
+  },
 
   /**
    * Makes a DELETE Google API Request
@@ -198,26 +180,20 @@ const googleRequest: IGoogleRequest = {
    * @param {Record<string, string>} headers - Additional Headers to be Sent
    * @returns {Promise<IGoogleResponse>} - Response from the API
    */
-  delete: <T extends string, U = Record<string, unknown>>(
+  delete: async <T extends string, U = Record<string, unknown>>(
     api: T,
     token: ITokenDoc,
     data?: Record<string, unknown>,
     headers?: Record<string, string>,
-  ): Promise<IGoogleResponse<U>> =>
-    new Promise<IGoogleResponse<U>>((resolve, reject) => {
-      const url = constructURL<T>(api);
-      const getHeaders = constructHeaders('post', token, headers);
-      axios
-        .delete<U>(url, {
-          headers: getHeaders,
-          data,
-        })
-        .then((response) => handleResponse<U>(response))
-        .then(resolve)
-        .catch((error: AxiosError) => {
-          reject(new Error(`${error.name}: ${error.message}`));
-        });
-    }),
+  ): Promise<IGoogleResponse<U>> => {
+    const url = constructURL<T>(api);
+    const getHeaders = constructHeaders('post', token, headers);
+    const response = await axios.delete<U>(url, {
+      headers: getHeaders,
+      data,
+    });
+    return handleResponse<U>(response);
+  },
 
   /**
    * Makes a Streaming Request to Google API

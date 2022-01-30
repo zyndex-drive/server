@@ -14,36 +14,28 @@ export const heirarchy = {
 export const getHeirarchy = (roleDoc: IRoleDoc): number | undefined =>
   dotProp.get(heirarchy, `${roleDoc.name}`);
 
-export const getHighestHeirarchy = (
+export const getHighestHeirarchy = async (
   roleDocs: IRoleLeanDoc[],
-): Promise<IRoleLeanDoc> =>
-  new Promise<IRoleLeanDoc>((resolve, reject) => {
-    try {
-      const heirarchies: { heirarchy: number; doc: IRoleLeanDoc }[] = [];
-      roleDocs.forEach((role, index) => {
+): Promise<IRoleLeanDoc> => {
+  const heirarchies: { heirarchy: number; doc: IRoleLeanDoc }[] = [];
+  const promises = roleDocs.map(
+    (role) =>
+      new Promise<void>((resolve) => {
         const heir: number | undefined = dotProp.get(heirarchy, `${role.name}`);
         if (heir && heir !== undefined) {
           heirarchies.push({ heirarchy: heir, doc: role });
         }
-        if (index === roleDocs.length - 1) {
-          const roleNumbers = heirarchies.map(
-            (heirarchy) => heirarchy.heirarchy,
-          );
-          const highest: number = mathjs.max(roleNumbers);
-          const [highestRoleDoc] = heirarchies.filter(
-            (heirarchy) => heirarchy.heirarchy === highest,
-          );
-          resolve(highestRoleDoc.doc);
-        }
-      });
-    } catch {
-      reject(
-        new Error(
-          'Error while Determining User Heirarchy, Please Try again Later',
-        ),
-      );
-    }
-  });
+        resolve();
+      }),
+  );
+  await Promise.all(promises);
+  const roleNumbers = heirarchies.map((heirarchy) => heirarchy.heirarchy);
+  const highest: number = mathjs.max(roleNumbers);
+  const [highestRoleDoc] = heirarchies.filter(
+    (heirarchy) => heirarchy.heirarchy === highest,
+  );
+  return highestRoleDoc.doc;
+};
 
 /**
  * Checks Herirarchy of Admin's Role and User's Role for Performing a Action

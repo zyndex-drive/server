@@ -37,23 +37,21 @@ export function handleServieAccount(serviceAcc: string): Promise<ITokenDoc> {
  * @param {string} credentials - Credential Document from Database
  * @returns {Promise<IMailTokens>} - Tokens
  */
-export function retreiveTokens(
+export async function retreiveTokens(
   credentials: ICredentialsDoc['_id'],
 ): Promise<IMailTokens> {
-  return new Promise<IMailTokens>((resolve, reject) => {
-    oauthHelpers
-      .resolveToken(credentials, gmailScopes, true)
-      .then((resolvedTokens) => ({
-        credentials: resolvedTokens.credentials,
-        tokens: {
-          refresh: resolvedTokens.tokens.refresh,
-          access: resolvedTokens.tokens.access,
-        },
-        service_account: resolvedTokens.service_account,
-      }))
-      .then(resolve)
-      .catch((err: string) => {
-        reject(new Error(err));
-      });
-  });
+  const resolvedTokens = await oauthHelpers.resolveToken(
+    credentials,
+    gmailScopes,
+    true,
+  );
+  const data = {
+    credentials: resolvedTokens.credentials,
+    tokens: {
+      refresh: resolvedTokens.tokens.refresh,
+      access: resolvedTokens.tokens.access,
+    },
+    service_account: resolvedTokens.service_account,
+  };
+  return data;
 }

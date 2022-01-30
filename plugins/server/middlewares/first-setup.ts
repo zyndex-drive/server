@@ -17,7 +17,7 @@ import { BadRequest, UnAuthorized, InternalServerError } from '@plugins/errors';
 
 // Type Imports
 import { Request, Response, NextFunction } from 'express';
-import { Error as MongoError, Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { map as roleMap } from '@plugins/templates/roles';
 import { map as policyMap } from '@plugins/templates/policies';
 
@@ -57,34 +57,24 @@ async function checkDBPresent<INTERFACE, DOC, MODEL extends Model<DOC>>(
   db: MODEL,
   map?: Readonly<INTERFACE>[],
 ): Promise<boolean> {
-  return new Promise<boolean>((resolve, reject) => {
-    const collections = db.find({}).lean().exec();
-    collections
-      .then((result) => {
-        if (result) {
-          if (result.length > 0) {
-            if (map) {
-              if (map.length === result.length) {
-                resolve(true);
-              } else {
-                resolve(false);
-              }
-            } else {
-              resolve(true);
-            }
-          } else {
-            resolve(false);
-          }
+  const collections = await db.find({}).lean().exec();
+  if (collections) {
+    if (collections.length > 0) {
+      if (map) {
+        if (map.length === collections.length) {
+          return true;
         } else {
-          reject(
-            new InternalServerError('Unknown Error while Querying Collection'),
-          );
+          return false;
         }
-      })
-      .catch((e: MongoError) => {
-        reject(new InternalServerError(e.message, e.name));
-      });
-  });
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  } else {
+    throw new InternalServerError('Unknown Error while Querying Collection');
+  }
 }
 
 /**

@@ -1,4 +1,4 @@
-export { heirarchy, heirarchyChecker } from './heirarchy';
-export { checkPolicy, getDeeperRoles } from './policy-checker';
-export { retrievePolicies } from './policy-retriever';
+export * from './heirarchy';
+export * from './policy-checker';
+export * from './policy-retriever';
 export * from './model-methods';
