@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-50](https://github.com/zyndex-drive/server/compare/v0.2.0-49...v0.2.0-50) (2022-01-30)
+
+
+### Code Refactoring 🖌
+
+* **plugins:** completely refactor all the plugins to async/await from promises' ([d417cfe](https://github.com/zyndex-drive/server/commit/d417cfe0a151eedc9033cbf87f5a3765072044ef))
+
 ## [0.2.0-49](https://github.com/zyndex-drive/server/compare/v0.2.0-48...v0.2.0-49) (2022-01-18)
 
 
