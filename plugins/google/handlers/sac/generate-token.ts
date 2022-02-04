@@ -5,7 +5,6 @@ import { axios } from '@plugins';
 import { api, createJwtToken } from '@plugins/google/helpers';
 
 // Types
-import type { AxiosError } from 'axios';
 import type { IServiceAccLeanDoc } from '@models/types';
 import type {
   IGoogTokenResponse,
@@ -33,39 +32,27 @@ function constructTokenRequestURL(jwtSignature: string): {
 /**
  * Requests a Token Response from Google Servers for Generating Access Token for Service Account
  *
+ * @async
  * @param {IServiceAccLeanDoc} account - Service Account Document from Database
  * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
  * @returns {Promise<IGoogTokenResponse>} - Returns Token Response
  */
-function tokenRequest<TokenType>(
+async function tokenRequest<TokenType>(
   account: IServiceAccLeanDoc,
   scopes: TGoogleApiScope[],
 ): Promise<TokenType> {
-  return new Promise<TokenType>((resolve, reject) => {
-    createJwtToken(account, scopes)
-      .then((jwtSignature) => {
-        const { url, params } = constructTokenRequestURL(jwtSignature);
-        axios
-          .post(url, params, {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-          })
-          .then((response) => {
-            if (response.status === 200) {
-              resolve(response.data);
-            } else {
-              reject(new Error('Error While Generating the Tokens'));
-            }
-          })
-          .catch((error: AxiosError) => {
-            reject(new Error(`${error.name}: ${error.message}`));
-          });
-      })
-      .catch((err) => {
-        reject(new Error(err));
-      });
+  const jwtSignature = await createJwtToken(account, scopes);
+  const { url, params } = constructTokenRequestURL(jwtSignature);
+  const response = await axios.post<TokenType>(url, params, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
   });
+  if (response.status === 200) {
+    return response.data;
+  } else {
+    throw new Error('Error While Generating the Tokens');
+  }
 }
 
 /**
