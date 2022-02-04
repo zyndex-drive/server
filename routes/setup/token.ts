@@ -10,8 +10,11 @@ import {
 
 import { BadRequest } from '@plugins/errors';
 
+import { generateKeys } from '@plugins/json-web-token';
+import { generateRandomKeys } from '@plugins/crypto';
+
 // Model
-import { Tokens } from '@models';
+import { Tokens, Keys } from '@models';
 
 // Others
 import { objectID, isUndefined } from '@plugins/misc';
@@ -41,7 +44,7 @@ router.post('/add', (async (req, res) => {
     } else {
       const { token, expires_at }: IRequestToken = req.body;
       if (!isUndefined([token, expires_at])) {
-        const newID = objectID('f');
+        const newID = objectID();
         const newToken = new Tokens({
           _id: newID,
           token,
@@ -64,6 +67,21 @@ router.post('/add', (async (req, res) => {
   } catch (e) {
     errorResponseHandler(res, e);
   }
+}) as RequestHandler);
+
+router.post('/generate-key-pair', (async (req, res) => {
+  const keys = await generateKeys();
+  createdResponse(res, keys);
+}) as RequestHandler);
+
+router.post('/generate-random-bytes', (req, res) => {
+  const keys = generateRandomKeys();
+  createdResponse(res, keys);
+});
+
+router.post('/get-keys', (async (req, res) => {
+  const keys = await Keys.find({});
+  okResponse(res, keys);
 }) as RequestHandler);
 
 export default router;
