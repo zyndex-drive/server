@@ -1,6 +1,6 @@
 import { Schema } from 'mongoose';
 import appendStatics from './statics';
-import { cryptoPlugin, hashPlugin } from '@plugins/db/plugins';
+import { cryptoPlugin } from '@plugins/db/plugins';
 import type { ICredentials, ICredentialsDoc, ICredentialsModel } from './types';
 
 const schema = new Schema<ICredentialsDoc, ICredentialsModel, ICredentials>({
@@ -10,7 +10,7 @@ const schema = new Schema<ICredentialsDoc, ICredentialsModel, ICredentials>({
   alias: {
     type: String,
     required: true,
-    hash: true,
+    encrypt: true,
   },
   client_id: {
     type: String,
@@ -35,5 +35,4 @@ const schema = new Schema<ICredentialsDoc, ICredentialsModel, ICredentials>({
 });
 
 schema.plugin(cryptoPlugin<ICredentials, ICredentialsDoc, ICredentialsModel>());
-schema.plugin(hashPlugin<ICredentials, ICredentialsDoc, ICredentialsModel>());
 export default appendStatics(schema);
