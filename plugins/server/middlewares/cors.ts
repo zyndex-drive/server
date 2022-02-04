@@ -31,20 +31,23 @@ async function corsMiddleware(
         const headerPass = req.headers['x-local-dev-pass'];
         if (reqType === 'GET') {
           res.setHeader('Access-Control-Allow-Origin', '*');
-          res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+          res.setHeader('Access-Control-Allow-Methods', 'GET');
           res.setHeader(
             'Access-Control-Allow-Headers',
-            'x-local-dev-pass,x-secret-pass,X-Requested-With,content-type, Accept',
+            'x-local-dev-pass,x-secret-pass,X-Requested-With,x-lean-doc-request,content-type, Accept',
           );
           next();
         } else {
           if (headerPass) {
             if (secret === headerPass) {
               res.setHeader('Access-Control-Allow-Origin', '*');
-              res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+              res.setHeader(
+                'Access-Control-Allow-Methods',
+                'GET, POST, DELETE',
+              );
               res.setHeader(
                 'Access-Control-Allow-Headers',
-                'x-local-dev-pass,x-secret-pass,X-Requested-With,content-type, Accept',
+                'x-local-dev-pass,x-secret-pass,X-Requested-With,x-lean-doc-request,content-type, Accept',
               );
               next();
             } else {
@@ -68,10 +71,10 @@ async function corsMiddleware(
       if (origin && allowedDomains.indexOf(origin) > -1) {
         res.setHeader('Access-Control-Allow-Origin', origin);
       }
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
       res.setHeader(
         'Access-Control-Allow-Headers',
-        'x-local-dev-pass,x-secret-pass,X-Requested-With,content-type, Accept',
+        'x-local-dev-pass,x-secret-pass,X-Requested-With,x-lean-doc-request,content-type, Accept',
       );
       res.setHeader('Access-Control-Allow-Credentials', 'true');
       next();
