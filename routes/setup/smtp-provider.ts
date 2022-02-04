@@ -40,7 +40,7 @@ router.post('/add', (async (req, res) => {
   try {
     const { name, alias, type, smtp, imap }: IRequestSMTPProvider = req.body;
     if (!isUndefined([name, alias, type, smtp, imap])) {
-      const newID = objectID('s');
+      const newID = objectID();
       const newSmtpProvider = new SMTPProviders({
         _id: newID,
         name,

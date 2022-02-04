@@ -37,7 +37,7 @@ router.post('/add', (async (req, res) => {
     if (!isUndefined([name, email, password, type, provider_id])) {
       const smtpProviderDoc = await SMTPProviders.findById(provider_id).exec();
       if (smtpProviderDoc) {
-        const newID = objectID('f');
+        const newID = objectID();
         const newSmtpMailer = new SMTPMailers({
           _id: newID,
           name,

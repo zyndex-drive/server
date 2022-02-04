@@ -28,7 +28,7 @@ router.post('/add', (async (req, res) => {
     if (!isUndefined([name, drive_id, credential_id])) {
       const idCheck = await Credentials.checkID(credential_id);
       if (idCheck) {
-        const newID = objectID('scope');
+        const newID = objectID();
         const newScope = new Scopes({
           _id: newID,
           name,

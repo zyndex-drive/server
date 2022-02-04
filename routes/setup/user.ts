@@ -30,7 +30,6 @@ interface IRequestUserData {
   email: string;
   avatar: string;
   password: string;
-  scope_id: string;
 }
 
 router.post('/add', (async (req, res) => {
@@ -47,7 +46,7 @@ router.post('/add', (async (req, res) => {
           name: 'Owner',
         }).exec();
         if (scopeDocs.length > 0 && roleDoc) {
-          const newId = objectID('u');
+          const newId = objectID();
           const token_hash = generateUID();
           const newUser: IUser = {
             _id: newId,

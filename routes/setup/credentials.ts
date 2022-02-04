@@ -22,25 +22,11 @@ import type { ICredentials } from '@models/types';
 // Router
 const router = express.Router();
 
-interface IRequestCredentials {
-  alias: string;
-  client_id: string;
-  client_secret: string;
-  redirect_uri: string;
-  email: string;
-}
-
 router.post('/add', (async (req, res) => {
   try {
-    const {
-      alias,
-      client_id,
-      client_secret,
-      redirect_uri,
-      email,
-    }: IRequestCredentials = req.body;
+    const { alias, client_id, client_secret, redirect_uri, email } = req.body;
     if (!isUndefined([alias, client_id, client_secret, redirect_uri, email])) {
-      const newID = objectID('c');
+      const newID = objectID();
       const newCredential: ICredentials = {
         _id: newID,
         alias,

@@ -22,16 +22,11 @@ import type { IFrontend } from '@models/types';
 // Router
 const router = express.Router();
 
-interface IRequestFrontend {
-  domain: string;
-  name: string;
-}
-
 router.post('/add', (async (req, res) => {
   try {
-    const { domain, name }: IRequestFrontend = req.body;
+    const { domain, name } = req.body;
     if (!isUndefined([domain, name])) {
-      const newID = objectID('f');
+      const newID = objectID();
       const newFrontend: IFrontend = {
         _id: newID,
         domain,
