@@ -1,0 +1,6 @@
+@URL = http://{{HOST}}:{{PORT}}/setup
+
+### Reset the Database
+
+DELETE {{URL}}/reset HTTP/1.1
+x-secret-pass: {{SECRET}}
