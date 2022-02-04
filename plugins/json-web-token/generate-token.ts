@@ -1,4 +1,5 @@
-import { EncryptJWT, importSPKI } from 'jose';
+import { Keys } from '@models';
+import { EncryptJWT, importJWK } from 'jose';
 
 import type { IUserLeanDoc } from '@models/types';
 import type { JWTPayload } from 'jose';
@@ -14,12 +15,12 @@ export default async function (
   user: IUserLeanDoc,
   payload: JWTPayload,
 ): Promise<string> {
-  const { PRIVATE_KEY } = process.env;
-  if (PRIVATE_KEY) {
+  const secretKey = await Keys.findOne({ type: 'secretkey' });
+  if (secretKey) {
     const jwtObject = new EncryptJWT(payload)
       .setProtectedHeader({
-        alg: '',
-        enc: '',
+        alg: 'dir',
+        enc: 'A256GCM',
       })
       .setAudience(String(user._id))
       .setExpirationTime('1m')
@@ -27,11 +28,13 @@ export default async function (
       .setNotBefore('1m')
       .setIssuer('zyndex:server');
 
-    const algorithm = 'RS256';
-    const key = await importSPKI(PRIVATE_KEY, algorithm);
+    const algorithm = 'HS256';
+    const key = await importJWK(secretKey.key, algorithm);
     const encryptedString = await jwtObject.encrypt(key);
     return encryptedString;
   } else {
-    throw new Error('No Private Key is Found in the Environment Variables');
+    throw new Error(
+      'Private Key Not Found in the Database, Please Generate it and Try',
+    );
   }
 }
