@@ -14,18 +14,14 @@ export function encryptFields<T>(obj: T, encryptedFields?: string[]): T {
     encryptedFields.forEach((field) => {
       if (dotProp.has(obj, field)) {
         const inValue = dotProp.get(obj, field);
-        let encryptedValue: string;
-        if (typeof inValue === 'string') {
-          encryptedValue = encrypt.str(inValue);
-        } else {
-          const cryptoData = {
-            data: inValue,
-          };
-          encryptedValue = encrypt.obj<unknown>(cryptoData);
-        }
-        modObj = dotProp.set(modObj, field, encryptedValue);
+        const cryptoData = {
+          data: inValue,
+        };
+        const result = encrypt.aes.obj<unknown>(cryptoData);
+        modObj = dotProp.set(modObj, field, result);
       }
     });
+    return modObj;
   }
   return modObj;
 }
@@ -43,13 +39,13 @@ export function decryptFields<T>(obj: T, encryptedFields?: string[]): T {
     encryptedFields.forEach((field) => {
       if (dotProp.has(obj, field)) {
         const inValue = dotProp.get(obj, field);
-        let decryptedValue;
         if (typeof inValue === 'string') {
-          decryptedValue = decrypt.str(inValue);
+          const result = decrypt.aes.obj<unknown>(inValue);
+          modObj = dotProp.set(modObj, field, result);
         }
-        modObj = dotProp.set(modObj, field, decryptedValue);
       }
     });
+    return modObj;
   }
   return modObj;
 }

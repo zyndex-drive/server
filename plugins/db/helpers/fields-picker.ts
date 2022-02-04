@@ -13,16 +13,16 @@ export default function <T, U extends Document, V extends Model<U>>(
   schema: Schema<U, V, T>,
   criteria: string,
 ): string[] {
-  const encryptedFields: string[] = [];
+  const pickedFields: string[] = [];
   schema.eachPath((path: string, schemaType: SchemaType) => {
     const keys = Object.keys(schemaType);
     const props = Object.create(schemaType);
     if (keys && props) {
       const options = props['options'];
       if (dotProp.has(options, criteria)) {
-        encryptedFields.push(path);
+        pickedFields.push(path);
       }
     }
   });
-  return encryptedFields;
+  return pickedFields;
 }
