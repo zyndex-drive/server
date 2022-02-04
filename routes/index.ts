@@ -2,7 +2,11 @@
 import express from 'express';
 
 // Middlewares
-import { checkSetupStatus, checkSecretPass } from '@plugins/server/middlewares';
+import {
+  checkSecretPass,
+  checkSetupComplete,
+  checkSetupNotComplete,
+} from '@plugins/server/middlewares';
 
 // Others
 import path from 'path';
@@ -16,8 +20,8 @@ import login from './login';
 const router = express.Router();
 
 // Assign Main Routes
-router.use('/setup', [checkSetupStatus, checkSecretPass], setup);
-router.use('/login', login);
+router.use('/setup', [checkSecretPass, checkSetupNotComplete], setup);
+router.use('/login', [checkSetupComplete], login);
 
 // Default Get
 router.get(/(\/.*)+/, (req, res) => {
