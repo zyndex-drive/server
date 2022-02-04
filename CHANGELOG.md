@@ -2,6 +2,66 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-51](https://github.com/zyndex-drive/server/compare/v0.2.0-50...v0.2.0-51) (2022-02-04)
+
+
+### Bug Fixes 🛠
+
+* **models/credentials:** use correct encrypt plugin and change corresponding option ([d8eec82](https://github.com/zyndex-drive/server/commit/d8eec82bbcb0b399bd06f137461d11ff78d3affd))
+* **models/global-settings:** fix flag type casting with mixed type ([f088fcf](https://github.com/zyndex-drive/server/commit/f088fcf13b9ac7df475f3e3ccff1be46496c5bac))
+* **plugins/auth:** remove parameter requirement for objectid function ([79f9ad1](https://github.com/zyndex-drive/server/commit/79f9ad1c065a8f03028a0651013d2b36a485d533))
+* **plugins/db:** fix encryption helper for db to always encrypt with object ([a5e4287](https://github.com/zyndex-drive/server/commit/a5e42872bce14fbe33de26b6a0f3c4459260d5b2))
+* **plugins/otp:** fix objectid function ([0450158](https://github.com/zyndex-drive/server/commit/045015871321d95cfc9aff50c196b46b2c83dd6c))
+* **plugins/server/gen:** fix endpoints generator class to properly handle errors ([79c76f0](https://github.com/zyndex-drive/server/commit/79c76f0ca89131f6a94421e09fb17a8e089b7ece))
+* **plugins/server/middlewares:** fix cors middleware to properly send response headers ([d939d58](https://github.com/zyndex-drive/server/commit/d939d582bf804109820e20df1f5f99974a806b41))
+* **plugins/server/middlewares:** remove first-setup middleware as it is not working as expected ([8d4f7e8](https://github.com/zyndex-drive/server/commit/8d4f7e80d4ff6a893d90df2aab6328dfadf2e32d))
+* **plugins/session-manager:** fix objectid function ([d4a0ff0](https://github.com/zyndex-drive/server/commit/d4a0ff04168b208d5727b1a8e655e922979e7af8))
+* **plugins/templates:** fix objectid function ([706ec25](https://github.com/zyndex-drive/server/commit/706ec2554b2a9c2e59c78cf5da421b7a485c1df0))
+* **plugins/uid:** fix objectid function - now requires no parameter ([31540a7](https://github.com/zyndex-drive/server/commit/31540a7d9aa64a82d65f7d5733ead0b78fa93e8a))
+* **routes/login:** fix login response, properly handle errors ([76d86a8](https://github.com/zyndex-drive/server/commit/76d86a8cca100721bb0a6d54b729c54b2fd7e76a))
+
+
+### Code Refactoring 🖌
+
+* **plugins/db/helpers:** refactor db hash plugin from promises to async/await ([824975e](https://github.com/zyndex-drive/server/commit/824975eee756ff3320cc9fac39a90d71929b3bc9))
+* **plugins/google/helpers:** refactor google oauth helper function to async/await ([e2eb99c](https://github.com/zyndex-drive/server/commit/e2eb99c76e76a98903b81622f9e4790ca9102c15))
+* **plugins/google/helpers:** refactor google service account handlers ([bd061ef](https://github.com/zyndex-drive/server/commit/bd061ef093859e8bb5f921fab6d2e71adaac8476))
+* **plugins/google/helpers:** refactor google token resolver functions ([fc1f4a7](https://github.com/zyndex-drive/server/commit/fc1f4a74cd123d5a0986a9478a41ef0b73525b3c))
+* **plugins/google:** refactor every promise function to use async/await ([303ab8b](https://github.com/zyndex-drive/server/commit/303ab8bd4bbb85a888d0015ad7765a8a19cd4923))
+* **plugins/server/middlewares:** add named exports ([9cc6329](https://github.com/zyndex-drive/server/commit/9cc6329683e76e565c8d5dc0fb3662d5d5fc98c8))
+* **routes/setup:** refactor every under setup route to reduce duplication ([bddfe23](https://github.com/zyndex-drive/server/commit/bddfe235239eba18ac991a39bbcc5b46ea2d9811))
+
+
+### Features 🔥
+
+* **models:** introduce new model to store server private, public and secret keys ([3f08cb3](https://github.com/zyndex-drive/server/commit/3f08cb3c4e1de093f790dc90adde3b947eba1324))
+* **plugins/crypto:** add new function for generating random bytes ([57f6cc8](https://github.com/zyndex-drive/server/commit/57f6cc865da39be8fa1dd2001019b2c1bbd1e96b))
+* **plugins/crypto:** enable support for decrypting with rsa algorithm ([5037369](https://github.com/zyndex-drive/server/commit/5037369ddb1d3e34e70e2633113454016138ca2d))
+* **plugins/crypto:** enable support for encrypting with rsa algorithm ([f7c968b](https://github.com/zyndex-drive/server/commit/f7c968bfef578b871ea16d983ac618382151c9ba))
+* **plugins/jwt:** use jose to generate rsa and es256 keys ([df311c8](https://github.com/zyndex-drive/server/commit/df311c80518c0c6734144a5ec46752d4e919d6ef))
+* **plugins/jwt:** use the new keys database and use es256 keys to generate jwt ([c35dfb3](https://github.com/zyndex-drive/server/commit/c35dfb381e1f9845370a22a9bbc609a81c1b3f6d))
+* **plugins/server/gen:** use header param to enable lean document request ([7744782](https://github.com/zyndex-drive/server/commit/7744782eaf28e4cc89df2b6cc6e8532e0a9d0d82))
+* **plugins/server/middlewares:** add secret check and setup check middlewares ([2e7a710](https://github.com/zyndex-drive/server/commit/2e7a710ba0725538ae06b8779bef8db2a8c72325))
+* **routes/setup:** add route for generating random bytes, random rsa & es256 keys ([41402e0](https://github.com/zyndex-drive/server/commit/41402e0a0fba7bf185cd923997079777f98aaeb3))
+* **routes:** use the new setup and secret check middlewares ([ac3498a](https://github.com/zyndex-drive/server/commit/ac3498a83e11f240ea3682a749808ca9dd576ba9))
+
+
+### Tests 🧪
+
+* **rest/login:** write rest test case login/user route ([82e3e33](https://github.com/zyndex-drive/server/commit/82e3e3348fc410e71d4d8a2faa136eccc700a165))
+* **rest/setup:** add rest test cases for setup routes ([c14d172](https://github.com/zyndex-drive/server/commit/c14d1724225abc5eee6a0d672b1ce37709aff50b))
+
+
+### Others 🔧
+
+* **ignore:** fix ignore files to properly ignore unnecessary files ([34b7927](https://github.com/zyndex-drive/server/commit/34b79270987410c695a06b17fdf0519a35916cba))
+* **types:** declare lean-doc-request header to express types ([924478b](https://github.com/zyndex-drive/server/commit/924478b3fd208ce990da18be5291f830922c3e30))
+
+
+### Build System 🏗
+
+* **packages:** remove crypto-js module, use native nodejs crypto module ([a803618](https://github.com/zyndex-drive/server/commit/a803618129e08f57f3942d6962e0d74595f3ec42))
+
 ## [0.2.0-50](https://github.com/zyndex-drive/server/compare/v0.2.0-49...v0.2.0-50) (2022-01-30)
 
 
