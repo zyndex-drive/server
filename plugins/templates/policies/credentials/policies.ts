@@ -10,7 +10,7 @@ import { objectID } from '@plugins/misc/uid';
 
 const CODE = 'creds';
 export const creds_add: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}add`,
   name: 'Add Credentials to DB',
   message: 'Enable Adding of Credentials from Database',
@@ -18,7 +18,7 @@ export const creds_add: Readonly<IPolicy> = {
 };
 
 export const creds_edit: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}edit`,
   name: 'Edit Credentials in DB',
   message: 'Enable Editing of Credentials from Database',
@@ -26,7 +26,7 @@ export const creds_edit: Readonly<IPolicy> = {
 };
 
 export const creds_rm: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}rm`,
   name: 'Remove Credentials from DB',
   message: 'Enable Removal of Credentials from Database',

@@ -11,7 +11,7 @@ import { objectID } from '@plugins/misc/uid';
 const CODE = 'usr';
 
 export const viewer_blist: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}blistvwr`,
   name: 'Blacklist Viewer',
   message: 'Enable Blacklisting of Viewers and its Delegates',
@@ -19,7 +19,7 @@ export const viewer_blist: Readonly<IPolicy> = {
 };
 
 export const content_mgr_blist: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}blistcntmgr`,
   name: 'Blacklist Content Managers',
   message: 'Enable Blacklisting of Content Managers and its Delegates',
@@ -27,7 +27,7 @@ export const content_mgr_blist: Readonly<IPolicy> = {
 };
 
 export const mod_blist: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}blistmod`,
   name: 'Blacklist Moderators',
   message: 'Enable Blacklisting of Moderators and its Delegates',
@@ -35,7 +35,7 @@ export const mod_blist: Readonly<IPolicy> = {
 };
 
 export const mgr_blist: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}blistmgr`,
   name: 'Blacklist Managers',
   message: 'Enable Blacklisting of Managers and its Delegates',

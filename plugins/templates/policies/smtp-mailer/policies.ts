@@ -11,7 +11,7 @@ import { objectID } from '@plugins/misc/uid';
 const CODE = 'smtpmail';
 
 export const smtp_mailer_add: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}add`,
   name: 'Add SMTP Emails Accounts',
   message: 'Enable Adding of SMTP Emails Accounts to Database',
@@ -19,7 +19,7 @@ export const smtp_mailer_add: Readonly<IPolicy> = {
 };
 
 export const smtp_mailer_edit: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}edit`,
   name: 'Edit SMTP Emails Accounts',
   message: 'Enable Editing of SMTP Emails Accounts in Database',
@@ -27,7 +27,7 @@ export const smtp_mailer_edit: Readonly<IPolicy> = {
 };
 
 export const smtp_mailer_rm: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}rm`,
   name: 'Remove SMTP Emails Accounts',
   message: 'Enable Removal of SMTP Emails Accounts from Database',

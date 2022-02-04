@@ -10,7 +10,7 @@ import { objectID } from '@plugins/misc/uid';
 
 const CODE = 'ftend';
 export const frontend_add: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}add`,
   name: 'Add Frontends',
   message: 'Enable Adding of Frotnends from Database',
@@ -18,7 +18,7 @@ export const frontend_add: Readonly<IPolicy> = {
 };
 
 export const frontend_edit: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}edit`,
   name: 'Edit Frontends',
   message: 'Enable Editing of Frontend Details from Database',
@@ -26,7 +26,7 @@ export const frontend_edit: Readonly<IPolicy> = {
 };
 
 export const frontend_rm: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}rm`,
   name: 'Remove Frontends',
   message: 'Enable Removal of Frontends from Database',

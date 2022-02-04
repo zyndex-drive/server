@@ -11,7 +11,7 @@ import { objectID } from '@plugins/misc/uid';
 const CODE = 'sacacc';
 
 export const sac_add: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}add`,
   name: 'Add Service Account',
   message: 'Enable Adding of Service Accounts to Database',
@@ -19,7 +19,7 @@ export const sac_add: Readonly<IPolicy> = {
 };
 
 export const sac_edit: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}edit`,
   name: 'Edit Service Account',
   message: 'Enable Editing of Service Accounts in Database',
@@ -27,7 +27,7 @@ export const sac_edit: Readonly<IPolicy> = {
 };
 
 export const sac_rm: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}rm`,
   name: 'Remove Service Account',
   message: 'Enable Removal of Service Accounts from Database',

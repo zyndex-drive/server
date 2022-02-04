@@ -10,7 +10,7 @@ import { objectID } from '@plugins/misc/uid';
 
 const CODE = 'usr';
 export const viewer_rm: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}rmvwr`,
   name: 'Remove Viewer',
   message: 'Enable Removal of Viewers and its Delegates',
@@ -18,7 +18,7 @@ export const viewer_rm: Readonly<IPolicy> = {
 };
 
 export const content_mgr_rm: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}rmcntmgr`,
   name: 'Remove Content Managers',
   message: 'Enable Removal of Content Managers and Delegates',
@@ -26,7 +26,7 @@ export const content_mgr_rm: Readonly<IPolicy> = {
 };
 
 export const mods_rm: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}rmmdtr`,
   name: 'Remove Moderators',
   message: 'Enable Removal of Moderators and Delegates',
@@ -34,7 +34,7 @@ export const mods_rm: Readonly<IPolicy> = {
 };
 
 export const mgr_rm: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}rmmgr`,
   name: 'Remove Managers',
   message: 'Enable Removal of Managers and Delegates',

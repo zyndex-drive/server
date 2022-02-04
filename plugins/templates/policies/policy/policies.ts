@@ -10,7 +10,7 @@ import { objectID } from '@plugins/misc/uid';
 
 const CODE = 'pol';
 export const policies_edit: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}edit`,
   name: 'Edit Policies',
   message: 'Enable Editing of Organisation Policies',

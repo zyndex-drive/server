@@ -11,7 +11,7 @@ import { objectID } from '@plugins/misc/uid';
 const CODE = 'template';
 
 export const templates_add: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}add`,
   name: 'Add Templates to Database',
   message: 'Enable Adding of Templates to Database',
@@ -19,7 +19,7 @@ export const templates_add: Readonly<IPolicy> = {
 };
 
 export const templates_edit: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}edit`,
   name: 'Edit Templates',
   message: 'Enable Editing of Templates in Database',
@@ -27,7 +27,7 @@ export const templates_edit: Readonly<IPolicy> = {
 };
 
 export const templates_rm: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}rm`,
   name: 'Remove Templates',
   message: 'Enable Removal of Templates from Database',

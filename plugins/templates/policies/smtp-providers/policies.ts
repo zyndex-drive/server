@@ -11,7 +11,7 @@ import { objectID } from '@plugins/misc/uid';
 const CODE = 'smtppro';
 
 export const smtp_provider_add: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}add`,
   name: 'Add SMTP Email Providers',
   message: 'Enable Adding of SMTP Email Providers to Database',
@@ -19,7 +19,7 @@ export const smtp_provider_add: Readonly<IPolicy> = {
 };
 
 export const smtp_provider_edit: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}edit`,
   name: 'Edit SMTP Email Providers',
   message: 'Enable Editing of SMTP Email Providers in Database',
@@ -27,7 +27,7 @@ export const smtp_provider_edit: Readonly<IPolicy> = {
 };
 
 export const smtp_provider_rm: Readonly<IPolicy> = {
-  _id: objectID('p'),
+  _id: objectID(),
   code: `${CODE}rm`,
   name: 'Remove SMTP Email Providers',
   message: 'Enable Removal of SMTP Email Providers from Database',

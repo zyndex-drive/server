@@ -16,11 +16,11 @@ import moderatorPolicies from './policies-map/moderator';
 import contentMgrPolicies from './policies-map/content-manager';
 
 const IDS = {
-  viewer: objectID('r'),
-  contentMgr: objectID('r'),
-  moderator: objectID('r'),
-  manager: objectID('r'),
-  owner: objectID('r'),
+  viewer: objectID(),
+  contentMgr: objectID(),
+  moderator: objectID(),
+  manager: objectID(),
+  owner: objectID(),
 };
 
 export const viewer: Readonly<IRole> = {
