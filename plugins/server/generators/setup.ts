@@ -33,7 +33,9 @@ export class SetupGenerator<T extends Document> {
   serve(): IRouter {
     this.router.post('/get', (async (req, res) => {
       try {
-        const frontendDocs = await this.model.find({}).exec();
+        const leanHeader = req.headers['x-lean-doc-request'];
+        const leanRequest = leanHeader ? true : false;
+        const frontendDocs = await this.model.find({}).lean(leanRequest).exec();
         okResponse(res, frontendDocs);
       } catch (e) {
         errorResponseHandler(res, e);
