@@ -12,7 +12,7 @@ import type { IOtpDoc, IPendingUserDoc, IUserDoc } from '@models/types';
 export default async function (
   user: IUserDoc | IPendingUserDoc,
 ): Promise<IOtpDoc> {
-  const otpId = objectID('o');
+  const otpId = objectID();
   const grantTime = Date.now();
   const expiryTime = grantTime + 15 * 60 * 1000;
   const otp = generateOTP();
