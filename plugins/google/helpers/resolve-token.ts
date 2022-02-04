@@ -128,7 +128,7 @@ async function generateNormalTokenSave(
     credentials,
     refreshToken.token,
   );
-  const [uid, now] = [objectID('t'), Date.now()];
+  const [uid, now] = [objectID(), Date.now()];
   const token = {
     _id: uid,
     token: response.access_token,
@@ -156,7 +156,7 @@ async function generateServiceTokenSave(
   scopes: TGoogleApiScope[],
 ): Promise<ITokenDoc> {
   const response = await generateServiceAccessToken(account, scopes);
-  const [uid, now] = [objectID('t'), Date.now()];
+  const [uid, now] = [objectID(), Date.now()];
   const token = {
     _id: uid,
     token: response.access_token,
