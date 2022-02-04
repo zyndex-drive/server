@@ -8,3 +8,5 @@ export default {
   encrypt: Encrypt,
   decrypt: Decrypt,
 };
+
+export { default as generateRandomKeys } from './generate-keys';
