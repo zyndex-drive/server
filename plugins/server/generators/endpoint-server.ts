@@ -1,5 +1,5 @@
 import getRoutes from '../helpers/get-all-routes';
-import { okResponse } from '@plugins/server/responses';
+import { okResponse, errorResponseHandler } from '@plugins/server/responses';
 import type { Response, IRouter } from 'express';
 
 /** Identify Endpoints in the Route and Creates a Response */
@@ -22,6 +22,10 @@ export class EndpointGenerator {
    * Serve the Endpoints
    */
   serve(): void {
-    okResponse(this.response, getRoutes(this.router));
+    try {
+      okResponse(this.response, getRoutes(this.router));
+    } catch (e) {
+      errorResponseHandler(this.response, e);
+    }
   }
 }
