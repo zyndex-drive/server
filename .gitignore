@@ -1,5 +1,3 @@
-# output files
-
 # Logs
 logs
 *.log
@@ -118,3 +116,6 @@ out
 .vscode/*
 !.vscode/launch.json
 !.vscode/tasks.json
+
+# Other Files
+tests/rest/request-bodies
