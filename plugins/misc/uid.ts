@@ -41,14 +41,13 @@ export default longID;
 /**
  * Generates a Mongo Reference ID
  *
- * @param {string} prefix - prefix to be attached
  * @returns {Types.ObjectId} - Mongo Object ID
  */
-export function objectID(prefix?: string): Types.ObjectId {
+export function objectID(): Types.ObjectId {
   try {
-    const id = Types.ObjectId(longID(prefix));
+    const id = Types.ObjectId(longID('s'));
     return id;
-  } catch (e: unknown) {
+  } catch (e) {
     throw new Error(String(e));
   }
 }
