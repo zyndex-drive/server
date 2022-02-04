@@ -14,15 +14,10 @@ import stringizeScopes from '@plugins/google/helpers/stringize-scope';
 // Response Handlers
 import { okResponse, errorResponseHandler } from '@plugins/server/responses';
 
-import {
-  BadRequest,
-  NotFound,
-  InternalServerError,
-} from '@plugins/errors';
+import { BadRequest, NotFound } from '@plugins/errors';
 
 // Types
 import type { Request, Response } from 'express';
-import type { Error as MongoError } from 'mongoose';
 import type { IToken, ITokenDoc, ICredentialsLeanDoc } from '@models/types';
 import type {
   IGoogTokenResponse,
@@ -54,139 +49,123 @@ function constructOauthURL(
 /**
  * Redirect the User to the OAuth Authentication URL
  *
+ * @async
  * @param {Response} res - Express Response Object
  * @param {string} id - Credentials ID
  * @param {TGoogleApiScope[]} scopes - Google API Scopes
  */
-function redirectUser(
+async function redirectUser(
   res: Response,
   id: string,
   scopes: TGoogleApiScope[],
-): void {
-  Credentials.findById(id)
-    .exec()
-    .then((credentials) => {
-      if (credentials) {
-        const leanCredentials = credentials.toObject();
-        const state = encrypt.str(String(leanCredentials._id));
-        const url = constructOauthURL(leanCredentials, scopes, state);
-        res.redirect(url);
-      } else {
-        throw new NotFound('Credential ID Not found in DB, Kindly Recheck');
-      }
-    })
-    .catch((err: MongoError) => {
-      throw new InternalServerError(err.message, err.name);
-    });
+): Promise<void> {
+  const credentials = await Credentials.findById(id).exec();
+  if (credentials) {
+    const leanCredentials = credentials.toObject();
+    const state = encrypt.aes.str(String(leanCredentials._id));
+    const url = constructOauthURL(leanCredentials, scopes, state);
+    res.redirect(url);
+  } else {
+    throw new NotFound('Credential ID Not found in DB, Kindly Recheck');
+  }
 }
 
 /**
  * Saves the Refresh Token and Access Token in the Database for Long Term Use
  *
+ * @async
  * @param {ICredentialsLeanDoc} credentials - Credentials Document from Database
  * @param {TGoogleApiScope[]} scopes - Google Oauth API Scopes
  * @param {IGoogTokenResponse} refreshToken - Refresh Token Response
  * @param {IGoogTokenResponse} accessToken - Access Token Response
  * @returns {Promise<ITokenDoc[]>} - Saved Token Documents
  */
-function handleTokenSaving(
+async function handleTokenSaving(
   credentials: ICredentialsLeanDoc,
   scopes: TGoogleApiScope[],
   refreshToken: Required<IGoogTokenResponse>,
   accessToken: IGoogTokenResponse,
 ): Promise<ITokenDoc[]> {
-  return new Promise<ITokenDoc[]>((resolve, reject) => {
-    const now = Date.now();
-    const [uid1, uid2] = [objectID('t'), objectID('t')];
-    const tokensArr: IToken[] = [
-      {
-        _id: uid1,
-        token: encrypt.str(refreshToken.refresh_token),
-        type: 'refresh',
-        related_to: credentials._id,
-        scopes,
-        ref_model: 'Credential',
-        expires_at: now + 100 * 365 * 24 * 3600 * 1000,
-        website: 'google.com',
-      },
-      {
-        _id: uid2,
-        token: encrypt.str(accessToken.access_token),
-        type: 'access',
-        related_to: credentials._id,
-        scopes,
-        ref_model: 'Credential',
-        expires_at: now + accessToken.expires_in * 1000,
-        website: 'google.com',
-      },
-    ];
-    Tokens.insertMany(tokensArr)
-      .then(resolve)
-      .catch((error: MongoError) => {
-        reject(new InternalServerError(error.message, error.name));
-      });
-  });
+  const now = Date.now();
+  const [uid1, uid2] = [objectID(), objectID()];
+  const [encryptedRefresh, encryptedAccess] = [
+    encrypt.aes.str(refreshToken.refresh_token),
+    encrypt.aes.str(accessToken.access_token),
+  ];
+  const tokensArr: IToken[] = [
+    {
+      _id: uid1,
+      token: encryptedRefresh,
+      type: 'refresh',
+      related_to: credentials._id,
+      scopes,
+      ref_model: 'Credential',
+      expires_at: now + 100 * 365 * 24 * 3600 * 1000,
+      website: 'google.com',
+    },
+    {
+      _id: uid2,
+      token: encryptedAccess,
+      type: 'access',
+      related_to: credentials._id,
+      scopes,
+      ref_model: 'Credential',
+      expires_at: now + accessToken.expires_in * 1000,
+      website: 'google.com',
+    },
+  ];
+  const tokenDocs = await Tokens.insertMany(tokensArr);
+  return tokenDocs;
 }
 
 /**
  * Handle Token Generation after User Authorization from Google Oauth
  *
+ * @async
  * @param {Response} res - Express Response Object
  * @param {string} id - Credentials ID
  * @param {string} code - Authorization Code Received from Google Server
  * @param {TGoogleApiScope[]} scopes - Google API Scopes
  */
-function handleUserAuthorization(
+async function handleUserAuthorization(
   res: Response,
   id: string,
   code: string,
   scopes: TGoogleApiScope[],
-) {
-  Credentials.findById(id)
-    .exec()
-    .then(async (credentials) => {
-      if (credentials) {
-        const leanCredentials = credentials.toObject();
-        const scopeParam = stringizeScopes(scopes);
-        try {
-          const refreshToken = await generateRefreshToken(
-            leanCredentials,
-            scopeParam,
-            code,
-          );
-          if (refreshToken.refresh_token) {
-            const accessToken = await generateAccessToken(
-              leanCredentials,
-              refreshToken.refresh_token,
-            );
-            const savedDocs = await handleTokenSaving(
-              leanCredentials,
-              scopes,
-              refreshToken,
-              accessToken,
-            );
-            okResponse(res, savedDocs);
-          } else {
-            throw new NotFound(
-              'No Refresh Token Found in Response, Kindly Retry',
-            );
-          }
-        } catch (e: unknown) {
-          console.log(e);
-          throw new InternalServerError(String(e), 'Token Generation');
-        }
-      } else {
-        throw new NotFound('Credential ID Not found in DB, Kindly Recheck');
-      }
-    })
-    .catch((err: MongoError) => {
-      throw new InternalServerError(err.message, err.name);
-    });
+): Promise<void> {
+  const credentials = await Credentials.findById(id).exec();
+  if (credentials) {
+    const leanCredentials = credentials.toObject();
+    const scopeParam = stringizeScopes(scopes);
+    const refreshToken = await generateRefreshToken(
+      leanCredentials,
+      scopeParam,
+      code,
+    );
+    if (refreshToken.refresh_token) {
+      const accessToken = await generateAccessToken(
+        leanCredentials,
+        refreshToken.refresh_token,
+      );
+      const savedDocs = await handleTokenSaving(
+        leanCredentials,
+        scopes,
+        refreshToken,
+        accessToken,
+      );
+      okResponse(res, savedDocs);
+    } else {
+      throw new NotFound('No Refresh Token Found in Response, Kindly Retry');
+    }
+  } else {
+    throw new NotFound('Credential ID Not found in DB, Kindly Recheck');
+  }
 }
 
 /**
  * Express Handler for Generating Google Oauth Refresh Token and Authorization Token
  *
+ * @async
  * @param {Request} req - Express Request Object
  * @param {Response} res - Express Response Object
  * @param {TGoogleApiScope[]} scopes - Google API Scopes
@@ -199,15 +178,15 @@ export default function (
   try {
     const { creds, code, state } = req.query;
     if (!code && creds) {
-      redirectUser(res, String(creds), scopes);
+      void redirectUser(res, String(creds), scopes);
     } else if (code && state) {
       const stringizedCode = String(code);
-      const credID = decrypt.str(decodeURIComponent(String(state)));
-      handleUserAuthorization(res, credID, stringizedCode, scopes);
+      const credID = decrypt.aes.str(decodeURIComponent(String(state)));
+      void handleUserAuthorization(res, credID, stringizedCode, scopes);
     } else {
       throw new BadRequest('creds', 'Query Parameters');
     }
   } catch (e) {
-    errorResponseHandler(res, e)
+    errorResponseHandler(res, e);
   }
 }
