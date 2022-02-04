@@ -5,7 +5,6 @@ import { axios } from '@plugins';
 import api from '@plugins/google/helpers/API';
 
 // Types
-import type { AxiosError } from 'axios';
 import type { ICredentialsLeanDoc } from '@models/types';
 import type { IGoogTokenResponse } from '@plugins/google/helpers/types';
 
@@ -41,42 +40,35 @@ function constructTokenRequestURL(
 /**
  * Requests a Token Response from Google Servers for Generating Access / Refresh Tokens
  *
+ * @async
  * @param {string} type - Type of Token to Generate (refresh_token or access_token)
  * @param {ICredentialsLeanDoc} credentials - Credentials Doc from Database
  * @param {string} code - Authorization Code or Refresh Token
  * @param {string} scopes - Space Delimited Google API Scopes
  * @returns {Promise<IGoogTokenResponse>} - Returns Token Response
  */
-function tokenRequest<TokenType>(
+async function tokenRequest<TokenType>(
   type: string,
   credentials: ICredentialsLeanDoc,
   code: string,
   scopes?: string,
 ): Promise<TokenType> {
-  return new Promise<TokenType>((resolve, reject) => {
-    const { url, params } = constructTokenRequestURL(
-      credentials,
-      type,
-      code,
-      scopes,
-    );
-    axios
-      .post(url, params, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          resolve(response.data);
-        } else {
-          reject(new Error('Error While Generating the Tokens'));
-        }
-      })
-      .catch((error: AxiosError) => {
-        reject(new Error(`${error.name}: ${error.message}`));
-      });
+  const { url, params } = constructTokenRequestURL(
+    credentials,
+    type,
+    code,
+    scopes,
+  );
+  const response = await axios.post<TokenType>(url, params, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
   });
+  if (response.status === 200) {
+    return response.data;
+  } else {
+    throw new Error('Error While Generating the Tokens');
+  }
 }
 
 /**
