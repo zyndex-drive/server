@@ -1,0 +1,8 @@
+@URL = http://{{HOST}}:{{PORT}}/login/user
+
+### Login as a User
+
+POST {{URL}} HTTP/1.1
+content-type: application/json
+
+< ../../request-bodies/login/user.json
