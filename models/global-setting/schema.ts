@@ -28,7 +28,7 @@ const schema = new Schema<
     required: true,
   },
   global_flag: {
-    type: Boolean || String || Number || Schema.Types.ObjectId,
+    type: Schema.Types.Mixed,
     refPath: 'reference',
     required: true,
   },
