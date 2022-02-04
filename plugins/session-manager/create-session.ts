@@ -39,7 +39,7 @@ export default async function (
     if (sessionDocs.length >= totalSessions) {
       await Sessions.deleteOne({ user_id: user._id });
       const token = await generateJWT(user, payload);
-      const newId = objectID('s');
+      const newId = objectID();
       const now = Date.now();
       const expiryPeriod = 30 * 60 * 60 * 1000;
       const expiry = now + expiryPeriod;
@@ -54,7 +54,7 @@ export default async function (
       return sessionDoc;
     } else {
       const token = await generateJWT(user, payload);
-      const newId = objectID('s');
+      const newId = objectID();
       const now = Date.now();
       const expiryPeriod = 30 * 60 * 60 * 1000;
       const expiry = now + expiryPeriod;
