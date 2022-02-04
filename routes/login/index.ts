@@ -20,7 +20,7 @@ import bcrypt from 'bcrypt';
 import type { RequestHandler } from 'express';
 
 interface ILoginRequest {
-  username: string;
+  email: string;
   password: string;
   end_id: string;
 }
@@ -34,9 +34,9 @@ router.use('/google/', google);
 // Assign Other Routes
 router.post('/user', (async (req, res) => {
   try {
-    const { username, password, end_id }: ILoginRequest = req.body;
-    if (username && password && end_id) {
-      const userDoc = await Users.findOne({ email: username })
+    const { email, password, end_id }: ILoginRequest = req.body;
+    if (email && password && end_id) {
+      const userDoc = await Users.findOne({ email })
         .orFail(() => new NotFound('Username Not Found in the Database'))
         .exec();
       const passwordMatch = await bcrypt.compare(password, userDoc.password);
@@ -57,6 +57,7 @@ router.post('/user', (async (req, res) => {
           issued_at: sessionDoc.issued_at,
           token_secret: sessionDoc.token_secret,
           user_id: String(sessionDoc.user_id),
+          expires_at: sessionDoc.expires_at,
           roles: [
             ...userDoc.roles.map((role) => ({
               role: String(role.role),
