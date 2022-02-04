@@ -26,3 +26,4 @@ export * from './smtp-provider/types';
 export * from './templates/types';
 export * from './tokens/types';
 export * from './user/types';
+export * from './keys/types';
