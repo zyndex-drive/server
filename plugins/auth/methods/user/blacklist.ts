@@ -29,7 +29,7 @@ function blacklistUser(
   return new Promise<IBlacklistedUserDoc>((resolve, reject) => {
     checkPolicy(policies, admin, scope, user)
       .then(() => Users.updateOne({ _id: user._id }, { restricted: true }))
-      .then(() => objectID('b'))
+      .then(() => objectID())
       .then(
         (uid) =>
           ({
