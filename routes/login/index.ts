@@ -7,14 +7,14 @@ import { okResponse, errorResponseHandler } from '@plugins/server/responses';
 import { BadRequest, NotFound, UnAuthorized } from '@plugins/errors';
 
 // Models
-import { Users, Frontends } from '@models';
+import { Users } from '@models';
 
 // Routes
 import google from './google';
+import twitter from './twitter';
 
 // Others
 import { sessionManager } from '@plugins';
-import bcrypt from 'bcrypt';
 
 // Types
 import type { RequestHandler } from 'express';
@@ -28,8 +28,9 @@ interface ILoginRequest {
 // Router
 const router = express.Router();
 
-// Assign Google Oauth Route
+// Assign Oauth onboarding Routes
 router.use('/google/', google);
+router.use('/twitter', twitter);
 
 // Assign Other Routes
 router.post('/user', (async (req, res) => {
@@ -39,32 +40,13 @@ router.post('/user', (async (req, res) => {
       const userDoc = await Users.findOne({ email })
         .orFail(() => new NotFound('Username Not Found in the Database'))
         .exec();
-      const passwordMatch = await bcrypt.compare(password, userDoc.password);
+      const passwordMatch = await userDoc.verifyPassword(password);
       if (passwordMatch) {
-        const frontendDoc = await Frontends.findOne({ _id: end_id })
-          .lean()
-          .orFail(() => new NotFound('Frontend ID Not Found in the Database'))
-          .exec();
-        const sessionDoc = await sessionManager.createSession(
+        const sessionResponse = await sessionManager.createSession(
           req,
           userDoc,
-          frontendDoc,
+          end_id,
         );
-        const sessionResponse = {
-          _id: String(sessionDoc._id),
-          frontend: String(sessionDoc.frontend),
-          ip: sessionDoc.ip,
-          issued_at: sessionDoc.issued_at,
-          token_secret: sessionDoc.token_secret,
-          user_id: String(sessionDoc.user_id),
-          expires_at: sessionDoc.expires_at,
-          roles: [
-            ...userDoc.roles.map((role) => ({
-              role: String(role.role),
-              scope: String(role.scope),
-            })),
-          ],
-        };
         okResponse(res, sessionResponse);
       } else {
         throw new UnAuthorized('Password Not Matching with the Database');
