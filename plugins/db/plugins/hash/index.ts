@@ -20,7 +20,7 @@ export default function <T, U extends Document, V extends Model<U>>(): (
         })
         .catch((err) => {
           console.log(err);
-          throw new Error('Password Hashing Failed');
+          next(new Error('Password Hashing Failed'));
         });
     });
   };
