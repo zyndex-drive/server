@@ -17,6 +17,7 @@ import { GlobalSettings } from '@models';
 import {
   userRequests,
   upgradeRequests,
+  setupStatus,
   otpVerification,
   tmdbFlag,
   defaultSmtpMailer,
@@ -85,6 +86,19 @@ router.post('/otp-verification', (req, res) =>
       otpFlag = otpVerification(false);
     }
     void savenSendit(res, otpFlag);
+  }),
+);
+
+router.post('/setup-check', (req, res) =>
+  callorThrow(res, () => {
+    const { setup }: { setup: boolean } = req.body;
+    let setupFlag: Readonly<IGlobalSettings>;
+    if (setup) {
+      setupFlag = setupStatus(true);
+    } else {
+      setupFlag = setupStatus(false);
+    }
+    void savenSendit(res, setupFlag);
   }),
 );
 

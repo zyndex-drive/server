@@ -24,8 +24,19 @@ const router = express.Router();
 
 router.post('/add', (async (req, res) => {
   try {
-    const { alias, client_id, client_secret, redirect_uri, email } = req.body;
-    if (!isUndefined([alias, client_id, client_secret, redirect_uri, email])) {
+    const { alias, client_id, client_secret, redirect_uri } = req.body;
+    const { type, login, email } = req.body;
+    if (
+      !isUndefined([
+        alias,
+        client_id,
+        client_secret,
+        redirect_uri,
+        type,
+        login,
+        email,
+      ])
+    ) {
       const newID = objectID();
       const newCredential: ICredentials = {
         _id: newID,
@@ -33,6 +44,8 @@ router.post('/add', (async (req, res) => {
         client_id,
         client_secret,
         redirect_uri,
+        type,
+        login,
         email,
       };
       const savedCreds = await Credentials.create(newCredential);
