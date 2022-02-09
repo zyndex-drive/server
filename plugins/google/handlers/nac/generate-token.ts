@@ -28,7 +28,10 @@ function constructTokenRequestURL(
   const encoded_client_id = encodeURIComponent(credentials.client_id);
   const encoded_client_secret = encodeURIComponent(credentials.client_secret);
   const encoded_scopes = scopes ? encodeURIComponent(scopes) : '';
-  const encoded_redirect_uri = encodeURIComponent(credentials.redirect_uri);
+  const [redirectUri] = credentials.redirect_uri.filter(
+    (creds) => creds.type === 'other',
+  );
+  const encoded_redirect_uri = encodeURIComponent(redirectUri.uri);
   if (type === 'access_token') {
     params += `client_id=${encoded_client_id}&client_secret=${encoded_client_secret}&refresh_token=${code}&grant_type=refresh_token`;
   } else {

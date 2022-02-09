@@ -38,7 +38,10 @@ function constructOauthURL(
   state: string,
 ): string {
   const encodedClient_id = encodeURIComponent(credentials.client_id);
-  const encodedRedirect_uri = encodeURIComponent(credentials.redirect_uri);
+  const [redirectUri] = credentials.redirect_uri.filter(
+    (creds) => creds.type === 'other',
+  );
+  const encodedRedirect_uri = encodeURIComponent(redirectUri.uri);
   const encodedState = encodeURIComponent(state);
   const scopeParam = stringizeScopes(scopes);
   const encodedScope_param = encodeURIComponent(scopeParam);
