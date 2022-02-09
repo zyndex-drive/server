@@ -12,16 +12,27 @@ export interface IUser {
   verified_at: number;
   token_hash: string;
   restricted: boolean;
+  oauth_id?: string;
   roles: {
     scope: ID<IScopeDoc>;
     role: ID<IRoleDoc>;
   }[];
-  password: string;
+  password?: string;
   allowed_policies?: ID<IPolicyDoc>[];
   disallowed_policies?: ID<IPolicyDoc>[];
 }
 
-export interface IUserDoc extends IUser, Document {}
+export interface IUserDoc extends IUser, Document {
+  /**
+   * Verifies the Given Password with that of the Document
+   *
+   * @async
+   * @param {IUserDoc} this - Current User Document
+   * @param {string} password - Password Entered by the User
+   * @returns {Promise<boolean>} - Password Matches or not
+   */
+  verifyPassword: (this: IUserDoc, password: string) => Promise<boolean>;
+}
 
 export interface IUserModel extends IBaseModel<IUserDoc> {}
 

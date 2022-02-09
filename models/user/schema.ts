@@ -1,6 +1,7 @@
 import { Schema } from 'mongoose';
 import appendStatics from './statics';
 import { cryptoPlugin, hashPlugin } from '@plugins/db/plugins';
+import { verifyPassword } from './methods';
 import type { IUser, IUserDoc, IUserModel } from './types';
 
 const schema = new Schema<IUserDoc, IUserModel, IUser>({
@@ -40,6 +41,10 @@ const schema = new Schema<IUserDoc, IUserModel, IUser>({
     type: Boolean,
     default: false,
   },
+  oauth_id: {
+    type: String,
+    unique: true,
+  },
   roles: [
     {
       scope: {
@@ -74,5 +79,7 @@ const schema = new Schema<IUserDoc, IUserModel, IUser>({
 
 schema.plugin(cryptoPlugin<IUser, IUserDoc, IUserModel>());
 schema.plugin(hashPlugin<IUser, IUserDoc, IUserModel>());
+
+schema.method('verifyPassword', verifyPassword);
 
 export default appendStatics(schema);
