@@ -1,6 +1,7 @@
 import db from '@plugins/db';
-import type { Server } from 'http';
 import { createTerminus, TerminusOptions } from '@godaddy/terminus';
+
+import type { Server } from 'http';
 
 /**
  * Close Database Connection Before Termination of Server
