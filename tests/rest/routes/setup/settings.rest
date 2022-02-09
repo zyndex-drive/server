@@ -39,3 +39,13 @@ content-type: application/json
 {
     "sessions": 20
 }
+
+### Setup Flag
+
+POST {{URL}}/setup-check HTTP/1.1
+x-secret-pass: {{SECRET}}
+content-type: application/json
+
+{
+    "setup": true
+}
