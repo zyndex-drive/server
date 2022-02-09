@@ -22,10 +22,26 @@ const schema = new Schema<ICredentialsDoc, ICredentialsModel, ICredentials>({
     required: true,
     encrypt: true,
   },
-  redirect_uri: {
+  redirect_uri: [
+    {
+      type: {
+        type: String,
+        required: true,
+      },
+      uri: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
+  type: {
     type: String,
     required: true,
-    encrypt: true,
+  },
+  login: {
+    type: Boolean,
+    required: true,
+    default: false,
   },
   email: {
     type: String,

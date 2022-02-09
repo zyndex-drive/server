@@ -6,7 +6,12 @@ export interface ICredentials {
   alias: string;
   client_id: string;
   client_secret: string;
-  redirect_uri: string;
+  redirect_uri: {
+    type: 'login' | 'other';
+    uri: string;
+  }[];
+  type: string;
+  login: boolean;
   email: string;
 }
 
