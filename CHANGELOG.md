@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-52](https://github.com/zyndex-drive/server/compare/v0.2.0-51...v0.2.0-52) (2022-02-09)
+
+
+### Bug Fixes 🛠
+
+* **plugins/db:** fix db-hash plugin which hangs the server which using plugin ([a152836](https://github.com/zyndex-drive/server/commit/a15283667de967e56d8c053124b93724c65aeb3f))
+* **plugins/sessionmanager:** move more redundant tasks to the main create session function ([386c928](https://github.com/zyndex-drive/server/commit/386c928665d187b64775dd8af2d9bc57e5fdde43))
+
+
+### Code Refactoring 🖌
+
+* **plugins/google:** fix google oauth helpers to update to latest changes ([1ed3083](https://github.com/zyndex-drive/server/commit/1ed308385727ddba568215a047805b66b703bfb1))
+* **plugins/healthcheck:** refactor health-check.ts file ([ee8e594](https://github.com/zyndex-drive/server/commit/ee8e5943516bb45ed7d56c69b39528f568a59314))
+* **routes/setup:** refactor all routes which require changes as per latest updates ([556c88e](https://github.com/zyndex-drive/server/commit/556c88e807c9d0a76275ce45ef5395b8f79e290b))
+* **types:** move files inside types to a proper folder structure ([4492166](https://github.com/zyndex-drive/server/commit/4492166449f2e020dcf02ede2bc4c9cfefd098c1))
+
+
+### Build System 🏗
+
+* **packages:** add passport,google-oauth,twitter-oauth packages ([735b5a0](https://github.com/zyndex-drive/server/commit/735b5a062d65a2b26cd87cc4b26f1fb9d4b27aec))
+
+
+### Tests 🧪
+
+* **tests/rest:** add latest routes rest based tests ([05a4de1](https://github.com/zyndex-drive/server/commit/05a4de1b30538cbfe5b7d36e9e2c5e29658d8bbc))
+
+
+### Features 🔥
+
+* **app.ts:** add passport initialize function after db connects ([55fcb37](https://github.com/zyndex-drive/server/commit/55fcb37afbfeb4bb0860f2bb69e48d27a3659fa0))
+* **model/credentials:** change credential schema to support more oauth features ([1f2b68f](https://github.com/zyndex-drive/server/commit/1f2b68f76aba3407509d751225e6b84807fa388a))
+* **models/user:** change user schema to support oauth based logins ([cf13987](https://github.com/zyndex-drive/server/commit/cf13987a364cd5d2109192ebffd248cdf0412193))
+* **oauth/google:** write oauth authenticate action for login with google function ([21b269a](https://github.com/zyndex-drive/server/commit/21b269a645c36e46ccd971bafdd1ad3fa51972e6))
+* **oauth/helpers:** write passport authenticate tranform function for proper error handling ([79a1aff](https://github.com/zyndex-drive/server/commit/79a1affa1d0672af5f748098ca7e23da7f0b5fe0))
+* **oauth/helpers:** write passport function for oauth user verification ([ab8921e](https://github.com/zyndex-drive/server/commit/ab8921ec107d1b9cfcd82a8853b4dc468eba0dfc))
+* **oauth/helpers:** write passport initialize function that initializes all the clients ([78fab85](https://github.com/zyndex-drive/server/commit/78fab8529fab57c6d88b4f4948ab6a70f7f0a79d))
+* **oauth/twitter:** write oauth authenticate action for login with twitter function ([c9f2172](https://github.com/zyndex-drive/server/commit/c9f2172f3c8355bf19dad97bab23ca68fe8096f8))
+* **routes/login:** write router for google oauth login ([dffefe1](https://github.com/zyndex-drive/server/commit/dffefe179f3c8748d94567873fe66caee3c2bf08))
+* **routes/login:** write router for twitter oauth login ([95cc509](https://github.com/zyndex-drive/server/commit/95cc5095e07f0f02087d3e87322928fb4a7a83d0))
+
 ## [0.2.0-51](https://github.com/zyndex-drive/server/compare/v0.2.0-50...v0.2.0-51) (2022-02-04)
 
 
