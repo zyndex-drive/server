@@ -15,11 +15,11 @@
       "@models": ["./models"],
       "@routes/*": ["./routes/*"],
       "@routes": ["./routes"],
-      "@typs/*": ["./types/*"],
-      "@typs": ["./types"]
+      "@typs/*": ["./@types/*"],
+      "@typs": ["./@types"]
     },
     "rootDirs": ["./"],
-    "typeRoots": ["./types"],
+    "typeRoots": ["@types"],
     "types": ["mocha", "node"],
     "esModuleInterop": true,
     "skipLibCheck": true,
