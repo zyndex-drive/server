@@ -17,7 +17,7 @@
     "test:unit": "set NODE_ENV=test && ts-mocha --paths tests/unit/**/*.spec.ts -r 'tests/require'",
     "test:single": "set NODE_ENV=test && ts-mocha -r 'tests/require'",
     "test:report": "set NODE_ENV=test && ts-mocha --paths tests/api/**/*.spec.ts -r 'tests/require' --reporter mocha-simple-html-reporter --reporter-options output=test-report.html",
-    "serve:dev": "set NODE_ENV=development && nodemon --ignore tests/ -r tsconfig-paths/register app.ts",
+    "serve:dev": "set NODE_ENV=development && nodemon --ignore tests/ -r tsconfig-paths/register src/app.ts",
     "build:tsc": "set NODE_ENV=production && webpack",
     "build:prepare": "bash ./scripts/prepare-build.sh",
     "start": "set NODE_ENV=production && node app.js"
