@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-54](https://github.com/zyndex-drive/server/compare/v0.2.0-53...v0.2.0-54) (2022-03-19)
+
+
+### Features 🔥
+
+* **plugins/oauth:** add more oauth2.0 clients - facebook, twitter, github ([11b1d58](https://github.com/zyndex-drive/server/commit/11b1d583787345e8a80faa52eb7751551eac3c57))
+
+
+### Tests 🧪
+
+* **tests:** correct all tests to implement local dev password ([43605a0](https://github.com/zyndex-drive/server/commit/43605a0170bc595df0b249079ea4d1a814bca6d7))
+
+
+### Build System 🏗
+
+* **packages:** add passport oauth client packages ([50adcc8](https://github.com/zyndex-drive/server/commit/50adcc899051790adaecd9d641b4f0a614dc1e3f))
+* **packages:** add passport oauth packages ([ec0c9ef](https://github.com/zyndex-drive/server/commit/ec0c9ef9aa02571d6c9c445906404dfc1ddfeb94))
+
 ## [0.2.0-53](https://github.com/zyndex-drive/server/compare/v0.2.0-52...v0.2.0-53) (2022-02-10)
 
 
