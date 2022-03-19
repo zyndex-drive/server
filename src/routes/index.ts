@@ -25,12 +25,11 @@ router.use('/login', [checkSetupComplete], login);
 
 // Default Get
 router.get(/(\/.*)+/, (req, res) => {
-  console.log(process.env.NODE_ENV);
   const viewsPath =
-    process.env.NODE_ENV === 'development'
-      ? '../views/index.html'
-      : 'views/index.html';
-  res.status(200).sendFile(path.resolve(__dirname, viewsPath));
+    process.env.NODE_ENV === 'production'
+      ? path.resolve(__dirname, 'views', 'index.html')
+      : path.resolve(__dirname, '../views/index.html');
+  res.status(200).sendFile(viewsPath);
 });
 
 // Respond with all the Endpoints in this Route

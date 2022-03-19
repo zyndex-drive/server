@@ -7,7 +7,6 @@ import { Forbidden } from '@plugins/errors';
 import type { Request, Response, NextFunction } from 'express';
 
 const setupFlag = async (): Promise<boolean> => {
-  console.log(process.env['NODE_ENV']);
   if (process.env['NODE_ENV'] === 'development') {
     return true;
   } else {
@@ -32,7 +31,6 @@ export async function checkSetupNotComplete(
   res: Response,
   next: NextFunction,
 ): Promise<void> {
-  console.log(process.env['NODE_ENV']);
   if (process.env['NODE_ENV'] === 'development') {
     next();
   } else {
@@ -63,7 +61,6 @@ export async function checkSetupComplete(
   res: Response,
   next: NextFunction,
 ): Promise<void> {
-  console.log(process.env['NODE_ENV']);
   if (process.env['NODE_ENV'] === 'development') {
     next();
   } else {
