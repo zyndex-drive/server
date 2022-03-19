@@ -874,6 +874,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/passport-facebook@npm:^2.1.11":
+  version: 2.1.11
+  resolution: "@types/passport-facebook@npm:2.1.11"
+  dependencies:
+    "@types/express": "*"
+    "@types/passport": "*"
+  checksum: 655fade194454f2b99072049212af1c90ae96bb4892377df8a5397ad62afb5fc634277dbd0f9c4f381060863155e3bf13b69f2193b4ed8ce0e9bad645f8c61eb
+  languageName: node
+  linkType: hard
+
+"@types/passport-github2@npm:^1.2.5":
+  version: 1.2.5
+  resolution: "@types/passport-github2@npm:1.2.5"
+  dependencies:
+    "@types/express": "*"
+    "@types/passport": "*"
+    "@types/passport-oauth2": "*"
+  checksum: a4f1851edb91a2502136b7e76dd10fd3c52aebec938ff21ffa2ade40b1f62d0e7f65991c80589f5cfa40b6cba04bf0b8ea46db6942975bf5918fa4690f681235
+  languageName: node
+  linkType: hard
+
 "@types/passport-google-oauth20@npm:^2":
   version: 2.0.11
   resolution: "@types/passport-google-oauth20@npm:2.0.11"
@@ -885,7 +906,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/passport-oauth2@npm:*":
+"@types/passport-oauth2@npm:*, @types/passport-oauth2@npm:^1":
   version: 1.4.11
   resolution: "@types/passport-oauth2@npm:1.4.11"
   dependencies:
@@ -6494,6 +6515,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"passport-facebook@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "passport-facebook@npm:3.0.0"
+  dependencies:
+    passport-oauth2: 1.x.x
+  checksum: f70598738537b39b914845a202b8d7b86ece56e2e1de6e723f74337c69445664ef2503e449a90ad63329f59440ceeb7920f5825123e725db8935531f251df142
+  languageName: node
+  linkType: hard
+
+"passport-github2@npm:^0.1.12":
+  version: 0.1.12
+  resolution: "passport-github2@npm:0.1.12"
+  dependencies:
+    passport-oauth2: 1.x.x
+  checksum: 2d33c1bdd808c617a5faef51f6079f8775a4dbb8864b2be073e5e043ed2b7e8f9addd66a5844c7604f26be99a5899ae6cd9f8adac85999714b2a19649aef2b35
+  languageName: node
+  linkType: hard
+
 "passport-google-oauth20@npm:^2.0.0":
   version: 2.0.0
   resolution: "passport-google-oauth20@npm:2.0.0"
@@ -6514,7 +6553,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"passport-oauth2@npm:1.x.x":
+"passport-oauth2@npm:1.x.x, passport-oauth2@npm:^1.6.1":
   version: 1.6.1
   resolution: "passport-oauth2@npm:1.6.1"
   dependencies:
@@ -8786,7 +8825,10 @@ __metadata:
     "@types/node": ^15.14.9
     "@types/nodemailer": ^6.4.4
     "@types/passport": ^0
+    "@types/passport-facebook": ^2.1.11
+    "@types/passport-github2": ^1.2.5
     "@types/passport-google-oauth20": ^2
+    "@types/passport-oauth2": ^1
     "@types/passport-twitter": ^1
     "@types/uuid": ^8.3.4
     "@typescript-eslint/eslint-plugin": ^4.33.0
@@ -8828,7 +8870,10 @@ __metadata:
     node-webcrypto-ossl: ^2.1.3
     nodemailer: ^6.7.2
     passport: ^0.5.2
+    passport-facebook: ^3.0.0
+    passport-github2: ^0.1.12
     passport-google-oauth20: ^2.0.0
+    passport-oauth2: ^1.6.1
     passport-twitter: ^1.0.4
     query-string: ^7.1.0
     standard-version: ^9.3.2
