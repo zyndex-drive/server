@@ -3,6 +3,7 @@
 ### Add Scope to Database
 
 POST {{URL}}/add HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
 x-secret-pass: {{SECRET}}
 content-type: application/json
 
@@ -12,10 +13,12 @@ content-type: application/json
 ### Get Scopes from Database
 
 POST {{URL}}/get HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
 x-secret-pass: {{SECRET}}
 
 
 ### Reset Scope in the Database
 
 DELETE {{URL}}/reset HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
 x-secret-pass: {{SECRET}}

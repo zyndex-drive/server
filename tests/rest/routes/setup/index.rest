@@ -3,4 +3,5 @@
 ### Reset the Database
 
 DELETE {{URL}}/reset HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
 x-secret-pass: {{SECRET}}

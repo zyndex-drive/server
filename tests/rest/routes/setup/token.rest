@@ -3,14 +3,17 @@
 ### Generate RSA Key Pair
 
 POST {{URL}}/generate-key-pair HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
 x-secret-pass: {{SECRET}}
 
 ### Generate Random Bytes
 
 POST {{URL}}/generate-random-bytes HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
 x-secret-pass: {{SECRET}}
 
 ### Get Generated Keys
 
 POST {{URL}}/get-keys HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
 x-secret-pass: {{SECRET}}

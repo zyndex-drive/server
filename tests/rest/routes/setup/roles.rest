@@ -3,15 +3,18 @@
 ### Add Roles to Database
 
 POST {{URL}}/add HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
 x-secret-pass: {{SECRET}}
 
 ### Get Roles from Database
 
 POST {{URL}}/get HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
 x-secret-pass: {{SECRET}}
 
 
 ### Reset Roles in the Database
 
 DELETE {{URL}}/reset HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
 x-secret-pass: {{SECRET}}
