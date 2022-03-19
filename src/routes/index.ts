@@ -25,6 +25,7 @@ router.use('/login', [checkSetupComplete], login);
 
 // Default Get
 router.get(/(\/.*)+/, (req, res) => {
+  console.log(process.env.NODE_ENV);
   const viewsPath =
     process.env.NODE_ENV === 'development'
       ? '../views/index.html'

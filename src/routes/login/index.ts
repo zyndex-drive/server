@@ -10,8 +10,7 @@ import { BadRequest, NotFound, UnAuthorized } from '@plugins/errors';
 import { Users } from '@models';
 
 // Routes
-import google from './google';
-import twitter from './twitter';
+import oauth from './oauth';
 
 // Others
 import { sessionManager } from '@plugins';
@@ -29,8 +28,7 @@ interface ILoginRequest {
 const router = express.Router();
 
 // Assign Oauth onboarding Routes
-router.use('/google/', google);
-router.use('/twitter', twitter);
+router.use('/oauth', oauth);
 
 // Assign Other Routes
 router.post('/user', (async (req, res) => {

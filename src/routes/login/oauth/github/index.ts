@@ -19,9 +19,8 @@ router.get(
     passportAuthenticate(
       { req, res, next },
       {
-        strgy: 'twitter',
+        strgy: 'github',
         opts: {
-          failureRedirect: '/',
           session: false,
         },
       },

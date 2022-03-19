@@ -7,25 +7,11 @@ import { sessionManager } from '@plugins';
 // Response Handlers
 import { okResponse, errorResponseHandler } from '@plugins/server/responses';
 
-// Google Oauth
-import { normalAccountHandler } from '@plugins/google';
-
-// Google Drive
-import { oauthScopes } from '@plugins/google';
-
 import type { IUserDoc } from '@models/types';
 import type { RequestHandler } from 'express';
 
 // Router
 const router = express.Router();
-
-// Google Oauth Login Route
-router.get('/oauth/', (req, res) => {
-  normalAccountHandler.generateOauth(req, res, [
-    ...oauthScopes.drive,
-    ...oauthScopes.iam,
-  ]);
-});
 
 router.get(
   '/onboarding',
@@ -33,10 +19,8 @@ router.get(
     passportAuthenticate(
       { req, res, next },
       {
-        strgy: 'google',
+        strgy: 'twitter',
         opts: {
-          scope: ['profile'],
-          failureRedirect: '/',
           session: false,
         },
       },
