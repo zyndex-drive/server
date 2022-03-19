@@ -36,7 +36,7 @@ app.use([dbChecker, cors]);
 app.use(process.env.NODE_ENV === 'production' ? morgan('tiny') : morgan('dev'));
 
 // Serve Public Assets
-app.use(express.static('views'));
+app.use(express.static('src/views'));
 
 // Use the Router Config from Routes
 app.use('/', router);

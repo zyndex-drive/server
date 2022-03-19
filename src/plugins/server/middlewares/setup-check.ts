@@ -7,11 +7,16 @@ import { Forbidden } from '@plugins/errors';
 import type { Request, Response, NextFunction } from 'express';
 
 const setupFlag = async (): Promise<boolean> => {
-  const setup = await GlobalSettings.findOne({ code: 'setup-flag' });
-  if (setup) {
-    return typeof setup.global_flag === 'boolean' ? setup.global_flag : false;
+  console.log(process.env['NODE_ENV']);
+  if (process.env['NODE_ENV'] === 'development') {
+    return true;
   } else {
-    return false;
+    const setup = await GlobalSettings.findOne({ code: 'setup-flag' });
+    if (setup) {
+      return typeof setup.global_flag === 'boolean' ? setup.global_flag : false;
+    } else {
+      return false;
+    }
   }
 };
 
@@ -27,17 +32,22 @@ export async function checkSetupNotComplete(
   res: Response,
   next: NextFunction,
 ): Promise<void> {
-  try {
-    const flag = await setupFlag();
-    if (flag) {
-      throw new Forbidden(
-        'Setup is Already Complete, You Cannot Pass this Route',
-      );
-    } else {
-      next();
+  console.log(process.env['NODE_ENV']);
+  if (process.env['NODE_ENV'] === 'development') {
+    next();
+  } else {
+    try {
+      const flag = await setupFlag();
+      if (flag) {
+        throw new Forbidden(
+          'Setup is Already Complete, You Cannot Pass this Route',
+        );
+      } else {
+        next();
+      }
+    } catch (e) {
+      errorResponseHandler(res, e);
     }
-  } catch (e) {
-    errorResponseHandler(res, e);
   }
 }
 
@@ -53,16 +63,21 @@ export async function checkSetupComplete(
   res: Response,
   next: NextFunction,
 ): Promise<void> {
-  try {
-    const flag = await setupFlag();
-    if (flag) {
-      next();
-    } else {
-      throw new Forbidden(
-        'You Need to Setup the Application First before Accessing this route',
-      );
+  console.log(process.env['NODE_ENV']);
+  if (process.env['NODE_ENV'] === 'development') {
+    next();
+  } else {
+    try {
+      const flag = await setupFlag();
+      if (flag) {
+        next();
+      } else {
+        throw new Forbidden(
+          'You Need to Setup the Application First before Accessing this route',
+        );
+      }
+    } catch (e) {
+      errorResponseHandler(res, e);
     }
-  } catch (e) {
-    errorResponseHandler(res, e);
   }
 }
