@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-55](https://github.com/zyndex-drive/server/compare/v0.2.0-54...v0.2.0-55) (2022-03-19)
+
+
+### Bug Fixes 🛠
+
+* **views:** fix paths, fix router not rendering index.html ([d79eb93](https://github.com/zyndex-drive/server/commit/d79eb93dd3cdf9731feb72f72a9bcfb2c6ecae75))
+
 ## [0.2.0-54](https://github.com/zyndex-drive/server/compare/v0.2.0-53...v0.2.0-54) (2022-03-19)
 
 
