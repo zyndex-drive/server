@@ -1,0 +1,24 @@
+@URL = http://{{HOST}}:{{PORT}}/setup/users
+
+### Add Owner User to Database
+
+POST {{URL}}/add HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}
+content-type: application/json
+
+< ../../request-bodies/setup/user/add.json
+
+
+### Get User from Database
+
+POST {{URL}}/get HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}
+
+
+### Reset Users in the Database
+
+DELETE {{URL}}/reset HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}

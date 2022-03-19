@@ -1,0 +1,24 @@
+@URL = http://{{HOST}}:{{PORT}}/setup/frontends
+
+### Add Frontend to Database
+
+POST {{URL}}/add HTTP/1.1
+x-secret-pass: {{SECRET}}
+x-local-dev-pass: {{LOCAL_SECRET}}
+content-type: application/json
+
+< ../../request-bodies/setup/frontend/add.json
+
+
+### Get Frontends from Database
+
+POST {{URL}}/get HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}
+
+
+### Reset Frontends in the Database
+
+DELETE {{URL}}/reset HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}

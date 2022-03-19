@@ -5,7 +5,7 @@ const WebpackObfuscator = require('webpack-obfuscator');
 const path = require('path');
 
 module.exports = {
-  entry: './app.ts',
+  entry: './src/app.ts',
   mode: 'production',
   output: {
     path: path.resolve(__dirname, 'out'),
@@ -35,7 +35,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, 'views'),
+          from: path.resolve(__dirname, 'src', 'views'),
           to: path.resolve(__dirname, 'out', 'views'),
         },
       ],

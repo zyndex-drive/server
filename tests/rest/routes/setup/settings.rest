@@ -1,0 +1,56 @@
+@URL = http://{{HOST}}:{{PORT}}/setup/settings
+
+### Enable User Requests
+
+POST {{URL}}/user-requests HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}
+content-type: application/json
+
+{
+    "requests": true
+}
+
+### Enable Upgrade Requests
+
+POST {{URL}}/upgrade-requests HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}
+content-type: application/json
+
+{
+    "requests": true
+}
+
+### Enable OTP Verification
+
+POST {{URL}}/otp-verification HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}
+content-type: application/json
+
+{
+    "otp": true
+}
+
+### Max Sessions Flg
+
+POST {{URL}}/max-sessions HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}
+content-type: application/json
+
+{
+    "sessions": 20
+}
+
+### Setup Flag
+
+POST {{URL}}/setup-check HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}
+content-type: application/json
+
+{
+    "setup": true
+}
