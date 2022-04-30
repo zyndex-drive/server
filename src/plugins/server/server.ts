@@ -1,5 +1,6 @@
 // Initialization
 import http from 'http';
+import path from 'path';
 import express from 'express';
 
 // Middlewares
@@ -36,7 +37,13 @@ app.use([dbChecker, cors]);
 app.use(process.env.NODE_ENV === 'production' ? morgan('tiny') : morgan('dev'));
 
 // Serve Public Assets
-app.use(express.static('src/views'));
+app.use(
+  express.static(
+    process.env.NODE_ENV === 'production'
+      ? path.join(__dirname, 'views')
+      : 'src/views',
+  ),
+);
 
 // Use the Router Config from Routes
 app.use('/', router);
@@ -64,8 +71,8 @@ export default function (PORT: string | number): void {
         .then(() => {
           console.log('Database Connected...OK..');
         })
+        .then(() => console.log('Initializing Oauth Clients'))
         .then(() => initializePassport())
-        .then(() => console.log('Passport Oauth Clients Initialized'))
         .catch((err: string) => {
           console.log(err);
           server.close();

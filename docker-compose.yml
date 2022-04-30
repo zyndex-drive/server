@@ -1,0 +1,18 @@
+version: '3'
+networks:
+  api_server_default:
+    external: true
+services:
+  zyndex-server:
+    tty: true
+    env_file:
+      - .env
+    networks:
+      - api_server_default
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000

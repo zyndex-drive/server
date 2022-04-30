@@ -19,18 +19,29 @@ import login from './login';
 // Router
 const router = express.Router();
 
-// Assign Main Routes
-router.use('/setup', [checkSecretPass, checkSetupNotComplete], setup);
-router.use('/login', [checkSetupComplete], login);
+const { NODE_ENV } = process.env;
 
-// Default Get
-router.get(/(\/.*)+/, (req, res) => {
-  console.log(process.env.NODE_ENV);
+// Assign Main Routes
+router.use(
+  '/setup',
+  NODE_ENV === 'development'
+    ? [checkSecretPass]
+    : [checkSecretPass, checkSetupNotComplete],
+  setup,
+);
+router.use(
+  '/login',
+  NODE_ENV === 'development' ? [] : [checkSetupComplete],
+  login,
+);
+
+// Serve HTML Files
+router.get(/(\/.*)+/, (req, res): void => {
   const viewsPath =
-    process.env.NODE_ENV === 'development'
-      ? '../views/index.html'
-      : 'views/index.html';
-  res.status(200).sendFile(path.resolve(__dirname, viewsPath));
+    NODE_ENV === 'production'
+      ? path.resolve(__dirname, 'views', 'index.html')
+      : path.resolve(__dirname, '../views/index.html');
+  res.status(200).sendFile(viewsPath);
 });
 
 // Respond with all the Endpoints in this Route

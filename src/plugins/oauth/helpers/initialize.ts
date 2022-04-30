@@ -1,7 +1,6 @@
 import passport from 'passport';
 import {
   googleStrategyHandler,
-  twitterStrategyHandler,
   facebookStrategyHandler,
   githubStrategyHandler,
 } from '@plugins/oauth/clients';
@@ -16,18 +15,17 @@ import type { PassportStatic } from 'passport';
 export async function initializePassport(): Promise<PassportStatic> {
   const googleStrategy = await googleStrategyHandler();
   if (googleStrategy) {
+    console.log('Google Oauth Enabled');
     passport.use(googleStrategy);
-  }
-  const twitterStrategy = await twitterStrategyHandler();
-  if (twitterStrategy) {
-    passport.use(twitterStrategy);
   }
   const facebookStrategy = await facebookStrategyHandler();
   if (facebookStrategy) {
+    console.log('Facebook Oauth Enabled');
     passport.use(facebookStrategy);
   }
   const githubStrategy = await githubStrategyHandler();
   if (githubStrategy) {
+    console.log('Github Oauth Enabled');
     passport.use(githubStrategy);
   }
   return passport;

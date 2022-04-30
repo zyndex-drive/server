@@ -1,6 +1,6 @@
 {
   "name": "zyndex-server",
-  "version": "0.2.0-54",
+  "version": "0.2.0-56",
   "description": "Backend Server for Handling Zyndex Frontend Requests",
   "main": "app.js",
   "scripts": {
@@ -32,7 +32,9 @@
     "Google",
     "Drive",
     "mongodb",
-    "oauth2"
+    "oauth2",
+    "zyndex",
+    "server"
   ],
   "author": {
     "email": "hello@sudharshan.tk",
@@ -44,7 +46,7 @@
     "url": "https://github.com/zyndex-drive/server/issues",
     "email": "support@zyndex.tk"
   },
-  "homepage": "https://github.com/zyndex-drive/server#readme",
+  "homepage": "https://zyndex.tk",
   "dependencies": {
     "@godaddy/terminus": "^4.10.2",
     "axios": "^0.24.0",
