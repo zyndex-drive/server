@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-56](https://github.com/zyndex-drive/server/compare/v0.2.0-55...v0.2.0-56) (2022-04-30)
+
+
+### Bug Fixes 🛠
+
+* **oauth:** remove twitter oauth login client as it cannot be implemented ([90d4938](https://github.com/zyndex-drive/server/commit/90d4938a8368cfbb2fae0df2b39b7d28f523799c))
+
+
+### Build System 🏗
+
+* **docker:** add docker-compose & dockerfile for production build ([2670227](https://github.com/zyndex-drive/server/commit/26702270705cff762a40de1fe1efdd1670d77fd3))
+
 ## [0.2.0-55](https://github.com/zyndex-drive/server/compare/v0.2.0-54...v0.2.0-55) (2022-03-19)
 
 
