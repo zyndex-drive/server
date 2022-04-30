@@ -71,8 +71,8 @@ export default function (PORT: string | number): void {
         .then(() => {
           console.log('Database Connected...OK..');
         })
+        .then(() => console.log('Initializing Oauth Clients'))
         .then(() => initializePassport())
-        .then(() => console.log('Passport Oauth Clients Initialized'))
         .catch((err: string) => {
           console.log(err);
           server.close();
