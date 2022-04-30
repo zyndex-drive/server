@@ -21,6 +21,9 @@ cp ../yarn.lock ./
 cp ../.yarnrc.yml ./
 cp ../README.md ./
 cp ../LICENSE ./
+cp ../app.json ./
+cp ../Dockerfile ./
+cp ../docker-compose.yml ./
 cp ../.gitignore ./
 cp ../CHANGELOG.md ./
 cp -r ../.yarn/plugins ./.yarn/

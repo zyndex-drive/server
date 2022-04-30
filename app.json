@@ -1,0 +1,13 @@
+{
+  "apps": [
+    {
+      "name": "zyndex-server",
+      "script": "app.js",
+      "exec_mode": "cluster",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": "3000"
+      }
+    }
+  ]
+}
