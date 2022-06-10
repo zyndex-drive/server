@@ -9,6 +9,22 @@
 import { IGlobalSettings } from '@models/types';
 import { objectID } from '@plugins/misc/uid';
 
+export const serverName = (flag: string): Readonly<IGlobalSettings> => ({
+  _id: objectID(),
+  code: 'srvr-name',
+  name: 'Server Name',
+  message: 'Give a Nice Server Name for Display',
+  global_flag: flag,
+});
+
+export const serverUserName = (flag: string): Readonly<IGlobalSettings> => ({
+  _id: objectID(),
+  code: 'srvr-usr-name',
+  name: 'Server Username',
+  message: 'User name for Server (will be used in issuing tokens)',
+  global_flag: flag,
+});
+
 export const userRequests = (flag: boolean): Readonly<IGlobalSettings> => ({
   _id: objectID(),
   code: 'usr-rqsts',
@@ -55,6 +71,27 @@ export const maxSessions = (sessions: number): Readonly<IGlobalSettings> => ({
   name: 'Maximum Sessions for a User',
   message: 'Maximum Active Sessions Allowed for a User',
   global_flag: sessions,
+});
+
+export const loginTokenExpiry = (
+  expiry: number,
+): Readonly<IGlobalSettings> => ({
+  _id: objectID(),
+  code: 'login-token-exp',
+  name: 'Login Token Expiry Time',
+  message: 'Maximum Time Login Session Token Allowed for a User',
+  global_flag: expiry,
+});
+
+export const otherTokenExpiry = (
+  expiry: number,
+): Readonly<IGlobalSettings> => ({
+  _id: objectID(),
+  code: 'other-token-exp',
+  name: 'Other Token Expiry Time',
+  message:
+    'Maximum Time for Other Session Token Allowed for a User (Such as Media Token)',
+  global_flag: expiry,
 });
 
 export const defaultSmtpProvider = (

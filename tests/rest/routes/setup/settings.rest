@@ -1,5 +1,49 @@
 @URL = http://{{HOST}}:{{PORT}}/setup/settings
 
+### Set Server Name
+
+POST {{URL}}/server-name HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}
+content-type: application/json
+
+{
+    "name": "Zyndex - Testing"
+}
+
+### Set Server User Name
+
+POST {{URL}}/server-user-name HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}
+content-type: application/json
+
+{
+    "name": "zyndex"
+}
+
+### Set Login Token Session Expiry
+
+POST {{URL}}/login-session-expiry HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}
+content-type: application/json
+
+{
+    "expiry": 30
+}
+
+### Set Other Token Session Expiry
+
+POST {{URL}}/other-session-expiry HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}
+content-type: application/json
+
+{
+    "expiry": 10
+}
+
 ### Enable User Requests
 
 POST {{URL}}/user-requests HTTP/1.1

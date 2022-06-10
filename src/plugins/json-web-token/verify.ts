@@ -1,6 +1,7 @@
-import { jwtDecrypt, importSPKI } from 'jose';
+import { jwtDecrypt, importJWK } from 'jose';
 
 import type { JWTDecryptResult } from 'jose';
+import { Keys } from '@models';
 
 /**
  * Decrypts the JSON Web Token
@@ -9,13 +10,13 @@ import type { JWTDecryptResult } from 'jose';
  * @returns {Promise<JWTDecryptResult>} - JWT Decrypted Result
  */
 export default async function (jwt: string): Promise<JWTDecryptResult> {
-  const { PUBLIC_KEY } = process.env;
-  if (PUBLIC_KEY) {
-    const algorithm = 'RS256';
-    const key = await importSPKI(PUBLIC_KEY, algorithm);
+  const secretKey = await Keys.findOne({ type: 'secretkey' });
+  if (secretKey) {
+    const algorithm = 'HS256';
+    const key = await importJWK(secretKey.key, algorithm);
     const decrypted = await jwtDecrypt(jwt, key);
     return decrypted;
   } else {
-    throw new Error('No Public Key is Found in the Environment Variables');
+    throw new Error('No Public Key is Found in the Database');
   }
 }

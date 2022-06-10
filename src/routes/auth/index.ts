@@ -1,15 +1,12 @@
 // Initialization
 import express from 'express';
 
-// Middlewares
-
-// Response Handlers
-import { okResponse } from '@plugins/server/responses';
-
 // Routes
 import policies from './policies';
 import roles from './roles';
-import { EndpointGenerator } from '@plugins/server/generators';
+
+// Response handlers
+import { okResponse } from '@plugins/server/responses';
 
 // Router
 const router = express.Router();
@@ -18,14 +15,8 @@ const router = express.Router();
 router.use('/policies', policies);
 router.use('/roles', roles);
 
-// Respond with all the Endpoints in this Route
-router.post('/endpoints', (req, res) =>
-  new EndpointGenerator(res, router).serve(),
-);
-
-// Default Get
-router.get('/', (req, res) => {
-  okResponse(res, 'Server Successfully Started');
+router.post('/status', (req, res) => {
+  okResponse(res, 'OK');
 });
 
 export default router;

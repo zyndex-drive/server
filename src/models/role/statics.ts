@@ -56,7 +56,7 @@ export function mapCheck(this: IRoleModel): Promise<IInlineResponse<boolean>> {
         resolve(result);
       })
       .catch((err: MongoError) => {
-        result.error = err;
+        result.error = `${err.name}: ${err.message}`;
         reject(new Error(`${err.name}: ${err.message}`));
       });
   });

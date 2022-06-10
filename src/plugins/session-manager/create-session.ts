@@ -14,7 +14,6 @@ interface ISessionResponse {
   issued_at: number;
   token_secret: string;
   user_id: string;
-  expires_at: number;
   roles: { role: string; scope: string }[];
 }
 
@@ -29,7 +28,6 @@ const generateResponse = (
     issued_at: sessionDoc.issued_at,
     token_secret: sessionDoc.token_secret,
     user_id: String(sessionDoc.user_id),
-    expires_at: sessionDoc.expires_at,
     roles: [
       ...userDoc.roles.map((role) => ({
         role: String(role.role),
@@ -63,40 +61,34 @@ export default async function (
     .exec();
   const totalSessions = maxSessions.global_flag;
   const payload: JWTPayload = {
-    ip: req.ip,
+    ip: req.clientIp,
     user_id: String(user._id),
     frontend: String(frontendDoc._id),
   };
   const sessionDocs = await Sessions.find({ user_id: user._id }).lean().exec();
   if (sessionDocs.length >= totalSessions) {
     await Sessions.deleteOne({ user_id: user._id });
-    const token = await generateJWT(user, payload);
+    const token = await generateJWT(user, payload, 'login');
     const newId = objectID();
     const now = Date.now();
-    const expiryPeriod = 30 * 60 * 60 * 1000;
-    const expiry = now + expiryPeriod;
     const newSession = new Sessions({
       _id: newId,
       ...payload,
       token_secret: token,
       issued_at: now,
-      expires_at: expiry,
     });
     const sessionDoc = await newSession.save();
     const response = generateResponse(sessionDoc, user);
     return response;
   } else {
-    const token = await generateJWT(user, payload);
+    const token = await generateJWT(user, payload, 'login');
     const newId = objectID();
     const now = Date.now();
-    const expiryPeriod = 30 * 60 * 60 * 1000;
-    const expiry = now + expiryPeriod;
     const newSession = new Sessions({
       _id: newId,
       ...payload,
       token_secret: token,
       issued_at: now,
-      expires_at: expiry,
     });
     const sessionDoc = await newSession.save();
     const response = generateResponse(sessionDoc, user);

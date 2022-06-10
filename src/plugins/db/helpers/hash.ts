@@ -8,39 +8,19 @@ import dotProp from 'dot-prop';
  * @param {string[]} encryptedFields - Array of Fields to Hash
  * @returns {Object} Object with Hashed Fields
  */
-export default function <T>(obj: T, encryptedFields?: string[]): Promise<T> {
-  return new Promise<T>((resolve, reject) => {
-    try {
-      if (encryptedFields) {
-        const forLoopPromise = new Promise<T>((resolve, reject) => {
-          let modObj = obj;
-          encryptedFields.forEach((field: string, index: number) => {
-            if (dotProp.has(obj, field)) {
-              const inValue = dotProp.get(obj, field);
-              if (typeof inValue === 'string') {
-                bcrypt
-                  .hash(inValue, 10)
-                  .then((result) => {
-                    modObj = dotProp.set(modObj, field, result);
-                  })
-                  .catch((err: string) => {
-                    reject(err);
-                  });
-              }
-            }
-            if (index === encryptedFields.length - 1) resolve(modObj);
-          });
-        });
-        forLoopPromise
-          .then((modObj) => resolve(modObj))
-          .catch((err) => {
-            console.log(err);
-            reject(err);
-          });
+export default function <T>(obj: T, encryptedFields?: string[]): T {
+  let modObj = obj;
+  if (encryptedFields) {
+    encryptedFields.forEach((field: string) => {
+      if (dotProp.has(obj, field)) {
+        const inValue = dotProp.get(obj, field);
+        if (typeof inValue === 'string') {
+          const hash = bcrypt.hashSync(inValue, 10);
+          modObj = dotProp.set(modObj, field, hash);
+        }
       }
-    } catch (err) {
-      console.log(err);
-      reject(err);
-    }
-  });
+    });
+    return modObj;
+  }
+  return modObj;
 }

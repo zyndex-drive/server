@@ -31,10 +31,6 @@ const schema = new Schema<ISessionDoc, ISessionModel, ISession>({
     required: true,
     default: Date.now,
   },
-  expires_at: {
-    type: Number,
-    required: true,
-  },
 });
 
 export default appendStatics(schema);

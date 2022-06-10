@@ -57,7 +57,7 @@ export function mapCheck(
         resolve(result);
       })
       .catch((err: MongoError) => {
-        result.error = err;
+        result.error = `${err.name}: ${err.message}`;
         reject(new Error(`${err.name}: ${err.message}`));
       });
   });
