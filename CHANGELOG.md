@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-57](https://github.com/zyndex-drive/server/compare/v0.2.0-56...v0.2.0-57) (2022-06-11)
+
+
+### Others 🔧
+
+* pushing changes after a long time ([d79761e](https://github.com/zyndex-drive/server/commit/d79761eba6d89a38da255ecbf3e6f958461aa52f))
+
 ## [0.2.0-56](https://github.com/zyndex-drive/server/compare/v0.2.0-55...v0.2.0-56) (2022-04-30)
 
 
