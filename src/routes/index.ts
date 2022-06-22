@@ -7,6 +7,7 @@ import {
   checkSetupComplete,
   checkSetupNotComplete,
   sessionChecker,
+  globalRateLimiter,
 } from '@plugins/server/middlewares';
 
 // HTTP Error Middlewares
@@ -34,13 +35,13 @@ router.use(
   '/setup',
   NODE_ENV === 'development'
     ? [checkSecretPass]
-    : [checkSecretPass, checkSetupNotComplete],
+    : [globalRateLimiter, checkSecretPass, checkSetupNotComplete],
   setup,
 );
 
 router.use(
   '/login',
-  NODE_ENV === 'development' ? [] : [checkSetupComplete],
+  NODE_ENV === 'development' ? [] : [globalRateLimiter, checkSetupComplete],
   login,
 );
 
@@ -48,7 +49,7 @@ router.use(
   '/auth',
   NODE_ENV === 'development'
     ? [sessionChecker]
-    : [checkSetupComplete, sessionChecker],
+    : [globalRateLimiter, checkSetupComplete, sessionChecker],
   auth,
 );
 
@@ -57,17 +58,13 @@ router.post(
   '/endpoints',
   NODE_ENV === 'development'
     ? [sessionChecker]
-    : [checkSetupComplete, sessionChecker],
+    : [globalRateLimiter, checkSetupComplete, sessionChecker],
   (req: Request, res: Response) => new EndpointGenerator(res, router).serve(),
 );
 
 // Serve 404 when path is not found
 router.post(/(\/.*)+/, (req, res): void => {
-  try {
-    throw new NotFound('404: Path not found');
-  } catch (e) {
-    errorResponseHandler(res, e);
-  }
+  errorResponseHandler(res, new NotFound('404: Path not found'));
 });
 
 // Serve HTML Files
