@@ -94,6 +94,38 @@ export const otherTokenExpiry = (
   global_flag: expiry,
 });
 
+export const globalRateLimiter = (
+  requests: number,
+): Readonly<IGlobalSettings> => ({
+  _id: objectID(),
+  code: 'global-rate-limiter',
+  name: 'Global Requests Limiter',
+  message: 'Maximum Requests from a Single IP in a Window of 15 Minutes',
+  global_flag: requests,
+});
+
+export const userRateLimiter = (
+  requests: number,
+): Readonly<IGlobalSettings> => ({
+  _id: objectID(),
+  code: 'user-rate-limiter',
+  name: 'User Requests Limiter',
+  message:
+    'Maximum Requests from a User from a Single IP in a Window of 15 Minutes',
+  global_flag: requests,
+});
+
+export const mediaRateLimiter = (
+  requests: number,
+): Readonly<IGlobalSettings> => ({
+  _id: objectID(),
+  code: 'media-rate-limiter',
+  name: 'Media Requests Limiter',
+  message:
+    'Maximum Requests from a User for Media Related Requests from a Single IP in a Window of 15 Minutes',
+  global_flag: requests,
+});
+
 export const defaultSmtpProvider = (
   provider_id: string,
 ): Readonly<IGlobalSettings> => ({
