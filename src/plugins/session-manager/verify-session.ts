@@ -1,6 +1,11 @@
 import { Sessions } from '@models';
 import { verifyJWT } from '@plugins/json-web-token';
 
+interface ISessionCheckResponse {
+  exists: boolean;
+  userid: string;
+}
+
 /**
  * Verifies the Session Document and also Verifies the JWT
  *
@@ -11,7 +16,7 @@ import { verifyJWT } from '@plugins/json-web-token';
 export default async function (
   sessionId: string,
   sessionToken: string,
-): Promise<boolean> {
+): Promise<ISessionCheckResponse> {
   const sessionDoc = await Sessions.findById(sessionId).lean().exec();
   if (sessionDoc) {
     const { token_secret: savedToken } = sessionDoc;
@@ -22,7 +27,10 @@ export default async function (
         payload.user_id === String(sessionDoc.user_id) &&
         payload.frontend === String(sessionDoc.frontend)
       ) {
-        return true;
+        return {
+          userid: String(sessionDoc.user_id),
+          exists: true,
+        };
       } else {
         throw new Error('Payload is Wrong in the JWT');
       }
