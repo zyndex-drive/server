@@ -24,10 +24,10 @@ export default async function (
   if (secretKey) {
     const getExpiryDocPromise = GlobalSettings.findOne({
       code: type === 'login' ? 'login-token-exp' : 'other-token-exp',
-    });
+    }).lean();
     const getServerUsernameDocPromise = GlobalSettings.findOne({
       code: 'srvr-usr-name',
-    });
+    }).lean();
     const [getExpiryDoc, getServerUsernameDoc] = await Promise.all([
       getExpiryDocPromise.exec(),
       getServerUsernameDocPromise.exec(),

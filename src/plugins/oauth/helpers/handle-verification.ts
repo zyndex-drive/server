@@ -16,7 +16,9 @@ export const handleVerification = async (
       Users.findOne({ oauth_id: userProfile.id }).exec(),
       GlobalSettings.findOne({
         code: 'srvr-usr-name',
-      }).exec(),
+      })
+        .lean()
+        .exec(),
     ]);
     if (getServerUsernameDoc) {
       let serverUsername = getServerUsernameDoc.global_flag;

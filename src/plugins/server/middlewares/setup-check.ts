@@ -10,7 +10,9 @@ const setupFlag = async (): Promise<boolean> => {
   if (process.env['NODE_ENV'] === 'development') {
     return true;
   } else {
-    const setup = await GlobalSettings.findOne({ code: 'setup-flag' });
+    const setup = await GlobalSettings.findOne({ code: 'setup-flag' })
+      .lean()
+      .exec();
     if (setup) {
       return typeof setup.global_flag === 'boolean' ? setup.global_flag : false;
     } else {
