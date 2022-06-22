@@ -4,12 +4,16 @@ import express from 'express';
 // Models
 import { Policies } from '@models';
 
+// Auth Helpers
+import { policies as policyAuth } from '@plugins/auth';
+
 // Response Handlers
 import { errorResponseHandler, okResponse } from '@plugins/server/responses';
 
 // Types
 import type { RequestHandler } from 'express';
-import type { IPolicy } from '@models/types';
+import type { IPolicy, IUserDoc } from '@models/types';
+import { UnAuthorized, BadRequest } from '@plugins/errors';
 
 // Router
 const router = express.Router();
@@ -25,16 +29,40 @@ router.post('/list', (async (req, res) => {
 
 router.post('/update', (async (req, res) => {
   try {
-    const { policiesToUpdate }: { policiesToUpdate: IPolicy[] } = req.body;
-    const promises = policiesToUpdate.map((policy) => {
-      const { _id, ...toUpdate } = policy;
-      return Policies.updateOne({ _id }, { $set: toUpdate });
-    });
-    await Promise.all(promises);
-    okResponse(res, {
-      updated: true,
-      records: policiesToUpdate.map((policy) => String(policy._id)),
-    });
+    if (req.user) {
+      const user: IUserDoc = req.user;
+      const { policiesToUpdate }: { policiesToUpdate: IPolicy[] } = req.body;
+      const searchQs = {
+        $or: policiesToUpdate.map((policy) => {
+          if (policy._id) {
+            return {
+              _id: policy._id,
+            };
+          } else {
+            throw new BadRequest(
+              'policiesToUpdate',
+              'Requests.data to be of type IPolicy',
+            );
+          }
+        }),
+      };
+      const policyDocs = await Policies.find(searchQs).exec();
+      const promises = policiesToUpdate.map((modPolicy) => {
+        const [currentPolicyDoc] = policyDocs.filter(
+          (policy) => String(policy._id) === String(modPolicy._id),
+        );
+        return policyAuth.edit(user, currentPolicyDoc, modPolicy);
+      });
+      await Promise.all(promises);
+      okResponse(res, {
+        updated: true,
+        records: policiesToUpdate.map((policy) => String(policy._id)),
+      });
+    } else {
+      throw new UnAuthorized(
+        'User Not found in the Request, hence Unauthorized',
+      );
+    }
   } catch (e) {
     errorResponseHandler(res, e);
   }
