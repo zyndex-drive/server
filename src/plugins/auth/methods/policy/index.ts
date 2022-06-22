@@ -21,7 +21,7 @@ function edit(
   return editDatainDatabase<IPolicyDoc, IPolicyModel>(
     Policies,
     data,
-    modifiedData,
+    { $set: modifiedData },
     admin,
     policies,
   );
