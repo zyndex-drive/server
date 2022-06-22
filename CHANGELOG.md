@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-58](https://github.com/zyndex-drive/server/compare/v0.2.0-57...v0.2.0-58) (2022-06-22)
+
+
+### Bug Fixes 🛠
+
+* **models:** use lean method for applicable models for faster db queries ([68c7c4c](https://github.com/zyndex-drive/server/commit/68c7c4cd4e749800eb579d1a6e59e81d99cd427e))
+* **plugins/auth:** fix editdatabase function modification type ([a1e483d](https://github.com/zyndex-drive/server/commit/a1e483de607b8894784b457f9d7975af0f831d2a))
+* **plugins/session:** pass userid down the response context ([897e440](https://github.com/zyndex-drive/server/commit/897e44066876b9b3dcf0482ae18e3b46c9f9f254))
+
+
+### Features 🔥
+
+* **error class:** introduce too many request error class for rate limiting responses ([60b76da](https://github.com/zyndex-drive/server/commit/60b76daf6de59aa023cdf2c6829dfc6d8e9a57bd))
+* **middleware:** introduce global, user & other rate limiters in the application ([7f8fcfe](https://github.com/zyndex-drive/server/commit/7f8fcfec92bd14bb9d7845d998c9d580aabbf475))
+* **plugins/sessions:** create user document and pass it down the response context ([6ad7255](https://github.com/zyndex-drive/server/commit/6ad72557a5a1bfa70d76a3fee6a2e3ce4e743516))
+* **routes/auth/policy:** implement auth plugin in the auth/policy/modify route ([95e783b](https://github.com/zyndex-drive/server/commit/95e783b3b0ab1a959d3a38e01cb4f548b419d77f))
+* **routes:** add setup route for adding global, user & other rate limiter settings ([81a90c9](https://github.com/zyndex-drive/server/commit/81a90c950279e43a02be2ba68d644556f2e8b904))
+* **templates:** add setup template for rate limiter settings ([15e5955](https://github.com/zyndex-drive/server/commit/15e5955e2d8ddde2056ff468f2f9c7d2e4edf69a))
+
 ## [0.2.0-57](https://github.com/zyndex-drive/server/compare/v0.2.0-56...v0.2.0-57) (2022-06-11)
 
 
