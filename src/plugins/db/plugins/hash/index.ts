@@ -13,15 +13,14 @@ export default function <T, U extends Document, V extends Model<U>>(): (
   const plugin = (schema: Schema<U, V, T>): void => {
     const toHashFields: string[] = fieldsPicker<T, U, V>(schema, 'hash');
     schema.pre('validate', function (this: U, next: HookNextFunction) {
-      hashString<U>(this, toHashFields)
-        .then((hashedDoc) => {
-          this.set(hashedDoc);
-          next();
-        })
-        .catch((err) => {
-          console.log(err);
-          next(new Error('Password Hashing Failed'));
-        });
+      try {
+        const hashedDoc = hashString<U>(this, toHashFields);
+        this.set(hashedDoc);
+        next();
+      } catch (e) {
+        console.log(`Error Occured in Encrypt Plugin:Mongoose: ${String(e)}`);
+        next();
+      }
     });
   };
   return plugin;

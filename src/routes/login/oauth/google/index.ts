@@ -19,14 +19,15 @@ import type { RequestHandler } from 'express';
 // Router
 const router = express.Router();
 
-// Google Oauth Login Route
-router.get('/oauth/', (req, res) => {
+// Google Credentials add Route
+router.get('/root', (req, res) => {
   normalAccountHandler.generateOauth(req, res, [
     ...oauthScopes.drive,
     ...oauthScopes.iam,
   ]);
 });
 
+// Signup with Google Route
 router.get(
   '/onboarding',
   (req, res, next) =>

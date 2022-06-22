@@ -2,7 +2,7 @@
 
 ### Login as a User
 
-GET {{URL}}/login/oauth/github/onboarding HTTP/1.1
+POST {{URL}}/login/user HTTP/1.1
 content-type: application/json
 
 < ../../request-bodies/login/user.json

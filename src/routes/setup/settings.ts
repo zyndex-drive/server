@@ -15,6 +15,8 @@ import { GlobalSettings } from '@models';
 
 // Global Settings Handlers
 import {
+  serverName,
+  serverUserName,
   userRequests,
   upgradeRequests,
   setupStatus,
@@ -24,6 +26,11 @@ import {
   defaultSmtpProvider,
   mailing,
   maxSessions,
+  loginTokenExpiry,
+  otherTokenExpiry,
+  globalRateLimiter,
+  userRateLimiter,
+  mediaRateLimiter,
 } from '@plugins/templates/global-settings';
 
 // Types
@@ -49,6 +56,30 @@ const callorThrow = (res: Response, callback: () => void) => {
     errorResponseHandler(res, e);
   }
 };
+
+router.post('/server-name', (req, res) =>
+  callorThrow(res, () => {
+    const { name }: { name: string } = req.body;
+    if (name && typeof name === 'string') {
+      const sessionSetting = serverName(name);
+      void savenSendit(res, sessionSetting);
+    } else {
+      throw new BadRequest('name', 'request');
+    }
+  }),
+);
+
+router.post('/server-user-name', (req, res) =>
+  callorThrow(res, () => {
+    const { name }: { name: string } = req.body;
+    if (name && typeof name === 'string') {
+      const sessionSetting = serverUserName(name);
+      void savenSendit(res, sessionSetting);
+    } else {
+      throw new BadRequest('name', 'request');
+    }
+  }),
+);
 
 router.post('/user-requests', (req, res) =>
   callorThrow(res, () => {
@@ -123,6 +154,66 @@ router.post('/max-sessions', (req, res) =>
       void savenSendit(res, sessionSetting);
     } else {
       throw new BadRequest('sessions', 'request');
+    }
+  }),
+);
+
+router.post('/login-session-expiry', (req, res) =>
+  callorThrow(res, () => {
+    const { expiry }: { expiry: number } = req.body;
+    if (expiry && typeof expiry === 'number') {
+      const sessionSetting = loginTokenExpiry(expiry);
+      void savenSendit(res, sessionSetting);
+    } else {
+      throw new BadRequest('expiry', 'request');
+    }
+  }),
+);
+
+router.post('/other-token-expiry', (req, res) =>
+  callorThrow(res, () => {
+    const { expiry }: { expiry: number } = req.body;
+    if (expiry && typeof expiry === 'number') {
+      const sessionSetting = otherTokenExpiry(expiry);
+      void savenSendit(res, sessionSetting);
+    } else {
+      throw new BadRequest('expiry', 'request');
+    }
+  }),
+);
+
+router.post('/global-rate-limit', (req, res) =>
+  callorThrow(res, () => {
+    const { requests }: { requests: number } = req.body;
+    if (requests && typeof requests === 'number') {
+      const rateLimitSetting = globalRateLimiter(requests);
+      void savenSendit(res, rateLimitSetting);
+    } else {
+      throw new BadRequest('expiry', 'request');
+    }
+  }),
+);
+
+router.post('/user-rate-limit', (req, res) =>
+  callorThrow(res, () => {
+    const { requests }: { requests: number } = req.body;
+    if (requests && typeof requests === 'number') {
+      const rateLimitSetting = userRateLimiter(requests);
+      void savenSendit(res, rateLimitSetting);
+    } else {
+      throw new BadRequest('expiry', 'request');
+    }
+  }),
+);
+
+router.post('/media-rate-limit', (req, res) =>
+  callorThrow(res, () => {
+    const { requests }: { requests: number } = req.body;
+    if (requests && typeof requests === 'number') {
+      const rateLimitSetting = mediaRateLimiter(requests);
+      void savenSendit(res, rateLimitSetting);
+    } else {
+      throw new BadRequest('expiry', 'request');
     }
   }),
 );

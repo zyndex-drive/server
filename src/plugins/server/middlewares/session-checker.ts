@@ -1,7 +1,9 @@
+import { Users } from '@models';
+
 import { isUndefined } from '@plugins/misc';
 import { sessionManager } from '@plugins';
 import { errorResponseHandler } from '@plugins/server/responses';
-import { UnAuthorized } from '@plugins/errors';
+import { UnAuthorized, BadRequest, InternalServerError } from '@plugins/errors';
 
 // Types
 import type { Request, Response, NextFunction } from 'express';
@@ -30,11 +32,21 @@ export default async function (
         session_id,
         session_token,
       );
-      if (sessionBool) {
-        next();
+      if (sessionBool.exists) {
+        const userDoc = await Users.findOne({ _id: sessionBool.userid }).exec();
+        if (userDoc) {
+          req.user = userDoc;
+          next();
+        } else {
+          throw new InternalServerError(
+            'Unable to Find User Document for the Session',
+          );
+        }
       } else {
         throw new UnAuthorized('Session Token is Not Authorized');
       }
+    } else {
+      throw new BadRequest('session_id,session_token', 'Request');
     }
   } catch (e) {
     errorResponseHandler(res, e);

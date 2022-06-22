@@ -17,9 +17,14 @@ export default function <T, U extends Document, V extends Model<U>>(): (
   const plugin = (schema: Schema<U, V, T>): void => {
     const encryptedFields: string[] = fieldsPicker<T, U, V>(schema, 'encrypt');
     schema.pre('validate', function (this: U, next: HookNextFunction) {
-      const encryptedDoc = encryptFields(this, encryptedFields);
-      this.set(encryptedDoc);
-      next();
+      try {
+        const encryptedDoc = encryptFields(this, encryptedFields);
+        this.set(encryptedDoc);
+        next();
+      } catch (e) {
+        console.log(`Error Occured in Encrypt Plugin:Mongoose: ${String(e)}`);
+        next();
+      }
     });
     schema.post('init', function (this: U) {
       const decryptedDoc = decryptFields<U>(this, encryptedFields);
