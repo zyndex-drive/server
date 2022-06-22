@@ -44,6 +44,17 @@ content-type: application/json
     "expiry": 10
 }
 
+### Set Global Request Limiter Requests
+
+POST {{URL}}/global-rate-limit HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}
+content-type: application/json
+
+{
+    "requests": 100
+}
+
 ### Enable User Requests
 
 POST {{URL}}/user-requests HTTP/1.1

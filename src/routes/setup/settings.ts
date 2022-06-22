@@ -28,6 +28,9 @@ import {
   maxSessions,
   loginTokenExpiry,
   otherTokenExpiry,
+  globalRateLimiter,
+  userRateLimiter,
+  mediaRateLimiter,
 } from '@plugins/templates/global-settings';
 
 // Types
@@ -173,6 +176,42 @@ router.post('/other-token-expiry', (req, res) =>
     if (expiry && typeof expiry === 'number') {
       const sessionSetting = otherTokenExpiry(expiry);
       void savenSendit(res, sessionSetting);
+    } else {
+      throw new BadRequest('expiry', 'request');
+    }
+  }),
+);
+
+router.post('/global-rate-limit', (req, res) =>
+  callorThrow(res, () => {
+    const { requests }: { requests: number } = req.body;
+    if (requests && typeof requests === 'number') {
+      const rateLimitSetting = globalRateLimiter(requests);
+      void savenSendit(res, rateLimitSetting);
+    } else {
+      throw new BadRequest('expiry', 'request');
+    }
+  }),
+);
+
+router.post('/user-rate-limit', (req, res) =>
+  callorThrow(res, () => {
+    const { requests }: { requests: number } = req.body;
+    if (requests && typeof requests === 'number') {
+      const rateLimitSetting = userRateLimiter(requests);
+      void savenSendit(res, rateLimitSetting);
+    } else {
+      throw new BadRequest('expiry', 'request');
+    }
+  }),
+);
+
+router.post('/media-rate-limit', (req, res) =>
+  callorThrow(res, () => {
+    const { requests }: { requests: number } = req.body;
+    if (requests && typeof requests === 'number') {
+      const rateLimitSetting = mediaRateLimiter(requests);
+      void savenSendit(res, rateLimitSetting);
     } else {
       throw new BadRequest('expiry', 'request');
     }
