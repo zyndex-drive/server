@@ -97,41 +97,54 @@ const runAsyncWhileLoop = async <T, U>(
     throw new Error('Nice');
   }
 };
+
+interface IGetDeeperRoleHelpers {
+  roleId: string;
+  userPolicies: ID<IPolicyDoc>[];
+}
+
 export const getDeeperRoles = async (
   adminRole: string,
   otherPolicies?: ID<IPolicyDoc>[],
 ): Promise<IDeeperRoles> => {
   let userType = '';
-  let roleId = adminRole;
-  let userPolicies: ID<IPolicyDoc>[] = otherPolicies ? otherPolicies : [];
-  const deeperRoles = await new Promise<IDeeperRoles>((resolve, reject) => {
-    while (userType !== 'main') {
-      Roles.findById(roleId)
-        .lean()
-        .exec()
-        .then((roleDoc) => {
-          if (roleDoc) {
-            userType = roleDoc.type;
-            userPolicies = [...roleDoc.allowed_policies, ...userPolicies];
-            if (roleDoc.delgates_from) {
-              roleId = String(roleDoc.delgates_from);
-            }
-            resolve({
-              roleDoc,
-              allowedPolicies: userPolicies,
-            });
-          } else {
-            userType = 'main';
-            reject(new Error("Cannot Find User's Role Details"));
-          }
-        })
-        .catch((err) => {
-          reject(new Error(err));
-        });
-    }
-  }).catch((err) => {
-    throw new Error(err);
-  });
+  const roleId = adminRole;
+  const userPolicies: ID<IPolicyDoc>[] = otherPolicies ? otherPolicies : [];
+  const deeperRoles = await runAsyncWhileLoop<
+    IDeeperRoles,
+    IGetDeeperRoleHelpers
+  >(
+    '',
+    'main',
+    {
+      roleId,
+      userPolicies,
+    },
+    async (start, helpers) => {
+      const roleDoc = await Roles.findById(helpers.roleId).lean().exec();
+      if (roleDoc) {
+        userType = roleDoc.type;
+        helpers.userPolicies = [
+          ...roleDoc.allowed_policies,
+          ...helpers.userPolicies,
+        ];
+        if (roleDoc.delgates_from) {
+          helpers.roleId = String(roleDoc.delgates_from);
+        }
+        const whileresult: asyncWhileLoopResult<IDeeperRoles> = {
+          nextStartValue: userType,
+          finalResult: {
+            roleDoc,
+            allowedPolicies: helpers.userPolicies,
+          },
+        };
+        return whileresult;
+      } else {
+        userType = 'main';
+        throw new Error("Cannot Find User's Role Details");
+      }
+    },
+  );
   return deeperRoles;
 };
 
