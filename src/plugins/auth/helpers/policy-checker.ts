@@ -67,6 +67,36 @@ interface IDeeperRoles {
   allowedPolicies: ID<IPolicyDoc>[];
 }
 
+interface asyncWhileLoopResult<T> {
+  nextStartValue: string;
+  finalResult: T;
+}
+
+const runAsyncWhileLoop = async <T, U>(
+  start: string,
+  stop: string,
+  otherHelpers: U,
+  func: (start: string, helpers: U) => Promise<asyncWhileLoopResult<T>>,
+): Promise<T> => {
+  let startValue = start;
+  let result: T | undefined = undefined;
+  while (startValue !== stop) {
+    const { nextStartValue, finalResult } = await func(
+      startValue,
+      otherHelpers,
+    );
+    startValue = nextStartValue;
+    result = finalResult;
+    if (startValue === stop) {
+      return result;
+    }
+  }
+  if (result !== undefined) {
+    return result;
+  } else {
+    throw new Error('Nice');
+  }
+};
 export const getDeeperRoles = async (
   adminRole: string,
   otherPolicies?: ID<IPolicyDoc>[],
