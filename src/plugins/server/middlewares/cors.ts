@@ -34,7 +34,7 @@ async function corsMiddleware(
           res.setHeader('Access-Control-Allow-Methods', 'GET');
           res.setHeader(
             'Access-Control-Allow-Headers',
-            'x-local-dev-pass,x-secret-pass,X-Requested-With,x-lean-doc-request,content-type, Accept',
+            'x-local-dev-pass, x-secret-pass, X-Requested-With, x-lean-doc-request, x-session-id, x-session-token, content-type, Accept',
           );
           next();
         } else {
@@ -47,7 +47,7 @@ async function corsMiddleware(
               );
               res.setHeader(
                 'Access-Control-Allow-Headers',
-                'x-local-dev-pass,x-secret-pass,X-Requested-With,x-lean-doc-request,content-type, Accept',
+                'x-local-dev-pass, x-secret-pass, X-Requested-With, x-lean-doc-request, x-session-id, x-session-token, content-type, Accept',
               );
               next();
             } else {
@@ -74,7 +74,7 @@ async function corsMiddleware(
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
       res.setHeader(
         'Access-Control-Allow-Headers',
-        'x-local-dev-pass,x-secret-pass,X-Requested-With,x-lean-doc-request,content-type, Accept',
+        'x-secret-pass, X-Requested-With, x-lean-doc-request, x-session-id, x-session-token, content-type, Accept',
       );
       res.setHeader('Access-Control-Allow-Credentials', 'true');
       next();

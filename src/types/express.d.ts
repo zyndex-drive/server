@@ -4,5 +4,7 @@ declare module 'http' {
     'x-local-dev-pass'?: string;
     'x-persist-state'?: string;
     'x-lean-doc-request'?: string;
+    'x-session-id'?: string;
+    'x-session-token'?: string;
   }
 }

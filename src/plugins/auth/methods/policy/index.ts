@@ -2,6 +2,8 @@ import { Policies } from '@models';
 import { editDatainDatabase } from '@plugins/auth/helpers';
 import { policy as policyPolicies } from '@plugins/templates/policies';
 
+import { NotAllowed } from '@plugins/errors';
+
 import type { IPolicyDoc, IPolicyModel, IUserDoc } from '@models/types';
 
 /**
@@ -18,13 +20,20 @@ function edit(
   modifiedData: Partial<IPolicyDoc>,
 ): Promise<boolean> {
   const policies = [policyPolicies.edit];
-  return editDatainDatabase<IPolicyDoc, IPolicyModel>(
-    Policies,
-    data,
-    { $set: modifiedData },
-    admin,
-    policies,
-  );
+  const { code, ...otherData } = modifiedData;
+  if (data.code === code || code === undefined) {
+    return editDatainDatabase<IPolicyDoc, IPolicyModel>(
+      Policies,
+      data,
+      { $set: otherData },
+      admin,
+      policies,
+    );
+  } else {
+    throw new NotAllowed(
+      'Not Allowed to edit code property in policy document',
+    );
+  }
 }
 
 export default {

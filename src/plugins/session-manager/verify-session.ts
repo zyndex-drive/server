@@ -1,6 +1,8 @@
 import { Sessions } from '@models';
 import { verifyJWT } from '@plugins/json-web-token';
 
+import { UnAuthorized } from '@plugins/errors';
+
 interface ISessionCheckResponse {
   exists: boolean;
   userid: string;
@@ -32,14 +34,14 @@ export default async function (
           exists: true,
         };
       } else {
-        throw new Error('Payload is Wrong in the JWT');
+        throw new UnAuthorized('Payload is Wrong in the JWT');
       }
     } else {
-      throw new Error(
+      throw new UnAuthorized(
         'Session Token not Matching with the Saved Token in Database',
       );
     }
   } else {
-    throw new Error('Session Document not Found in the Database');
+    throw new UnAuthorized('Session Document not Found in the Database');
   }
 }

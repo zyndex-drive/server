@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-59](https://github.com/zyndex-drive/server/compare/v0.2.0-58...v0.2.0-59) (2022-06-23)
+
+
+### Features 🔥
+
+* **plugins/auth/helpers:** write a asyncwhileloop function for use in auth helper functions ([332518b](https://github.com/zyndex-drive/server/commit/332518b5afcc6a0a2ecd10bdbef1954bd9264624))
+* **plugins/errors:** add a new not allowed error response class ([b6f415c](https://github.com/zyndex-drive/server/commit/b6f415cf17a03024c469fcdeeab8ec8d59c2272c))
+
+
+### Others 🔧
+
+* **types/express:** add express header types for x-session-id and x-session-token ([71c88c0](https://github.com/zyndex-drive/server/commit/71c88c008f15b9aa2eb70e6492181f447be81b49))
+
+
+### Code Refactoring 🖌
+
+* **plugins/server/middleware:** update session checker function to use the new session headers ([e995941](https://github.com/zyndex-drive/server/commit/e995941e35166606121d967cd01403529d977de2))
+
+
+### Bug Fixes 🛠
+
+* **plugins/auth/helper:** fix mathjs module import line, add owner to heirarchy ([92f0490](https://github.com/zyndex-drive/server/commit/92f0490968481239b469e863763e5234453f111e))
+* **plugins/auth/helpers:** remove existing while loop and use asyncwhileloop function ([ef3c1ad](https://github.com/zyndex-drive/server/commit/ef3c1adef73b06420951cafbfc5608dd5cf48f8f))
+* **plugins/auth/policy:** restrict editing 'code' prop in policy document ([386af4c](https://github.com/zyndex-drive/server/commit/386af4c49821cdd608baf26fed632ac4c93339c0))
+* **plugins/cors:** allow x-session-id & x-session-token to be allowed in cors requests ([f3b6ee7](https://github.com/zyndex-drive/server/commit/f3b6ee72372ce05138c1c76182eb7f017a2c6608))
+* **plugins/session-manager:** use updated error classes for more proper responses to user ([cb5d02f](https://github.com/zyndex-drive/server/commit/cb5d02f5e9934bf1e674c5a77892fad0745494c2))
+
 ## [0.2.0-58](https://github.com/zyndex-drive/server/compare/v0.2.0-57...v0.2.0-58) (2022-06-22)
 
 

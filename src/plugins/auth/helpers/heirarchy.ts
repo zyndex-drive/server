@@ -1,6 +1,6 @@
 /* eslint-disable quote-props */
 import dotProp from 'dot-prop';
-import mathjs from 'mathjs';
+import { max as maximum } from 'mathjs';
 
 import type { IRoleDoc, IRoleLeanDoc } from '@models/types';
 
@@ -9,6 +9,7 @@ export const heirarchy = {
   'Content Manager': 1,
   Moderator: 2,
   Manager: 3,
+  Owner: 4,
 };
 
 export const getHeirarchy = (roleDoc: IRoleDoc): number | undefined =>
@@ -30,7 +31,7 @@ export const getHighestHeirarchy = async (
   );
   await Promise.all(promises);
   const roleNumbers = heirarchies.map((heirarchy) => heirarchy.heirarchy);
-  const highest: number = mathjs.max(roleNumbers);
+  const highest: number = maximum(roleNumbers);
   const [highestRoleDoc] = heirarchies.filter(
     (heirarchy) => heirarchy.heirarchy === highest,
   );
