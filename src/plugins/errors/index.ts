@@ -6,3 +6,4 @@ export * from './internal-server-error';
 export * from './not-found';
 export * from './un-authorized';
 export * from './too-many-requests';
+export * from './not-allowed';
