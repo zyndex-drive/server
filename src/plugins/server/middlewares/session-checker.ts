@@ -1,17 +1,11 @@
 import { Users } from '@models';
 
-import { isUndefined } from '@plugins/misc';
 import { sessionManager } from '@plugins';
 import { errorResponseHandler } from '@plugins/server/responses';
 import { UnAuthorized, BadRequest, InternalServerError } from '@plugins/errors';
 
 // Types
 import type { Request, Response, NextFunction } from 'express';
-
-interface ISessionRequestBody {
-  session_id: string;
-  session_token: string;
-}
 
 /**
  * Checks the Session id and Session Token and Verifies it
@@ -26,8 +20,14 @@ export default async function (
   next: NextFunction,
 ): Promise<void> {
   try {
-    const { session_id, session_token }: ISessionRequestBody = req.body;
-    if (!isUndefined([session_id, session_token])) {
+    const session_id = req.headers['x-session-id'];
+    const session_token = req.headers['x-session-token'];
+    if (
+      session_id &&
+      typeof session_id === 'string' &&
+      session_token &&
+      typeof session_token === 'string'
+    ) {
       const sessionBool = await sessionManager.verifySession(
         session_id,
         session_token,
@@ -46,7 +46,7 @@ export default async function (
         throw new UnAuthorized('Session Token is Not Authorized');
       }
     } else {
-      throw new BadRequest('session_id,session_token', 'Request');
+      throw new BadRequest('x-session-id,x-session-token', 'Request.Headers');
     }
   } catch (e) {
     errorResponseHandler(res, e);
