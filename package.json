@@ -3,6 +3,9 @@
   "version": "0.2.0-59",
   "description": "Backend Server for Handling Zyndex Frontend Requests",
   "main": "app.js",
+  "engines": {
+    "node": ">=12.9.0"
+  },
   "scripts": {
     "prepare": "husky install && husky add .husky/commit-msg \"npx --no-install commitlint --edit \"$1\"\"",
     "git:stage": "git add",
