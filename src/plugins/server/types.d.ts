@@ -1,3 +1,5 @@
+import { IEditDatabaseResult } from '@plugins/auth/helpers/types';
+
 export interface Routes {
   get: string[];
   post: string[];
@@ -17,4 +19,10 @@ export interface IErrorResponse {
   message: string;
   data?: unknown;
 }
+
+export interface IEditDatabaseResponse {
+  recordsUpdated: IEditDatabaseResult[];
+  totalRecordsUpdated: number;
+  recordsNotUpdated: IEditDatabaseResult[];
+  totalRecordsNotUpdated: number;
 }

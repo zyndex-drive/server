@@ -1,2 +1,3 @@
-export { EndpointGenerator } from './endpoint-server';
-export { SetupGenerator } from './setup';
+export * from './endpoint-server';
+export * from './setup';
+export * from './edit-database';
