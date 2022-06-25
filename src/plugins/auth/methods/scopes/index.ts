@@ -7,6 +7,7 @@ import {
 import { scopes as scopePolicies } from '@plugins/templates/policies';
 
 import type { IScope, IScopeDoc, IScopeModel, IUserDoc } from '@models/types';
+import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
 
 /**
  * Add Scopes in the Database
@@ -31,17 +32,17 @@ function add(admin: IUserDoc, data: IScope): Promise<IScopeDoc> {
  * @param {IUserDoc} admin - Admin User to Perform the Action
  * @param {IScopeDoc} data - Data to be Modified
  * @param {Partial<IScopeDoc>} modifiedData - Modified Object
- * @returns {Promise<boolean>} - true/false
+ * @returns {Promise<IEditDatabaseResult>} - IEditDatabaseResult
  */
 function edit(
   admin: IUserDoc,
   data: IScopeDoc,
   modifiedData: Partial<IScopeDoc>,
-): Promise<boolean> {
+): Promise<IEditDatabaseResult> {
   const policies = [scopePolicies.edit];
   return editDatainDatabase<IScopeDoc, IScopeModel>(
     Scopes,
-    data,
+    data._id,
     modifiedData,
     admin,
     policies,

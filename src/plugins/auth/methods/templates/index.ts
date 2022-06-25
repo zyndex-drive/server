@@ -12,6 +12,7 @@ import type {
   ITemplateModel,
   IUserDoc,
 } from '@models/types';
+import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
 
 /**
  * Add Templates in the Database
@@ -36,17 +37,17 @@ function add(admin: IUserDoc, data: ITemplate): Promise<ITemplateDoc> {
  * @param {IUserDoc} admin - Admin User to Perform the Action
  * @param {ITemplateDoc} data - Data to be Modified
  * @param {Partial<ITemplateDoc>} modifiedData - Modified Object
- * @returns {Promise<boolean>} - true/false
+ * @returns {Promise<IEditDatabaseResult>} - IEditDatabaseResult
  */
 function edit(
   admin: IUserDoc,
   data: ITemplateDoc,
   modifiedData: Partial<ITemplateDoc>,
-): Promise<boolean> {
+): Promise<IEditDatabaseResult> {
   const policies = [templatesPolicies.edit];
   return editDatainDatabase<ITemplateDoc, ITemplateModel>(
     Templates,
-    data,
+    data._id,
     modifiedData,
     admin,
     policies,

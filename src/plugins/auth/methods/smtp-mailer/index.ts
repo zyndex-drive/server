@@ -12,6 +12,7 @@ import type {
   ISMTPMailerModel,
   IUserDoc,
 } from '@models/types';
+import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
 
 /**
  * Add SMTPMailers in the Database
@@ -36,17 +37,17 @@ function add(admin: IUserDoc, data: ISMTPMailer): Promise<ISMTPMailerDoc> {
  * @param {IUserDoc} admin - Admin User to Perform the Action
  * @param {ISMTPMailerDoc} data - Data to be Modified
  * @param {Partial<ISMTPMailerDoc>} modifiedData - Modified Object
- * @returns {Promise<boolean>} - true/false
+ * @returns {Promise<IEditDatabaseResult>} - IEditDatabaseResult
  */
 function edit(
   admin: IUserDoc,
   data: ISMTPMailerDoc,
   modifiedData: Partial<ISMTPMailerDoc>,
-): Promise<boolean> {
+): Promise<IEditDatabaseResult> {
   const policies = [smtpMailerPolicies.edit];
   return editDatainDatabase<ISMTPMailerDoc, ISMTPMailerModel>(
     SMTPMailers,
-    data,
+    data._id,
     modifiedData,
     admin,
     policies,

@@ -7,6 +7,7 @@ import type {
   IGlobalSettingsModel,
   IUserDoc,
 } from '@models/types';
+import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
 
 /**
  * Edit GlobalSettings in the Database
@@ -14,17 +15,17 @@ import type {
  * @param {IUserDoc} admin - Admin User to Perform the Action
  * @param {IGlobalSettingsDoc} data - Data to be Modified
  * @param {Partial<IGlobalSettingsDoc>} modifiedData - Modified Object
- * @returns {Promise<boolean>} - true/false
+ * @returns {Promise<IEditDatabaseResult>} - IEditDatabaseResult
  */
 function edit(
   admin: IUserDoc,
   data: IGlobalSettingsDoc,
   modifiedData: Partial<IGlobalSettingsDoc>,
-): Promise<boolean> {
+): Promise<IEditDatabaseResult> {
   const policies = [globalSettingsPolicies.edit];
   return editDatainDatabase<IGlobalSettingsDoc, IGlobalSettingsModel>(
     GlobalSettings,
-    data,
+    data._id,
     modifiedData,
     admin,
     policies,
