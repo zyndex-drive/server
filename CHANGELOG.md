@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-60](https://github.com/zyndex-drive/server/compare/v0.2.0-59...v0.2.0-60) (2022-06-25)
+
+
+### Build System 🏗
+
+* **config:** change node engine version and target version to use more advanced features ([ff21fce](https://github.com/zyndex-drive/server/commit/ff21fce18b8c5db6b2555f579f9eb2a09d68c298))
+
+
+### Features 🔥
+
+* **plugins/auth/helpers:** return database result type instead of boolean for more meaningfull res ([709260b](https://github.com/zyndex-drive/server/commit/709260bd9001d03cb15c7781a4c5f6ef1cc7a3a1))
+* **plugins/auth/methods:** implement database result in all model methods ([bf4c851](https://github.com/zyndex-drive/server/commit/bf4c851db1b2d59cb9a2ec2ff5de1436c3759cd4))
+* **plugins/auth:** add new type for database edit results ([e755e50](https://github.com/zyndex-drive/server/commit/e755e50b498c41028998d9ca71b86587b2796f3e))
+* **plugins/server:** add a common express handler to handle database edit requests ([2c84f1c](https://github.com/zyndex-drive/server/commit/2c84f1c84ca3138af36f2f32eb7a2d8d627fd37f))
+* **routes/auth/policies:** add new route for editing policy model with the new express handler ([e204294](https://github.com/zyndex-drive/server/commit/e20429492f43ebb92d6c51439b822a0463d83881))
+* **routes/auth/roles:** add new route for editing roles model using new express handler ([fe99bb3](https://github.com/zyndex-drive/server/commit/fe99bb3b88c9cf92c5baea92db94b81796b0f452))
+
+
+### Bug Fixes 🛠
+
+* **models/frontend:** add new property to frontend schema to have more control over scopes ([6dd55a7](https://github.com/zyndex-drive/server/commit/6dd55a7be1ea606dfc254e8208bc09b5436e46b0))
+* **plugins/server:** add data property to send data in error responses ([cdff2b8](https://github.com/zyndex-drive/server/commit/cdff2b84ab4be190cdcd7fa336f7461a4ac7efce))
+
 ## [0.2.0-59](https://github.com/zyndex-drive/server/compare/v0.2.0-58...v0.2.0-59) (2022-06-23)
 
 
