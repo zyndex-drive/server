@@ -3,6 +3,7 @@ import type { IBaseModel } from '../types';
 import type {
   IPolicyDoc,
   IRoleDoc,
+  IScopeDoc,
   ISMTPMailerDoc,
   IGlobalSettingsDoc,
 } from '@models/types';
@@ -21,6 +22,7 @@ export interface IFrontend {
     disallowed_roles: ID<IRoleDoc>[];
     allowed_policies: ID<IPolicyDoc>[];
     disallowed_policies: ID<IPolicyDoc>[];
+    disallowed_scopes: ID<IScopeDoc>[];
   };
 }
 
