@@ -15,4 +15,6 @@ export interface IErrorResponse {
   status: number;
   errorname: string;
   message: string;
+  data?: unknown;
+}
 }
