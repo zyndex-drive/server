@@ -18,7 +18,7 @@ const { NODE_ENV } = process.env;
  * @param {Response} res - Express Response Object
  * @param {NextFunction} next - Express Next Function
  */
-async function corsMiddleware(
+export async function cors(
   req: Request,
   res: Response,
   next: NextFunction,
@@ -83,5 +83,3 @@ async function corsMiddleware(
     errorResponseHandler(res, e);
   }
 }
-
-export default corsMiddleware;

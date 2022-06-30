@@ -11,7 +11,11 @@ import type { IErrorResponse } from '@plugins/server/types';
  * @param {Response} res - Express Response Object
  * @param {NextFunction} next - Express Next Function
  */
-function dbChecker(req: Request, res: Response, next: NextFunction): void {
+export function dbChecker(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): void {
   const mongoState = connection.readyState;
   if ([0, 2, 3].includes(mongoState)) {
     const result: IErrorResponse = {
@@ -25,5 +29,3 @@ function dbChecker(req: Request, res: Response, next: NextFunction): void {
     next();
   }
 }
-
-export default dbChecker;
