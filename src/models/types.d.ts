@@ -1,22 +1,22 @@
 import type { Document, Model } from 'mongoose';
 import type { IInlineResponse } from '@typs/inline.response';
-import { IBlacklistedUser } from './blacklisted-user/types';
-import { ICredentials } from './credential/types';
-import { IFrontend } from './frontend/types';
-import { IGlobalSettings } from './global-setting/types';
-import { IOtp } from './otp/types';
-import { IPendingUser } from './pending-user/types';
-import { IPolicy } from './policy/types';
-import { IRole } from './role/types';
-import { IScope } from './scope/types';
-import { IServiceAcc } from './service-account/types';
-import { ISession } from './session/types';
-import { ISMTPMailer } from './smtp-mailer/types';
-import { ISMTPProvider } from './smtp-provider/types';
-import { ITemplate } from './templates/types';
-import { IToken } from './tokens/types';
-import { IUser } from './user/types';
-import { IKey } from './keys/types';
+import type { IBlacklistedUser } from './blacklisted-user/types';
+import type { ICredentials } from './credential/types';
+import type { IFrontend } from './frontend/types';
+import type { IGlobalSettings } from './global-setting/types';
+import type { IOtp } from './otp/types';
+import type { IPendingUser } from './pending-user/types';
+import type { IPolicy } from './policy/types';
+import type { IRole } from './role/types';
+import type { IScope } from './scope/types';
+import type { IServiceAcc } from './service-account/types';
+import type { ISession } from './session/types';
+import type { ISMTPMailer } from './smtp-mailer/types';
+import type { ISMTPProvider } from './smtp-provider/types';
+import type { ITemplate } from './templates/types';
+import type { IToken } from './tokens/types';
+import type { IUser } from './user/types';
+import type { IKey } from './keys/types';
 
 export interface IBaseModel<U extends Document> extends Model<U> {
   /**
