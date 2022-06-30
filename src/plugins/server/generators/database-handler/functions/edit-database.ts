@@ -1,5 +1,5 @@
 import { BadRequest, UnAuthorized } from '@plugins/errors';
-import { errorResponseHandler, okResponse } from '../responses';
+import { errorResponseHandler, okResponse } from '@plugins/server/responses';
 
 // Type Imports
 import type { Request, Response } from 'express';
@@ -8,7 +8,7 @@ import type { IBaseModel, IUserDoc, TGenericModelSchema } from '@models/types';
 import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
 import type { IEditDatabaseResponse } from '@plugins/server/types';
 
-interface IEditDatabaseHelpers {
+export interface IEditDatabaseHelpers {
   bodyProp: string;
   modelName: string;
 }
@@ -23,7 +23,7 @@ interface IEditDatabaseHelpers {
  * @param {IEditDatabaseHelpers} helpers - Helpers for the function
  * @param {Function} authFunc - Auth edit function for that model from auth plugin
  */
-export async function editDatabaseExpressHandler<
+export async function editDatabaseFunction<
   T extends TGenericModelSchema,
   U extends Document,
   V extends LeanDocument<U>,
