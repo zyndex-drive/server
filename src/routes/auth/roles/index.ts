@@ -1,25 +1,51 @@
 // Initialization
 import express from 'express';
 
-// Response Handlers
-import { okResponse } from '@plugins/server/responses';
+// Models
+import { Roles } from '@models';
 
-// Others
-import { map as rolesMap } from '@plugins/templates/roles';
+// Auth Helpers
+import { roles as rolesAuth } from '@plugins/auth';
+
+// Response Handlers
+import { okResponse, errorResponseHandler } from '@plugins/server/responses';
 
 // Types
-import { EndpointGenerator } from '@plugins/server/generators';
+import type { RequestHandler } from 'express';
+import type { IRole, IRoleDoc, IRoleLeanDoc } from '@models/types';
+import { ExpressDatabaseHandler } from '@plugins/server/generators';
 
 // Router
 const router = express.Router();
 
-router.post('/list', (req, res) => {
-  okResponse(res, rolesMap);
-});
+// Express Handlers
+const expressRoleDatabaseHandler = new ExpressDatabaseHandler<
+  IRole,
+  IRoleDoc,
+  IRoleLeanDoc
+>(Roles, true);
 
-// Respond with all the Endpoints in this Route
-router.post('/endpoints', (req, res) =>
-  new EndpointGenerator(res, router).serve(),
+router.post('/list', (async (req, res) => {
+  try {
+    const roles = await Roles.find({}).lean();
+    okResponse(res, roles);
+  } catch (e) {
+    errorResponseHandler(res, e);
+  }
+}) as RequestHandler);
+
+router.post(
+  '/update',
+  (async (req, res) =>
+    await expressRoleDatabaseHandler.editDatabaseHandler(
+      req,
+      res,
+      {
+        bodyProp: 'rolesToUpdate',
+        modelName: 'Role',
+      },
+      rolesAuth.edit,
+    )) as RequestHandler,
 );
 
 export default router;

@@ -12,6 +12,7 @@ import type {
   IFrontendModel,
   IUserDoc,
 } from '@models/types';
+import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
 
 /**
  * Add Frontends in the Database
@@ -36,17 +37,17 @@ function add(admin: IUserDoc, data: IFrontend): Promise<IFrontendDoc> {
  * @param {IUserDoc} admin - Admin User to Perform the Action
  * @param {IFrontendDoc} data - Data to be Modified
  * @param {Partial<IFrontendDoc>} modifiedData - Modified Object
- * @returns {Promise<boolean>} - true/false
+ * @returns {Promise<IEditDatabaseResult>} - IEditDatabaseResult
  */
 function edit(
   admin: IUserDoc,
   data: IFrontendDoc,
   modifiedData: Partial<IFrontendDoc>,
-): Promise<boolean> {
+): Promise<IEditDatabaseResult> {
   const policies = [frontendsPolicies.edit];
   return editDatainDatabase<IFrontendDoc, IFrontendModel>(
     Frontends,
-    data,
+    data._id,
     modifiedData,
     admin,
     policies,

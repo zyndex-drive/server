@@ -47,6 +47,12 @@ const schema = new Schema<IFrontendDoc, IFrontendModel, IFrontend>({
         ref: 'Policy',
       },
     ],
+    disallowed_scopes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Scope',
+      },
+    ],
   },
 });
 

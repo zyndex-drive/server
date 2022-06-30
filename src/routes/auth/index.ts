@@ -15,8 +15,6 @@ const router = express.Router();
 router.use('/policies', policies);
 router.use('/roles', roles);
 
-router.post('/status', (req, res) => {
-  okResponse(res, 'OK');
-});
+router.post('/status', (req, res) => okResponse(res, 'OK'));
 
 export default router;

@@ -2,6 +2,49 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-61](https://github.com/zyndex-drive/server/compare/v0.2.0-60...v0.2.0-61) (2022-06-30)
+
+
+### Styling 🎨
+
+* **misc:** update import lines ([2de1f62](https://github.com/zyndex-drive/server/commit/2de1f629e1c06b28cd52ee356057de363c617ea1))
+* **routes:** misc change ([dc0db6d](https://github.com/zyndex-drive/server/commit/dc0db6d5d1b3e739e523ceffb0e908bd22e85634))
+* **types:** update import as type imports ([8bc7d66](https://github.com/zyndex-drive/server/commit/8bc7d66a7c892482f4c6733422439c3e985dd223))
+
+
+### Code Refactoring 🖌
+
+* **app:** use the refactored server class to start the server ([19aec1a](https://github.com/zyndex-drive/server/commit/19aec1aea908ce58562f34ccffe7815fd73f6d41))
+* **plugins/server/generator:** rewrite express database handlers as class based ([59b1661](https://github.com/zyndex-drive/server/commit/59b166119f702e72edf0fe9426ec3739cbb69ed5))
+* **plugins/server/generators:** refactor the folder structure for consistent views ([8be9e1e](https://github.com/zyndex-drive/server/commit/8be9e1ed087efa00aadf00d572eb68462c8d38e6))
+* **plugins/server/helpers:** rewrite health checker function as a class based ([81c8a47](https://github.com/zyndex-drive/server/commit/81c8a47b525b922e533d171fa8cb0e5fb098396e))
+* **plugins/server/middlewares:** rename functions and have a consistent format ([b260368](https://github.com/zyndex-drive/server/commit/b26036868df6b381a91a057ab73a94b05d6014ec))
+* **plugins/server:** rewrite the server function as a class based ([b4125fe](https://github.com/zyndex-drive/server/commit/b4125fe252992a6be821f7bdca283fc54f2e4bd5))
+* **routes/auth:** update policy, role files to use the refactored database handler ([7e93f00](https://github.com/zyndex-drive/server/commit/7e93f005368fbc4a7b570c7638657f4798ccc491))
+
+## [0.2.0-60](https://github.com/zyndex-drive/server/compare/v0.2.0-59...v0.2.0-60) (2022-06-25)
+
+
+### Build System 🏗
+
+* **config:** change node engine version and target version to use more advanced features ([ff21fce](https://github.com/zyndex-drive/server/commit/ff21fce18b8c5db6b2555f579f9eb2a09d68c298))
+
+
+### Features 🔥
+
+* **plugins/auth/helpers:** return database result type instead of boolean for more meaningfull res ([709260b](https://github.com/zyndex-drive/server/commit/709260bd9001d03cb15c7781a4c5f6ef1cc7a3a1))
+* **plugins/auth/methods:** implement database result in all model methods ([bf4c851](https://github.com/zyndex-drive/server/commit/bf4c851db1b2d59cb9a2ec2ff5de1436c3759cd4))
+* **plugins/auth:** add new type for database edit results ([e755e50](https://github.com/zyndex-drive/server/commit/e755e50b498c41028998d9ca71b86587b2796f3e))
+* **plugins/server:** add a common express handler to handle database edit requests ([2c84f1c](https://github.com/zyndex-drive/server/commit/2c84f1c84ca3138af36f2f32eb7a2d8d627fd37f))
+* **routes/auth/policies:** add new route for editing policy model with the new express handler ([e204294](https://github.com/zyndex-drive/server/commit/e20429492f43ebb92d6c51439b822a0463d83881))
+* **routes/auth/roles:** add new route for editing roles model using new express handler ([fe99bb3](https://github.com/zyndex-drive/server/commit/fe99bb3b88c9cf92c5baea92db94b81796b0f452))
+
+
+### Bug Fixes 🛠
+
+* **models/frontend:** add new property to frontend schema to have more control over scopes ([6dd55a7](https://github.com/zyndex-drive/server/commit/6dd55a7be1ea606dfc254e8208bc09b5436e46b0))
+* **plugins/server:** add data property to send data in error responses ([cdff2b8](https://github.com/zyndex-drive/server/commit/cdff2b84ab4be190cdcd7fa336f7461a4ac7efce))
+
 ## [0.2.0-59](https://github.com/zyndex-drive/server/compare/v0.2.0-58...v0.2.0-59) (2022-06-23)
 
 

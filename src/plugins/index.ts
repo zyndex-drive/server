@@ -7,4 +7,4 @@ export { default as jwt } from './json-web-token';
 export { default as mailTransporter } from './mail-transporter';
 export { default as otpManager } from './otp-manager';
 export { default as sessionManager } from './session-manager';
-export { default as server } from './server';
+export * from './server';

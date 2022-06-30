@@ -12,6 +12,7 @@ import type {
   ISMTPProviderModel,
   IUserDoc,
 } from '@models/types';
+import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
 
 /**
  * Add SMTPProviders in the Database
@@ -36,17 +37,17 @@ function add(admin: IUserDoc, data: ISMTPProvider): Promise<ISMTPProviderDoc> {
  * @param {IUserDoc} admin - Admin User to Perform the Action
  * @param {ISMTPProviderDoc} data - Data to be Modified
  * @param {Partial<ISMTPProviderDoc>} modifiedData - Modified Object
- * @returns {Promise<boolean>} - true/false
+ * @returns {Promise<IEditDatabaseResult>} - IEditDatabaseResult
  */
 function edit(
   admin: IUserDoc,
   data: ISMTPProviderDoc,
   modifiedData: Partial<ISMTPProviderDoc>,
-): Promise<boolean> {
+): Promise<IEditDatabaseResult> {
   const policies = [smtpProvidersPolicies.edit];
   return editDatainDatabase<ISMTPProviderDoc, ISMTPProviderModel>(
     SMTPProviders,
-    data,
+    data._id,
     modifiedData,
     admin,
     policies,

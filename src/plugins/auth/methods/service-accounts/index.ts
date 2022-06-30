@@ -12,6 +12,7 @@ import type {
   IServiceAccModel,
   IUserDoc,
 } from '@models/types';
+import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
 
 /**
  * Add ServiceAccs in the Database
@@ -36,17 +37,17 @@ function add(admin: IUserDoc, data: IServiceAcc): Promise<IServiceAccDoc> {
  * @param {IUserDoc} admin - Admin User to Perform the Action
  * @param {IServiceAccDoc} data - Data to be Modified
  * @param {Partial<IServiceAccDoc>} modifiedData - Modified Object
- * @returns {Promise<boolean>} - true/false
+ * @returns {Promise<IEditDatabaseResult>} - IEditDatabaseResult
  */
 function edit(
   admin: IUserDoc,
   data: IServiceAccDoc,
   modifiedData: Partial<IServiceAccDoc>,
-): Promise<boolean> {
+): Promise<IEditDatabaseResult> {
   const policies = [serviceAccPolicies.edit];
   return editDatainDatabase<IServiceAccDoc, IServiceAccModel>(
     ServiceAccs,
-    data,
+    data._id,
     modifiedData,
     admin,
     policies,

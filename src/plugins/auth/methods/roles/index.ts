@@ -4,9 +4,17 @@ import {
   editDatainDatabase,
   deleteDatafromDatabase,
 } from '@plugins/auth/helpers';
-import { credentials as credentialPolicies } from '@plugins/templates/policies';
+import { roles as rolePolicies } from '@plugins/templates/policies';
+import { NotAllowed } from '@plugins/errors';
 
-import type { IRole, IRoleDoc, IRoleModel, IUserDoc } from '@models/types';
+import type {
+  IRole,
+  IRoleDoc,
+  IRoleLeanDoc,
+  IRoleModel,
+  IUserDoc,
+} from '@models/types';
+import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
 
 /**
  * Add Roles in the Database
@@ -16,13 +24,20 @@ import type { IRole, IRoleDoc, IRoleModel, IUserDoc } from '@models/types';
  * @returns {Promise<IRoleDoc>} - Roles Document from the Database
  */
 function add(admin: IUserDoc, data: IRole): Promise<IRoleDoc> {
-  const policies = [credentialPolicies.add];
-  return addDatatoDatabase<IRole, IRoleDoc, IRoleModel>(
-    Roles,
-    data,
-    admin,
-    policies,
-  );
+  const policies = [rolePolicies.add];
+  const { type } = data;
+  if (type !== 'main') {
+    return addDatatoDatabase<IRole, IRoleDoc, IRoleModel>(
+      Roles,
+      data,
+      admin,
+      policies,
+    );
+  } else {
+    throw new NotAllowed(
+      'Not Allowed to add main documents other than predefined documents',
+    );
+  }
 }
 
 /**
@@ -31,21 +46,27 @@ function add(admin: IUserDoc, data: IRole): Promise<IRoleDoc> {
  * @param {IUserDoc} admin - Admin User to Perform the Action
  * @param {IRoleDoc} data - Data to be Modified
  * @param {Partial<IRoleDoc>} modifiedData - Modified Object
- * @returns {Promise<boolean>} - true/false
+ * @returns {Promise<IEditDatabaseResult>} - IEditDatabaseResult
  */
 function edit(
   admin: IUserDoc,
-  data: IRoleDoc,
+  data: IRoleDoc | IRoleLeanDoc,
   modifiedData: Partial<IRoleDoc>,
-): Promise<boolean> {
-  const policies = [credentialPolicies.edit];
-  return editDatainDatabase<IRoleDoc, IRoleModel>(
-    Roles,
-    data,
-    modifiedData,
-    admin,
-    policies,
-  );
+): Promise<IEditDatabaseResult> {
+  const policies = [rolePolicies.edit];
+  if (data.type !== 'main') {
+    return editDatainDatabase<IRoleDoc, IRoleModel>(
+      Roles,
+      data._id,
+      { $set: modifiedData },
+      admin,
+      policies,
+    );
+  } else {
+    throw new NotAllowed(
+      `You are Not Allowed to edit main Role Document: ${String(data._id)}`,
+    );
+  }
 }
 
 /**
@@ -56,13 +77,20 @@ function edit(
  * @returns {Promise<boolean>} - true/false
  */
 function remove(admin: IUserDoc, data: IRoleDoc): Promise<boolean> {
-  const policies = [credentialPolicies.remove];
-  return deleteDatafromDatabase<IRoleDoc, IRoleModel>(
-    Roles,
-    data,
-    admin,
-    policies,
-  );
+  const policies = [rolePolicies.remove];
+  const { type } = data;
+  if (type !== 'main') {
+    return deleteDatafromDatabase<IRoleDoc, IRoleModel>(
+      Roles,
+      data,
+      admin,
+      policies,
+    );
+  } else {
+    throw new NotAllowed(
+      'Not Allowed to delete main role documents in the database',
+    );
+  }
 }
 
 export default {

@@ -2,7 +2,7 @@
 import dotenv from 'dotenv';
 
 // Import Server
-import { server } from '@plugins';
+import { ZyndexServer } from '@plugins';
 
 // Load ENV Variables to the Process
 dotenv.config();
@@ -10,4 +10,6 @@ dotenv.config();
 // Create Server and Start the Server
 const PORT = process.env.PORT || 3000;
 
-server.start(PORT);
+const zyndexServer = new ZyndexServer(PORT);
+
+zyndexServer.start();

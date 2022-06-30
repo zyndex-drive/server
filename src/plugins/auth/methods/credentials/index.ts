@@ -12,6 +12,7 @@ import type {
   ICredentialsModel,
   IUserDoc,
 } from '@models/types';
+import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
 
 /**
  * Add Credentials in the Database
@@ -36,17 +37,17 @@ function add(admin: IUserDoc, data: ICredentials): Promise<ICredentialsDoc> {
  * @param {IUserDoc} admin - Admin User to Perform the Action
  * @param {ICredentialsDoc} data - Data to be Modified
  * @param {Partial<ICredentialsDoc>} modifiedData - Modified Object
- * @returns {Promise<boolean>} - true/false
+ * @returns {Promise<IEditDatabaseResult>} - IEditDatabaseResult
  */
 function edit(
   admin: IUserDoc,
   data: ICredentialsDoc,
   modifiedData: Partial<ICredentialsDoc>,
-): Promise<boolean> {
+): Promise<IEditDatabaseResult> {
   const policies = [credentialPolicies.edit];
   return editDatainDatabase<ICredentialsDoc, ICredentialsModel>(
     Credentials,
-    data,
+    data._id,
     modifiedData,
     admin,
     policies,

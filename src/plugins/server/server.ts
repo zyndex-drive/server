@@ -1,9 +1,9 @@
-// Initialization
+// Core
 import http from 'http';
 import path from 'path';
 import express from 'express';
 
-// Middlewares
+// Exress Middlewares
 import bodyparser from 'body-parser';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
@@ -12,86 +12,131 @@ import xssProtect from 'x-xss-protection';
 import morgan from 'morgan';
 import { dbChecker, cors } from '@plugins/server/middlewares';
 
-// Import Server and Database
+// Import Database
 import os from 'os';
 import { db } from '@plugins';
 
-// Health Check Service
-import { healthCheckService } from '@plugins/server/helpers';
+// Health Checker Service
+import { ExpressHealthChecker } from '@plugins/server/generators';
 
-// Passport Imports
+// Passport Import
 import { initializePassport } from '@plugins/oauth';
 
 // Router
 import router from '@routes';
 
-// Express config
-const app = express();
-
-// Use Middlewares
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({ extended: true }));
-app.use(helmet());
-app.use(xssProtect());
-app.use(mongoSanitize());
-app.set('trust proxy', true);
-app.use(requestIp.mw());
-app.use([dbChecker, cors]);
-app.use(process.env.NODE_ENV === 'production' ? morgan('tiny') : morgan('dev'));
-
-// Serve Public Assets
-app.use(
-  express.static(
-    process.env.NODE_ENV === 'production'
-      ? path.join(__dirname, 'views')
-      : 'src/views',
-  ),
-);
-
-// Use the Router Config from Routes
-app.use('/', router);
-
-// Create http server from express
-export const server = http.createServer(app);
-
-// Start the Health Checker Service
-healthCheckService(server);
+// Types
+import type { Express } from 'express';
 
 /**
- * Starts the Zyndex Server
- *
- * @param {string | number} PORT - Port to Start the Server
+ * @class ZyndexServer
  */
-export default function (PORT: string | number): void {
-  try {
-    server.listen(PORT, () => {
-      console.log(`Environment: ${os.type()}`);
-      console.log(`Server Started on Port: ${PORT}`);
-      console.log('Connecting to Database.....');
+export class ZyndexServer {
+  app: Express;
+  server: http.Server;
+  port: string | number;
 
-      // Connect to Database
-      db.connect()
-        .then(() => {
-          console.log('Database Connected...OK..');
-        })
-        .then(() => console.log('Initializing Oauth Clients'))
-        .then(() => initializePassport())
-        .catch((err: string) => {
-          console.log(err);
-          server.close();
-        });
-    });
-    server.once('error', (err) => {
-      console.log(
-        'There was an error starting the server in the error listener:',
-        err,
-      );
-      server.close();
-    });
-  } catch (e) {
-    console.log('There was an error starting the server:', e);
-    server.close();
+  /**
+   * Initializes and Starts the Zyndex Server
+   *
+   * @param {number} port - Port Number to start the server
+   */
+  constructor(port: number | string) {
+    this.port = port;
+    this.app = express();
+    this.initializeMiddlewares();
+    this.serveStaticFiles();
+    this.assignRouter();
+    this.server = this.createHttpServer(this.app);
+    this.startHealthChecker();
+  }
+
+  /**
+   * Initialize Server Middlewares
+   */
+  initializeMiddlewares(): void {
+    this.app.use(bodyparser.json());
+    this.app.use(bodyparser.urlencoded({ extended: true }));
+    this.app.use(helmet());
+    this.app.use(xssProtect());
+    this.app.use(mongoSanitize());
+    this.app.set('trust proxy', true);
+    this.app.use(requestIp.mw());
+    this.app.use([dbChecker, cors]);
+    this.app.use(
+      process.env.NODE_ENV === 'production' ? morgan('tiny') : morgan('dev'),
+    );
+  }
+
+  /**
+   * Serve Static Views Folder
+   */
+  serveStaticFiles(): void {
+    this.app.use(
+      express.static(
+        process.env.NODE_ENV === 'production'
+          ? path.join(__dirname, 'views')
+          : 'src/views',
+      ),
+    );
+  }
+
+  /**
+   * Assign the Server's Default Router
+   */
+  assignRouter(): void {
+    this.app.use('/', router);
+  }
+
+  /**
+   * Create a Http Server from Express App
+   *
+   * @param {Express} app - Express App Object
+   * @returns {http.Server} server - Http Server
+   */
+  createHttpServer(app: Express): http.Server {
+    return http.createServer(app);
+  }
+
+  /**
+   * Start the Health Checker Service
+   */
+  startHealthChecker(): void {
+    new ExpressHealthChecker(this.server).start();
+  }
+
+  /**
+   * Start the Zyndex Server
+   */
+  start(): void {
+    try {
+      this.server.listen(this.port, () => {
+        console.log(`Environment: ${os.type()}`);
+        console.log(`Server Started on Port: ${this.port}`);
+        console.log('Connecting to Database.....');
+
+        // Connect to Database
+        db.connect()
+          .then(() => {
+            console.log('Database Connected...OK..');
+          })
+          .then(() => console.log('Initializing Oauth Clients'))
+          .then(() => initializePassport())
+          .catch((err: string) => {
+            console.log(err);
+            this.server.close();
+          });
+      });
+      this.server.once('error', (err) => {
+        console.log(
+          'There was an error starting the server in the error listener:',
+          err,
+        );
+        this.server.close();
+      });
+    } catch (e) {
+      console.log('There was an error starting the server:', e);
+      this.server.close();
+    }
   }
 }
-
-export const expressApp = app;

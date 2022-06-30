@@ -14,7 +14,7 @@ import type { Request, Response, NextFunction } from 'express';
  * @param {Response} res - Express Response Object
  * @param {NextFunction} next - Express Next Function
  */
-export default async function (
+export async function sessionChecker(
   req: Request,
   res: Response,
   next: NextFunction,
