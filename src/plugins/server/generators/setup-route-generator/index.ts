@@ -10,33 +10,33 @@ import type { IBaseModel } from '@models/types';
 import type { IRouter } from 'express';
 
 /**
- * Super Cool
+ * Default Express Routes Generator Inside Setup Route
  */
 export class SetupGenerator<T extends Document> {
   router: IRouter;
   model: IBaseModel<T>;
 
   /**
-   * coool
+   * Default Express Routes Generator Inside Setup Route
    *
-   * @param {IBaseModel<Document>} model - coool
+   * @param {IBaseModel<Document>} model - Model to be used for executing the queries
    */
   constructor(model: IBaseModel<T>) {
     (this.router = express.Router()), (this.model = model);
   }
 
   /**
-   * Serves the Purpose
+   * Generates the Default get and reset Route for the given model
    *
-   * @returns {IRouter} - Router
+   * @returns {IRouter} - Express Router Object
    */
   serve(): IRouter {
     this.router.post('/get', (async (req, res) => {
       try {
         const leanHeader = req.headers['x-lean-doc-request'];
         const leanRequest = leanHeader ? true : false;
-        const frontendDocs = await this.model.find({}).lean(leanRequest).exec();
-        okResponse(res, frontendDocs);
+        const docs = await this.model.find({}).lean(leanRequest).exec();
+        okResponse(res, docs);
       } catch (e) {
         errorResponseHandler(res, e);
       }

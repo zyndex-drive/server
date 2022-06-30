@@ -1,4 +1,4 @@
-import getRoutes from '../helpers/get-all-routes';
+import getRoutes from '../../helpers/get-all-routes';
 import { okResponse, errorResponseHandler } from '@plugins/server/responses';
 import type { Response, IRouter } from 'express';
 
