@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-61](https://github.com/zyndex-drive/server/compare/v0.2.0-60...v0.2.0-61) (2022-06-30)
+
+
+### Styling 🎨
+
+* **misc:** update import lines ([2de1f62](https://github.com/zyndex-drive/server/commit/2de1f629e1c06b28cd52ee356057de363c617ea1))
+* **routes:** misc change ([dc0db6d](https://github.com/zyndex-drive/server/commit/dc0db6d5d1b3e739e523ceffb0e908bd22e85634))
+* **types:** update import as type imports ([8bc7d66](https://github.com/zyndex-drive/server/commit/8bc7d66a7c892482f4c6733422439c3e985dd223))
+
+
+### Code Refactoring 🖌
+
+* **app:** use the refactored server class to start the server ([19aec1a](https://github.com/zyndex-drive/server/commit/19aec1aea908ce58562f34ccffe7815fd73f6d41))
+* **plugins/server/generator:** rewrite express database handlers as class based ([59b1661](https://github.com/zyndex-drive/server/commit/59b166119f702e72edf0fe9426ec3739cbb69ed5))
+* **plugins/server/generators:** refactor the folder structure for consistent views ([8be9e1e](https://github.com/zyndex-drive/server/commit/8be9e1ed087efa00aadf00d572eb68462c8d38e6))
+* **plugins/server/helpers:** rewrite health checker function as a class based ([81c8a47](https://github.com/zyndex-drive/server/commit/81c8a47b525b922e533d171fa8cb0e5fb098396e))
+* **plugins/server/middlewares:** rename functions and have a consistent format ([b260368](https://github.com/zyndex-drive/server/commit/b26036868df6b381a91a057ab73a94b05d6014ec))
+* **plugins/server:** rewrite the server function as a class based ([b4125fe](https://github.com/zyndex-drive/server/commit/b4125fe252992a6be821f7bdca283fc54f2e4bd5))
+* **routes/auth:** update policy, role files to use the refactored database handler ([7e93f00](https://github.com/zyndex-drive/server/commit/7e93f005368fbc4a7b570c7638657f4798ccc491))
+
 ## [0.2.0-60](https://github.com/zyndex-drive/server/compare/v0.2.0-59...v0.2.0-60) (2022-06-25)
 
 
