@@ -59,16 +59,14 @@ export interface IDriveFileResource extends IDriveFileDetails {
     permissionId: IDrivePermissionResource['id'][];
     emailAddress: string;
   };
-  owners: [
-    {
-      kind: 'drive#user';
-      displayName: string;
-      photoLink: string;
-      me: boolean;
-      permissionId: IDrivePermissionResource['id'][];
-      emailAddress: string;
-    },
-  ];
+  owners: {
+    kind: 'drive#user';
+    displayName: string;
+    photoLink: string;
+    me: boolean;
+    permissionId: IDrivePermissionResource['id'][];
+    emailAddress: string;
+  }[];
   driveId?: string;
   lastModifyingUser: {
     kind: 'drive#user';

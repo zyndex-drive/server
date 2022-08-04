@@ -1,5 +1,8 @@
 import { AxiosError } from 'axios';
 
+export type * from './projects/types';
+export type * from './service-account/types';
+
 export interface IIamErrorDetails {
   '@type': string;
   reason: string;
