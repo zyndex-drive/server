@@ -23,7 +23,7 @@ export interface IEditDatabaseHelpers {
  * @param {IEditDatabaseHelpers} helpers - Helpers for the function
  * @param {Function} authFunc - Auth edit function for that model from auth plugin
  */
-export async function editDatabaseFunction<
+export async function edit<
   T extends TGenericModelSchema,
   U extends Document,
   V extends LeanDocument<U>,
@@ -103,6 +103,8 @@ export async function editDatabaseFunction<
                 responseData.recordsNotUpdated.push(promise.value);
                 responseData.totalRecordsNotUpdated += 1;
               }
+            } else {
+              throw new Error(promise.reason);
             }
           });
           if (responseData.totalRecordsUpdated > 0) {
