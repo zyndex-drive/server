@@ -1,8 +1,12 @@
 import { checkPolicy } from '@plugins/auth/helpers';
 
-import type { IPolicy, IUserDoc } from '@models/types';
+import type { TGenericModelSchema, IPolicy, IUserDoc } from '@models/types';
 import type { Model, Document, UpdateQuery } from 'mongoose';
-import type { IEditDatabaseResult } from './types';
+import type {
+  IAddDatabaseResult,
+  IEditDatabaseResult,
+  IDeleteDatabaseResult,
+} from './types';
 
 /**
  * Add Data into Database of the Particular Model after Verification
@@ -15,7 +19,7 @@ import type { IEditDatabaseResult } from './types';
  * @returns {Promise<Document>} - Saved Document
  */
 export async function addDatatoDatabase<
-  T,
+  T extends TGenericModelSchema,
   U extends Document,
   V extends Model<U>,
 >(
@@ -23,11 +27,27 @@ export async function addDatatoDatabase<
   data: T,
   admin: IUserDoc,
   policies: Readonly<IPolicy>[],
-): Promise<U> {
-  await checkPolicy(policies, admin);
+): Promise<IAddDatabaseResult<T, U>> {
+  let result: IAddDatabaseResult<T, U> | undefined = undefined;
+  await checkPolicy(policies, admin).catch(() => {
+    result = { doc: data, added: false };
+  });
   const newData = new model(data);
-  const savedData = await newData.save();
-  return savedData;
+  const savedData = await newData
+    .save()
+    .then((doc: U) => doc)
+    .catch(() => {
+      result = { doc: data, added: false };
+    });
+  if (result === undefined) {
+    if (savedData) {
+      return { doc: savedData, added: true };
+    } else {
+      return { doc: data, added: false };
+    }
+  } else {
+    return result;
+  }
 }
 
 /**
@@ -38,7 +58,7 @@ export async function addDatatoDatabase<
  * @param {Object} modifiedData - Modified Data
  * @param {IUserDoc} admin - Admin user Document from Database
  * @param {Readonly<IPolicy>[]} policies - Array of Policies Applicable for the Function
- * @returns {Promise<IEditDatabaseResult>} - always resolves to true or throws error
+ * @returns {Promise<IEditDatabaseResult>} - Returns EditDatabaseType
  */
 export async function editDatainDatabase<
   U extends Document,
@@ -69,21 +89,30 @@ export async function editDatainDatabase<
  *
  * @async
  * @param {Model} model - Model in the Database
- * @param {Object} data - Data to be Deleted to Database
+ * @param {Object} id - id of the Docuemnt to Delete
  * @param {IUserDoc} admin - Admin user Document from Database
  * @param {Readonly<IPolicy>[]} policies - Array of Policies Applicable for the Function
- * @returns {Promise<boolean>} - always resolves to true or throws error
+ * @returns {Promise<IDeleteDatabaseResult>} - Returns DeleteDatabaseType
  */
 export async function deleteDatafromDatabase<
   U extends Document,
   V extends Model<U>,
 >(
   model: V,
-  data: U,
+  id: U['_id'],
   admin: IUserDoc,
   policies: Readonly<IPolicy>[],
-): Promise<boolean> {
-  await checkPolicy(policies, admin);
-  await model.deleteOne({ _id: data._id });
-  return true;
+): Promise<IDeleteDatabaseResult> {
+  let result: IDeleteDatabaseResult | undefined = undefined;
+  await checkPolicy(policies, admin).catch(() => {
+    result = { id, deleted: false };
+  });
+  await model.deleteOne({ _id: id }).catch(() => {
+    result = { id, deleted: false };
+  });
+  if (result === undefined) {
+    return { id, deleted: true };
+  } else {
+    return result;
+  }
 }
