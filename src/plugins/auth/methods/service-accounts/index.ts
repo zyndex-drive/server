@@ -12,16 +12,23 @@ import type {
   IServiceAccModel,
   IUserDoc,
 } from '@models/types';
-import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
+import type {
+  IAddDatabaseResult,
+  IEditDatabaseResult,
+  IDeleteDatabaseResult,
+} from '@plugins/auth/helpers/types';
 
 /**
  * Add ServiceAccs in the Database
  *
  * @param {IUserDoc} admin - Admin user to Perform the Action
  * @param {IServiceAcc} data - ServiceAccs Data
- * @returns {Promise<IServiceAccDoc>} - ServiceAccs Document from the Database
+ * @returns {Promise<IAddDatabaseResult<IServiceAcc, IServiceAccDoc>>} - ServiceAccs Document from the Database
  */
-function add(admin: IUserDoc, data: IServiceAcc): Promise<IServiceAccDoc> {
+function add(
+  admin: IUserDoc,
+  data: IServiceAcc,
+): Promise<IAddDatabaseResult<IServiceAcc, IServiceAccDoc>> {
   const policies = [serviceAccPolicies.add];
   return addDatatoDatabase<IServiceAcc, IServiceAccDoc, IServiceAccModel>(
     ServiceAccs,
@@ -59,13 +66,16 @@ function edit(
  *
  * @param {IUserDoc} admin - Admin User to Perform the Action
  * @param {IServiceAccDoc} data - Data to be Deleted
- * @returns {Promise<boolean>} - true/false
+ * @returns {Promise<IDeleteDatabaseResult>} - IDeleteDatabaseResult
  */
-function remove(admin: IUserDoc, data: IServiceAccDoc): Promise<boolean> {
+function remove(
+  admin: IUserDoc,
+  data: IServiceAccDoc,
+): Promise<IDeleteDatabaseResult> {
   const policies = [serviceAccPolicies.remove];
   return deleteDatafromDatabase<IServiceAccDoc, IServiceAccModel>(
     ServiceAccs,
-    data,
+    data._id,
     admin,
     policies,
   );

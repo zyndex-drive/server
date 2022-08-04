@@ -14,16 +14,23 @@ import type {
   IRoleModel,
   IUserDoc,
 } from '@models/types';
-import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
+import type {
+  IAddDatabaseResult,
+  IEditDatabaseResult,
+  IDeleteDatabaseResult,
+} from '@plugins/auth/helpers/types';
 
 /**
  * Add Roles in the Database
  *
  * @param {IUserDoc} admin - Admin user to Perform the Action
  * @param {IRole} data - Roles Data
- * @returns {Promise<IRoleDoc>} - Roles Document from the Database
+ * @returns {Promise<IAddDatabaseResult<IRole, IRoleDoc>>} - Roles Document from the Database
  */
-function add(admin: IUserDoc, data: IRole): Promise<IRoleDoc> {
+function add(
+  admin: IUserDoc,
+  data: IRole,
+): Promise<IAddDatabaseResult<IRole, IRoleDoc>> {
   const policies = [rolePolicies.add];
   const { type } = data;
   if (type !== 'main') {
@@ -74,15 +81,18 @@ function edit(
  *
  * @param {IUserDoc} admin - Admin User to Perform the Action
  * @param {IRoleDoc} data - Data to be Deleted
- * @returns {Promise<boolean>} - true/false
+ * @returns {Promise<IDeleteDatabaseResult>} - IDeleteDatabaseResult
  */
-function remove(admin: IUserDoc, data: IRoleDoc): Promise<boolean> {
+function remove(
+  admin: IUserDoc,
+  data: IRoleDoc | IRoleLeanDoc,
+): Promise<IDeleteDatabaseResult> {
   const policies = [rolePolicies.remove];
   const { type } = data;
   if (type !== 'main') {
     return deleteDatafromDatabase<IRoleDoc, IRoleModel>(
       Roles,
-      data,
+      data._id,
       admin,
       policies,
     );

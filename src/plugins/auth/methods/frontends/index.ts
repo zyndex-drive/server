@@ -12,16 +12,23 @@ import type {
   IFrontendModel,
   IUserDoc,
 } from '@models/types';
-import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
+import type {
+  IAddDatabaseResult,
+  IEditDatabaseResult,
+  IDeleteDatabaseResult,
+} from '@plugins/auth/helpers/types';
 
 /**
  * Add Frontends in the Database
  *
  * @param {IUserDoc} admin - Admin user to Perform the Action
  * @param {IFrontend} data - Frontends Data
- * @returns {Promise<IFrontendDoc>} - Frontends Document from the Database
+ * @returns {Promise<IAddDatabaseResult<IFrontend, IFrontendDoc>>} - Frontends Document from the Database
  */
-function add(admin: IUserDoc, data: IFrontend): Promise<IFrontendDoc> {
+function add(
+  admin: IUserDoc,
+  data: IFrontend,
+): Promise<IAddDatabaseResult<IFrontend, IFrontendDoc>> {
   const policies = [frontendsPolicies.add];
   return addDatatoDatabase<IFrontend, IFrontendDoc, IFrontendModel>(
     Frontends,
@@ -59,13 +66,16 @@ function edit(
  *
  * @param {IUserDoc} admin - Admin User to Perform the Action
  * @param {IFrontendDoc} data - Data to be Deleted
- * @returns {Promise<boolean>} - true/false
+ * @returns {Promise<IDeleteDatabaseResult>} - IDeleteDatabaseResult
  */
-function remove(admin: IUserDoc, data: IFrontendDoc): Promise<boolean> {
+function remove(
+  admin: IUserDoc,
+  data: IFrontendDoc,
+): Promise<IDeleteDatabaseResult> {
   const policies = [frontendsPolicies.remove];
   return deleteDatafromDatabase<IFrontendDoc, IFrontendModel>(
     Frontends,
-    data,
+    data._id,
     admin,
     policies,
   );

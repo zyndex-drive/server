@@ -7,16 +7,23 @@ import {
 import { scopes as scopePolicies } from '@plugins/templates/policies';
 
 import type { IScope, IScopeDoc, IScopeModel, IUserDoc } from '@models/types';
-import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
+import type {
+  IAddDatabaseResult,
+  IEditDatabaseResult,
+  IDeleteDatabaseResult,
+} from '@plugins/auth/helpers/types';
 
 /**
  * Add Scopes in the Database
  *
  * @param {IUserDoc} admin - Admin user to Perform the Action
  * @param {IScope} data - Scopes Data
- * @returns {Promise<IScopeDoc>} - Scopes Document from the Database
+ * @returns {Promise<IAddDatabaseResult<IScope, IScopeDoc>>} - Scopes Document from the Database
  */
-function add(admin: IUserDoc, data: IScope): Promise<IScopeDoc> {
+function add(
+  admin: IUserDoc,
+  data: IScope,
+): Promise<IAddDatabaseResult<IScope, IScopeDoc>> {
   const policies = [scopePolicies.add];
   return addDatatoDatabase<IScope, IScopeDoc, IScopeModel>(
     Scopes,
@@ -54,13 +61,16 @@ function edit(
  *
  * @param {IUserDoc} admin - Admin User to Perform the Action
  * @param {IScopeDoc} data - Data to be Deleted
- * @returns {Promise<boolean>} - true/false
+ * @returns {Promise<IDeleteDatabaseResult>} - IDeleteDatabaseResult
  */
-function remove(admin: IUserDoc, data: IScopeDoc): Promise<boolean> {
+function remove(
+  admin: IUserDoc,
+  data: IScopeDoc,
+): Promise<IDeleteDatabaseResult> {
   const policies = [scopePolicies.remove];
   return deleteDatafromDatabase<IScopeDoc, IScopeModel>(
     Scopes,
-    data,
+    data._id,
     admin,
     policies,
   );

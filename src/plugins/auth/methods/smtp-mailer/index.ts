@@ -12,16 +12,23 @@ import type {
   ISMTPMailerModel,
   IUserDoc,
 } from '@models/types';
-import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
+import type {
+  IAddDatabaseResult,
+  IEditDatabaseResult,
+  IDeleteDatabaseResult,
+} from '@plugins/auth/helpers/types';
 
 /**
  * Add SMTPMailers in the Database
  *
  * @param {IUserDoc} admin - Admin user to Perform the Action
  * @param {ISMTPMailer} data - SMTPMailers Data
- * @returns {Promise<ISMTPMailerDoc>} - SMTPMailers Document from the Database
+ * @returns {Promise<IAddDatabaseResult<ISMTPMailer, ISMTPMailerDoc>>} - SMTPMailers Document from the Database
  */
-function add(admin: IUserDoc, data: ISMTPMailer): Promise<ISMTPMailerDoc> {
+function add(
+  admin: IUserDoc,
+  data: ISMTPMailer,
+): Promise<IAddDatabaseResult<ISMTPMailer, ISMTPMailerDoc>> {
   const policies = [smtpMailerPolicies.add];
   return addDatatoDatabase<ISMTPMailer, ISMTPMailerDoc, ISMTPMailerModel>(
     SMTPMailers,
@@ -59,13 +66,16 @@ function edit(
  *
  * @param {IUserDoc} admin - Admin User to Perform the Action
  * @param {ISMTPMailerDoc} data - Data to be Deleted
- * @returns {Promise<boolean>} - true/false
+ * @returns {Promise<IDeleteDatabaseResult>} - IDeleteDatabaseResult
  */
-function remove(admin: IUserDoc, data: ISMTPMailerDoc): Promise<boolean> {
+function remove(
+  admin: IUserDoc,
+  data: ISMTPMailerDoc,
+): Promise<IDeleteDatabaseResult> {
   const policies = [smtpMailerPolicies.remove];
   return deleteDatafromDatabase<ISMTPMailerDoc, ISMTPMailerModel>(
     SMTPMailers,
-    data,
+    data._id,
     admin,
     policies,
   );

@@ -12,16 +12,23 @@ import type {
   ITemplateModel,
   IUserDoc,
 } from '@models/types';
-import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
+import type {
+  IAddDatabaseResult,
+  IEditDatabaseResult,
+  IDeleteDatabaseResult,
+} from '@plugins/auth/helpers/types';
 
 /**
  * Add Templates in the Database
  *
  * @param {IUserDoc} admin - Admin user to Perform the Action
  * @param {ITemplate} data - Templates Data
- * @returns {Promise<ITemplateDoc>} - Templates Document from the Database
+ * @returns {Promise<IAddDatabaseResult<ITemplate, ITemplateDoc>>} - Templates Document from the Database
  */
-function add(admin: IUserDoc, data: ITemplate): Promise<ITemplateDoc> {
+function add(
+  admin: IUserDoc,
+  data: ITemplate,
+): Promise<IAddDatabaseResult<ITemplate, ITemplateDoc>> {
   const policies = [templatesPolicies.add];
   return addDatatoDatabase<ITemplate, ITemplateDoc, ITemplateModel>(
     Templates,
@@ -59,13 +66,16 @@ function edit(
  *
  * @param {IUserDoc} admin - Admin User to Perform the Action
  * @param {ITemplateDoc} data - Data to be Deleted
- * @returns {Promise<boolean>} - true/false
+ * @returns {Promise<IDeleteDatabaseResult>} - IDeleteDatabaseResult
  */
-function remove(admin: IUserDoc, data: ITemplateDoc): Promise<boolean> {
+function remove(
+  admin: IUserDoc,
+  data: ITemplateDoc,
+): Promise<IDeleteDatabaseResult> {
   const policies = [templatesPolicies.remove];
   return deleteDatafromDatabase<ITemplateDoc, ITemplateModel>(
     Templates,
-    data,
+    data._id,
     admin,
     policies,
   );
