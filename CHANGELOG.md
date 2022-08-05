@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-62](https://github.com/zyndex-drive/server/compare/v0.2.0-61...v0.2.0-62) (2022-08-04)
+
+
+### Bug Fixes 🛠
+
+* **plugins/google:** properly export google api methods ([2874f36](https://github.com/zyndex-drive/server/commit/2874f36002c3940685ff7c513cbd0895ad89fd09))
+
+
+### Features 🔥
+
+* **plugins/auth:** update all the auth model methods for latest changes in model mothods ([af99a67](https://github.com/zyndex-drive/server/commit/af99a67d52c2e3837d2054bc5be800d271d99542))
+* **plugins/auth:** update model methods for more error handling ([6768ee0](https://github.com/zyndex-drive/server/commit/6768ee0571b660fe94340db5fc21da9428b3ff60))
+* **plugins/serve/generators:** create a express database auth handlers for performaing db funcs ([2d73efa](https://github.com/zyndex-drive/server/commit/2d73efa358a949aeb6cfc2efc3e4a19bc2d1b6fa))
+* **routes:** update auth routes to use the new express handler class for db functions ([ed1a857](https://github.com/zyndex-drive/server/commit/ed1a857c13e8c6538c78af55a622243939994196))
+
+
+### Tests 🧪
+
+* fix unit tests import line ([f4b39a8](https://github.com/zyndex-drive/server/commit/f4b39a864a75a48ffc93d9197f5ee08fdafc9be9))
+
 ## [0.2.0-61](https://github.com/zyndex-drive/server/compare/v0.2.0-60...v0.2.0-61) (2022-06-30)
 
 

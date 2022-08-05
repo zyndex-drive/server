@@ -35,9 +35,23 @@ router.post('/list', (async (req, res) => {
 }) as RequestHandler);
 
 router.post(
+  '/add',
+  (async (req, res) =>
+    await expressRoleDatabaseHandler.add(
+      req,
+      res,
+      {
+        bodyProp: 'rolesToAdd',
+        modelName: 'Role',
+      },
+      rolesAuth.add,
+    )) as RequestHandler,
+);
+
+router.post(
   '/update',
   (async (req, res) =>
-    await expressRoleDatabaseHandler.editDatabaseHandler(
+    await expressRoleDatabaseHandler.edit(
       req,
       res,
       {
@@ -45,6 +59,17 @@ router.post(
         modelName: 'Role',
       },
       rolesAuth.edit,
+    )) as RequestHandler,
+);
+
+router.delete(
+  '/delete',
+  (async (req, res) =>
+    await expressRoleDatabaseHandler.delete(
+      req,
+      res,
+      { bodyProp: 'rolesToDelete', modelName: 'Role' },
+      rolesAuth.remove,
     )) as RequestHandler,
 );
 

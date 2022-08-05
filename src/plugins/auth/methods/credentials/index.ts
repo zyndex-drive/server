@@ -12,16 +12,23 @@ import type {
   ICredentialsModel,
   IUserDoc,
 } from '@models/types';
-import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
+import type {
+  IAddDatabaseResult,
+  IEditDatabaseResult,
+  IDeleteDatabaseResult,
+} from '@plugins/auth/helpers/types';
 
 /**
  * Add Credentials in the Database
  *
  * @param {IUserDoc} admin - Admin user to Perform the Action
  * @param {ICredentials} data - Credentials Data
- * @returns {Promise<ICredentialsDoc>} - Credentials Document from the Database
+ * @returns {Promise<IAddDatabaseResult<ICredentials, ICredentialsDoc>>} - Credentials Document from the Database
  */
-function add(admin: IUserDoc, data: ICredentials): Promise<ICredentialsDoc> {
+function add(
+  admin: IUserDoc,
+  data: ICredentials,
+): Promise<IAddDatabaseResult<ICredentials, ICredentialsDoc>> {
   const policies = [credentialPolicies.add];
   return addDatatoDatabase<ICredentials, ICredentialsDoc, ICredentialsModel>(
     Credentials,
@@ -59,13 +66,16 @@ function edit(
  *
  * @param {IUserDoc} admin - Admin User to Perform the Action
  * @param {ICredentialsDoc} data - Data to be Deleted
- * @returns {Promise<boolean>} - true/false
+ * @returns {Promise<IDeleteDatabaseResult>} - IDeleteDatabaseResult
  */
-function remove(admin: IUserDoc, data: ICredentialsDoc): Promise<boolean> {
+function remove(
+  admin: IUserDoc,
+  data: ICredentialsDoc,
+): Promise<IDeleteDatabaseResult> {
   const policies = [credentialPolicies.remove];
   return deleteDatafromDatabase<ICredentialsDoc, ICredentialsModel>(
     Credentials,
-    data,
+    data._id,
     admin,
     policies,
   );

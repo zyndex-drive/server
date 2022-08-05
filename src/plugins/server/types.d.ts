@@ -1,4 +1,8 @@
-import { IEditDatabaseResult } from '@plugins/auth/helpers/types';
+import {
+  IAddDatabaseResult,
+  IEditDatabaseResult,
+  IDeleteDatabaseResult,
+} from '@plugins/auth/helpers/types';
 
 export interface Routes {
   get: string[];
@@ -20,9 +24,23 @@ export interface IErrorResponse {
   data?: unknown;
 }
 
+export interface IAddDatabaseResponse<T, U> {
+  recordsAdded: IAddDatabaseResult<T, U>[];
+  totalRecordsAdded: number;
+  recordsNotAdded: IAddDatabaseResult<T, U>[];
+  totalRecordsNotAdded: number;
+}
+
 export interface IEditDatabaseResponse {
   recordsUpdated: IEditDatabaseResult[];
   totalRecordsUpdated: number;
   recordsNotUpdated: IEditDatabaseResult[];
   totalRecordsNotUpdated: number;
+}
+
+export interface IDeleteDatabaseResponse {
+  recordsDeleted: IDeleteDatabaseResult[];
+  totalRecordsDeleted: number;
+  recordsNotDeleted: IDeleteDatabaseResult[];
+  totalRecordsNotDeleted: number;
 }

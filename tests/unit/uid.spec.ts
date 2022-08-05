@@ -1,4 +1,4 @@
-import { shortuid } from '../../plugins/misc/uid';
+import { shortuid } from '../../src/plugins/misc/uid';
 
 describe('Testing Unique ID Generator', () => {
   it('Generate a Short UID', (done) => {

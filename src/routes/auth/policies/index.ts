@@ -37,7 +37,7 @@ router.post('/list', (async (req, res) => {
 router.post(
   '/update',
   (async (req, res) =>
-    await expressPolicyDatabaseHandler.editDatabaseHandler(
+    await expressPolicyDatabaseHandler.edit(
       req,
       res,
       {

@@ -2,6 +2,7 @@ import passport from 'passport';
 import { encrypt, decrypt } from '@plugins/crypto';
 import { errorResponseHandler } from '@plugins/server/responses';
 
+// Types
 import type { IUserDoc } from '@models/types';
 import type { AuthenticateOptions } from 'passport';
 import type { Request, Response, NextFunction } from 'express';
