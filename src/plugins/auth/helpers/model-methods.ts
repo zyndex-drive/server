@@ -67,14 +67,14 @@ export async function addDatatoDatabase<
   await checkPolicy(policies, admin).catch(() => {
     result = { doc: data, added: false };
   });
-  const newData = new model(data);
-  const savedData = await newData
-    .save()
-    .then((doc: U) => doc)
-    .catch(() => {
-      result = { doc: data, added: false };
-    });
   if (result === undefined) {
+    const newData = new model(data);
+    const savedData = await newData
+      .save()
+      .then((doc: U) => doc)
+      .catch(() => {
+        result = { doc: data, added: false };
+      });
     if (savedData) {
       return { doc: savedData, added: true };
     } else {
@@ -109,10 +109,10 @@ export async function editDatainDatabase<
   await checkPolicy(policies, admin).catch(() => {
     result = { id, updated: false };
   });
-  await model.updateOne({ _id: id }, modifiedData).catch(() => {
-    result = { id, updated: false };
-  });
   if (result === undefined) {
+    await model.updateOne({ _id: id }, modifiedData).catch(() => {
+      result = { id, updated: false };
+    });
     return { id, updated: true };
   } else {
     return result;
@@ -142,10 +142,10 @@ export async function deleteDatafromDatabase<
   await checkPolicy(policies, admin).catch(() => {
     result = { id, deleted: false };
   });
-  await model.deleteOne({ _id: id }).catch(() => {
-    result = { id, deleted: false };
-  });
   if (result === undefined) {
+    await model.deleteOne({ _id: id }).catch(() => {
+      result = { id, deleted: false };
+    });
     return { id, deleted: true };
   } else {
     return result;
