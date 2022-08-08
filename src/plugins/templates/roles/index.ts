@@ -71,4 +71,4 @@ export const owner: Readonly<IRole> = {
   allowed_policies: ownerPolicies,
 };
 
-export const map = [viewer, contentMgr, moderator, owner];
+export const map = [viewer, contentMgr, moderator, manager, owner];
