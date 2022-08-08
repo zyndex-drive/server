@@ -10,6 +10,14 @@ import { objectID } from '@plugins/misc/uid';
 
 const CODE = 'scp';
 
+export const scope_view: Readonly<IPolicy> = {
+  _id: objectID(),
+  code: `${CODE}view`,
+  name: 'View Scopes',
+  message: 'Enable Viewing Scopes from Database',
+  global_flag: true,
+};
+
 export const scope_add: Readonly<IPolicy> = {
   _id: objectID(),
   code: `${CODE}add`,

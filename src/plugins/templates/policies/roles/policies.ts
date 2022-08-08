@@ -10,6 +10,14 @@ import { objectID } from '@plugins/misc/uid';
 
 const CODE = 'role';
 
+export const roles_view: Readonly<IPolicy> = {
+  _id: objectID(),
+  code: `${CODE}view`,
+  name: 'View Roles',
+  message: 'Enable Viewing Roles from Database',
+  global_flag: true,
+};
+
 export const roles_add: Readonly<IPolicy> = {
   _id: objectID(),
   code: `${CODE}add`,
