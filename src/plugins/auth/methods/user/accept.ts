@@ -12,32 +12,26 @@ import type {
 /**
  * Accept a User as a Particular Role for the Particular Scope
  *
+ * @async
  * @param {IUserDoc} admin - Admin User with which to Create the User
  * @param {string} scope - Scope for which User Should be Accepted
  * @param {Readonly<IPolicy>} policies - accept policies applicable for the particular user
  * @param {IPendingUserDoc} pendingUser - User Object containing Details
  * @returns {boolean} - (true/false)
  */
-function acceptUser(
+async function acceptUser(
   admin: IUserDoc,
   scope: IScopeDoc['_id'],
   policies: Readonly<IPolicy>[],
   pendingUser: IPendingUserDoc,
 ): Promise<boolean> {
-  return new Promise<boolean>((resolve, reject) => {
-    checkPolicy(policies, admin, scope, pendingUser)
-      .then(() => {
-        const setValues = {
-          accepted: true,
-          accepted_at: Date.now(),
-        };
-        return PendingUsers.updateOne({ _id: pendingUser._id }, setValues);
-      })
-      .then(() => resolve(true))
-      .catch((err: string) => {
-        reject(new Error(err));
-      });
-  });
+  await checkPolicy(policies, admin, false, scope, pendingUser);
+  const setValues = {
+    accepted: true,
+    accepted_at: Date.now(),
+  };
+  await PendingUsers.updateOne({ _id: pendingUser._id }, setValues);
+  return true;
 }
 
 /**

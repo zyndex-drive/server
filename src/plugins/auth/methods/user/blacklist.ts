@@ -7,47 +7,38 @@ import type {
   IScopeDoc,
   IPolicy,
   IUserDoc,
-  IBlacklistedUser,
   IBlacklistedUserDoc,
 } from '@models/types';
 
 /**
  * Blacklists a User for a Particular Scope
  *
+ * @async
  * @param {IUserDoc} admin - Admin User with which to Blacklist the User
  * @param {Readonly<IPolicy>[]} policies - Blacklist Policies applicable for the user
  * @param {string} scope - Scope for which user should be blacklisted
  * @param {IUserDoc} user - user to blacklist
  * @returns {Promise<IBlacklistedUserDoc>} - Blacklisted User Document
  */
-function blacklistUser(
+async function blacklistUser(
   admin: IUserDoc,
   policies: Readonly<IPolicy>[],
   scope: IScopeDoc['_id'],
   user: IUserDoc,
 ): Promise<IBlacklistedUserDoc> {
-  return new Promise<IBlacklistedUserDoc>((resolve, reject) => {
-    checkPolicy(policies, admin, scope, user)
-      .then(() => Users.updateOne({ _id: user._id }, { restricted: true }))
-      .then(() => objectID())
-      .then(
-        (uid) =>
-          ({
-            _id: uid,
-            name: user.name,
-            email: user.email,
-            flagged_by: admin._id,
-            role: user.roles.filter((us) => String(us.scope) === String(scope)),
-            blacklisted_from: Date.now(),
-          } as IBlacklistedUser),
-      )
-      .then((blacklistUser) => new BlacklistUsers(blacklistUser))
-      .then((newBlacklistUser) => newBlacklistUser.save())
-      .then(resolve)
-      .catch((err: string) => {
-        reject(new Error(err));
-      });
+  await checkPolicy(policies, admin, false, scope, user);
+  await Users.updateOne({ _id: user._id }, { restricted: true });
+  const uid = objectID();
+  const newBlacklistUser = new BlacklistUsers({
+    _id: uid,
+    name: user.name,
+    email: user.email,
+    flagged_by: admin._id,
+    role: user.roles.filter((us) => String(us.scope) === String(scope)),
+    blacklisted_from: Date.now(),
   });
+  const blacklistUserDoc = await newBlacklistUser.save();
+  return blacklistUserDoc;
 }
 
 /**
