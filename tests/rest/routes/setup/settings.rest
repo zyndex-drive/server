@@ -35,7 +35,7 @@ content-type: application/json
 
 ### Set Other Token Session Expiry
 
-POST {{URL}}/other-session-expiry HTTP/1.1
+POST {{URL}}/other-token-expiry HTTP/1.1
 x-local-dev-pass: {{LOCAL_SECRET}}
 x-secret-pass: {{SECRET}}
 content-type: application/json
@@ -53,6 +53,28 @@ content-type: application/json
 
 {
     "requests": 100
+}
+
+### Set User Request Limiter Requests
+
+POST {{URL}}/user-rate-limit HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}
+content-type: application/json
+
+{
+    "requests": 50
+}
+
+### Set Media Request Limiter Requests
+
+POST {{URL}}/media-rate-limit HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}
+content-type: application/json
+
+{
+    "requests": 200
 }
 
 ### Enable User Requests
@@ -86,6 +108,17 @@ content-type: application/json
 
 {
     "otp": true
+}
+
+### Enable Mail Support
+
+POST {{URL}}/mailing HTTP/1.1
+x-local-dev-pass: {{LOCAL_SECRET}}
+x-secret-pass: {{SECRET}}
+content-type: application/json
+
+{
+    "mail": true
 }
 
 ### Max Sessions Flg
