@@ -2,8 +2,7 @@
 import express from 'express';
 
 // Routes
-import policies from './policies';
-import roles from './roles';
+import autoRoutes from './routes';
 
 // Response handlers
 import { okResponse } from '@plugins/server/responses';
@@ -11,9 +10,10 @@ import { okResponse } from '@plugins/server/responses';
 // Router
 const router = express.Router();
 
-// Assign Auth Routes
-router.use('/policies', policies);
-router.use('/roles', roles);
+// Assign Auth Auto Routes
+autoRoutes.forEach((route) => {
+  router.use(`/${route.name}`, route.handler.hostAllRoutes());
+});
 
 router.post('/status', (req, res) => okResponse(res, 'OK'));
 

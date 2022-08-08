@@ -10,6 +10,14 @@ import { objectID } from '@plugins/misc/uid';
 
 const CODE = 'template';
 
+export const templates_view: Readonly<IPolicy> = {
+  _id: objectID(),
+  code: `${CODE}view`,
+  name: 'View Templates',
+  message: 'Enable Viewing Templates from Database',
+  global_flag: true,
+};
+
 export const templates_add: Readonly<IPolicy> = {
   _id: objectID(),
   code: `${CODE}add`,

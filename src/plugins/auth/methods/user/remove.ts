@@ -7,26 +7,22 @@ import type { IScopeDoc, IPolicy, IUserDoc } from '@models/types';
 /**
  * Remove a User
  *
+ * @async
  * @param {IUserDoc} admin - Admin User with which to Create the User
  * @param {string} scope - Scope for which User Should be Accepted
  * @param {Readonly<IPolicy>} policies - accept policies applicable for the particular user
  * @param {IUserDoc} user - User Object containing Details
  * @returns {boolean} - (true/false)
  */
-function removeUser(
+async function removeUser(
   admin: IUserDoc,
   scope: IScopeDoc['_id'],
   policies: Readonly<IPolicy>[],
   user: IUserDoc,
 ): Promise<boolean> {
-  return new Promise<boolean>((resolve, reject) => {
-    checkPolicy(policies, admin, scope, user)
-      .then(() => Users.deleteOne({ _id: user._id }))
-      .then(() => resolve(true))
-      .catch((err: string) => {
-        reject(new Error(err));
-      });
-  });
+  await checkPolicy(policies, admin, false, scope, user);
+  await Users.deleteOne({ _id: user._id });
+  return true;
 }
 
 /**

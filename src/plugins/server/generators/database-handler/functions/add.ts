@@ -7,25 +7,21 @@ import type { Request, Response } from 'express';
 import type { Document } from 'mongoose';
 import type { IUserDoc, TGenericModelSchema } from '@models/types';
 import type { IAddDatabaseResult } from '@plugins/auth/helpers/types';
+import type { IDatabaseHelpers } from '@plugins/server/generators/database-handler/types';
 import type { IAddDatabaseResponse } from '@plugins/server/types';
-
-export interface IAddDatabaseHelpers {
-  bodyProp: string;
-  modelName: string;
-}
 
 /**
  * Common Express Handler for all models to Add new Docs to the Database of that model which follows the auth workflow
  *
  * @param {Request} req - Express Request Object
  * @param {Response} res - Express Response Object
- * @param {IAddDatabaseHelpers} helpers - Helpers for the function
+ * @param {IDatabaseHelpers} helpers - Helpers for the function
  * @param {Function} authFunc - Auth edit function for that model from auth plugin
  */
 export async function add<T extends TGenericModelSchema, U extends Document>(
   req: Request,
   res: Response,
-  helpers: IAddDatabaseHelpers,
+  helpers: IDatabaseHelpers,
   authFunc: (admin: IUserDoc, data: T) => Promise<IAddDatabaseResult<T, U>>,
 ): Promise<void> {
   try {

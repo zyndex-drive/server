@@ -10,6 +10,14 @@ import { objectID } from '@plugins/misc/uid';
 
 const CODE = 'sacacc';
 
+export const sac_view: Readonly<IPolicy> = {
+  _id: objectID(),
+  code: `${CODE}view`,
+  name: 'View Service Account',
+  message: 'Enable Viewing Service Accounts from Database',
+  global_flag: true,
+};
+
 export const sac_add: Readonly<IPolicy> = {
   _id: objectID(),
   code: `${CODE}add`,

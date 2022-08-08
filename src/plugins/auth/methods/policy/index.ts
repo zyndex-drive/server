@@ -1,5 +1,8 @@
 import { Policies } from '@models';
-import { editDatainDatabase } from '@plugins/auth/helpers';
+import {
+  viewDatafromDatabase,
+  editDatainDatabase,
+} from '@plugins/auth/helpers';
 import { policy as policyPolicies } from '@plugins/templates/policies';
 
 import { NotAllowed } from '@plugins/errors';
@@ -11,6 +14,28 @@ import type {
   IUserDoc,
 } from '@models/types';
 import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
+import type { FilterQuery } from 'mongoose';
+
+/**
+ * View Policy Docs from the Database
+ *
+ * @param {IUserDoc} admin - Admin User to Perform the Action
+ * @param {FilterQuery<IPolicyDoc>} filter - Filter Object for Policy Model
+ * @returns {Promise<IPolicyDoc[] | IPolicyLeanDoc[]>} - Documents for the Filter Provided
+ */
+function view(
+  admin: IUserDoc,
+  filter?: FilterQuery<IPolicyDoc>,
+): Promise<IPolicyDoc[] | IPolicyLeanDoc[]> {
+  const policies = [policyPolicies.view];
+  return viewDatafromDatabase<IPolicyDoc, IPolicyLeanDoc, IPolicyModel>(
+    Policies,
+    admin,
+    true,
+    policies,
+    filter,
+  );
+}
 
 /**
  * Edit Policies in the Database
@@ -43,5 +68,6 @@ function edit(
 }
 
 export default {
+  view,
   edit,
 };

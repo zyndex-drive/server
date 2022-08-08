@@ -1,5 +1,6 @@
 import { SMTPMailers } from '@models';
 import {
+  viewDatafromDatabase,
   addDatatoDatabase,
   editDatainDatabase,
   deleteDatafromDatabase,
@@ -9,6 +10,7 @@ import { smtpMailers as smtpMailerPolicies } from '@plugins/templates/policies';
 import type {
   ISMTPMailer,
   ISMTPMailerDoc,
+  ISMTPMailerLeanDoc,
   ISMTPMailerModel,
   IUserDoc,
 } from '@models/types';
@@ -17,6 +19,26 @@ import type {
   IEditDatabaseResult,
   IDeleteDatabaseResult,
 } from '@plugins/auth/helpers/types';
+import type { FilterQuery } from 'mongoose';
+
+/**
+ * View SMTP Mailers from the Database
+ *
+ * @param {IUserDoc} admin - Admin User to Perform the Action
+ * @param {FilterQuery<ISMTPMailerDoc>} filter - Filter Object for SMTP Mailers Model
+ * @returns {Promise<ISMTPMailerDoc[] | ISMTPMailerLeanDoc[]>} - Documents for the Filter Provided
+ */
+function view(
+  admin: IUserDoc,
+  filter?: FilterQuery<ISMTPMailerDoc>,
+): Promise<ISMTPMailerDoc[] | ISMTPMailerLeanDoc[]> {
+  const policies = [smtpMailerPolicies.view];
+  return viewDatafromDatabase<
+    ISMTPMailerDoc,
+    ISMTPMailerLeanDoc,
+    ISMTPMailerModel
+  >(SMTPMailers, admin, false, policies, filter);
+}
 
 /**
  * Add SMTPMailers in the Database
@@ -42,13 +64,13 @@ function add(
  * Edit SMTPMailers in the Database
  *
  * @param {IUserDoc} admin - Admin User to Perform the Action
- * @param {ISMTPMailerDoc} data - Data to be Modified
+ * @param {ISMTPMailerDoc | ISMTPMailerLeanDoc} data - Data to be Modified
  * @param {Partial<ISMTPMailerDoc>} modifiedData - Modified Object
  * @returns {Promise<IEditDatabaseResult>} - IEditDatabaseResult
  */
 function edit(
   admin: IUserDoc,
-  data: ISMTPMailerDoc,
+  data: ISMTPMailerDoc | ISMTPMailerLeanDoc,
   modifiedData: Partial<ISMTPMailerDoc>,
 ): Promise<IEditDatabaseResult> {
   const policies = [smtpMailerPolicies.edit];
@@ -65,12 +87,12 @@ function edit(
  * Delete SMTPMailers from the Database
  *
  * @param {IUserDoc} admin - Admin User to Perform the Action
- * @param {ISMTPMailerDoc} data - Data to be Deleted
+ * @param {ISMTPMailerDoc | ISMTPMailerLeanDoc} data - Data to be Deleted
  * @returns {Promise<IDeleteDatabaseResult>} - IDeleteDatabaseResult
  */
 function remove(
   admin: IUserDoc,
-  data: ISMTPMailerDoc,
+  data: ISMTPMailerDoc | ISMTPMailerLeanDoc,
 ): Promise<IDeleteDatabaseResult> {
   const policies = [smtpMailerPolicies.remove];
   return deleteDatafromDatabase<ISMTPMailerDoc, ISMTPMailerModel>(
@@ -82,6 +104,7 @@ function remove(
 }
 
 export default {
+  view,
   add,
   edit,
   remove,

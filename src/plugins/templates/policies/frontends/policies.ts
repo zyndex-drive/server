@@ -9,6 +9,15 @@ import { IPolicy } from '@models/types';
 import { objectID } from '@plugins/misc/uid';
 
 const CODE = 'ftend';
+
+export const frontend_view: Readonly<IPolicy> = {
+  _id: objectID(),
+  code: `${CODE}view`,
+  name: 'View Frontends',
+  message: 'Enable Viewing Frontends from Database',
+  global_flag: true,
+};
+
 export const frontend_add: Readonly<IPolicy> = {
   _id: objectID(),
   code: `${CODE}add`,

@@ -1,5 +1,6 @@
 import { Roles } from '@models';
 import {
+  viewDatafromDatabase,
   addDatatoDatabase,
   editDatainDatabase,
   deleteDatafromDatabase,
@@ -19,6 +20,28 @@ import type {
   IEditDatabaseResult,
   IDeleteDatabaseResult,
 } from '@plugins/auth/helpers/types';
+import type { FilterQuery } from 'mongoose';
+
+/**
+ * View Role Docs from the Database
+ *
+ * @param {IUserDoc} admin - Admin User to Perform the Action
+ * @param {FilterQuery<IRoleDoc>} filter - Filter Object for Roles Model
+ * @returns {Promise<IRoleDoc[] | IRoleLeanDoc[]>} - Documents for the Filter Provided
+ */
+function view(
+  admin: IUserDoc,
+  filter?: FilterQuery<IRoleDoc>,
+): Promise<IRoleDoc[] | IRoleLeanDoc[]> {
+  const policies = [rolePolicies.view];
+  return viewDatafromDatabase<IRoleDoc, IRoleLeanDoc, IRoleModel>(
+    Roles,
+    admin,
+    true,
+    policies,
+    filter,
+  );
+}
 
 /**
  * Add Roles in the Database
@@ -104,6 +127,7 @@ function remove(
 }
 
 export default {
+  view,
   add,
   edit,
   remove,

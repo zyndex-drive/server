@@ -183,12 +183,18 @@ const getHighestHeirarchy = async (
   return highestDeepestRole.deepRoles;
 };
 
+interface IGetUserPoliciesResult {
+  allowedPolicies: string[];
+  adminRole: IRoleLeanDoc;
+  userRole?: IRoleLeanDoc;
+}
+
 const getUserPolicies = async (
   admin: IUserDoc,
   otherPolicies?: ID<IPolicyDoc>[],
   scope?: IScopeDoc['_id'],
   user?: IUserDoc | IPendingUserDoc,
-): Promise<string[]> => {
+): Promise<IGetUserPoliciesResult> => {
   if (user && scope) {
     const [userRole] = user.roles.filter((role) => role.scope === scope);
     const [adminRole] = user.roles.filter((role) => role.scope === scope);
@@ -199,7 +205,11 @@ const getUserPolicies = async (
     const { roleDoc } = userDeepRole;
     const { roleDoc: adminRoleDoc, allowedPolicies } = deepRoles;
     if (heirarchyChecker(adminRoleDoc, roleDoc)) {
-      return convertObjectID(allowedPolicies);
+      return {
+        allowedPolicies: convertObjectID(allowedPolicies),
+        adminRole: adminRoleDoc,
+        userRole: roleDoc,
+      };
     } else {
       throw new Error(
         'This Admin Cannot Perform this action against this User',
@@ -213,7 +223,11 @@ const getUserPolicies = async (
     const { roleDoc } = userDeepRole;
     const { roleDoc: adminRoleDoc, allowedPolicies } = deepRoles;
     if (heirarchyChecker(adminRoleDoc, roleDoc)) {
-      return convertObjectID(allowedPolicies);
+      return {
+        allowedPolicies: convertObjectID(allowedPolicies),
+        adminRole: adminRoleDoc,
+        userRole: roleDoc,
+      };
     } else {
       throw new Error(
         'This Admin Cannot Perform this action against this User',
@@ -222,40 +236,85 @@ const getUserPolicies = async (
   } else {
     const deepRoles = await getHighestHeirarchy(admin.roles, otherPolicies);
     const { allowedPolicies } = deepRoles;
-    return convertObjectID(allowedPolicies);
+    return {
+      allowedPolicies: convertObjectID(allowedPolicies),
+      adminRole: deepRoles.roleDoc,
+    };
   }
 };
 
+interface ICheckPolicyResultAdmin {
+  check: boolean;
+  adminRole: IRoleLeanDoc;
+}
+
+interface ICheckPolicyResultUser {
+  check: boolean;
+  adminRole: IRoleLeanDoc;
+  userRole: IRoleLeanDoc;
+}
+
+export async function checkPolicy(
+  policies: IPolicy[],
+  admin: IUserDoc,
+  returnRoleDocs: true,
+  scope: IScopeDoc['_id'],
+  user: IUserDoc | IPendingUserDoc,
+): Promise<ICheckPolicyResultUser>;
+export async function checkPolicy(
+  policies: IPolicy[],
+  admin: IUserDoc,
+  returnRoleDocs: true,
+  scope?: IScopeDoc['_id'],
+  user?: IUserDoc | IPendingUserDoc,
+): Promise<ICheckPolicyResultAdmin>;
+export async function checkPolicy(
+  policies: IPolicy[],
+  admin: IUserDoc,
+  returnRoleDocs?: false,
+  scope?: IScopeDoc['_id'],
+  user?: IUserDoc | IPendingUserDoc,
+): Promise<true>;
 /**
  * Checks the Given Policies to the Given User for the Particular Scope
  *
  * @async
  * @param {IPolicy[]} policies - Array of Policies to Check
  * @param {IUserDoc} admin - User to which Policy is to be Checked
+ * @param {boolean} returnRoleDocs - Returns the Role Documents of admin and user if there
  * @param {string} scope - Scope ID for which Policies to be checked
  * @param {IUserDoc} user - User to whom Action is applied
- * @returns {Promise<true>} - always resolves to true or throws error
+ * @returns {Promise<ICheckPolicyResultUser | ICheckPolicyResultAdmin | true>} - always resolves to true or throws error
  */
 export async function checkPolicy(
   policies: IPolicy[],
   admin: IUserDoc,
+  returnRoleDocs?: boolean,
   scope?: IScopeDoc['_id'],
   user?: IUserDoc | IPendingUserDoc,
-): Promise<true> {
+): Promise<ICheckPolicyResultUser | ICheckPolicyResultAdmin | true> {
   if (!admin.restricted) {
     const policyDocs = await getPolicyDocuments(policies);
-    const userPolicies = await getUserPolicies(
+    const { allowedPolicies, adminRole, userRole } = await getUserPolicies(
       admin,
       admin.allowed_policies,
       scope,
       user,
     );
-    const policyChecker = checkPolicyArray(policyDocs, userPolicies);
+    const policyChecker = checkPolicyArray(policyDocs, allowedPolicies);
     const allPoliciesBoolean = policyChecker.map((policy) => policy.value);
     if (allPoliciesBoolean.includes(false)) {
       throw new Error('This User Does not have Access to this Action');
     } else {
-      return true;
+      if (returnRoleDocs) {
+        return {
+          check: true,
+          adminRole,
+          userRole,
+        };
+      } else {
+        return true;
+      }
     }
   } else {
     throw new Error('This User Account is Restricted, Cannot do any Action');

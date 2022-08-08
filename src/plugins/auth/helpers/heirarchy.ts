@@ -12,7 +12,7 @@ export const heirarchy = {
   Owner: 4,
 };
 
-export const getHeirarchy = (roleDoc: IRoleDoc): number | undefined =>
+export const getHeirarchy = (roleDoc: IRoleLeanDoc): number | undefined =>
   dotProp.get(heirarchy, `${roleDoc.name}`);
 
 export const getHighestHeirarchy = async (

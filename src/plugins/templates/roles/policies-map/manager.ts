@@ -6,6 +6,7 @@ import {
   smtpProviders,
   roles,
   policy,
+  templates,
 } from '@plugins/templates/policies';
 
 const policies = [
@@ -24,18 +25,31 @@ const policies = [
   users.modify.viewer.policy._id,
   users.modify.viewer.restrict._id,
   users.modify.viewer.scope._id,
+  users.view.mods._id,
+  users.view.contentMgr._id,
+  users.view.viewer._id,
   frontends.edit._id,
+  frontends.view._id,
   globalSettings.edit._id,
+  globalSettings.view._id,
   roles.add._id,
   roles.edit._id,
   roles.remove._id,
+  roles.view._id,
   policy.edit._id,
+  policy.view._id,
   smtpProviders.add._id,
   smtpProviders.edit._id,
   smtpProviders.remove._id,
+  smtpProviders.view._id,
   smtpMailers.add._id,
   smtpMailers.edit._id,
   smtpMailers.remove._id,
+  smtpMailers.view._id,
+  templates.add._id,
+  templates.edit._id,
+  templates.remove._id,
+  templates.view._id,
 ];
 
 export default policies;

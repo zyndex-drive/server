@@ -5,13 +5,9 @@ import { errorResponseHandler, okResponse } from '@plugins/server/responses';
 import type { Request, Response } from 'express';
 import type { Document, LeanDocument } from 'mongoose';
 import type { IBaseModel, IUserDoc, TGenericModelSchema } from '@models/types';
+import type { IDatabaseHelpers } from '@plugins/server/generators/database-handler/types';
 import type { IEditDatabaseResult } from '@plugins/auth/helpers/types';
 import type { IEditDatabaseResponse } from '@plugins/server/types';
-
-export interface IEditDatabaseHelpers {
-  bodyProp: string;
-  modelName: string;
-}
 
 /**
  * Common Express Handler for all models to Modify the Database of that model which follows the auth workflow
@@ -20,7 +16,7 @@ export interface IEditDatabaseHelpers {
  * @param {Response} res - Express Response Object
  * @param {IBaseModel} model - Mongoose Model Object
  * @param {boolean} lean - Whether the Model should execuete the query in lean mode
- * @param {IEditDatabaseHelpers} helpers - Helpers for the function
+ * @param {IDatabaseHelpers} helpers - Helpers for the function
  * @param {Function} authFunc - Auth edit function for that model from auth plugin
  */
 export async function edit<
@@ -32,7 +28,7 @@ export async function edit<
   res: Response,
   model: IBaseModel<U>,
   lean: boolean,
-  helpers: IEditDatabaseHelpers,
+  helpers: IDatabaseHelpers,
   authFunc: (
     admin: IUserDoc,
     data: U | V,

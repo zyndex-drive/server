@@ -10,6 +10,14 @@ import { objectID } from '@plugins/misc/uid';
 
 const CODE = 'smtppro';
 
+export const smtp_provider_view: Readonly<IPolicy> = {
+  _id: objectID(),
+  code: `${CODE}view`,
+  name: 'View SMTP Email Providers',
+  message: 'Enable Viewing SMTP Email Providers from Database',
+  global_flag: true,
+};
+
 export const smtp_provider_add: Readonly<IPolicy> = {
   _id: objectID(),
   code: `${CODE}add`,

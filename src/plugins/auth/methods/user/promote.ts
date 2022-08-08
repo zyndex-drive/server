@@ -13,6 +13,7 @@ import type {
 /**
  * Accept a User as a Particular Role for the Particular Scope
  *
+ * @async
  * @param {IUserDoc} admin - Admin User with which to accept the Request
  * @param {Readonly<IPolicy>[]} policies - Accept Policies applicable to the user
  * @param {string} scope - Scope for which User Should be Accepted
@@ -20,32 +21,26 @@ import type {
  * @param {IUserDoc} user - User to be Upgraded
  * @returns {boolean} - (true/false)
  */
-function upgradeUser(
+async function upgradeUser(
   admin: IUserDoc,
   policies: Readonly<IPolicy>[],
   scope: IScopeDoc['_id'],
   pendingUser: IPendingUserDoc,
   user: IUserDoc,
 ): Promise<boolean> {
-  return new Promise<boolean>((resolve, reject) => {
-    checkPolicy(policies, admin, scope, user)
-      .then(() => {
-        const setValues = {
-          accepted: true,
-          accepted_at: Date.now(),
-        };
-        return PendingUsers.updateOne({ _id: pendingUser._id }, setValues);
-      })
-      .then(() => resolve(true))
-      .catch((err: string) => {
-        reject(new Error(err));
-      });
-  });
+  await checkPolicy(policies, admin, false, scope, user);
+  const setValues = {
+    accepted: true,
+    accepted_at: Date.now(),
+  };
+  await PendingUsers.updateOne({ _id: pendingUser._id }, setValues);
+  return true;
 }
 
 /**
  * Directly Promote a User as a Particular Role for the Particular Scope
  *
+ * @async
  * @param {IUserDoc} admin - Admin User with which to Promote the User
  * @param {Readonly<IPolicy>[]} policies - Accept Policies applicable to the user
  * @param {string} scope - Scope for which User Should be Accepted
@@ -53,31 +48,24 @@ function upgradeUser(
  * @param {IUserDoc} user - User to be Promoted
  * @returns {boolean} - (true/false)
  */
-function directPromote(
+async function directPromote(
   admin: IUserDoc,
   policies: Readonly<IPolicy>[],
   scope: IScopeDoc['_id'],
   roleDoc: IRoleDoc,
   user: IUserDoc,
 ): Promise<boolean> {
-  return new Promise<boolean>((resolve, reject) => {
-    checkPolicy(policies, admin, scope, user)
-      .then(() => {
-        const filteredRoles = user.roles.filter((role) => role.scope !== scope);
-        filteredRoles.push({
-          role: roleDoc._id,
-          scope,
-        });
-        const setValues = {
-          roles: filteredRoles,
-        };
-        return Users.updateOne({ _id: user._id }, setValues);
-      })
-      .then(() => resolve(true))
-      .catch((err: string) => {
-        reject(new Error(err));
-      });
+  await checkPolicy(policies, admin, false, scope, user);
+  const filteredRoles = user.roles.filter((role) => role.scope !== scope);
+  filteredRoles.push({
+    role: roleDoc._id,
+    scope,
   });
+  const setValues = {
+    roles: filteredRoles,
+  };
+  await Users.updateOne({ _id: user._id }, setValues);
+  return true;
 }
 
 /**
