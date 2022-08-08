@@ -35,7 +35,7 @@ router.use(
   '/setup',
   NODE_ENV === 'development'
     ? [checkSecretPass]
-    : [globalRateLimiter, checkSecretPass, checkSetupNotComplete],
+    : [checkSecretPass, checkSetupNotComplete],
   setup,
 );
 
