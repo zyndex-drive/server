@@ -1,5 +1,6 @@
 import { ServiceAccs } from '@models';
 import {
+  viewDatafromDatabase,
   addDatatoDatabase,
   editDatainDatabase,
   deleteDatafromDatabase,
@@ -9,6 +10,7 @@ import { serviceAccounts as serviceAccPolicies } from '@plugins/templates/polici
 import type {
   IServiceAcc,
   IServiceAccDoc,
+  IServiceAccLeanDoc,
   IServiceAccModel,
   IUserDoc,
 } from '@models/types';
@@ -17,6 +19,26 @@ import type {
   IEditDatabaseResult,
   IDeleteDatabaseResult,
 } from '@plugins/auth/helpers/types';
+import type { FilterQuery } from 'mongoose';
+
+/**
+ * View Service Accounts from the Database
+ *
+ * @param {IUserDoc} admin - Admin User to Perform the Action
+ * @param {FilterQuery<IServiceAccDoc>} filter - Filter Object for Service Accounts Model
+ * @returns {Promise<IServiceAccDoc[] | IServiceAccLeanDoc[]>} - Documents for the Filter Provided
+ */
+function view(
+  admin: IUserDoc,
+  filter?: FilterQuery<IServiceAccDoc>,
+): Promise<IServiceAccDoc[] | IServiceAccLeanDoc[]> {
+  const policies = [serviceAccPolicies.view];
+  return viewDatafromDatabase<
+    IServiceAccDoc,
+    IServiceAccLeanDoc,
+    IServiceAccModel
+  >(ServiceAccs, admin, false, policies, filter);
+}
 
 /**
  * Add ServiceAccs in the Database
@@ -42,13 +64,13 @@ function add(
  * Edit ServiceAccs in the Database
  *
  * @param {IUserDoc} admin - Admin User to Perform the Action
- * @param {IServiceAccDoc} data - Data to be Modified
+ * @param {IServiceAccDoc | IServiceAccLeanDoc} data - Data to be Modified
  * @param {Partial<IServiceAccDoc>} modifiedData - Modified Object
  * @returns {Promise<IEditDatabaseResult>} - IEditDatabaseResult
  */
 function edit(
   admin: IUserDoc,
-  data: IServiceAccDoc,
+  data: IServiceAccDoc | IServiceAccLeanDoc,
   modifiedData: Partial<IServiceAccDoc>,
 ): Promise<IEditDatabaseResult> {
   const policies = [serviceAccPolicies.edit];
@@ -65,12 +87,12 @@ function edit(
  * Delete ServiceAccs from the Database
  *
  * @param {IUserDoc} admin - Admin User to Perform the Action
- * @param {IServiceAccDoc} data - Data to be Deleted
+ * @param {IServiceAccDoc | IServiceAccLeanDoc} data - Data to be Deleted
  * @returns {Promise<IDeleteDatabaseResult>} - IDeleteDatabaseResult
  */
 function remove(
   admin: IUserDoc,
-  data: IServiceAccDoc,
+  data: IServiceAccDoc | IServiceAccLeanDoc,
 ): Promise<IDeleteDatabaseResult> {
   const policies = [serviceAccPolicies.remove];
   return deleteDatafromDatabase<IServiceAccDoc, IServiceAccModel>(
@@ -82,6 +104,7 @@ function remove(
 }
 
 export default {
+  view,
   add,
   edit,
   remove,

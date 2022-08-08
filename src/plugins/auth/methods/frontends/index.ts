@@ -1,5 +1,6 @@
 import { Frontends } from '@models';
 import {
+  viewDatafromDatabase,
   addDatatoDatabase,
   editDatainDatabase,
   deleteDatafromDatabase,
@@ -9,6 +10,7 @@ import { frontends as frontendsPolicies } from '@plugins/templates/policies';
 import type {
   IFrontend,
   IFrontendDoc,
+  IFrontendLeanDoc,
   IFrontendModel,
   IUserDoc,
 } from '@models/types';
@@ -17,6 +19,28 @@ import type {
   IEditDatabaseResult,
   IDeleteDatabaseResult,
 } from '@plugins/auth/helpers/types';
+import type { FilterQuery } from 'mongoose';
+
+/**
+ * View Frontend Docs from the Database
+ *
+ * @param {IUserDoc} admin - Admin User to Perform the Action
+ * @param {FilterQuery<IFrontendDoc>} filter - Filter Object for Frontend Model
+ * @returns {Promise<IFrontendDoc[] | IFrontendLeanDoc[]>} - Documents for the Filter Provided
+ */
+function view(
+  admin: IUserDoc,
+  filter?: FilterQuery<IFrontendDoc>,
+): Promise<IFrontendDoc[] | IFrontendLeanDoc[]> {
+  const policies = [frontendsPolicies.view];
+  return viewDatafromDatabase<IFrontendDoc, IFrontendLeanDoc, IFrontendModel>(
+    Frontends,
+    admin,
+    true,
+    policies,
+    filter,
+  );
+}
 
 /**
  * Add Frontends in the Database
@@ -42,13 +66,13 @@ function add(
  * Edit Frontends in the Database
  *
  * @param {IUserDoc} admin - Admin User to Perform the Action
- * @param {IFrontendDoc} data - Data to be Modified
+ * @param {IFrontendDoc | IFrontendLeanDoc} data - Data to be Modified
  * @param {Partial<IFrontendDoc>} modifiedData - Modified Object
  * @returns {Promise<IEditDatabaseResult>} - IEditDatabaseResult
  */
 function edit(
   admin: IUserDoc,
-  data: IFrontendDoc,
+  data: IFrontendDoc | IFrontendLeanDoc,
   modifiedData: Partial<IFrontendDoc>,
 ): Promise<IEditDatabaseResult> {
   const policies = [frontendsPolicies.edit];
@@ -65,12 +89,12 @@ function edit(
  * Delete Frontends from the Database
  *
  * @param {IUserDoc} admin - Admin User to Perform the Action
- * @param {IFrontendDoc} data - Data to be Deleted
+ * @param {IFrontendDoc | IFrontendLeanDoc} data - Data to be Deleted
  * @returns {Promise<IDeleteDatabaseResult>} - IDeleteDatabaseResult
  */
 function remove(
   admin: IUserDoc,
-  data: IFrontendDoc,
+  data: IFrontendDoc | IFrontendLeanDoc,
 ): Promise<IDeleteDatabaseResult> {
   const policies = [frontendsPolicies.remove];
   return deleteDatafromDatabase<IFrontendDoc, IFrontendModel>(
@@ -82,6 +106,7 @@ function remove(
 }
 
 export default {
+  view,
   add,
   edit,
   remove,

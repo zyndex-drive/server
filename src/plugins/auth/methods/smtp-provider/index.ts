@@ -1,5 +1,6 @@
 import { SMTPProviders } from '@models';
 import {
+  viewDatafromDatabase,
   addDatatoDatabase,
   editDatainDatabase,
   deleteDatafromDatabase,
@@ -9,6 +10,7 @@ import { smtpProviders as smtpProvidersPolicies } from '@plugins/templates/polic
 import type {
   ISMTPProvider,
   ISMTPProviderDoc,
+  ISMTPProviderLeanDoc,
   ISMTPProviderModel,
   IUserDoc,
 } from '@models/types';
@@ -17,6 +19,26 @@ import type {
   IEditDatabaseResult,
   IDeleteDatabaseResult,
 } from '@plugins/auth/helpers/types';
+import type { FilterQuery } from 'mongoose';
+
+/**
+ * View SMTP Providers from the Database
+ *
+ * @param {IUserDoc} admin - Admin User to Perform the Action
+ * @param {FilterQuery<ISMTPProviderDoc>} filter - Filter Object for SMTP Providers Model
+ * @returns {Promise<ISMTPProviderDoc[] | ISMTPProviderLeanDoc[]>} - Documents for the Filter Provided
+ */
+function view(
+  admin: IUserDoc,
+  filter?: FilterQuery<ISMTPProviderDoc>,
+): Promise<ISMTPProviderDoc[] | ISMTPProviderLeanDoc[]> {
+  const policies = [smtpProvidersPolicies.view];
+  return viewDatafromDatabase<
+    ISMTPProviderDoc,
+    ISMTPProviderLeanDoc,
+    ISMTPProviderModel
+  >(SMTPProviders, admin, false, policies, filter);
+}
 
 /**
  * Add SMTPProviders in the Database
@@ -42,13 +64,13 @@ function add(
  * Edit SMTPProviders in the Database
  *
  * @param {IUserDoc} admin - Admin User to Perform the Action
- * @param {ISMTPProviderDoc} data - Data to be Modified
+ * @param {ISMTPProviderDoc | ISMTPProviderLeanDoc} data - Data to be Modified
  * @param {Partial<ISMTPProviderDoc>} modifiedData - Modified Object
  * @returns {Promise<IEditDatabaseResult>} - IEditDatabaseResult
  */
 function edit(
   admin: IUserDoc,
-  data: ISMTPProviderDoc,
+  data: ISMTPProviderDoc | ISMTPProviderLeanDoc,
   modifiedData: Partial<ISMTPProviderDoc>,
 ): Promise<IEditDatabaseResult> {
   const policies = [smtpProvidersPolicies.edit];
@@ -65,12 +87,12 @@ function edit(
  * Delete SMTPProviders from the Database
  *
  * @param {IUserDoc} admin - Admin User to Perform the Action
- * @param {ISMTPProviderDoc} data - Data to be Deleted
+ * @param {ISMTPProviderDoc | ISMTPProviderLeanDoc} data - Data to be Deleted
  * @returns {Promise<IDeleteDatabaseResult>} - IDeleteDatabaseResult
  */
 function remove(
   admin: IUserDoc,
-  data: ISMTPProviderDoc,
+  data: ISMTPProviderDoc | ISMTPProviderLeanDoc,
 ): Promise<IDeleteDatabaseResult> {
   const policies = [smtpProvidersPolicies.remove];
   return deleteDatafromDatabase<ISMTPProviderDoc, ISMTPProviderModel>(
@@ -82,6 +104,7 @@ function remove(
 }
 
 export default {
+  view,
   add,
   edit,
   remove,
