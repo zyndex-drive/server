@@ -1,12 +1,47 @@
 import { checkPolicy } from '@plugins/auth/helpers';
 
 import type { TGenericModelSchema, IPolicy, IUserDoc } from '@models/types';
-import type { Model, Document, UpdateQuery } from 'mongoose';
+import type {
+  Model,
+  Document,
+  LeanDocument,
+  UpdateQuery,
+  FilterQuery,
+} from 'mongoose';
 import type {
   IAddDatabaseResult,
   IEditDatabaseResult,
   IDeleteDatabaseResult,
 } from './types';
+
+/**
+ * View Data from Database of the Particular Model after Verifing Policies
+ *
+ * @param {Model} model - Model in the Database
+ * @param {IUserDoc} admin - Admin user Document from Database
+ * @param {boolean} lean - Whether the Query should run in lean mode
+ * @param {Readonly<IPolicy>[]} policies - Array of Policies Applicable for the Function
+ * @param {Object} filter - Query Filter
+ * @returns {Promise<Document>} - Returns EditDatabaseType
+ */
+export async function viewDatafromDatabase<
+  T extends Document,
+  U extends LeanDocument<T>,
+  V extends Model<T>,
+>(
+  model: V,
+  admin: IUserDoc,
+  lean: boolean,
+  policies: Readonly<IPolicy>[],
+  filter?: FilterQuery<T>,
+): Promise<T[] | U[]> {
+  await checkPolicy(policies, admin);
+  const docs = (await model
+    .find(filter ? filter : {})
+    .lean(lean)
+    .exec()) as T[] | U[];
+  return docs;
+}
 
 /**
  * Add Data into Database of the Particular Model after Verification
