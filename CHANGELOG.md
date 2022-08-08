@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-63](https://github.com/zyndex-drive/server/compare/v0.2.0-62...v0.2.0-63) (2022-08-08)
+
+
+### Bug Fixes 🛠
+
+* **plugin/auth:** fix auth model methods improperly checking for result ([a83f2c0](https://github.com/zyndex-drive/server/commit/a83f2c0dad360969d0e94d701af9acd0a6cb23e8))
+* **plugins/misc:** fix otp string length and characters ([0aebd78](https://github.com/zyndex-drive/server/commit/0aebd788a7b585897a87b5a6aa6fb63871060c04))
+* **workflows:** update codacy workflow to new version ([4562efa](https://github.com/zyndex-drive/server/commit/4562efa6a3c736118402d7dd0a63928cb9faa732))
+
+
+### Code Refactoring 🖌
+
+* **plugins/auth/user:** refactor user methods to use async await instead of promise ([b6442e1](https://github.com/zyndex-drive/server/commit/b6442e159cf78df02a37469b2b57e5aa4f7d6974))
+* **plugins/server/generators:** fix database handler to use a single type for helper function ([89e9256](https://github.com/zyndex-drive/server/commit/89e9256d96f57781b93025f624ccfd5ecaeeff0a))
+* **routes/auth:** remove the redundant routes using same functions ([1e3c20c](https://github.com/zyndex-drive/server/commit/1e3c20c50fe209ad934ddf62558a764daac7538a))
+
+
+### Features 🔥
+
+* **plugins/auth:** add a auth method for viewing documents from the database ([762dbba](https://github.com/zyndex-drive/server/commit/762dbba1648310bf178bf14e65a259a1730aec33))
+* **plugins/auth:** update policy checker with multiple options for getting detailed results ([fa2caff](https://github.com/zyndex-drive/server/commit/fa2caff3a44d2af53e1a79253e55467216a2df8f))
+* **plugins/auth:** write all the auth methods for all the models ([d536980](https://github.com/zyndex-drive/server/commit/d536980c73058c57d25293787e7028141c8be3b8))
+* **plugins/server/generators:** update the dbhandler class to include a router and host it ([2692f0c](https://github.com/zyndex-drive/server/commit/2692f0cf5ff7d8e76362da05296fbcf52e13f606))
+* **plugins/server/generators:** write a view database handler function ([9231b75](https://github.com/zyndex-drive/server/commit/9231b7560aec99c792b7a4e810a4ceade06aa915))
+* **plugins/templates:** add policies for all models for viewing the documents ([2193361](https://github.com/zyndex-drive/server/commit/2193361dfa95cf89fd054cd22472d21e89ac1670))
+* **plugins/templates:** update the policy maps for roles to include view policies ([8d55b8f](https://github.com/zyndex-drive/server/commit/8d55b8f8c0e3dcc640b1351f74474051d2a3555c))
+* **routes/auth:** automate route handling for all models using dbhandler class ([e87a7ba](https://github.com/zyndex-drive/server/commit/e87a7ba531122229e62f9b77c6f676a0b60629d6))
+
+
+### Tests 🧪
+
+* **rest:** add missing test cases ([7e4af37](https://github.com/zyndex-drive/server/commit/7e4af37a83e32643bda7148d001310cf1d6076c1))
+
 ## [0.2.0-62](https://github.com/zyndex-drive/server/compare/v0.2.0-61...v0.2.0-62) (2022-08-04)
 
 
