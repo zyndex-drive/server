@@ -5,13 +5,9 @@ import { errorResponseHandler, okResponse } from '@plugins/server/responses';
 import type { Request, Response } from 'express';
 import type { Document, LeanDocument } from 'mongoose';
 import type { IBaseModel, IUserDoc, TGenericModelSchema } from '@models/types';
+import type { IDatabaseHelpers } from '@plugins/server/generators/database-handler/types';
 import type { IDeleteDatabaseResult } from '@plugins/auth/helpers/types';
 import type { IDeleteDatabaseResponse } from '@plugins/server/types';
-
-export interface IDeleteDatabaseHelpers {
-  bodyProp: string;
-  modelName: string;
-}
 
 /**
  * Common Express Handler for all models to Delete Documents from Database of that model which follows the auth workflow
@@ -20,7 +16,7 @@ export interface IDeleteDatabaseHelpers {
  * @param {Response} res - Express Response Object
  * @param {IBaseModel} model - Mongoose Model Object
  * @param {boolean} lean - Whether the Model should execuete the query in lean mode
- * @param {IDeleteDatabaseHelpers} helpers - Helpers for the function
+ * @param {IDatabaseHelpers} helpers - Helpers for the function
  * @param {Function} authFunc - Auth Delete function for that model from auth plugin
  */
 export async function remove<
@@ -32,7 +28,7 @@ export async function remove<
   res: Response,
   model: IBaseModel<U>,
   lean: boolean,
-  helpers: IDeleteDatabaseHelpers,
+  helpers: IDatabaseHelpers,
   authFunc: (admin: IUserDoc, data: U | V) => Promise<IDeleteDatabaseResult>,
 ): Promise<void> {
   try {
