@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-64](https://github.com/zyndex-drive/server/compare/v0.2.0-63...v0.2.0-64) (2022-08-13)
+
+
+### CI 🛠
+
+* remove github codacy workflow ([449570b](https://github.com/zyndex-drive/server/commit/449570b53637bc8a530bff5fa6752b5614159b48))
+
+
+### Code Refactoring 🖌
+
+* **plugins/auth:** completely refactor auth methods for all models reducing duplicated code ([d554a03](https://github.com/zyndex-drive/server/commit/d554a03af15469b6a2fad36f953d21fbe514bc6b))
+* **plugins/auth:** refactor model-methods completely to a class to reduce duplication ([5d3b082](https://github.com/zyndex-drive/server/commit/5d3b082f2fedadecde9cf13469030d24c9e3c598))
+
 ## [0.2.0-63](https://github.com/zyndex-drive/server/compare/v0.2.0-62...v0.2.0-63) (2022-08-08)
 
 
