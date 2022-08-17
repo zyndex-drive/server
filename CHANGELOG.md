@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-65](https://github.com/zyndex-drive/server/compare/v0.2.0-64...v0.2.0-65) (2022-08-17)
+
+
+### Features 🔥
+
+* **plugins/auth:** reduce more code in auth plugin model methods to reduce duplication ([be45fe9](https://github.com/zyndex-drive/server/commit/be45fe9debace9da4b195595ea3a30c16a697440))
+
+
+### Code Refactoring 🖌
+
+* **plugins/auth/auth:** remove exports which are not required ([8b69507](https://github.com/zyndex-drive/server/commit/8b69507a9508ecc0960916b56829996f7c8cccc8))
+* **plugins/auth/methods:** completely refactor all the models except user to a single file ([94695c2](https://github.com/zyndex-drive/server/commit/94695c2d3db18c4104022a3b555e85927d2c42ac))
+* **plugins/server:** refactor all generator classes to include private or public methods ([6620291](https://github.com/zyndex-drive/server/commit/6620291c755b4d2f00f11c2a13e5c83998baaca6))
+
 ## [0.2.0-64](https://github.com/zyndex-drive/server/compare/v0.2.0-63...v0.2.0-64) (2022-08-13)
 
 
