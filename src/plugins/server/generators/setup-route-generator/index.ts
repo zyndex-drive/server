@@ -13,8 +13,8 @@ import type { IRouter } from 'express';
  * Default Express Routes Generator Inside Setup Route
  */
 export class SetupGenerator<T extends Document> {
-  router: IRouter;
-  model: IBaseModel<T>;
+  private router: IRouter;
+  private model: IBaseModel<T>;
 
   /**
    * Default Express Routes Generator Inside Setup Route
@@ -30,7 +30,7 @@ export class SetupGenerator<T extends Document> {
    *
    * @returns {IRouter} - Express Router Object
    */
-  serve(): IRouter {
+  public serve(): IRouter {
     this.router.post('/get', (async (req, res) => {
       try {
         const leanHeader = req.headers['x-lean-doc-request'];

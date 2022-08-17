@@ -37,11 +37,11 @@ export class ExpressDatabaseHandler<
   U extends Document,
   V extends LeanDocument<U>,
 > {
-  model: IBaseModel<U>;
-  lean: boolean;
-  router: IRouter;
-  authFuncs: IModelAuthFuncs<T, U, V>;
-  databaseHelpers: Omit<IDatabaseHelpers, 'bodyProp'>;
+  private model: IBaseModel<U>;
+  private lean: boolean;
+  private router: IRouter;
+  private authFuncs: IModelAuthFuncs<T, U, V>;
+  private databaseHelpers: Omit<IDatabaseHelpers, 'bodyProp'>;
 
   /**
    * Express Handlers for Performing Database Functions
@@ -70,7 +70,7 @@ export class ExpressDatabaseHandler<
    * @param {Request} req - Express Request Object
    * @param {Response} res - Express Response Object
    */
-  async view(req: Request, res: Response): Promise<void> {
+  public async view(req: Request, res: Response): Promise<void> {
     if (this.authFuncs.view) {
       await view<U, V>(req, res, this.authFuncs.view);
     } else {
@@ -90,7 +90,7 @@ export class ExpressDatabaseHandler<
    * @param {Request} req - Express Request Object
    * @param {Response} res - Express Response Object
    */
-  async add(req: Request, res: Response): Promise<void> {
+  public async add(req: Request, res: Response): Promise<void> {
     if (this.authFuncs.add) {
       await add(
         req,
@@ -118,7 +118,7 @@ export class ExpressDatabaseHandler<
    * @param {Request} req - Express Request Object
    * @param {Response} res - Express Response Object
    */
-  async edit(req: Request, res: Response): Promise<void> {
+  public async edit(req: Request, res: Response): Promise<void> {
     if (this.authFuncs.edit) {
       await edit<T, U, V>(
         req,
@@ -148,7 +148,7 @@ export class ExpressDatabaseHandler<
    * @param {Request} req - Express Request Object
    * @param {Response} res - Express Response Object
    */
-  async delete(req: Request, res: Response): Promise<void> {
+  public async delete(req: Request, res: Response): Promise<void> {
     if (this.authFuncs.remove) {
       await remove<T, U, V>(
         req,
@@ -177,7 +177,7 @@ export class ExpressDatabaseHandler<
    *
    * @returns {IRouter} Router Object Containing all the Routes
    */
-  hostAllRoutes(): IRouter {
+  public hostAllRoutes(): IRouter {
     if (this.authFuncs.view) {
       this.router.post(
         '/get',

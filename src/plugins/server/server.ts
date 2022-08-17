@@ -32,9 +32,9 @@ import type { Express } from 'express';
  * @class ZyndexServer
  */
 export class ZyndexServer {
-  app: Express;
-  server: http.Server;
-  port: string | number;
+  public app: Express;
+  public server: http.Server;
+  private port: string | number;
 
   /**
    * Initializes and Starts the Zyndex Server
@@ -54,7 +54,7 @@ export class ZyndexServer {
   /**
    * Initialize Server Middlewares
    */
-  initializeMiddlewares(): void {
+  private initializeMiddlewares(): void {
     this.app.use(bodyparser.json());
     this.app.use(bodyparser.urlencoded({ extended: true }));
     this.app.use(helmet());
@@ -71,7 +71,7 @@ export class ZyndexServer {
   /**
    * Serve Static Views Folder
    */
-  serveStaticFiles(): void {
+  private serveStaticFiles(): void {
     this.app.use(
       express.static(
         process.env.NODE_ENV === 'production'
@@ -84,7 +84,7 @@ export class ZyndexServer {
   /**
    * Assign the Server's Default Router
    */
-  assignRouter(): void {
+  private assignRouter(): void {
     this.app.use('/', router);
   }
 
@@ -94,21 +94,21 @@ export class ZyndexServer {
    * @param {Express} app - Express App Object
    * @returns {http.Server} server - Http Server
    */
-  createHttpServer(app: Express): http.Server {
+  private createHttpServer(app: Express): http.Server {
     return http.createServer(app);
   }
 
   /**
    * Start the Health Checker Service
    */
-  startHealthChecker(): void {
+  private startHealthChecker(): void {
     new ExpressHealthChecker(this.server).start();
   }
 
   /**
    * Start the Zyndex Server
    */
-  start(): void {
+  public start(): void {
     try {
       this.server.listen(this.port, () => {
         console.log(`Environment: ${os.type()}`);

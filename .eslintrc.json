@@ -50,6 +50,8 @@
     "node/no-missing-import": "off",
     "object-curly-spacing": "off",
     "semi": "off",
+    "no-dupe-class-members": "off",
+    "@typescript-eslint/no-dupe-class-members": ["error"],
     "no-redeclare": "off",
     "@typescript-eslint/no-redeclare": ["error"],
     "node/no-unsupported-features/node-builtins": "off",
