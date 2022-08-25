@@ -21,7 +21,7 @@ const otpGenerate = customAlphabet(OTPALPHS, OTP_LENGTH);
  * @param {string} prefix - Prefix to be Added before the UID
  * @returns {string} uid - Long UID
  */
-function longID(prefix?: string): string {
+export function generateUID(prefix?: string): string {
   const prefixCheck = prefix ? (prefix.length > 1 ? false : true) : true;
   if (prefixCheck) {
     try {
@@ -37,8 +37,6 @@ function longID(prefix?: string): string {
   }
 }
 
-export default longID;
-
 /**
  * Generates a Mongo Reference ID
  *
@@ -46,7 +44,7 @@ export default longID;
  */
 export function objectID(): Types.ObjectId {
   try {
-    const id = Types.ObjectId(longID('s'));
+    const id = Types.ObjectId(generateUID('s'));
     return id;
   } catch (e) {
     throw new Error(String(e));

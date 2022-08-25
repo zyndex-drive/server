@@ -4,7 +4,7 @@
  * @param {Array} props - Array of Variables to Check for Undefined
  * @returns {boolean} - returns true if all the Variables are properly Defined
  */
-export default function (props: unknown[]): boolean {
+export function isUndefined(props: unknown[]): boolean {
   const resultArr: boolean[] = [];
   props.forEach((prop) => {
     if (prop) {
