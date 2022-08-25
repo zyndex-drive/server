@@ -49,13 +49,49 @@ interface IAuthFuncResult<
   U extends Document,
   V extends LeanDocument<U>,
 > {
+  /**
+   * View Data from Database of the Particular Model after Verifing Policies
+   *
+   * @async
+   * @param {IUserDoc} admin - Admin user Document from Database
+   * @param {Object} filter - Query Filter
+   * @returns {Promise<Document>} - Returns EditDatabaseType
+   */
   view: (admin: IUserDoc, filter?: FilterQuery<U>) => Promise<U[] | V[]>;
+
+  /**
+   * Add Data into Database of the Particular Model after Verification
+   *
+   * @async
+   * @param {IUserDoc} admin - Admin user Document from Database
+   * @param {Object} data - Data to be Added to Database
+   * @returns {Promise<Document>} - Saved Document
+   */
   add?: (admin: IUserDoc, data: T) => Promise<IAddDatabaseResult<T, U>>;
+
+  /**
+   * Edit Data in Database of the Particular Model after Verification
+   *
+   * @async
+   * @param {IUserDoc} admin - Admin user Document from Database
+   * @param {Document | LeanDocument} data - Data Document from the Database
+   * @param {Object} modifiedData - Modified Data
+   * @returns {Promise<IEditDatabaseResult>} - Returns EditDatabaseType
+   */
   edit: (
     admin: IUserDoc,
     data: U | V,
     modifiedData: UpdateQuery<U>,
   ) => Promise<IEditDatabaseResult>;
+
+  /**
+   * Delete Data from Database of the Particular Model after Verification
+   *
+   * @async
+   * @param {IUserDoc} admin - Admin user Document from Database
+   * @param {Document | LeanDocument} data - id of the Docuemnt to Delete
+   * @returns {Promise<IDeleteDatabaseResult>} - Returns DeleteDatabaseType
+   */
   remove?: (admin: IUserDoc, data: U | V) => Promise<IDeleteDatabaseResult>;
 }
 
