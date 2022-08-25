@@ -1,5 +1,6 @@
 import db from '@plugins/db';
 import { createTerminus, TerminusOptions } from '@godaddy/terminus';
+import { logger } from '@plugins';
 
 // Types
 import type { Server } from 'http';
@@ -25,7 +26,7 @@ export class ExpressHealthChecker {
    * @returns {[Promise<void>]} Promise - Closes the Database Connection
    */
   private onSignal(): Promise<void> {
-    console.log('server is starting cleanup');
+    logger.info('server is starting cleanup');
     return db.close();
   }
 
@@ -36,7 +37,7 @@ export class ExpressHealthChecker {
    */
   private onShutdown(): Promise<void> {
     return new Promise<void>((resolve) => {
-      console.log('cleanup finished, server is shutting down');
+      logger.info('cleanup finished, server is shutting down');
       resolve();
     });
   }
