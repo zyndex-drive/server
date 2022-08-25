@@ -8,3 +8,4 @@ export { default as mailTransporter } from './mail-transporter';
 export { default as otpManager } from './otp-manager';
 export { default as sessionManager } from './session-manager';
 export * from './server';
+export * from './logger';
