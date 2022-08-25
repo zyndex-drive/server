@@ -2,6 +2,8 @@
 import http from 'http';
 import path from 'path';
 import express from 'express';
+import fs from 'fs';
+import { DateTime } from 'luxon';
 
 // Exress Middlewares
 import bodyparser from 'body-parser';
@@ -10,6 +12,7 @@ import mongoSanitize from 'express-mongo-sanitize';
 import requestIp from 'request-ip';
 import xssProtect from 'x-xss-protection';
 import morgan from 'morgan';
+import { logger } from '@plugins';
 import { dbChecker, cors } from '@plugins/server/middlewares';
 
 // Import Database
@@ -32,9 +35,9 @@ import type { Express } from 'express';
  * @class ZyndexServer
  */
 export class ZyndexServer {
-  app: Express;
-  server: http.Server;
-  port: string | number;
+  public app: Express;
+  public server: http.Server;
+  private port: string | number;
 
   /**
    * Initializes and Starts the Zyndex Server
@@ -52,9 +55,35 @@ export class ZyndexServer {
   }
 
   /**
+   *
+   */
+  private prepareLoggerMiddleware(): void {
+    morgan.token('date', () => {
+      const dateTime = DateTime.now();
+      return DateTime.local(
+        dateTime.year,
+        dateTime.month,
+        dateTime.day,
+        dateTime.hour,
+        dateTime.minute,
+        dateTime.second,
+        dateTime.millisecond,
+      ).toFormat('yyyy-MM-dd HH:mm:ss');
+    });
+    morgan.token(
+      'appMode',
+      () => `zyndex-server:${String(process.env.NODE_ENV)}`,
+    );
+    morgan.format(
+      'zyndexLog',
+      ':date [:appMode]:[REQUEST LOG] :method :url :status - :response-time ms',
+    );
+  }
+
+  /**
    * Initialize Server Middlewares
    */
-  initializeMiddlewares(): void {
+  private initializeMiddlewares(): void {
     this.app.use(bodyparser.json());
     this.app.use(bodyparser.urlencoded({ extended: true }));
     this.app.use(helmet());
@@ -63,15 +92,24 @@ export class ZyndexServer {
     this.app.set('trust proxy', true);
     this.app.use(requestIp.mw());
     this.app.use([dbChecker, cors]);
+    this.prepareLoggerMiddleware();
+    this.app.use(morgan('zyndexLog'));
     this.app.use(
-      process.env.NODE_ENV === 'production' ? morgan('tiny') : morgan('dev'),
+      morgan('zyndexLog', {
+        stream: fs.createWriteStream(
+          process.env.NODE_ENV === 'production'
+            ? path.resolve(__dirname, 'logs', 'requests.log')
+            : path.resolve(__dirname, '../../../logs/requests.log'),
+          { flags: 'a' },
+        ),
+      }),
     );
   }
 
   /**
    * Serve Static Views Folder
    */
-  serveStaticFiles(): void {
+  private serveStaticFiles(): void {
     this.app.use(
       express.static(
         process.env.NODE_ENV === 'production'
@@ -84,7 +122,7 @@ export class ZyndexServer {
   /**
    * Assign the Server's Default Router
    */
-  assignRouter(): void {
+  private assignRouter(): void {
     this.app.use('/', router);
   }
 
@@ -94,48 +132,49 @@ export class ZyndexServer {
    * @param {Express} app - Express App Object
    * @returns {http.Server} server - Http Server
    */
-  createHttpServer(app: Express): http.Server {
+  private createHttpServer(app: Express): http.Server {
     return http.createServer(app);
   }
 
   /**
    * Start the Health Checker Service
    */
-  startHealthChecker(): void {
+  private startHealthChecker(): void {
     new ExpressHealthChecker(this.server).start();
   }
 
   /**
    * Start the Zyndex Server
    */
-  start(): void {
+  public start(): void {
     try {
       this.server.listen(this.port, () => {
-        console.log(`Environment: ${os.type()}`);
-        console.log(`Server Started on Port: ${this.port}`);
-        console.log('Connecting to Database.....');
+        logger.info(`Environment: ${os.type()}`);
+        logger.info(`Server Started on Port: ${this.port}`);
+        logger.info('Connecting to Database.....');
 
         // Connect to Database
         db.connect()
           .then(() => {
-            console.log('Database Connected...OK..');
+            logger.info('Database Connected...OK..');
           })
-          .then(() => console.log('Initializing Oauth Clients'))
+          .then(() => logger.info('Initializing Oauth Clients'))
           .then(() => initializePassport())
+          .then(() => logger.info('Initialized all Available Oauth Clients'))
           .catch((err: string) => {
-            console.log(err);
+            logger.error(err);
             this.server.close();
           });
       });
       this.server.once('error', (err) => {
-        console.log(
+        logger.error(
           'There was an error starting the server in the error listener:',
           err,
         );
         this.server.close();
       });
     } catch (e) {
-      console.log('There was an error starting the server:', e);
+      logger.error('There was an error starting the server:', e);
       this.server.close();
     }
   }

@@ -4,8 +4,8 @@ import type { Response, IRouter } from 'express';
 
 /** Identify Endpoints in the Route and Creates a Response */
 export class EndpointGenerator {
-  response: Response;
-  router: IRouter;
+  private response: Response;
+  private router: IRouter;
 
   /**
    * Creates a Route Containing all the Endpoints in the Server
@@ -21,7 +21,7 @@ export class EndpointGenerator {
   /**
    * Serve the Endpoints
    */
-  serve(): void {
+  public serve(): void {
     try {
       okResponse(this.response, getRoutes(this.router));
     } catch (e) {

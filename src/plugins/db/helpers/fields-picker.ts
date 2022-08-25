@@ -9,7 +9,7 @@ import type { Document, Model, Schema, SchemaType } from 'mongoose';
  * @param {string} criteria - Custom Option in the Schema to Check
  * @returns {string[]} - Array of path names passing the criteria
  */
-export default function <T, U extends Document, V extends Model<U>>(
+export function fieldsPicker<T, U extends Document, V extends Model<U>>(
   schema: Schema<U, V, T>,
   criteria: string,
 ): string[] {

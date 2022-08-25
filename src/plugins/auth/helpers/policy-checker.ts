@@ -103,7 +103,7 @@ interface IGetDeeperRoleHelpers {
   userPolicies: ID<IPolicyDoc>[];
 }
 
-export const getDeeperRoles = async (
+const getDeeperRoles = async (
   adminRole: string,
   otherPolicies?: ID<IPolicyDoc>[],
 ): Promise<IDeeperRoles> => {

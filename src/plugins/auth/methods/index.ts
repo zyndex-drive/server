@@ -1,11 +1,2 @@
+export * from './others';
 export { default as users } from './user';
-export { default as credentials } from './credentials';
-export { default as frontends } from './frontends';
-export { default as globalSettings } from './global-settings';
-export { default as policies } from './policy';
-export { default as roles } from './roles';
-export { default as scopes } from './scopes';
-export { default as serviceAccs } from './service-accounts';
-export { default as smtpMailer } from './smtp-mailer';
-export { default as smtpProvider } from './smtp-provider';
-export { default as templates } from './templates';

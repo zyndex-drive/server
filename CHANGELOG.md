@@ -2,6 +2,59 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-66](https://github.com/zyndex-drive/server/compare/v0.2.0-65...v0.2.0-66) (2022-08-25)
+
+
+### Docs 📃
+
+* **plugins/auth/helpers:** add jsdoc comments for model-methods in auth plugin ([5dd8c9d](https://github.com/zyndex-drive/server/commit/5dd8c9da779de6c54f5063aad34b9f52a3ecdc1d))
+
+
+### Code Refactoring 🖌
+
+* **plugins/db:** properly give spacing, arrange the folder properly ([2f880f3](https://github.com/zyndex-drive/server/commit/2f880f397143845db0ce4239ce221627472b42ce))
+* **plugins/misc:** make exports consistent across files ([33fd62d](https://github.com/zyndex-drive/server/commit/33fd62df44d54ff3e4514d989af6624f59c5439d))
+
+
+### Build System 🏗
+
+* **package:** add cross-env package and update commands ([920ec0c](https://github.com/zyndex-drive/server/commit/920ec0cd45b6e8a0192e13d8c665ec492182ba49))
+* **packages:** add winston and luxon for logger functionality ([0adcd7e](https://github.com/zyndex-drive/server/commit/0adcd7e2c6068c032dd0167ad814bb68ff2284df))
+
+
+### Features 🔥
+
+* **plugins/axios:** add request start and end time to axios interceptor ([9da847e](https://github.com/zyndex-drive/server/commit/9da847e2337e7621eec7bcbb493e16469f9c3f3f))
+* **plugins/logger:** write a logger function using winston and log it to a file ([a2e72fb](https://github.com/zyndex-drive/server/commit/a2e72fb3c5442a1a32f27a33bcd186e58b57cae3))
+* **plugins:** use the new logger function instead of console.log ([109d0e2](https://github.com/zyndex-drive/server/commit/109d0e2014b92ffe2bd9fafe765a2190e57a6478))
+
+## [0.2.0-65](https://github.com/zyndex-drive/server/compare/v0.2.0-64...v0.2.0-65) (2022-08-17)
+
+
+### Features 🔥
+
+* **plugins/auth:** reduce more code in auth plugin model methods to reduce duplication ([be45fe9](https://github.com/zyndex-drive/server/commit/be45fe9debace9da4b195595ea3a30c16a697440))
+
+
+### Code Refactoring 🖌
+
+* **plugins/auth/auth:** remove exports which are not required ([8b69507](https://github.com/zyndex-drive/server/commit/8b69507a9508ecc0960916b56829996f7c8cccc8))
+* **plugins/auth/methods:** completely refactor all the models except user to a single file ([94695c2](https://github.com/zyndex-drive/server/commit/94695c2d3db18c4104022a3b555e85927d2c42ac))
+* **plugins/server:** refactor all generator classes to include private or public methods ([6620291](https://github.com/zyndex-drive/server/commit/6620291c755b4d2f00f11c2a13e5c83998baaca6))
+
+## [0.2.0-64](https://github.com/zyndex-drive/server/compare/v0.2.0-63...v0.2.0-64) (2022-08-13)
+
+
+### CI 🛠
+
+* remove github codacy workflow ([449570b](https://github.com/zyndex-drive/server/commit/449570b53637bc8a530bff5fa6752b5614159b48))
+
+
+### Code Refactoring 🖌
+
+* **plugins/auth:** completely refactor auth methods for all models reducing duplicated code ([d554a03](https://github.com/zyndex-drive/server/commit/d554a03af15469b6a2fad36f953d21fbe514bc6b))
+* **plugins/auth:** refactor model-methods completely to a class to reduce duplication ([5d3b082](https://github.com/zyndex-drive/server/commit/5d3b082f2fedadecde9cf13469030d24c9e3c598))
+
 ## [0.2.0-63](https://github.com/zyndex-drive/server/compare/v0.2.0-62...v0.2.0-63) (2022-08-08)
 
 

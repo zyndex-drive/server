@@ -10,7 +10,7 @@
       },
       "problemMatcher": [],
       "label": "Build TS Files",
-      "detail": "set NODE_ENV=production && tsc && tsc-alias"
+      "detail": "cross-env NODE_ENV=production tsc && tsc-alias"
     },
     {
       "type": "npm",
@@ -21,21 +21,21 @@
       },
       "problemMatcher": [],
       "label": "Run Comprehensive Tests",
-      "detail": "set NODE_ENV=test && ts-mocha --paths tests/**/*.spec.ts -r 'tests/require'"
+      "detail": "cross-env NODE_ENV=test ts-mocha --paths tests/**/*.spec.ts -r 'tests/require'"
     },
     {
       "type": "npm",
       "script": "test:api",
       "problemMatcher": [],
       "label": "Run API Tests",
-      "detail": "set NODE_ENV=test && ts-mocha --paths tests/api/**/*.spec.ts -r 'tests/require'"
+      "detail": "cross-env NODE_ENV=test ts-mocha --paths tests/api/**/*.spec.ts -r 'tests/require'"
     },
     {
       "type": "npm",
       "script": "test:unit",
       "problemMatcher": [],
       "label": "Run Unit Tests",
-      "detail": "set NODE_ENV=test && ts-mocha --paths tests/unit/**/*.spec.ts -r 'tests/require'"
+      "detail": "cross-env NODE_ENV=test ts-mocha --paths tests/unit/**/*.spec.ts -r 'tests/require'"
     },
     {
       "type": "npm",
