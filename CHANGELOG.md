@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-66](https://github.com/zyndex-drive/server/compare/v0.2.0-65...v0.2.0-66) (2022-08-25)
+
+
+### Docs 📃
+
+* **plugins/auth/helpers:** add jsdoc comments for model-methods in auth plugin ([5dd8c9d](https://github.com/zyndex-drive/server/commit/5dd8c9da779de6c54f5063aad34b9f52a3ecdc1d))
+
+
+### Code Refactoring 🖌
+
+* **plugins/db:** properly give spacing, arrange the folder properly ([2f880f3](https://github.com/zyndex-drive/server/commit/2f880f397143845db0ce4239ce221627472b42ce))
+* **plugins/misc:** make exports consistent across files ([33fd62d](https://github.com/zyndex-drive/server/commit/33fd62df44d54ff3e4514d989af6624f59c5439d))
+
+
+### Build System 🏗
+
+* **package:** add cross-env package and update commands ([920ec0c](https://github.com/zyndex-drive/server/commit/920ec0cd45b6e8a0192e13d8c665ec492182ba49))
+* **packages:** add winston and luxon for logger functionality ([0adcd7e](https://github.com/zyndex-drive/server/commit/0adcd7e2c6068c032dd0167ad814bb68ff2284df))
+
+
+### Features 🔥
+
+* **plugins/axios:** add request start and end time to axios interceptor ([9da847e](https://github.com/zyndex-drive/server/commit/9da847e2337e7621eec7bcbb493e16469f9c3f3f))
+* **plugins/logger:** write a logger function using winston and log it to a file ([a2e72fb](https://github.com/zyndex-drive/server/commit/a2e72fb3c5442a1a32f27a33bcd186e58b57cae3))
+* **plugins:** use the new logger function instead of console.log ([109d0e2](https://github.com/zyndex-drive/server/commit/109d0e2014b92ffe2bd9fafe765a2190e57a6478))
+
 ## [0.2.0-65](https://github.com/zyndex-drive/server/compare/v0.2.0-64...v0.2.0-65) (2022-08-17)
 
 
