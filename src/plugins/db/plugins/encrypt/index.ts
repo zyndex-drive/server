@@ -1,8 +1,6 @@
-import {
-  fieldsPicker,
-  encryptFields,
-  decryptFields,
-} from '@plugins/db/helpers';
+import { encryptFields, decryptFields } from './encrypt';
+import { fieldsPicker } from '@plugins/db/helpers';
+import { logger } from '@plugins';
 
 import type { Document, Model, Schema, HookNextFunction } from 'mongoose';
 
@@ -11,7 +9,7 @@ import type { Document, Model, Schema, HookNextFunction } from 'mongoose';
  *
  * @returns {Function} Crypto Plugin
  */
-export default function <T, U extends Document, V extends Model<U>>(): (
+export function cryptoPlugin<T, U extends Document, V extends Model<U>>(): (
   schema: Schema<U, V, T>,
 ) => void {
   const plugin = (schema: Schema<U, V, T>): void => {
@@ -22,7 +20,7 @@ export default function <T, U extends Document, V extends Model<U>>(): (
         this.set(encryptedDoc);
         next();
       } catch (e) {
-        console.log(`Error Occured in Encrypt Plugin:Mongoose: ${String(e)}`);
+        logger.error(`Error Occured in Encrypt Plugin:Mongoose: ${String(e)}`);
         next();
       }
     });

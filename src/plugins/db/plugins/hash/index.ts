@@ -1,4 +1,6 @@
-import { fieldsPicker, hashString } from '@plugins/db/helpers';
+import { hashString } from './hash';
+import { fieldsPicker } from '@plugins/db/helpers';
+import { logger } from '@plugins';
 
 import type { Document, Model, Schema, HookNextFunction } from 'mongoose';
 
@@ -7,7 +9,7 @@ import type { Document, Model, Schema, HookNextFunction } from 'mongoose';
  *
  * @returns {Function} Hash Plugin
  */
-export default function <T, U extends Document, V extends Model<U>>(): (
+export function hashPlugin<T, U extends Document, V extends Model<U>>(): (
   schema: Schema<U, V, T>,
 ) => void {
   const plugin = (schema: Schema<U, V, T>): void => {
@@ -18,7 +20,7 @@ export default function <T, U extends Document, V extends Model<U>>(): (
         this.set(hashedDoc);
         next();
       } catch (e) {
-        console.log(`Error Occured in Encrypt Plugin:Mongoose: ${String(e)}`);
+        logger.error(`Error Occured in Encrypt Plugin:Mongoose: ${String(e)}`);
         next();
       }
     });

@@ -8,7 +8,7 @@ import dotProp from 'dot-prop';
  * @param {string[]} encryptedFields - Array of Fields to Hash
  * @returns {Object} Object with Hashed Fields
  */
-export default function <T>(obj: T, encryptedFields?: string[]): T {
+export function hashString<T>(obj: T, encryptedFields?: string[]): T {
   let modObj = obj;
   if (encryptedFields) {
     encryptedFields.forEach((field: string) => {

@@ -1,4 +1,5 @@
-import { fieldsPicker, encodeFields, decodeFields } from '@plugins/db/helpers';
+import { encodeFields, decodeFields } from './base-encode';
+import { fieldsPicker } from '@plugins/db/helpers';
 
 import type { Document, Model, Schema, HookNextFunction } from 'mongoose';
 
@@ -7,9 +8,11 @@ import type { Document, Model, Schema, HookNextFunction } from 'mongoose';
  *
  * @returns {Function} Base64 Plugin
  */
-export default function <T, U extends Document, V extends Model<U>>(): (
-  schema: Schema<U, V, T>,
-) => void {
+export function base64EncodePlugin<
+  T,
+  U extends Document,
+  V extends Model<U>,
+>(): (schema: Schema<U, V, T>) => void {
   const plugin = (schema: Schema<U, V, T>): void => {
     const toEncodeFields: string[] = fieldsPicker<T, U, V>(
       schema,

@@ -5,6 +5,7 @@ export class BaseError extends Error {
   errorname: string;
   message: string;
   status: number;
+
   /**
    * @param {number} status - Status Code of the Error
    * @param {string} errorname - Error Name

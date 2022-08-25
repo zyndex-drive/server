@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { logger } from '@plugins';
 
 export default {
   connect: async (): Promise<typeof mongoose> => {
@@ -20,7 +21,7 @@ export default {
   },
   close: async (): Promise<void> => {
     await mongoose.connection.close();
-    console.log('Successfully Closed the Database Connection');
+    logger.info('Successfully Closed the Database Connection');
   },
   reset: async (): Promise<void> => {
     await mongoose.connection.dropDatabase();
