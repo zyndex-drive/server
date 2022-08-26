@@ -97,9 +97,9 @@ export class ZyndexServer {
     this.app.use(
       morgan('zyndexLog', {
         stream: fs.createWriteStream(
-          process.env.NODE_ENV === 'production'
-            ? path.resolve(__dirname, 'logs', 'requests.log')
-            : path.resolve(__dirname, '../../../logs/requests.log'),
+          process.env.NODE_ENV === 'development'
+            ? path.resolve(__dirname, '../../../logs/requests.log')
+            : path.resolve(__dirname, 'logs', 'requests.log'),
           { flags: 'a' },
         ),
       }),
@@ -112,9 +112,9 @@ export class ZyndexServer {
   private serveStaticFiles(): void {
     this.app.use(
       express.static(
-        process.env.NODE_ENV === 'production'
-          ? path.join(__dirname, 'views')
-          : 'src/views',
+        process.env.NODE_ENV === 'development'
+          ? 'src/views'
+          : path.join(__dirname, 'views'),
       ),
     );
   }

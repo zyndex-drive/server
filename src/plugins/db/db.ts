@@ -5,7 +5,7 @@ export default {
   connect: async (): Promise<typeof mongoose> => {
     const prodURL = process.env['DBURL'];
     const testURL = process.env['DBURL_TESTING'];
-    const dbUrl = process.env.NODE_ENV === 'production' ? prodURL : testURL;
+    const dbUrl = process.env.NODE_ENV === 'development' ? testURL : prodURL;
     if (dbUrl) {
       const connection = await mongoose.connect(dbUrl, {
         useUnifiedTopology: true,
@@ -25,5 +25,8 @@ export default {
   },
   reset: async (): Promise<void> => {
     await mongoose.connection.dropDatabase();
+    logger.warning(
+      'Complete Database has been Dropped, Kindly Restart the Server to Initialize & Continue',
+    );
   },
 };

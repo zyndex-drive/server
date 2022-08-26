@@ -1,4 +1,5 @@
-import sendResponse from '../helpers/send-response';
+import sendResponse from '@plugins/server/helpers/send-response';
+import { logger } from '@plugins';
 import { BaseError, InternalServerError } from '@plugins/errors';
 
 // Types
@@ -35,14 +36,17 @@ export function errorResponseHandler(
   data?: unknown,
 ): void {
   if (error instanceof BaseError) {
+    logger.error('Error Caught in Exception Handler', error);
     errorResponse(res, error, data);
   } else if (error instanceof Error) {
     const serverError = new InternalServerError(error.message, error.name);
+    logger.error('Error Caught in Exception Handler', serverError);
     errorResponse(res, serverError, data);
   } else {
     const serverError = new InternalServerError(
       'Unknown Error in the Server, Try Again later',
     );
+    logger.error('Error Caught in Exception Handler', serverError);
     errorResponse(res, serverError, data);
   }
 }
